@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+            android:id="@+id/menu_scoring"
+            android:icon="@drawable/ic_action_edit"
+            android:showAsAction="ifRoom"
+            android:title="@string/enter_scores"/>
+    <item
+            android:id="@+id/menu_leaderboard"
+            android:icon="@drawable/ic_action_view_as_list"
+            android:showAsAction="ifRoom"
+            android:title="@string/leaderboard"/>
+
+    <item
+            android:id="@+id/menu_picture"
+            android:icon="@drawable/ic_action_camera"
+            android:title="@string/take_pic"
+            android:showAsAction="ifRoom"/>
+    <item
+            android:id="@+id/menu_gallery"
+            android:icon="@drawable/ic_action_picture"
+            android:title="@string/tourn_gallery"
+            android:showAsAction="ifRoom"/>
+
+</menu>

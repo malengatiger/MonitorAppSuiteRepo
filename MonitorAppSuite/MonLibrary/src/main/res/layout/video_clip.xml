@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+    <ImageView android:id="@+id/VI_image"
+            android:src="@drawable/video32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    <ImageView android:id="@+id/VI_tick"
+               android:src="@drawable/tick_32"
+               android:layout_alignParentRight="true"
+               android:layout_alignParentTop="true"
+               android:layout_marginRight="15dp"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"/>
+    <TextView
+            android:id="@+id/VI_tournament"
+            android:text="@string/txt"
+            style="@style/Title3TextStyleBlack"
+            android:layout_toRightOf="@id/VI_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    <TextView
+            android:id="@+id/VI_date"
+            android:text="30 December 2099 13:04"
+            style="@style/TextStyleBlue"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/VI_tournament"
+            android:layout_alignLeft="@id/VI_tournament"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    <RelativeLayout
+            android:id="@+id/VI_layout" android:layout_marginTop="5dp"
+            android:layout_alignLeft="@id/VI_date"
+            android:layout_below="@id/VI_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                android:id="@+id/VI_label"
+                android:text="Video File Size"
+                style="@style/TextStyleGrey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/VI_size"
+                android:text="00" android:layout_marginRight="15dp"
+                style="@style/RedCountBoxSmall" android:textSize="14sp"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+
+</RelativeLayout>

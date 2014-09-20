@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<color name="white">#ffffffff</color>
+    <color name="circle_background">#fff2f2f2</color>
+    <color name="line_background">#ffcccccc</color>
+    <color name="done_text_color_normal">#ff333333</color>
+    <color name="done_text_color_disabled">#ffcccccc</color>
+    <color name="blue">#ff33b5e5</color>
+    <color name="darker_blue">#ff0099cc</color>
+    <color name="date_picker_text_normal">#ff999999</color>
+    <color name="calendar_header">#ff999999</color>
+    <color name="date_picker_view_animator">#fff2f2f2</color>
+
+    <color name="ampm_text_color">#8c8c8c</color>
+    <color name="numbers_text_color">#8c8c8c</color>
+
+    <color name="transparent_black">#7F000000</color>
+    <color name="maroon">#CC0000</color>
+    <color name="brown">#CC0000</color>
+    <color name="navy_blue">#3399CC</color>
+    <color name="purple_lite">#FFCCFF</color>
+    <color name="opaque_red">#f00</color>
+    <color name="translucent_red">#80ff0000</color>
+    <color name="blue_one">#EFEDFC</color>
+    <color name="beige">#EFEDFC</color>
+    <color name="blue_two">#EAF1FB</color>
+    <color name="purple">#DBF0F7</color>
+    <color name="blue_pale">#EEEEFF</color>
+    <color name="green_pale">#99FF99</color>
+    <color name="green_two">#009900</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="grey">#CCCCCC</color>
+    <color name="grey2">#A9A9A9</color>
+    <color name="grey_light">#EEEEEE</color>
+    <color name="pale_yellow">#EAFEE2</color>
+    <color name="black">#000000</color>
+    <color name="blue_dark1">#000033</color>
+    <color name="blue_dark2">#003366</color>
+    <color name="dark_blue">#0000FF</color>
+    <color name="pale1">#FAF2EF</color>
+    <color name="pale2">#F5F5F2</color>
+    <color name="pale3">#E6FCFF</color>
+    <color name="pale4">#FFF9FC</color>
+    <color name="green">#339966</color>
+    <color name="blue2">#D9F3FF</color>
+    <color name="blue3">#EEEEFF</color>
+    <color name="orange">#FFA500</color>
+    <color name="absa_red">#D00505</color>
+    <color name="beige_pale">#F7F2E0</color>
+    <color name="yellow_pale">#F2F5A9</color>
+
+</resources>

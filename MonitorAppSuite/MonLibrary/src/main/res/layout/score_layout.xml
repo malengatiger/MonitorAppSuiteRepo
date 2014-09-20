@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:orientation="horizontal"
+             android:layout_width="match_parent"
+             android:background="@color/grey_light" android:padding="3dp"
+             android:layout_height="match_parent">
+
+    <TableRow
+            android:layout_width="match_parent"
+            android:padding="1dp"
+
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:layout_height="wrap_content">
+
+        <RelativeLayout
+                android:id="@+id/LS_round1Layout"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_width="wrap_content">
+
+            <TextView
+                    android:id="@+id/LS_round1Label"
+                    android:text="1"
+                    android:textSize="12sp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/LS_round1"
+                    android:text="@string/zero"
+                    style="@style/LeaderBoardNumberNormal"
+                    android:layout_below="@id/LS_round1Label"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/LS_round2Layout"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_width="wrap_content">
+
+            <TextView
+                    android:id="@+id/LS_round2Label"
+                    android:text="2"
+                    android:textSize="12sp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/LS_round2"
+                    android:text="@string/zero"
+                    style="@style/LeaderBoardNumberNormal"
+                    android:layout_below="@id/LS_round2Label"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+                android:id="@+id/LS_round3Layout"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_width="wrap_content">
+
+            <TextView
+                    android:id="@+id/LS_round3Label"
+                    android:text="3"
+                    android:textSize="12sp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/LS_round3"
+                    android:text="@string/zero"
+                    style="@style/LeaderBoardNumberNormal"
+                    android:layout_below="@id/LS_round3Label"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/LS_round4Layout"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_width="wrap_content">
+
+            <TextView
+                    android:id="@+id/LS_round4Label"
+                    android:text="4"
+                    android:textSize="12sp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/LS_round4"
+                    android:text="@string/zero"
+                    style="@style/LeaderBoardNumberNormal"
+                    android:layout_below="@id/LS_round4Label"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/LS_round5Layout"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_width="wrap_content">
+
+            <TextView
+                    android:id="@+id/LS_round5Label"
+                    android:text="5"
+                    android:textSize="12sp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/LS_round5"
+                    android:text="@string/zero"
+                    style="@style/LeaderBoardNumberNormal"
+                    android:layout_below="@id/LS_round5Label"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/LS_round6Layout"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_width="wrap_content">
+
+            <TextView
+                    android:id="@+id/LS_round6Label"
+                    android:text="6"
+                    android:textSize="12sp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/LS_round6"
+                    android:text="@string/zero"
+                    style="@style/LeaderBoardNumberNormal"
+                    android:layout_below="@id/LS_round6Label"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/LS_totLayout"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content">
+
+            <TextView
+                    android:id="@+id/LS_totLabel"
+                    android:text="Total"
+                    android:textSize="12sp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/LS_total"
+                    android:text="@string/zero"
+                    style="@style/LeaderBoardNumberNormal"
+                    android:layout_below="@id/LS_totLabel"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/LS_parLayout"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content">
+
+            <TextView
+                    android:id="@+id/LS_parLabel"
+                    android:text="Par"
+                    android:textSize="12sp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/LS_parStatus"
+                    android:text="@string/zero"
+                    style="@style/LeaderBoardNumberMedium"
+                    android:layout_below="@id/LS_parLabel"
+                    android:textColor="@color/absa_red"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+
+    </TableRow>
+
+</TableLayout>

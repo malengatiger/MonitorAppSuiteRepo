@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:background="@drawable/xwhite_rounded_corners"
+                android:layout_height="wrap_content">
+
+    <com.android.volley.toolbox.NetworkImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:id="@+id/TNPL_image"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/boy"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt"
+            android:id="@+id/TNPL_txtName"
+            style="@style/Title3TextStyleBlack" android:textStyle="normal"
+            android:textSize="18sp" android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/TNPL_image"/>
+
+
+    <RelativeLayout
+            android:id="@+id/TNPL_layoutRound1"
+            android:layout_below="@+id/TNPL_txtName"
+            android:layout_alignLeft="@id/TNPL_txtName"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/TNPL_txtLabel1"
+                android:text="@string/round1"
+                android:layout_centerVertical="true"
+                style="@style/TextStyleGrey"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/TNPL_txtLabel1a"
+                android:text="@string/tee"
+                android:layout_centerVertical="true"
+                style="@style/TextStyleGrey" android:textSize="18sp"
+                android:layout_marginLeft="15dp"
+                
+                android:layout_width="wrap_content"
+                android:layout_toRightOf="@id/TNPL_txtLabel1"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/TNPL_txtTee1"
+                android:text="@string/zero"
+                style="@style/TextStyle20"
+                android:layout_marginLeft="10dp" android:layout_alignBottom="@id/TNPL_txtLabel1a"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/TNPL_txtLabel1a"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/TNPL_txtPar1"
+                android:text="@string/zero"
+                style="@style/Title3TextStyleBlack"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/TNPL_layoutRound2"
+            android:layout_below="@+id/TNPL_layoutRound1"
+            android:layout_alignLeft="@id/TNPL_layoutRound1"
+            android:layout_width="wrap_content"
+            android:visibility="visible"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/TNPL_txtLabel2"
+                android:text="@string/round2"
+                style="@style/TextStyleGrey" android:textSize="18sp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/TNPL_txtLabel2a"
+                android:text="@string/tee"
+                android:layout_centerVertical="true"
+                style="@style/TextStyleGrey" android:textSize="18sp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_toRightOf="@id/TNPL_txtLabel2"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/TNPL_txtTee2"
+                android:text="@string/zero"
+                style="@style/TextStyle20"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/TNPL_txtLabel2a"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/TNPL_txtPar2"
+                android:text="@string/zero"
+                style="@style/Title3TextStyleBlack"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/TNPL_layoutRound3"
+            android:layout_below="@+id/TNPL_layoutRound2"
+            android:layout_alignLeft="@id/TNPL_layoutRound2"
+            android:layout_width="wrap_content"
+            android:visibility="visible"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/TNPL_txtLabel3"
+                android:text="@string/round3"
+                style="@style/TextStyleGrey" android:textSize="18sp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/TNPL_txtLabel3a"
+                android:text="@string/tee"
+                android:layout_centerVertical="true"
+                style="@style/TextStyleGrey" android:textSize="18sp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_toRightOf="@id/TNPL_txtLabel3"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/TNPL_txtTee3"
+                android:text="@string/zero"
+                style="@style/TextStyle20"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/TNPL_txtLabel3a"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/TNPL_txtPar3"
+                android:text="@string/zero"
+                style="@style/Title3TextStyleBlack"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/TNPL_layoutRound4"
+            android:layout_below="@+id/TNPL_layoutRound3"
+            android:layout_alignLeft="@id/TNPL_layoutRound3"
+            android:layout_width="wrap_content"
+            android:visibility="visible"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/TNPL_txtLabel4"
+                android:text="@string/round4"
+                style="@style/TextStyleGrey" android:textSize="18sp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/TNPL_txtLabel4a"
+                android:text="@string/tee"
+                android:layout_centerVertical="true"
+                style="@style/TextStyleGrey" android:textSize="18sp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_toRightOf="@id/TNPL_txtLabel4"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/TNPL_txtTee4"
+                android:text="@string/zero"
+                style="@style/TextStyle20"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/TNPL_txtLabel4a"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/TNPL_txtPar4"
+                android:text="@string/zero"
+                style="@style/Title3TextStyleBlack"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/TNPL_layoutRound5"
+            android:layout_below="@+id/TNPL_layoutRound4"
+            android:layout_alignLeft="@id/TNPL_layoutRound4"
+            android:layout_width="wrap_content"
+            android:visibility="visible"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/TNPL_txtLabel5"
+                android:text="@string/round5"
+                style="@style/TextStyleGrey" android:textSize="18sp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/TNPL_txtLabel5a"
+                android:text="@string/tee"
+                android:layout_centerVertical="true"
+                style="@style/TextStyleGrey" android:textSize="18sp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_toRightOf="@id/TNPL_txtLabel5"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/TNPL_txtTee5"
+                android:text="@string/zero"
+                style="@style/TextStyle20"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/TNPL_txtLabel5a"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/TNPL_txtPar5"
+                android:text="@string/zero"
+                style="@style/Title3TextStyleBlack"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/TNPL_layoutRound6"
+            android:layout_below="@+id/TNPL_layoutRound5"
+            android:layout_alignLeft="@id/TNPL_layoutRound5"
+            android:layout_width="wrap_content"
+            android:visibility="visible"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/TNPL_txtLabel6"
+                android:text="@string/round6"
+                style="@style/TextStyleGrey" android:textSize="18sp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/TNPL_txtLabel6a"
+                android:text="@string/tee"
+                android:layout_centerVertical="true"
+                style="@style/TextStyleGrey" android:textSize="18sp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_toRightOf="@id/TNPL_txtLabel6"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/TNPL_txtTee6"
+                android:text="@string/zero"
+                style="@style/TextStyle20"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/TNPL_txtLabel6a"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/TNPL_txtPar6"
+                android:text="@string/zero"
+                android:layout_centerVertical="true"
+                style="@style/Title3TextStyleBlack"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+            android:id="@+id/TNPL_layoutTotalScore"
+            android:layout_below="@+id/TNPL_layoutRound6"
+            android:layout_alignLeft="@id/TNPL_layoutRound6"
+            android:layout_width="wrap_content"
+            android:visibility="visible"
+            android:layout_height="wrap_content">
+
+        <View
+                android:id="@+id/TNPL_space"
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:background="@color/beige_pale"
+                android:layout_marginBottom="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_height="5dp"/>
+
+        <TextView
+                android:id="@+id/TNPL_txtLabel7"
+                android:text="@string/total_score"
+                style="@style/TextStyleGrey"
+                android:textSize="20sp"
+                android:layout_below="@id/TNPL_space"
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/TNPL_txtPar7"
+                android:text="@string/zero"
+                style="@style/Title2TextStyleBlack"
+                android:textColor="@color/green"
+                android:layout_alignBaseline="@id/TNPL_txtLabel7"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+</RelativeLayout>

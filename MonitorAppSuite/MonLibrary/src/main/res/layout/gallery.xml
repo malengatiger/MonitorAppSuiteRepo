@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:background="@color/black"
+                android:layout_height="match_parent">
+
+    <TextView
+            android:id="@+id/GAL_txtTourneyName"
+            android:text="@string/txt"
+            style="@style/TextStyleGrey"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/GAL_txtClubName"
+            android:text="@string/txt"
+            style="@style/TextStyleGrey"
+            android:layout_below="@id/GAL_txtTourneyName"
+            android:textColor="@color/blue" android:textSize="12sp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <GridView
+            android:id="@+id/GAL_grid"
+            android:numColumns="3"
+            android:gravity="center"
+            android:columnWidth="180dp"
+            android:layout_below="@id/GAL_txtClubName"
+            android:stretchMode="columnWidth"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    <ImageView
+            android:id="@+id/GAL_image"
+            android:scaleType="centerCrop"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/golf_pic1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+</RelativeLayout>

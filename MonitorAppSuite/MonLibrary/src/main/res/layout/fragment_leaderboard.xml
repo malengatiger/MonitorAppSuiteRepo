@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:background="@color/grey"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/LB_layoutTop"
+        android:background="@drawable/xwhite_rounded_corners"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/LB_layoutTourn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/LB_tournName"
+                android:text="@string/txt"
+                android:layout_alignParentLeft="true"
+                style="@style/Title3TextStyleBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/LB_live"
+                android:text="@string/live"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                style="@style/Title3TextStyleRed"
+                android:textColor="@color/white"
+                android:background="@color/absa_red"
+                android:padding="10dp"
+                android:textStyle="italic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/LB_complete"
+                android:text="@string/complete"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                style="@style/Title3TextStyleBlue"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:background="@color/green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/LB_clubName"
+            android:text="@string/txt"
+            style="@style/TextStyleBlue"
+            android:textSize="14sp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/LB_layoutTourn"
+            android:layout_alignLeft="@id/LB_layoutTourn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:id="@+id/LB_layoutCount"
+            android:layout_width="match_parent"
+            android:layout_below="@id/LB_clubName"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/LB_count"
+                android:text="@string/zero"
+                style="@style/Title3TextStyleBlue"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/LB_countLabel"
+                android:text="@string/number_players"
+                style="@style/TextStyleGrey"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_toLeftOf="@id/LB_count"
+                android:layout_marginRight="20dp"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/LB_layoutAvg"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_below="@id/LB_layoutCount"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/LB_average"
+                android:text="@string/zero"
+                style="@style/Title3TextStyleGreen"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/LB_avgLabel"
+                android:text="@string/avg_per_round"
+                style="@style/TextStyleGrey"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_toLeftOf="@id/LB_average"
+                android:layout_marginRight="20dp"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/LB_dateLayout"
+        android:layout_width="match_parent"
+        android:layout_below="@id/LB_layoutTop"
+        android:background="@color/beige_pale"
+        android:padding="5dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/LB_timeStamp"
+            android:text="Wed, 33 November 2014 10:14"
+            style="@style/Title3TextStyleGreen"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/LB_list"
+        android:layout_below="@id/LB_dateLayout"
+        android:layout_marginTop="10dp"
+        android:dividerHeight="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>

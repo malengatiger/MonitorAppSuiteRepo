@@ -1,0 +1,1914 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:padding="10dp"
+                android:background="@color/grey"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:id="@+id/SBH_topLayout"
+            android:background="@drawable/xwhite_rounded_corners"
+            android:layout_width="match_parent"
+            android:padding="0dp"
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:id="@+id/SBH_image"
+                android:layout_width="50dp"
+                android:src="@drawable/golfer2"
+                android:layout_height="50dp"/>
+
+        <TextView
+                android:id="@+id/SBH_txtName"
+                android:text="@string/txt"
+                android:layout_toRightOf="@id/SBH_image"
+                style="@style/Title3TextStyleBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+                android:id="@+id/SBH_totLayout"
+                android:layout_below="@id/SBH_txtName"
+                android:layout_toRightOf="@id/SBH_image"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content">
+
+
+            <TextView
+                    android:id="@+id/SBH_txtTotal"
+                    android:text="@string/zero"
+                    style="@style/Title1TextStyleGreen"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/SBH_txtTotalLabel"
+                    android:text="@string/round_score"
+                    style="@style/TextStyleGrey"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:layout_toLeftOf="@id/SBH_txtTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_marginRight="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+        <Spinner
+                android:id="@+id/SBH_spinnerRound"
+                android:layout_width="match_parent"
+                android:layout_below="@id/SBH_totLayout"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/SBH_txt9Holes"
+                android:text="@string/nine_holes_reminder"
+                style="@style/TextStyle" android:textColor="@color/translucent_red"
+                android:textSize="12sp" android:padding="5dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/SBH_spinnerRound"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"/>
+
+
+    </RelativeLayout>
+
+    <ScrollView
+            android:id="@+id/SBH_scroll"
+            android:layout_width="match_parent"
+            android:background="@color/grey"
+            android:layout_below="@id/SBH_topLayout"
+            android:layout_height="wrap_content">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <RelativeLayout
+                    android:id="@+id/SBH_frontNine"
+                    android:background="@drawable/xwhite_rounded_corners"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole1"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel1"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole1"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore1"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp1"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore1"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown1"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp1"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints1"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole1"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel1a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints1"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel1a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp1"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints1"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown1"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp1"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole2"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/SBH_layoutPoints1"
+                        android:layout_alignLeft="@id/SBH_layoutHole1"
+                        android:layout_width="match_parent"
+                        android:padding="5dp" android:layout_marginTop="15dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel2"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole2"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore2"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp2"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore2"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown2"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp2"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints2"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole2"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel2a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints2"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel2a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp2"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints2"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown2"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp2"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole3"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/SBH_layoutPoints2"
+                        android:layout_alignLeft="@id/SBH_layoutHole2"
+                        android:layout_width="match_parent"
+                        android:padding="5dp" android:layout_marginTop="15dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel3"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole3"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore3"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp3"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore3"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown3"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp3"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints3"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole3"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel3a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints3"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel3a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp3"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints3"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown3"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp3"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole4"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/SBH_layoutPoints3"
+                        android:layout_alignLeft="@id/SBH_layoutPoints3"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel4"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole4"
+                            android:layout_centerVertical="true"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore4"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp4"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore4"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown4"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp4"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints4"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole4"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel4a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints4"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel4a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp4"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints4"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown4"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp4"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole5"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/SBH_layoutPoints4"
+                        android:layout_alignLeft="@id/SBH_layoutPoints4"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel5"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole5"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore5"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp5"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore5"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown5"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp5"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints5"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole5"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel5a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints5"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel5a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp5"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints5"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown5"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp5"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole6"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/SBH_layoutPoints5"
+                        android:layout_alignLeft="@id/SBH_layoutPoints5"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel6"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole6"
+                            android:layout_centerVertical="true"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore6"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp6"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore6"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown6"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp6"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints6"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole6"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel6a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints6"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel6a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp6"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints6"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown6"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp6"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole7"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/SBH_layoutPoints6"
+                        android:layout_alignLeft="@id/SBH_layoutPoints6"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel7"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole7"
+                            android:layout_centerVertical="true"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore7"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp7"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore7"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown7"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp7"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints7"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole7"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel7a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints7"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel7a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp7"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints7"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown7"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp7"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole8"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/SBH_layoutPoints7"
+                        android:layout_alignLeft="@id/SBH_layoutPoints7"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel8"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole8"
+                            android:layout_centerVertical="true"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore8"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp8"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore8"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown8"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp8"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints8"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole8"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel8a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints8"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel8a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp8"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints8"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown8"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp8"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole9"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/SBH_layoutPoints8"
+                        android:layout_alignLeft="@id/SBH_layoutPoints8"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel9"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole9"
+                            android:layout_centerVertical="true"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore9"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp9"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore9"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown9"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp9"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints9"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole9"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel9a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints9"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel9a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp9"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints9"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown9"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp9"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <View
+                    android:id="@+id/SBH_space"
+                    android:layout_below="@id/SBH_frontNine"
+                    android:layout_alignLeft="@id/SBH_frontNine"
+                    android:layout_width="match_parent"
+                    android:background="@color/green"
+                    android:layout_height="10dp"/>
+
+            <RelativeLayout
+                    android:id="@+id/SBH_backNine"
+                    android:background="@drawable/xwhite_rounded_corners"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/SBH_space"
+                    android:layout_height="wrap_content">
+
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole10"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel10"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole10"
+                            android:layout_centerVertical="true"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore10"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp10"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore10"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown10"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp10"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints10"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole10"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel10a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints10"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel10a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp10"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints10"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown10"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp10"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole11"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/SBH_layoutPoints10"
+                        android:layout_alignLeft="@id/SBH_layoutPoints10"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel11"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole11"
+                            android:layout_centerVertical="true"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore11"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp11"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore11"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown11"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp11"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints11"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole11"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel11a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints11"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel11a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp11"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints11"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown11"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp11"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole12"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/SBH_layoutPoints11"
+                        android:layout_alignLeft="@id/SBH_layoutPoints11"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel12"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole12"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore12"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp12"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore12"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown12"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp12"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints12"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole12"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel12a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints12"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel12a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp12"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints12"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown12"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp12"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole13"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/SBH_layoutPoints12"
+                        android:layout_alignLeft="@id/SBH_layoutPoints12"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel13"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole13"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore13"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp13"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore13"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown13"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp13"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints13"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole13"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel13a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints13"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel13a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp13"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints13"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown13"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp13"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole14"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/SBH_layoutPoints13"
+                        android:layout_alignLeft="@id/SBH_layoutPoints13"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel14"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole14"
+                            android:layout_centerVertical="true"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore14"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp14"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore14"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown14"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp14"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints14"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole14"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel14a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints14"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel14a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp14"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints14"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown14"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp14"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole15"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/SBH_layoutPoints14"
+                        android:layout_alignLeft="@id/SBH_layoutPoints14"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel15"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole15"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore15"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel15"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp15"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore15"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown15"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp15"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints15"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole15"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel15a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints15"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel15a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp15"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints15"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown15"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp15"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole16"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/SBH_layoutPoints15"
+                        android:layout_alignLeft="@id/SBH_layoutPoints15"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel16"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole16"
+                            android:layout_centerVertical="true"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore16"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp16"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore16"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown16"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp16"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints16"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole16"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel16a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints16"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel16a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp16"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints16"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown16"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp16"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole17"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/SBH_layoutPoints16"
+                        android:layout_alignLeft="@id/SBH_layoutPoints16"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel17"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole17"
+                            android:layout_centerVertical="true"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore17"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel17"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp17"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore17"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown17"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp17"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints17"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole17"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/beige_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel17a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints17"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel17a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp17"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints17"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown17"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp17"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutHole18"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/SBH_layoutPoints17"
+                        android:layout_alignLeft="@id/SBH_layoutPoints17"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel18"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/hole18"
+                            android:layout_centerVertical="true"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtScore18"
+                            style="@style/Title1TextStyleBlue"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnUp18"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtScore18"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnDown18"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnUp18"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/SBH_layoutPoints18"
+                        android:layout_alignParentLeft="true" android:layout_below="@id/SBH_layoutHole18"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/blue_pale"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/SBH_txtLabel18a"
+                            style="@style/TextStyleGrey"
+                            android:text="@string/points"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_txtPoints18"
+                            style="@style/Title1TextStyleBlack"
+                            android:text="@string/zero"
+                            android:layout_marginLeft="30dp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/SBH_txtLabel18a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsUp18"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="65dp"
+                            android:layout_toRightOf="@id/SBH_txtPoints18"
+                            android:drawableLeft="@drawable/arrow_circle_up32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/SBH_btnPointsDown18"
+                            style="@style/ButtonCancelSmall"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@id/SBH_btnPointsUp18"
+                            android:drawableLeft="@drawable/arrow_circle_down32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <Button
+                    android:id="@+id/SBH_btnSave"
+                    style="@style/ButtonSaveSmall"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@id/SBH_backNine"
+                    android:text="@string/save_scores"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
+
+
+

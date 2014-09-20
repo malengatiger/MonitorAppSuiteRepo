@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:background="@color/grey"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:id="@+id/MSG_topLayout"
+            android:background="@color/white"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/MSG_title"
+                android:text="@string/messaging"
+                android:layout_width="wrap_content"
+                style="@style/Title2TextStyleBlue"
+                android:layout_height="wrap_content"/>
+
+        <RadioGroup
+                android:id="@+id/MSG_radios"
+                android:layout_below="@id/MSG_title"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="@color/blue_pale" android:padding="3dp"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+            <RadioButton
+                    android:id="@+id/MSG_radioEmail"
+                    android:text="@string/email"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <RadioButton
+                    android:id="@+id/MSG_radioText"
+                    android:text="@string/text_msg"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </RadioGroup>
+
+        <LinearLayout
+                android:layout_below="@id/MSG_radios"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content">
+
+            <CheckBox
+                    android:id="@+id/MSG_allCheck"
+                    android:text="@string/select_str"
+                    android:layout_weight="2"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            <Button
+                    android:id="@+id/MSG_btnSend"
+                    android:text="@string/go"
+                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/MSG_countLayout"
+            android:layout_below="@id/MSG_topLayout"
+            android:layout_width="match_parent" android:layout_marginTop="10dp"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/MSG_countLabel"
+                style="@style/Title3TextStyleGrey"
+                android:textColor="@color/grey2"
+                android:layout_centerVertical="true"
+                android:text="@string/players"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/MSG_count"
+                style="@style/Title2TextStyleBlack"
+                android:text="@string/zero"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/MSG_countLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/MSG_selected"
+                style="@style/Title2TextStyleGreen"
+                android:text="@string/zero"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/MSG_selectedLabel"
+                style="@style/Title3TextStyleGrey"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:text="@string/selected" android:layout_toLeftOf="@id/MSG_selected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+
+    <ListView
+            android:id="@+id/MSG_list"
+            android:layout_below="@id/MSG_countLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+</RelativeLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:background="@color/grey"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+
+            android:id="@+id/VU_topLayout" android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:background="@color/white" android:padding="10dp"
+            android:layout_height="wrap_content">
+        <TextView
+                android:id="@+id/VU_label"
+                style="@style/TextStyleGrey"
+                android:textSize="16sp" android:textStyle="bold"
+                android:layout_width="wrap_content" android:layout_centerVertical="true"
+                android:text="Number of Videos on Device"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/VU_count"
+                style="@style/BlueCountBoxSmall"
+                android:textSize="16sp" android:textStyle="bold"
+                android:layout_width="wrap_content" android:layout_marginRight="15dp"
+                android:text="00" android:layout_alignParentRight="true"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+    <ListView
+            android:id="@+id/VU_list"
+            android:layout_below="@id/VU_topLayout"
+            android:layout_marginTop="10dp"
+            android:dividerHeight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+</RelativeLayout>

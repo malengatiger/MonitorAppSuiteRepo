@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:background="@color/white"
+                android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+            android:id="@+id/MSGI_topLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:id="@+id/MSGI_image"
+                android:src="@drawable/ic_action_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/MSGI_txtName"
+                android:text="Player Adm Scorer Name"
+                android:layout_marginLeft="5dp"
+                style="@style/Title3TextStyleBlack"
+                android:layout_toRightOf="@id/MSGI_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+        <CheckBox
+                android:id="@+id/MSGI_checkBox"
+                android:text="@string/select_str"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+
+</RelativeLayout>

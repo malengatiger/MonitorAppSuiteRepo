@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+            android:id="@+id/menu_camera"
+            android:icon="@drawable/ic_action_camera"
+            android:showAsAction="ifRoom"
+            android:title="@string/take_pic"/>
+    <item
+            android:id="@+id/menu_video"
+            android:icon="@drawable/video32"
+            android:showAsAction="ifRoom"
+            android:title="@string/take_vid"/>
+
+    <item
+            android:id="@+id/menu_gallery"
+            android:icon="@drawable/ic_action_picture"
+            android:title="@string/tourn_gallery"
+            android:showAsAction="ifRoom"/>
+
+</menu>

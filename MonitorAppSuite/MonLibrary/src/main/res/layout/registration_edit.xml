@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:background="@color/grey"
+                android:padding="0dp"
+                android:visibility="visible"
+                android:id="@+id/EP_layout0"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:id="@+id/EP_mainLayout"
+            android:layout_width="match_parent"
+            android:background="@drawable/xwhite_rounded_corners"
+            android:layout_height="match_parent">
+
+        <TextView
+                android:id="@+id/EP_header"
+                android:layout_alignParentTop="true"
+                android:layout_width="wrap_content"
+                android:text="@string/group_reg"
+                style="@style/Title2TextStyleBlue"
+                android:layout_height="wrap_content"/>
+
+        <EditText
+                android:id="@+id/EP_groupName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                android:layout_below="@id/EP_header"
+                android:inputType="textCapWords"
+                android:hint="@string/group_name"/>
+
+        <EditText
+                android:id="@+id/EP_firstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/EP_groupName"
+                android:inputType="textCapWords"
+
+                android:hint="@string/firstname"/>
+
+        <EditText
+                android:id="@+id/EP_lastName"
+                android:layout_width="match_parent"
+                android:layout_below="@id/EP_firstName"
+                android:inputType="textCapWords"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/lastname"/>
+
+        <EditText
+                android:id="@+id/EP_cellphone"
+                android:layout_width="match_parent"
+                android:layout_below="@id/EP_lastName"
+                android:inputType="phone"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/cellphone"/>
+
+
+        <Spinner
+                android:id="@+id/EP_emailSpinner"
+                android:layout_width="match_parent"
+                android:layout_below="@id/EP_cellphone"
+                android:inputType="textEmailAddress"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"/>
+
+        <EditText
+                android:id="@+id/EP_password"
+                android:layout_width="match_parent"
+                android:layout_below="@id/EP_emailSpinner"
+                android:inputType="number"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_pin"/>
+
+        <Spinner
+                android:id="@+id/EP_countrySpinner"
+                android:layout_width="match_parent"
+                android:layout_below="@id/EP_password"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"/>
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_below="@id/EP_countrySpinner"
+                android:layout_marginTop="30dp"
+                android:padding="10dp"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+            <Button
+                    android:id="@+id/EP_btnCancel"
+                    style="@style/ButtonCancelSmall"
+                    android:text="@string/cancel"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <Button
+                    android:id="@+id/EP_btnSave"
+                    style="@style/ButtonSaveSmall"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:text="@string/register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

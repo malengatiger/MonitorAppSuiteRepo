@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@color/grey"
+            android:padding="10dp"
+            android:id="@+id/SI_mainLayout"
+            android:layout_height="match_parent">
+
+        <RelativeLayout
+                android:id="@+id/SI_layout0"
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:background="@color/white"
+                android:layout_height="wrap_content">
+
+            <com.boha.malengagolf.library.base.BannerBlue
+                    android:id="@+id/SI_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            <ImageView
+                    android:id="@+id/SI_image"
+                    android:src="@drawable/ic_launcher"
+                    android:layout_margin="30dp"
+                    android:layout_below="@id/SI_banner"
+                    android:layout_width="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/SI_welcome"
+                    android:layout_width="wrap_content"
+                    android:padding="10dp"
+                    android:text="@string/welcome_aboard"
+                    android:layout_centerHorizontal="true"
+                    style="@style/TextStyle"
+                    android:textSize="16sp"
+                    android:layout_below="@id/SI_image"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/SI_header"
+                    android:layout_width="wrap_content"
+                    android:text="@string/subject" android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"
+                    style="@style/Title2TextStyleBlue"
+                    android:layout_below="@id/SI_welcome"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:id="@+id/SI_app"
+                    android:layout_width="wrap_content"
+                    android:text="App Name Here"
+                    style="@style/Title2TextStyleBlack"
+                    android:layout_below="@id/SI_header"
+                    android:layout_centerHorizontal="true"
+                    android:layout_height="wrap_content"/>
+
+            <Spinner
+                    android:id="@+id/SI_spinner"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@id/SI_app"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+            <EditText
+                    android:id="@+id/SI_pin"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/SI_spinner"
+                    android:inputType="number"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/pin"/>
+
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/SI_pin"
+                    android:layout_marginTop="15dp"
+                    android:padding="10dp"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+
+                <Button
+                        android:id="@+id/SI_btnSave"
+                        style="@style/ButtonSaveSmall"
+                        android:layout_weight="3"
+                        android:layout_alignParentRight="true"
+                        android:text="@string/sign_in"
+                        android:textSize="20sp"
+                        android:layout_width="wrap_content"
+                        android:textStyle="normal"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</ScrollView>

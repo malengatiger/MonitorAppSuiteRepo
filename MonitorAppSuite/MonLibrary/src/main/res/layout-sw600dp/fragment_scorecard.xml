@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:padding="10dp"
+                android:background="@color/grey"
+                android:layout_height="wrap_content">
+
+    <RelativeLayout
+            android:id="@+id/PSC_layoutTop"
+            android:background="@drawable/xwhite_rounded_corners"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/PSC_playerName"
+                android:text="@string/txt"
+                style="@style/Title3TextStyleBlack" android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/PSC_tourneyName"
+                android:text="@string/txt"
+                style="@style/TextStyle" android:textColor="@color/blue"
+                android:textSize="16sp" android:layout_marginLeft="10dp"
+                android:layout_below="@id/PSC_playerName"
+                android:layout_alignLeft="@id/PSC_playerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/PSC_image"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/PSC_tourneyName"
+                android:layout_width="120dp"
+                android:layout_height="120dp"/>
+
+        <RelativeLayout android:id="@+id/PSC_layoutCount"
+                        android:layout_width="wrap_content"
+                        android:layout_alignTop="@id/PSC_image"
+                        android:layout_toRightOf="@id/PSC_image"
+                        android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/PSC_count"
+                    android:text="@string/zero"
+                    style="@style/Title3TextStyleBlue"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:id="@+id/PSC_countLabel"
+                    android:text="@string/number_rounds"
+                    style="@style/TextStyleGrey" android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_toLeftOf="@id/PSC_count"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+        <RelativeLayout android:id="@+id/PSC_layoutCount2"
+                        android:layout_width="wrap_content"
+                        android:layout_below="@id/PSC_layoutCount"
+                        android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/PSC_averageStrokes"
+                    android:text="@string/zero"
+                    style="@style/Title3TextStyleGreen"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:id="@+id/PSC_averageLabel"
+                    android:text="@string/avg_per_round"
+                    style="@style/TextStyleGrey" android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_toLeftOf="@id/PSC_averageStrokes"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <ListView
+            android:id="@+id/PSC_list"
+            android:layout_below="@id/PSC_layoutTop"
+            android:layout_marginTop="10dp" android:dividerHeight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+</RelativeLayout>

@@ -1,0 +1,1086 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:layout_height="match_parent">
+
+    <TableLayout
+            android:id="@+id/CARD_table"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        <TableRow
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:background="@color/grey_light"
+                android:layout_gravity="left"
+                android:gravity="left"
+                android:layout_height="wrap_content">
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole1Layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole1Label"
+                        android:text="1"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar1"
+                        android:layout_below="@id/CARD_hole1Label"
+                        android:text="4"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole1"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar1"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points1"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole1"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole2Layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole2Label"
+                        android:text="2"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar2"
+                        android:layout_below="@id/CARD_hole2Label"
+                        android:text="5"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole2"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar2"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points2"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole2"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole3Layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole3Label"
+                        android:text="3"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar3"
+                        android:layout_below="@id/CARD_hole3Label"
+                        android:text="4"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole3"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar3"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points3"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole3"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole4Layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole4Label"
+                        android:text="4"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar4"
+                        android:layout_below="@id/CARD_hole4Label"
+                        android:text="4"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole4"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar4"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points4"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole4"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole5Layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole5Label"
+                        android:text="5"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar5"
+                        android:layout_below="@id/CARD_hole5Label"
+                        android:text="3"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole5"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points5"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole5"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole6Layout"
+                    android:layout_marginRight="16dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole6Label"
+                        android:text="6"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar6"
+                        android:layout_below="@id/CARD_hole6Label"
+                        android:text="5"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole6"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points6"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole6"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole7Layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole7Label"
+                        android:text="7"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar7"
+                        android:layout_below="@id/CARD_hole7Label"
+                        android:text="5"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole7"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points7"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole7"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole8Layout"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole8Label"
+                        android:text="8"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar8"
+                        android:layout_below="@id/CARD_hole8Label"
+                        android:text="5"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole8"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar8"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points8"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole8"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole9Layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole9Label"
+                        android:text="9"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar9"
+                        android:layout_below="@id/CARD_hole9Label"
+                        android:text="5"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole9"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar9"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points9"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole9"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/CARD_totLayoutFrontNine"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_totLabelFN"
+                        android:text="Front"
+                        android:textSize="14sp"
+                        android:layout_marginTop="15dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_totalFN"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@id/CARD_totLabelFN"
+                        android:textAlignment="center"
+                        android:textColor="@color/green"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_totalFNPoints"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumberLarge"
+                        android:layout_marginTop="10dp"
+                        android:layout_centerVertical="true"
+                        android:layout_below="@id/CARD_totalFN"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/CARD_totalFNPointsLabel"
+                        android:text="@string/points"
+                        style="@style/TextStyleGreySmall" android:textSize="12sp"
+                        android:layout_centerVertical="true"
+                        android:layout_below="@id/CARD_totalFNPoints"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+        </TableRow>
+
+        <TableRow
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/beige_pale"
+                android:layout_gravity="left"
+                android:gravity="left"
+                android:layout_height="wrap_content">
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole10Layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole10Label"
+                        android:text="10"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar10"
+                        android:layout_below="@id/CARD_hole10Label"
+                        android:text="4"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole10"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar10"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points10"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole10"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole11Layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole11Label"
+                        android:text="11"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar11"
+                        android:layout_below="@id/CARD_hole11Label"
+                        android:text="4"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole11"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar11"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points11"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole11"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole12Layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole12Label"
+                        android:text="12"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar12"
+                        android:layout_below="@id/CARD_hole12Label"
+                        android:text="4"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole12"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar12"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points12"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole12"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole13Layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole13Label"
+                        android:text="4"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar13"
+                        android:layout_below="@id/CARD_hole13Label"
+                        android:text="4"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole13"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar13"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points13"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole13"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole14Layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole14Label"
+                        android:text="14"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar14"
+                        android:layout_below="@id/CARD_hole14Label"
+                        android:text="3"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole14"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar14"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points14"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole14"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole15Layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole15Label"
+                        android:text="15"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar15"
+                        android:layout_below="@id/CARD_hole15Label"
+                        android:text="4"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole15"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar15"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points15"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole15"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole16Layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole16Label"
+                        android:text="16"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar16"
+                        android:layout_below="@id/CARD_hole16Label"
+                        android:text="4"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole16"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar16"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points16"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole16"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole17Layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole17Label"
+                        android:text="17"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar17"
+                        android:layout_below="@id/CARD_hole17Label"
+                        android:text="3"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole17"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar17"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points17"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole17"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/CARD_hole18Layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_hole18Label"
+                        android:text="18"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_holepar18"
+                        android:layout_below="@id/CARD_hole18Label"
+                        android:text="4"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_hole18"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_below="@id/CARD_holepar18"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_points18"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/CARD_hole18"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/CARD_totLayoutBackNine"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_width="wrap_content">
+
+                <TextView
+                        android:id="@+id/CARD_totLabelBN"
+                        android:text="Back"
+                        android:textSize="14sp"
+                        android:layout_marginTop="15dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_totalBN"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumber"
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@id/CARD_totLabelBN"
+                        android:textAlignment="center"
+                        android:textColor="@color/green"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/CARD_totalBNPoints"
+                        android:text="@string/zero"
+                        style="@style/LeaderBoardNumberLarge"
+                        android:layout_marginTop="10dp"
+                        android:layout_centerVertical="true"
+                        android:layout_below="@id/CARD_totalBN"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/CARD_totalBNPointsLabel"
+                        android:text="@string/points"
+                        style="@style/TextStyleGreySmall" android:textSize="12sp"
+                        android:layout_centerVertical="true"
+                        android:layout_below="@id/CARD_totalBNPoints"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+        </TableRow>
+
+
+    </TableLayout>
+
+    <RelativeLayout
+            android:id="@+id/CARD_mLayout"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@color/white"
+            android:layout_below="@id/CARD_table" android:layout_marginTop="20dp"
+            android:layout_width="match_parent">
+
+        <RelativeLayout
+                android:id="@+id/CARD_roundLayout"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content">
+
+            <TextView
+                    android:id="@+id/CARD_roundLabel"
+                    android:text="Round"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/CARD_round"
+                    android:text="1"
+                    style="@style/LeaderBoardNumber"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/CARD_roundLabel"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/CARD_parLayout"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/CARD_roundLayout"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content">
+
+            <TextView
+                    android:id="@+id/CARD_parLabel"
+                    android:text="Par"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/CARD_par"
+                    android:text="+3"
+                    style="@style/LeaderBoardNumber"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/CARD_parLabel"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/CARD_totLayout"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/CARD_parLayout"
+android:layout_centerVertical="true"
+                android:layout_width="wrap_content">
+
+            <TextView
+                    android:id="@+id/CARD_totLabel"
+                    android:text="@string/score"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/CARD_total"
+                    android:text="75"
+                    style="@style/LeaderBoardNumber"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/CARD_totLabel"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/opaque_red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/CARD_pointsLayout"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/CARD_totLayout"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_width="wrap_content">
+
+            <TextView
+                    android:id="@+id/CARD_pointsLabel"
+                    android:text="@string/points"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/CARD_totalPoints"
+                    android:text="@string/zero"
+                    style="@style/LeaderBoardNumberLarge"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/CARD_pointsLabel"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

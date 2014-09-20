@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/menu_tournament_history"
+            android:icon="@drawable/flag32"
+            android:title="@string/tourn_history"
+            android:showAsAction="ifRoom"/>
+    <item
+            android:id="@+id/menu_take_picture"
+            android:icon="@drawable/camera32"
+            android:title="@string/take_pic"
+            android:showAsAction="ifRoom"/>
+    <item
+            android:id="@+id/menu_invite_player"
+            android:icon="@drawable/ic_action_edit"
+            android:title="@string/subject"
+            android:showAsAction="ifRoom"/>
+    <item
+            android:id="@+id/menu_send_mail"
+            android:icon="@drawable/flag32"
+            android:title="@string/send_mail"
+            android:showAsAction="ifRoom"/>
+    <item
+            android:id="@+id/menu_send_text"
+            android:icon="@drawable/flag32"
+            android:title="@string/send_text"
+            android:showAsAction="ifRoom"/>
+    <item
+            android:id="@+id/menu_change"
+            android:icon="@drawable/ic_action_refresh"
+            android:title="@string/change"
+            android:showAsAction="ifRoom"/>
+</menu>

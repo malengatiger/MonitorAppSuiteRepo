@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:background="@color/grey"
+                android:padding="0dp"
+                android:visibility="visible"
+                android:id="@+id/ED_PSN_layout0"
+                android:layout_height="wrap_content">
+
+    <RelativeLayout
+            android:id="@+id/ED_PSN_mainLayout"
+            android:layout_width="match_parent"
+            android:background="@drawable/xwhite_rounded_corners"
+            android:layout_height="wrap_content">
+
+
+
+        <ProgressBar
+                android:id="@+id/ED_PSN_progress"
+                android:layout_alignParentTop="true"
+                android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                style="@android:style/Widget.ProgressBar.Small"
+                android:layout_height="wrap_content"/>
+
+
+        <TextView
+                android:id="@+id/ED_PSN_groupName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                style="@style/Title3TextStyleGrey"
+                android:layout_alignParentLeft="true"
+                android:inputType="textCapWords"
+                android:text="@string/group_name"/>
+
+        <RelativeLayout
+                android:id="@+id/ED_PSN_space"
+                android:layout_width="match_parent"
+                android:background="@color/beige_pale"
+                android:layout_below="@id/ED_PSN_groupName"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/ED_PSN_personType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Title3TextStyleGrey"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/player"/>
+        </RelativeLayout>
+
+        <EditText
+                android:id="@+id/ED_PSN_firstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/ED_PSN_space"
+                android:inputType="textCapWords"
+                android:layout_marginLeft="5dp"
+                android:hint="@string/firstname"/>
+
+        <EditText
+                android:id="@+id/ED_PSN_lastName"
+                android:layout_width="match_parent"
+                android:layout_below="@id/ED_PSN_firstName"
+                android:inputType="textCapWords"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/lastname"/>
+
+        <EditText
+                android:id="@+id/ED_PSN_cellphone"
+                android:layout_width="match_parent"
+                android:layout_below="@id/ED_PSN_lastName"
+                android:inputType="phone"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:hint="@string/cellphone"/>
+
+
+        <EditText
+                android:id="@+id/ED_PSN_email"
+                android:layout_width="match_parent"
+                android:layout_below="@id/ED_PSN_cellphone"
+                android:inputType="textEmailAddress"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"/>
+        <Button
+                android:id="@+id/ED_PSN_btnBirthDate"
+                android:layout_width="match_parent"
+                android:layout_below="@id/ED_PSN_email"
+                android:layout_marginTop="10dp"
+                style="@style/ButtonCancel"
+                android:text="@string/date_birth"
+                android:layout_height="wrap_content"/>
+        <com.boha.malengagolf.library.base.PaddedCheckBox
+                android:id="@+id/ED_PSN_chkInvite"
+                android:layout_width="match_parent"
+                android:layout_below="@id/ED_PSN_btnBirthDate"
+                android:layout_marginTop="10dp" android:checked="true"
+                android:text="@string/subject"
+                android:layout_height="wrap_content"/>
+
+        <RadioGroup
+                android:id="@+id/ED_PSN_radioGroup"
+                android:layout_width="match_parent"
+                android:layout_below="@id/ED_PSN_chkInvite"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:background="@color/blue_pale"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+            <RadioButton
+                    android:id="@+id/ED_PSN_radioFemale"
+                    android:text="@string/female"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <RadioButton
+                    android:id="@+id/ED_PSN_radioMale"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/male"
+                    android:layout_height="wrap_content"/>
+
+        </RadioGroup>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_below="@id/ED_PSN_radioGroup"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+            <Button
+                    android:id="@+id/ED_PSN_btnCancel"
+                    style="@style/ButtonCancelSmall"
+                    android:text="@string/cancel"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <Button
+                    android:id="@+id/ED_PSN_btnSave"
+                    style="@style/ButtonSaveSmall"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:text="@string/save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

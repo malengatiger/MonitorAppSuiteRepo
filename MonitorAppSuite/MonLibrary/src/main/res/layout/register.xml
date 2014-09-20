@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:background="@color/grey"
+            android:layout_height="match_parent">
+
+        <RelativeLayout
+                android:id="@+id/REG_ediLayout"
+                android:layout_width="match_parent"
+                android:padding="15dp"
+                android:visibility="gone"
+                android:background="@drawable/xwhite_rounded_corners"
+                android:layout_height="match_parent">
+
+            <include layout="@layout/registration_edit"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/REG_mainLayout"
+                android:layout_width="match_parent"
+                android:padding="15dp"
+                android:visibility="visible"
+                android:layout_below="@id/REG_ediLayout"
+                android:background="@drawable/xwhite_rounded_corners"
+                android:layout_height="match_parent">
+
+            <com.boha.malengagolf.library.base.BannerBlue
+                    android:id="@+id/REG_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/REG_welcome"
+                    android:text="@string/welcome"
+                    style="@style/Title1TextStyleBlack"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@id/REG_banner"
+                    android:layout_width="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/REG_instruction"
+                    android:text="@string/signin_or_register"
+                    style="@style/TextStyle"
+                    android:textSize="16sp"
+                    android:layout_below="@id/REG_welcome"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            <Button
+                    android:id="@+id/REG_btnExisting"
+                    android:layout_marginTop="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/REG_instruction"
+                    android:text="@string/existing_acct"
+                    style="@style/ButtonNavyBlue"
+                    android:layout_height="wrap_content"/>
+
+            <Button
+                    android:id="@+id/REG_btnNewGroup"
+                    android:layout_width="match_parent"
+                    style="@style/ButtonRed"
+                    android:layout_marginTop="30dp"
+                    android:layout_below="@id/REG_btnExisting"
+                    android:text="@string/register_new_group"
+                    android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</ScrollView>

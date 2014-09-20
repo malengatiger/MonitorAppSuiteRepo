@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:background="@color/grey"
+                android:padding="10dp"
+                android:layout_height="match_parent">
+
+    <com.boha.malengagolf.library.base.BannerGold
+            android:id="@+id/INV_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+            android:id="@+id/INV_topLayout"
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:background="@color/white"
+            android:layout_below="@id/INV_banner"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/INV_groupName"
+                style="@style/Title3TextStyleBlack"
+                android:text="GolfGroup Name"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/INV_text"
+                style="@style/TextStyleGrey" android:textSize="16sp"
+                android:layout_below="@id/INV_groupName"
+                android:text="@string/invite_title"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/INV_txtMemberName"
+                style="@style/Title3TextStyleBlue"
+                android:layout_below="@id/INV_text"
+                android:text="@string/lb_viewer" android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/INV_txtEmail"
+                style="@style/TextStyle" android:textSize="12sp"
+                android:layout_below="@id/INV_txtMemberName"
+                android:text="Member Email" android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <EditText
+                android:id="@+id/INV_editEmail"
+                style="@style/TextStyle" android:textSize="16sp"
+                android:layout_below="@id/INV_txtEmail"
+                android:hint="@string/enter_email" android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true"
+                android:inputType="textEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/INV_appLayout"
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:background="@color/white"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/INV_topLayout"
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:id="@+id/INV_image"
+                android:src="@drawable/ic_launcher"
+                android:layout_width="48dp"
+                android:layout_height="48dp"/>
+
+        <TextView
+                android:id="@+id/INV_label"
+                android:text="@string/mg_apps"
+                android:layout_toRightOf="@id/INV_image"
+                android:layout_marginLeft="20dp"
+                android:layout_alignBottom="@id/INV_image"
+                style="@style/Title2TextStyleGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <com.boha.malengagolf.library.base.PaddedCheckBox
+                android:id="@+id/INV_chkPlayer"
+                android:text="@string/player_app"
+                android:layout_below="@id/INV_label"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:enabled="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <com.boha.malengagolf.library.base.PaddedCheckBox
+                android:id="@+id/INV_chkScorer"
+                android:text="@string/scorer_app"
+                android:layout_below="@id/INV_chkPlayer"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp" android:enabled="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <com.boha.malengagolf.library.base.PaddedCheckBox
+                android:id="@+id/INV_chkLeaderboard"
+                android:text="@string/leaderbd_app"
+                android:layout_below="@id/INV_chkScorer"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp" android:enabled="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <com.boha.malengagolf.library.base.PaddedCheckBox
+                android:id="@+id/INV_chkAdmin"
+                android:text="@string/admin_app"
+                android:layout_below="@id/INV_chkLeaderboard"
+                android:layout_marginTop="10dp" android:enabled="false"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <Button android:id="@+id/INV_btnSend"
+                android:background="@color/blue"
+                android:text="@string/send_inv"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:layout_below="@id/INV_chkAdmin"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
