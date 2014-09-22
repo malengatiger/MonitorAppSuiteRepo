@@ -16,12 +16,10 @@
     <string name="time_placeholder" translatable="false">--</string>
     <string name="time_separator" translatable="false">:</string>
     <string name="hour_picker_description">Hours circular slider</string>
-
     <string name="minute_picker_description">Minutes circular slider</string>
     <string name="radial_numbers_typeface" translatable="false">sans-serif</string>
     <string name="select_hours">Select hours</string>
     <string name="select_minutes">Select minutes</string>
-
     <string name="done">Done</string>
     <string name="get_number">Get Number</string>
     <string name="number_tourn">Tournaments</string>
@@ -33,7 +31,6 @@
     <string name="current_round">Current Round</string>
     <string name="view_players">View Player List</string>
     <string name="go">Go</string>
-
     <string name="error_email">Problem sending email</string>
     <string name="choose_photo">Select Profile Photo</string>
     <string name="error_date">Enter end date equal or later than start date</string>
@@ -55,11 +52,9 @@
     <string name="end_date">End Date</string>
     <string name="cellphone">Cellphone</string>
     <string name="search_map">Use Map for Club search</string>
-
     <string name="invited">You are invited to download this app\:</string>
     <string name="click_link">Click or tap the link below to navigate to Google Play</string>
     <string name="enjoy">Enjoy the game!</string>
-
     <string name="select_players_imp">Please select Players for import</string>
     <string name="subject">Invitation to mgGolf</string>
     <string name="off">Normal</string>
@@ -67,11 +62,9 @@
     <string name="on">Satellite</string>
     <string name="select_holes">Please select number of holes</string>
     <string name="select_email">Please select eMail address</string>
-
     <string name="pin_note">Please note your pin below. The pin is needed when you login the first time</string>
     <string name="player_removed">Player removed from Tournament</string>
     <string name="tourn_registered">Tournament has been registered</string>
-
     <string name="select_club">Select Golf Club</string>
     <string name="select_course">Select Golf Course</string>
     <string name="add_new_club">Add Golf Club</string>
@@ -93,7 +86,6 @@
     <string name="teeTime">Tee Time</string>
     <string name="first_hole">1st Hole</string>
     <string name="tenth_hole">10th Hole</string>
-
     <string name="club">Golf Club</string>
     <string name="messaging">Messaging</string>
     <string name="tournament">Tournament</string>
@@ -116,8 +108,6 @@
     <string name="find_club">Find Tournament Club</string>
     <string name="check_club_sc">Check Club Scorecard</string>
     <string name="select_str">Select</string>
-
-
     <string name="send_inv">Send Invitation</string>
     <string name="scorer_app">Scorer App</string>
     <string name="player_app">Player App</string>
@@ -127,7 +117,6 @@
     <string name="mg_apps">mgGolf Apps</string>
     <string name="invite_dialog">Are you sure you want to invite a download of this app? \nThe user will be an Administrator and may add and change data in your group</string>
     <string name="invite_confirm">Do you want to invite someone to download mgGolf Leaderboard App?</string>
-
     <string name="save_scores">Save Score</string>
     <string name="save_scorecard">Save Club Scorecard</string>
     <string name="select_round">Please select round</string>
@@ -138,10 +127,8 @@
     <string name="no">No</string>
     <string name="par">Par</string>
     <string name="club_directions">Do you want directions from your location to this Club?</string>
-
     <string name="sort">Sort TimeSheet</string>
     <string name="sort_players">Sort Players</string>
-
     <string name="round1">Round 1</string>
     <string name="round2">Round 2</string>
     <string name="round3">Round 3</string>
@@ -151,7 +138,6 @@
     <string name="total_score">Total Score</string>
     <string name="total_points">Total Points</string>
     <string name="relation">Relation to Par</string>
-
     <string name="teetime">Tee Time</string>
     <string name="hole">Hole</string>
     <string name="points">Points</string>
@@ -164,7 +150,6 @@
     <string name="hole7">Hole 07</string>
     <string name="hole8">Hole 08</string>
     <string name="hole9">Hole 09</string>
-
     <string name="hole10">Hole 10</string>
     <string name="hole11">Hole 11</string>
     <string name="hole12">Hole 12</string>
@@ -174,7 +159,6 @@
     <string name="hole16">Hole 16</string>
     <string name="hole17">Hole 17</string>
     <string name="hole18">Hole 18</string>
-
     <string name="text_msg">Text Message</string>
     <string name="email">Email</string>
     <string name="groups">Your Golf Groups</string>
@@ -187,7 +171,6 @@
     <string name="add_new_tourn">Add Tournament</string>
     <string name="use_age_groups">Use Age Groups?</string>
     <string name="select_tourn_type">Please select Tournament format</string>
-
     <string name="enter_pin">Enter PIN</string>
     <string name="select_acct">Please select account</string>
     <string name="enter_group_id">Enter Golf Group Number</string>
@@ -219,17 +202,21 @@
     <string name="failed_import">Failed to import Players</string>
     <string name="import_ok">Players successfully imported into Group\'s database</string>
     <string name="nine_holes_reminder">9 hole tournament. Score the front OR the the back nine.</string>
-
     <string name="view_video">Watch Video</string>
     <string name="delete_video">Remove Video from Device</string>
     <string name="video">Video</string>
+    <string name="site_tasks">Project Site Tasks</string>
+    <string name="site_staff">Project Site Staff</string>
+    <string name="company_projects">Company Projects</string>
+    <string name="company_staff">Company Staff</string>
     <string name="closed">Closed</string>
+    <string name="status_update_week">Task Status Updates this Week</string>
+    <string name="status_updates">Status Updates</string>
     <string name="withdraw">Withdraw Player</string>
     <string name="withdrawn">Player has been withdrawn from the tournament</string>
     <string name="withdraw_text">Do you want to withdraw this player from the tournament?</string>
     <string name="close_leaderboard">Close Scoring</string>
     <string name="close_leaderboard_text">Do you want to close scoring for the LeaderBoard?\nNo more player scores can be entered.</string>
-
     <string name="manage_tourn_players">Manage Players and Scores</string>
     <string name="update_tourn">Manage Tournament Info</string>
     <string name="delete_tourn">Delete Tournament</string>
@@ -262,27 +249,21 @@
     <string name="manage_teetime">Manage Tee Times</string>
     <string name="reminder_text">Send Reminder Text Message</string>
     <string name="video_actions">Video Actions</string>
-
     <string name="wait">Please wait a couple of minutes while your registration is processed and sample tournaments are generated.\nThanks for signing up!</string>
-
     <string name="tourn_history">Tournament History</string>
     <string name="send_mail">Send eMail</string>
     <string name="send_text">Send Text Message</string>
     <string name="change">Change Information</string>
     <string name="upload_video">Upload Video</string>
     <string name="camera">Camera</string>
-
     <string name="delete_tournament">Delete Tournament</string>
     <string name="delete_message">Do you want to remove this tournament?</string>
-
     <string name="delete_sample_tournament">Delete Sample Tournaments</string>
     <string name="delete_sample_message">Do you want to remove all the sample tournaments and associated data?</string>
-
     <string name="winner_countout">Winner by CountOut</string>
     <string name="winner_playoff">Winner by PlayOff</string>
     <string name="view_scorecard">Look at ScoreCard(s)</string>
     <string name="tournament_removed">Tournament has been removed(s)</string>
-
     <string name="winner_updated">Winner has been set. Congratulations!</string>
     <string name="even">E</string>
     <string name="date_birth">Date of Birth</string>
@@ -302,25 +283,21 @@
     <string name="group_signin">Golf Group SignIn</string>
     <string name="signin_or_register">If you have an existing account please Sign In otherwise please register new Golf Group</string>
     <string name="videofile_not_found">Video file not found</string>
-
     <string name="nine_holes">9 Holes</string>
     <string name="eighteen_holes">18 Holes</string>
     <string name="crash_toast">gf</string>
     <string name="crash_toast_text">Ooooops ! I crashed, but a report has been sent to my developer to help fix the issue !</string>
-
     <string name="crash_dialog_title">CrashTest has crashed</string>
     <string name="crash_dialog_text">An unexpected error occurred forcing the
     application to stop. Please help us fix this by sending us error data,
     all you have to do is click OK.</string>
     <string name="crash_dialog_comment_prompt">You might add your comments about the problem below:</string>
     <string name="crash_dialog_ok_toast">Thank you !</string>
-
     <string name="enter_group_name">Enter Golf Group Name</string>
     <string name="enter_firstname">Enter First Name</string>
     <string name="enter_lastname">Enter Surname</string>
     <string name="enter_cell">Enter Cellphone Number</string>
     <string name="enter_email">Enter Email address</string>
-
     <string name="enter_tourn">Enter Tournament Name</string>
     <string name="enter_startdate">Enter Start Date</string>
     <string name="enter_enddate">Enter End Date</string>
@@ -335,5 +312,10 @@
     <string name="remove_player_msg">Do you really want to remove or withdraw this player from the tournament?</string>
     <string name="golf_people">Golf Group People</string>
     <string name="select_country">Please select country</string>
+    <string name="title_activity_main_pager">MainPagerActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_add">Add New</string>
+    <string name="action_refresh">Refresh</string>
 
 </resources>

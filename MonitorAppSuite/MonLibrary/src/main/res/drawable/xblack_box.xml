@@ -7,8 +7,10 @@
         android:endColor="@color/black"
         android:startColor="@color/black" />
     <padding
-            android:bottom="5dip"
+            android:bottom="10dip"
             android:left="10dip"
             android:right="10dip"
-            android:top="5dip" />
+            android:top="10dip" />
+    <corners android:radius="6dp" />
+    <size android:height="48dp" android:width="60dp"/>
 </shape>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/SITE_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/SITE_image"
+            android:textColor="@color/yellow"
+            android:layout_centerVertical="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="00"
+            style="@style/BlackCircle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt"
+            android:id="@+id/SITE_txtName"
+            style="@style/Title3TextStyleBlack"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/SITE_image" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/SITE_descLayout"
+        android:visibility="gone"
+        android:layout_alignLeft="@id/SITE_top"
+        android:layout_below="@id/SITE_top">
+
+        <TextView
+            android:id="@+id/SITE_txtDesc"
+            style="@style/TextStyle"
+            android:text="A description"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/SITE_layout"
+        android:layout_marginTop="5dp"
+        android:layout_alignLeft="@id/SITE_top"
+        android:layout_below="@id/SITE_top">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00"
+            android:id="@+id/SITE_txtTaskCount"
+            style="@style/BlueCircle"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/site_tasks"
+            android:id="@+id/SITE_txtlabel"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/SITE_txtTaskCount"
+            android:layout_marginRight="20dp"
+            style="@style/TextStyleGrey"
+            android:textSize="16sp"
+
+            android:layout_marginLeft="10dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/SITE_staffLayout"
+        android:layout_marginTop="10dp"
+        android:layout_alignLeft="@id/SITE_layout"
+        android:layout_below="@id/SITE_layout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00"
+            android:id="@+id/SITE_txtStaffCount"
+            style="@style/GreenCircle"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/site_staff"
+            android:id="@+id/SITE_txtlabel2"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/SITE_txtStaffCount"
+            android:layout_marginRight="20dp"
+            style="@style/TextStyleGrey"
+            android:textSize="16sp"
+
+            android:layout_marginLeft="10dp" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

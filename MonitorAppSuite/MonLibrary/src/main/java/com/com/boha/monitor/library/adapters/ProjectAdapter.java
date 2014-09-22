@@ -1,7 +1,6 @@
 package com.com.boha.monitor.library.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import com.boha.malengagolf.library.R;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
+import com.com.boha.monitor.library.util.Statics;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -24,16 +24,14 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
     private final LayoutInflater mInflater;
     private final int mLayoutRes;
     private List<ProjectDTO> mList;
-    private List<Drawable> bmdList;
     private Context ctx;
 
    public ProjectAdapter(Context context, int textViewResourceId,
-                         List<ProjectDTO> list, List<Drawable> bmdList) {
+                         List<ProjectDTO> list) {
         super(context, textViewResourceId, list);
         this.mLayoutRes = textViewResourceId;
         mList = list;
         ctx = context;
-        this.bmdList = bmdList;
         this.mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -44,7 +42,7 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
     static class ViewHolderItem {
         TextView txtName, txtStaffCount;
         TextView txtSiteCount;
-        TextView txtNumber;
+        TextView txtNumber, txtDesc;
     }
 
     @Override
@@ -61,19 +59,29 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
                     .findViewById(R.id.PROJ_txtCount);
             item.txtStaffCount = (TextView) convertView
                    .findViewById(R.id.PROJ_txtStaffCount);
+            item.txtDesc = (TextView) convertView
+                    .findViewById(R.id.PROJ_txtDesc);
             convertView.setTag(item);
         } else {
             item = (ViewHolderItem) convertView.getTag();
         }
 
         ProjectDTO p = mList.get(position);
+        item.txtName.setText(p.getProjectName());
         item.txtNumber.setText(""+(position+ 1));
         item.txtSiteCount.setText("" + p.getProjectSiteList().size());
+        if (p.getDescription() == null) {
+            item.txtDesc.setText("");
+        } else {
+            item.txtDesc.setText(p.getDescription());
+        }
         int count = 0;
         for (ProjectSiteDTO ps: p.getProjectSiteList()) {
             count += ps.getProjectSiteStaffList().size();
         }
         item.txtStaffCount.setText(""+count);
+        Statics.setRobotoFontLight(ctx,item.txtDesc);
+        Statics.setRobotoFontBold(ctx,item.txtName);
 
 
         animateView(convertView);
@@ -82,7 +90,7 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
 
     public void animateView(final View view) {
         Animation a = AnimationUtils.loadAnimation(ctx, R.anim.grow_fade_in_center);
-        a.setDuration(1000);
+        a.setDuration(500);
         if (view == null)
             return;
         view.startAnimation(a);

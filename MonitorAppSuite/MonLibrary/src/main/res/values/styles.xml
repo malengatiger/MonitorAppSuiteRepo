@@ -318,13 +318,13 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:background">@drawable/xblue_oval</item>
+        <item name="android:background">@drawable/xblack_oval</item>
     </style>
 
     <style name="BlackCountBox" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:gravity">center</item>
         <item name="android:background">@drawable/xblack_box</item>
     </style>
     <style name="LeaderBoardNumber" parent="@android:style/TextAppearance.Large">
@@ -388,6 +388,13 @@
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/xgrey_oval</item>
+    </style>
+    <style name="YellowCircle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/absa_red</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/xyellow_oval</item>
     </style>
     <style name="BlueCircle" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/white</item>

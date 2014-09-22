@@ -18,11 +18,43 @@ public class ProjectSiteTaskStatusDTO implements Serializable {
     private long dateUpdated;
     private TaskStatusDTO taskStatus;
     private Integer projectSiteTaskID;
-    private Integer projectSiteStaffID;
+    private Integer projectSiteStaffID, companyStaffID;
+    private String projectSiteName, projectName, staffName;
 
     public ProjectSiteTaskStatusDTO() {
     }
-   
+
+    public Integer getCompanyStaffID() {
+        return companyStaffID;
+    }
+
+    public void setCompanyStaffID(Integer companyStaffID) {
+        this.companyStaffID = companyStaffID;
+    }
+
+    public String getProjectSiteName() {
+        return projectSiteName;
+    }
+
+    public void setProjectSiteName(String projectSiteName) {
+        this.projectSiteName = projectSiteName;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getStaffName() {
+        return staffName;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
+    }
 
     public Integer getProjectSiteTaskStatusID() {
         return projectSiteTaskStatusID;

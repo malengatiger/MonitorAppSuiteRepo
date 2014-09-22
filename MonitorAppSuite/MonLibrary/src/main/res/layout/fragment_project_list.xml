@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@color/grey"
+    tools:context="com.com.boha.monitor.library.fragments.ProjectListFragment">
+
+    <RelativeLayout
+        android:id="@+id/PROJ_LIST_layoutx"
+        android:padding="16dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/PROJ_LIST_projectCount"
+            android:text="00"
+            style="@style/GreyCircle"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/PROJ_LIST_label"
+            style="@style/Title2TextStyleGrey"
+            android:layout_centerVertical="true"
+            android:text="@string/company_projects"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/PROJ_LIST_layoutStatus"
+        android:layout_below="@id/PROJ_LIST_layoutx"
+        android:background="@color/beige_pale"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/PROJ_LIST_statusCount"
+            android:text="00"
+            style="@style/Title2TextStyleBlue"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/PROJ_LIST_label2"
+            style="@style/TextStyleBold"
+            android:textColor="@color/grey"
+            android:layout_marginTop="5dp"
+            android:layout_toLeftOf="@id/PROJ_LIST_statusCount"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="@string/status_update_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/PROJ_LIST_layoutStatus"
+        android:id="@android:id/list"
+        android:background="@color/white"
+        android:dividerHeight="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@android:id/empty"
+        android:text="+"
+        style="@style/RedCircle"
+        android:visibility="gone"
+        android:textSize="28sp"
+        android:layout_margin="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center" />
+
+</RelativeLayout>

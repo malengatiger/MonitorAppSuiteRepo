@@ -6,13 +6,14 @@
 
 package com.com.boha.monitor.library.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author aubreyM
  */
-public class ResponseDTO {
+public class ResponseDTO implements Serializable {
    
     private Integer statusCode;
     private String message, sessionID, GCMRegistrationID;

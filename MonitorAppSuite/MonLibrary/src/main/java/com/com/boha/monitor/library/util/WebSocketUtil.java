@@ -209,9 +209,7 @@ public class WebSocketUtil {
                     ResponseDTO r = gson.fromJson(response, ResponseDTO.class);
                     if (r.getStatusCode() == 0) {
                         if (r.getSessionID() != null) {
-                            //SharedUtil.setSessionID(ctx, r.getSessionID());
-                        } else {
-                            webSocketListener.onMessage(r);
+                           // webSocketListener.onMessage(r);
                         }
                     } else {
                         webSocketListener.onError(r.getMessage());

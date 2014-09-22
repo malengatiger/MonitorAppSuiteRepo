@@ -6,8 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import com.boha.monitor.dto.CompanyDTO;
-import com.boha.monitor.dto.CompanyStaffDTO;
+import com.com.boha.monitor.library.dto.CompanyDTO;
+import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 
 
 public class RegistrationActivity extends Activity {

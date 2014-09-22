@@ -1,5 +1,9 @@
 package com.com.boha.monitor.library.util;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,6 +14,10 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+
+import com.boha.malengagolf.library.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -83,34 +91,41 @@ public class Util {
 		return sb.toString();
 	}
 
-	/*public static void setReminders(CalendarEventDTO event, long startDate) {
-		// reminders, by default, check whether a reminder is a bridge too far
-		ReminderDTO remHour = new ReminderDTO(60, ReminderDTO.METHOD_EMAIL); // hour
-		ReminderDTO remDay = new ReminderDTO((60 * 24),
-				ReminderDTO.METHOD_EMAIL); // day
-		ReminderDTO remOneWeek = new ReminderDTO((60 * 24 * 7),
-				ReminderDTO.METHOD_EMAIL); // week
-		ReminderDTO remTwoWeeks = new ReminderDTO((60 * 24 * 14),
-				ReminderDTO.METHOD_EMAIL); // 2 weeks
-		ArrayList<ReminderDTO> remList = new ArrayList<ReminderDTO>();
-		long now = new Date().getTime();
-		long delta = startDate - now;
-		if (delta > WEEKS) {
-			remList.add(remTwoWeeks);
-		}
-		if (delta > WEEK) {
-			remList.add(remOneWeek);
-		}
-		if (delta > DAY) {
-			remList.add(remDay);
-		}
-		if (delta > HOUR) {
-			remList.add(remHour);
-		}
 
-		event.setReminders(remList);
-	}*/
-
+    private void animateText(View txt) {
+        final ObjectAnimator an = ObjectAnimator.ofFloat(txt, View.SCALE_X, 0);
+        an.setRepeatCount(1);
+        an.setDuration(200);
+        an.setRepeatMode(ValueAnimator.REVERSE);
+        an.start();
+    }
+    public static void animateScaleX(View txt, long duration) {
+        final ObjectAnimator an = ObjectAnimator.ofFloat(txt, View.SCALE_X, 0);
+        an.setRepeatCount(1);
+        an.setDuration(duration);
+        an.setRepeatMode(ValueAnimator.REVERSE);
+        an.start();
+    }
+    public static void animateScaleY(View txt, long duration) {
+        final ObjectAnimator an = ObjectAnimator.ofFloat(txt, View.SCALE_Y, 0);
+        an.setRepeatCount(1);
+        an.setDuration(duration);
+        an.setRepeatMode(ValueAnimator.REVERSE);
+        an.start();
+    }
+    public static void animateRotationY(View view, long duration) {
+        final ObjectAnimator an = ObjectAnimator.ofFloat(view, "rotation", 0.0f, 360f);
+        //an.setRepeatCount(ObjectAnimator.REVERSE);
+        an.setDuration(duration);
+        an.setInterpolator(new AccelerateDecelerateInterpolator());
+        an.start();
+    }
+    public static void animateFlipFade(Context ctx, View v) {
+        AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(ctx,
+                R.animator.flip_fade);
+        set.setTarget(v);
+        set.start();
+    }
 	public static ArrayList<String> getRecurStrings(Date date) {
 		Calendar cal = GregorianCalendar.getInstance();
 		cal.setTime(date);
