@@ -1,1 +1,1 @@
-include ':mobile', ':wear', ':MonitorAdmin', ':MonLibrary', ':MonEndPoints'
+include ':MonitorAdmin', ':MonLibrary'

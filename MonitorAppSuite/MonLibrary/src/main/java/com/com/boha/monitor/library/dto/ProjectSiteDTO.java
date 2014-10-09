@@ -6,8 +6,14 @@
 
 package com.com.boha.monitor.library.dto;
 
+import com.boha.monitor.data.Project;
+import com.boha.monitor.data.ProjectSite;
+import com.boha.monitor.util.FileUtility;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,12 +26,29 @@ public class ProjectSiteDTO implements Serializable {
     private Double latitude;
     private Double longitude;
     private Integer activeFlag;
-    private List<ProjectSiteTaskDTO> projectSiteTaskList;
+    private List<ProjectSiteTaskDTO> projectSiteTaskList = new ArrayList<>();
     private Integer projectID;
-    private List<ProjectSiteStaffDTO> projectSiteStaffList;
-    private List<String> imageFileNameList;
+    private List<ProjectSiteStaffDTO> projectSiteStaffList = new ArrayList<>();
+    private List<String> imageFileNameList = new ArrayList<>();
 
     public ProjectSiteDTO() {
+    }
+
+    public ProjectSiteDTO(ProjectSite a) {
+        this.projectSiteID = a.getProjectSiteID();
+        this.projectSiteName = a.getProjectSiteName();
+        this.latitude = a.getLatitude();
+        this.longitude = a.getLongitude();
+        this.activeFlag = a.getActiveFlag();
+        this.projectID = a.getProject().getProjectID();
+        
+        Project p = a.getProject();
+        try {
+            this.imageFileNameList = FileUtility.getImageFilesSite(p.getCompany().getCompanyID(),
+                    p.getProjectID(), a.getProjectSiteID());
+        } catch (Exception ex) {
+            Logger.getLogger(ProjectSiteTaskDTO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Integer getProjectSiteID() {

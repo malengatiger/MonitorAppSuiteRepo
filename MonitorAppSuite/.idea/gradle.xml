@@ -8,11 +8,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/MonEndPoints" />
             <option value="$PROJECT_DIR$/MonLibrary" />
             <option value="$PROJECT_DIR$/MonitorAdmin" />
-            <option value="$PROJECT_DIR$/mobile" />
-            <option value="$PROJECT_DIR$/wear" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -6,6 +6,10 @@
 
 package com.com.boha.monitor.library.dto;
 
+import com.boha.monitor.data.CompanyStaff;
+import com.boha.monitor.data.ProjectSiteStaff;
+import com.boha.monitor.data.ProjectSiteTask;
+import com.boha.monitor.data.ProjectSiteTaskStatus;
 import java.io.Serializable;
 
 /**
@@ -22,6 +26,20 @@ public class ProjectSiteTaskStatusDTO implements Serializable {
     private String projectSiteName, projectName, staffName;
 
     public ProjectSiteTaskStatusDTO() {
+    }
+
+    public ProjectSiteTaskStatusDTO(ProjectSiteTaskStatus a) {
+        this.projectSiteTaskStatusID = a.getProjectSiteTaskStatusID();
+        ProjectSiteTask pst = a.getProjectSiteTask();
+        this.projectSiteName = pst.getProjectSite().getProjectSiteName();
+        this.projectSiteTaskID = pst.getProjectSiteTaskID();
+        this.taskStatus = new TaskStatusDTO(a.getTaskStatus());
+        this.dateUpdated = a.getDateUpdated().getTime();
+        ProjectSiteStaff s = a.getProjectSiteStaff();
+        CompanyStaff cs = s.getCompanyStaff();
+        this.companyStaffID = cs.getCompanyStaffID();
+        this.staffName = cs.getFirstName() + " " + cs.getLastName();
+        this.projectSiteStaffID = s.getProjectSiteStaffID();
     }
 
     public Integer getCompanyStaffID() {
@@ -55,6 +73,8 @@ public class ProjectSiteTaskStatusDTO implements Serializable {
     public void setStaffName(String staffName) {
         this.staffName = staffName;
     }
+
+   
 
     public Integer getProjectSiteTaskStatusID() {
         return projectSiteTaskStatusID;

@@ -5,7 +5,10 @@
  */
 package com.com.boha.monitor.library.dto;
 
+import com.boha.monitor.data.CompanyStaff;
+import com.boha.monitor.data.ProjectSiteStaff;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,8 +20,8 @@ public class ProjectSiteStaffDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer projectSiteStaffID, activeFlag;
     private long dateRegistered;
-    private List<ProjectDiaryRecordDTO> projectDiaryRecordList;
-    private List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList;
+    private List<ProjectDiaryRecordDTO> projectDiaryRecordList = new ArrayList<>();
+    private List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList = new ArrayList<>();
     private Integer projectSiteID;
     private GcmDeviceDTO gcmDevice;
     private CompanyStaffDTO companyStaff;
@@ -46,6 +49,14 @@ public class ProjectSiteStaffDTO implements Serializable {
 
     public void setActiveFlag(Integer activeFlag) {
         this.activeFlag = activeFlag;
+    }
+
+    public ProjectSiteStaffDTO(ProjectSiteStaff a) {
+        this.dateRegistered = a.getDateRegistered().getTime();
+        this.projectSiteStaffID = a.getProjectSiteStaffID();
+        this.projectSiteID = a.getProjectSite().getProjectSiteID();
+        CompanyStaff cs = a.getCompanyStaff();
+        this.companyStaff = new CompanyStaffDTO(cs);
     }
 
     public GcmDeviceDTO getGcmDevice() {

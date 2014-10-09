@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.boha.malengagolf.library.R;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteStaffDTO;
 import com.com.boha.monitor.library.dto.RequestDTO;
@@ -30,6 +29,7 @@ import com.com.boha.monitor.library.util.WebSocketUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
+import com.boha.malengagolf.library.R;
 
 import java.util.ArrayList;
 import java.util.List;

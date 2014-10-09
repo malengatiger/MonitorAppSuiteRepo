@@ -6,6 +6,7 @@
 
 package com.com.boha.monitor.library.dto;
 
+import com.boha.monitor.data.TaskStatus;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,6 +21,11 @@ public class TaskStatusDTO implements Serializable {
     private List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList;
 
     public TaskStatusDTO() {
+    }
+
+    public TaskStatusDTO(TaskStatus a) {
+        this.taskStatusID = a.getTaskStatusID();
+        this.taskStatusName = a.getTaskStatusName();
     }
 
     public TaskStatusDTO(Integer taskStatusID, String taskStatusName) {

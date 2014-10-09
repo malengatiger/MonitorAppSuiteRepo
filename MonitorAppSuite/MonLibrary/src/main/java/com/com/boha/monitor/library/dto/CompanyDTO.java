@@ -6,7 +6,9 @@
 
 package com.com.boha.monitor.library.dto;
 
+import com.boha.monitor.data.Company;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,12 +19,17 @@ public class CompanyDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer companyID;
     private String companyName;
-    private List<ProjectDTO> projectList;
-    private List<ProjectStatusTypeDTO> projectStatusTypeList;
-    private List<CompanyStaffDTO> companyStaffList;
-    private List<TaskStatusDTO> taskStatusList;
+    private List<ProjectDTO> projectList = new ArrayList<>();
+    private List<ProjectStatusTypeDTO> projectStatusTypeList = new ArrayList<>();
+    private List<CompanyStaffDTO> companyStaffList = new ArrayList<>();
+    private List<TaskStatusDTO> taskStatusList = new ArrayList<>();
 
     public CompanyDTO() {
+    }
+
+    public CompanyDTO(Company a) {
+        this.companyID = a.getCompanyID();
+        this.companyName = a.getCompanyName();
     }
 
     public List<TaskStatusDTO> getTaskStatusList() {
@@ -32,6 +39,8 @@ public class CompanyDTO implements Serializable {
     public void setTaskStatusList(List<TaskStatusDTO> taskStatusList) {
         this.taskStatusList = taskStatusList;
     }
+
+  
 
     public Integer getCompanyID() {
         return companyID;

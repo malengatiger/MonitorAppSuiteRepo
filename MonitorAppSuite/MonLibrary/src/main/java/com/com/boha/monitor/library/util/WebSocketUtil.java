@@ -1,7 +1,6 @@
 package com.com.boha.monitor.library.util;
 
 import android.content.Context;
-import android.os.Environment;
 import android.util.Log;
 
 import com.com.boha.monitor.library.dto.RequestDTO;
@@ -12,11 +11,6 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.exceptions.WebsocketNotConnectedException;
 import org.java_websocket.handshake.ServerHandshake;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -47,7 +41,8 @@ public class WebSocketUtil {
             Log.e(LOG, "@@@@@@@@ webSocket session disconnected");
         }
     }
-    public static void sendRequest(Context c, final String suffix, RequestDTO req, WebSocketListener listener)  {
+
+    public static void sendRequest(Context c, final String suffix, RequestDTO req, WebSocketListener listener) {
         start = System.currentTimeMillis();
         webSocketListener = listener;
         request = req;
@@ -73,14 +68,14 @@ public class WebSocketUtil {
             }
         } catch (WebsocketNotConnectedException e) {
             try {
-                Log.e(LOG,"WebsocketNotConnectedException. Problems with web socket", e);
+                Log.e(LOG, "WebsocketNotConnectedException. Problems with web socket", e);
                 connectWebSocket(suffix, req);
             } catch (URISyntaxException e1) {
-                Log.e(LOG,"Problems with web socket", e);
+                Log.e(LOG, "Problems with web socket", e);
                 webSocketListener.onError("Problem starting server socket communications\n" + e1.getMessage());
             }
         } catch (URISyntaxException e) {
-            Log.e(LOG,"Problems with web socket", e);
+            Log.e(LOG, "Problems with web socket", e);
             webSocketListener.onError("Problem starting server socket communications");
         }
     }
@@ -91,7 +86,7 @@ public class WebSocketUtil {
         mWebSocketClient = new WebSocketClient(uri) {
             @Override
             public void onOpen(ServerHandshake serverHandshake) {
-                Log.w(LOG, "########## WEBSOCKET Opened: " + serverHandshake.getHttpStatusMessage() + " elapsed ms: " + (end-start));
+                Log.w(LOG, "########## WEBSOCKET Opened: " + serverHandshake.getHttpStatusMessage() + " elapsed ms: " + (end - start));
                 String json = gson.toJson(request);
                 mWebSocketClient.send(json);
                 Log.d(LOG, "########### web socket request sent after onOpen\n" + json);
@@ -101,7 +96,7 @@ public class WebSocketUtil {
             public void onMessage(String response) {
                 end = System.currentTimeMillis();
                 TimerUtil.killTimer();
-                Log.i(LOG, "########## onMessage, length: " + response.length()  + " elapsed: " + getElapsed()
+                Log.i(LOG, "########## onMessage, length: " + response.length() + " elapsed: " + getElapsed()
                         + "\nString: " + response);
                 try {
                     ResponseDTO r = gson.fromJson(response, ResponseDTO.class);
@@ -126,45 +121,9 @@ public class WebSocketUtil {
 
             @Override
             public void onMessage(ByteBuffer bb) {
-                end = System.currentTimeMillis();
                 TimerUtil.killTimer();
-                Log.i(LOG, "########## onMessage, ByteBuffer capacity: " + bb.capacity());
-                File dir = Environment.getExternalStorageDirectory();
-                File zip = new File(dir, "data.zip");
-                File unZip = new File(dir, "data.json");
-                BufferedOutputStream stream = null;
-                String content = null;
-                try {
-                    FileOutputStream fos = new FileOutputStream(zip);
-                    stream = new BufferedOutputStream(fos);
-                } catch (FileNotFoundException e) {
-                    Log.e(LOG, "Failed to get output file", e);
-                    webSocketListener.onError("Failed to get output file for saving server response");
-                    return;
-                }
-                try {
-                    stream.write(bb.array());
-                    stream.flush();
-                    stream.close();
-                    //Log.d(LOG, "###### zip file: " + zip.getAbsolutePath() + " length: " + zip.length());
-                    content = ZipUtil.unpack(zip, unZip);
-                    //Log.d(LOG, "################ unpacked length: " + unZip.length());
-                    if (content != null) {
-                        Log.e(LOG, "############# onMessage, unpacked length: " + content.length() + " elapsed: " + getElapsed()
-                                + "\n" + content);
-                        ResponseDTO response = gson.fromJson(content, ResponseDTO.class);
-                        if (response.getStatusCode() == 0) {
-                            webSocketListener.onMessage(response);
-                        } else {
-                            webSocketListener.onError(response.getMessage());
-                        }
-                    } else {
-                        webSocketListener.onError("Content from server failed. Response is null");
-                    }
-                } catch (IOException e) {
-                    Log.e(LOG, "onMessage Failed", e);
-                    webSocketListener.onError("Failed to unpack server response");
-                }
+                end = System.currentTimeMillis();
+                parseData(bb);
             }
 
 
@@ -203,13 +162,13 @@ public class WebSocketUtil {
             public void onMessage(String response) {
                 TimerUtil.killTimer();
                 end = System.currentTimeMillis();
-                Log.i(LOG, "########## onMessage, length: " + response.length()  + " elapsed: " + getElapsed()
+                Log.i(LOG, "########## onMessage, length: " + response.length() + " elapsed: " + getElapsed()
                         + "\n" + response);
                 try {
                     ResponseDTO r = gson.fromJson(response, ResponseDTO.class);
                     if (r.getStatusCode() == 0) {
                         if (r.getSessionID() != null) {
-                           // webSocketListener.onMessage(r);
+                            // webSocketListener.onMessage(r);
                         }
                     } else {
                         webSocketListener.onError(r.getMessage());
@@ -225,43 +184,7 @@ public class WebSocketUtil {
             public void onMessage(ByteBuffer bb) {
                 TimerUtil.killTimer();
                 end = System.currentTimeMillis();
-                Log.i(LOG, "########## onMessage ByteBuffer capacity: " + bb.capacity());
-                File dir = Environment.getExternalStorageDirectory();
-                File zip = new File(dir, "data.zip");
-                File unZip = new File(dir, "data.json");
-                BufferedOutputStream stream = null;
-                String content = null;
-                try {
-                    FileOutputStream fos = new FileOutputStream(zip);
-                    stream = new BufferedOutputStream(fos);
-                } catch (FileNotFoundException e) {
-                    Log.e(LOG, "Failed to get output file", e);
-                    webSocketListener.onError("Failed to get output file for saving server response");
-                    return;
-                }
-                try {
-                    stream.write(bb.array());
-                    stream.flush();
-                    stream.close();
-                    //Log.d(LOG, "###### zip file: " + zip.getAbsolutePath() + " length: " + zip.length());
-                    content = ZipUtil.unpack(zip, unZip);
-                    //Log.d(LOG, "################ unpacked length: " + unZip.length());
-                    if (content != null) {
-                        Log.e(LOG, "############# onMessage, unpacked length: " + content.length() + " elapsed: " + getElapsed()
-                                + "\n" + content);
-                        ResponseDTO response = gson.fromJson(content, ResponseDTO.class);
-                        if (response.getStatusCode() == 0) {
-                            webSocketListener.onMessage(response);
-                        } else {
-                            webSocketListener.onError(response.getMessage());
-                        }
-                    } else {
-                        webSocketListener.onError("Content from server failed. Response is null");
-                    }
-                } catch (IOException e) {
-                    Log.e(LOG, "onMessage Failed", e);
-                    webSocketListener.onError("Failed to unpack server response");
-                }
+                parseData(bb);
             }
 
 
@@ -284,9 +207,32 @@ public class WebSocketUtil {
         mWebSocketClient.connect();
     }
 
+    private static void parseData(ByteBuffer bb) {
+        Log.i(LOG, "########## parseData ByteBuffer capacity: " + bb.capacity());
+        try {
+            String content = ZipUtil.uncompressGZip(bb);
+            if (content != null) {
+                Log.e(LOG, "############# parseData, resonse unpacked - elapsed: " + getElapsed()
+                        + "\n" + content);
+                ResponseDTO response = gson.fromJson(content, ResponseDTO.class);
+                if (response.getStatusCode() == 0) {
+                    webSocketListener.onMessage(response);
+                } else {
+                    webSocketListener.onError(response.getMessage());
+                }
+            } else {
+                webSocketListener.onError("Content from server failed. Response is null");
+            }
+        } catch (Exception e) {
+            Log.e(LOG, "parseData Failed", e);
+            webSocketListener.onError("Failed to unpack server response");
+        }
+    }
+
     static WebSocketClient mWebSocketClient;
     static final String LOG = WebSocketUtil.class.getName();
     static final Gson gson = new Gson();
+
     public static String getElapsed() {
         BigDecimal m = new BigDecimal(end - start).divide(new BigDecimal(1000));
 

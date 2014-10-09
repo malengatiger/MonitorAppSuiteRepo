@@ -6,7 +6,9 @@
 
 package com.com.boha.monitor.library.dto;
 
+import com.boha.monitor.data.Project;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,13 +23,22 @@ public class ProjectDTO implements Serializable {
     private long dateRegistered;
     private Integer completeFlag;
     private Integer companyID;
-    private List<ProjectSiteDTO> projectSiteList;
+    private List<ProjectSiteDTO> projectSiteList = new ArrayList<>();
 
     public ProjectDTO() {
     }
 
     public ProjectDTO(Integer projectID) {
         this.projectID = projectID;
+    }
+
+    public ProjectDTO(Project a) {
+        this.projectID = a.getProjectID();
+        this.projectName = a.getProjectName();
+        this.dateRegistered = a.getDateRegistered().getTime();
+        this.description = a.getDescription();
+        this.completeFlag = a.getCompleteFlag();
+        this.companyID = a.getCompany().getCompanyID();
     }
 
     public Integer getProjectID() {

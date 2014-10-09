@@ -5,6 +5,10 @@
  */
 package com.com.boha.monitor.library.dto;
 
+import com.boha.monitor.data.ErrorStoreAndroid;
+
+
+
 /**
  *
  * @author aubreyM
@@ -16,6 +20,22 @@ public class ErrorStoreAndroidDTO {
             brand, appVersionCode, appVersionName, packageName, phoneModel;
     private long errorDate;
 
+    public ErrorStoreAndroidDTO(ErrorStoreAndroid a) {
+        errorDate = a.getErrorDate().getTime();
+        errorStoreAndroidID = a.getErrorStoreAndroidID();
+        if (a.getCompany() != null) {
+            companyID = a.getCompany().getCompanyID();
+            companyName = a.getCompany().getCompanyName();
+        }
+        logCat = a.getLogCat();
+        stackTrace = a.getStackTrace();
+        androidVersion = a.getAndroidVersion();
+        brand = a.getBrand();
+        appVersionCode = a.getAppVersionCode();
+        appVersionName = a.getAppVersionName();
+        packageName = a.getPackageName();
+        phoneModel = a.getPhoneModel();
+    }
 
     public int getErrorStoreAndroidID() {
         return errorStoreAndroidID;
