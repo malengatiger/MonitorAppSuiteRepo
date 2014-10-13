@@ -8,11 +8,13 @@ import android.util.Log;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.toolbox.BitmapLruCache;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.stream.HttpUrlGlideUrlLoader;
+import com.com.boha.monitor.library.dto.CompanyDTO;
+import com.com.boha.monitor.library.toolbox.BitmapLruCache;
+import com.com.boha.monitor.library.util.SharedUtil;
+import com.com.boha.monitor.library.util.Statics;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -38,7 +40,7 @@ import java.io.InputStream;
                 ReportField.PACKAGE_NAME,
                 ReportField.CUSTOM_DATA,
                 ReportField.LOGCAT},
-        socketTimeout = 3000
+        socketTimeout = 10000
 )
 public class MonApp extends Application {
 
@@ -48,6 +50,10 @@ public class MonApp extends Application {
         Log.d(LOG, "############################ onCreate MonApp has started ---------------->");
 
         ACRA.init(this);
+        CompanyDTO company = SharedUtil.getCompany(getApplicationContext());
+        ACRA.getErrorReporter().putCustomData("companyID", "" + company.getCompanyID());
+        ACRA.getErrorReporter().putCustomData("companyName", company.getCompanyName());
+
         Log.e(LOG, "###### ACRA Crash Reporting has been initiated");
         initializeVolley(getApplicationContext());
 
