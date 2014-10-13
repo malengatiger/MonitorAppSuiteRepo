@@ -11,10 +11,10 @@ import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.boha.malengagolf.library.R;
+import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.MonApp;
-import com.com.boha.monitor.library.dto.RequestDTO;
-import com.com.boha.monitor.library.dto.ResponseDTO;
+import com.com.boha.monitor.library.dto.transfer.RequestDTO;
+import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.WebCheck;
@@ -55,7 +55,7 @@ public class BaseVolley {
             ToastUtil.errorToast(
                     ctx,
                     ctx.getResources().getString(
-                            com.boha.malengagolf.library.R.string.error_network_unavailable)
+                            com.boha.monitor.library.R.string.error_network_unavailable)
             );
             return false;
         }

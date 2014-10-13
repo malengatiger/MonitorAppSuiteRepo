@@ -6,6 +6,7 @@
 
 package com.com.boha.monitor.library.dto.transfer;
 
+import com.com.boha.monitor.library.dto.CityDTO;
 import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.com.boha.monitor.library.dto.GcmDeviceDTO;
@@ -16,6 +17,7 @@ import com.com.boha.monitor.library.dto.ProjectSiteStaffDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.ProjectStatusTypeDTO;
+import com.com.boha.monitor.library.dto.TownshipDTO;
 
 import java.io.Serializable;
 
@@ -26,7 +28,7 @@ import java.io.Serializable;
 public class RequestDTO implements Serializable{
     private Integer requestType, companyID, companyStaffID, projectID, 
             projectSiteID, loginType;
-    private String email, pin;
+    private String email, pin, gcmRegistrationID;
     private CompanyDTO company;
     private CompanyStaffDTO companyStaff;
     private ProjectDTO project;
@@ -38,15 +40,17 @@ public class RequestDTO implements Serializable{
     private ProjectDiaryRecordDTO projectDiaryRecord;
     private ProjectSiteTaskStatusDTO projectSiteTaskStatus;
     private ProjectStatusTypeDTO projectStatusType;
+    private CityDTO city;
+    private TownshipDTO township;
     //register actors
-    public static final int 
+    public static final int
             REGISTER_COMPANY = 1,
             REGISTER_COMPANY_STAFF = 2,
             REGISTER_PROJECT = 3,
             REGISTER_PROJECT_SITE = 4,
             REGISTER_PROJECT_SITE_STAFF = 5;
     //add stuff
-    public static final int 
+    public static final int
             ADD_PROJECT_SITE_TASK = 11,
             ADD_PROJECT_DIARY_RECORD = 12,
             ADD_PROJECT_SITE_TASK_STATUS = 13,
@@ -55,7 +59,7 @@ public class RequestDTO implements Serializable{
             ADD_TASK_IMAGE = 16,
             ADD_DEVICE = 17;
     //get stuff
-    public static final int 
+    public static final int
             GET_PROJECT_DATA = 101,
             GET_PROJECT_SITE_DATA = 102,
             GET_SITE_IMAGE_FILENAMES = 103,
@@ -63,13 +67,21 @@ public class RequestDTO implements Serializable{
             GET_COMPANY_STAFF = 105,
             GET_TASK_STATUS_LIST = 106,
             GET_COMPANY_STAFF_TYPE_LIST = 107,
-            GET_COMPANY_DATA = 108;
-    //login's 
-    public static final int 
+            GET_COMPANY_DATA = 108,
+            GET_COUNTRY_LIST = 109;
+    //login's
+    public static final int
             LOGIN = 200,
-            LOGIN_OFFICE_ADMIN = 201,
-            LOGIN_EXECUTIVE = 202,
-            LOGIN_PROJECT_STAFF = 203;
+            SEND_GCM_REGISTRATION = 204;
+    //lookups
+    public static final int
+            ADD_COMPANY_TASK = 301,
+            ADD_COMPANY_TASK_STATUS = 302,
+            ADD_COMPANY_PROJECT_STATUS_TYPE = 303,
+            ADD_COMPANY_CHECKPOINT = 304,
+            ADD_CITY = 305,
+            ADD_TOWNSHIP = 306;
+
 
     public static final String COMPANY_DIR = "company";
     public static final String PROJECT_DIR = "project";
@@ -77,6 +89,31 @@ public class RequestDTO implements Serializable{
     public static final String TASK_DIR = "task";
 
     //
+
+    public CityDTO getCity() {
+        return city;
+    }
+
+    public void setCity(CityDTO city) {
+        this.city = city;
+    }
+
+    public TownshipDTO getTownship() {
+        return township;
+    }
+
+    public void setTownship(TownshipDTO township) {
+        this.township = township;
+    }
+
+    public String getGcmRegistrationID() {
+        return gcmRegistrationID;
+    }
+
+    public void setGcmRegistrationID(String gcmRegistrationID) {
+        this.gcmRegistrationID = gcmRegistrationID;
+    }
+
     public Integer getLoginType() {
         return loginType;
     }

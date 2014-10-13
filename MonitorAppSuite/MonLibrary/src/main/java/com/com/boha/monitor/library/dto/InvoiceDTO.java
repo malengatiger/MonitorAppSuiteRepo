@@ -21,16 +21,13 @@ public class InvoiceDTO implements Serializable {
     private Date invoiceDate;
     private Date invoiceDueDate;
     private Date dateRegistered;
-    private CompanyClientDTO companyClient;
+    private Double totalAmount;
+    private ClientDTO client;
+    private CompanyDTO company;
+    private ProjectDTO project;
     private List<InvoiceItemDTO> invoiceItemList;
     private List<SiteCheckPointDTO> siteCheckPointList;
 
-    public InvoiceDTO() {
-    }
-
-    public InvoiceDTO(Integer invoiceID) {
-        this.invoiceID = invoiceID;
-    }
 
     public InvoiceDTO(Integer invoiceID, Date invoiceDate) {
         this.invoiceID = invoiceID;
@@ -69,15 +66,37 @@ public class InvoiceDTO implements Serializable {
         this.dateRegistered = dateRegistered;
     }
 
-    public CompanyClientDTO getCompanyClient() {
-        return companyClient;
+    public Double getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setCompanyClient(CompanyClientDTO companyClient) {
-        this.companyClient = companyClient;
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-  
+    public ClientDTO getClient() {
+        return client;
+    }
+
+    public void setClient(ClientDTO client) {
+        this.client = client;
+    }
+
+    public CompanyDTO getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyDTO company) {
+        this.company = company;
+    }
+
+    public ProjectDTO getProject() {
+        return project;
+    }
+
+    public void setProject(ProjectDTO project) {
+        this.project = project;
+    }
 
     public List<InvoiceItemDTO> getInvoiceItemList() {
         return invoiceItemList;

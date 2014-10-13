@@ -13,10 +13,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteStaffDTO;
-import com.com.boha.monitor.library.dto.RequestDTO;
-import com.com.boha.monitor.library.dto.ResponseDTO;
+import com.com.boha.monitor.library.dto.transfer.RequestDTO;
+import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.fragments.PageFragment;
 import com.com.boha.monitor.library.fragments.ProjectListFragment;
 import com.com.boha.monitor.library.fragments.ProjectSiteStaffListFragment;
@@ -29,7 +30,6 @@ import com.com.boha.monitor.library.util.WebSocketUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
-import com.boha.malengagolf.library.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,7 @@ public class MainPagerActivity extends FragmentActivity implements com.google.an
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_pager, menu);
         mMenu = menu;
-        CacheUtil.getCachedData(ctx,CacheUtil.CACHE_COMPANY,new CacheUtil.CacheUtilListener() {
+        CacheUtil.getCachedData(ctx,CacheUtil.CACHE_DATA,new CacheUtil.CacheUtilListener() {
             @Override
             public void onFileDataDeserialized(ResponseDTO r) {
                 if (r != null) {
@@ -114,7 +114,7 @@ public class MainPagerActivity extends FragmentActivity implements com.google.an
                             isRefresh = false;
                             mPager.setCurrentItem(currentPageIndex);
                         }
-                        CacheUtil.cacheData(ctx,response,CacheUtil.CACHE_COMPANY,new CacheUtil.CacheUtilListener() {
+                        CacheUtil.cacheData(ctx,response,CacheUtil.CACHE_DATA,new CacheUtil.CacheUtilListener() {
                             @Override
                             public void onFileDataDeserialized(ResponseDTO response) {
 

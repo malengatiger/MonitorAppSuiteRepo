@@ -5,14 +5,9 @@
  */
 package com.com.boha.monitor.library.dto;
 
-import com.boha.monitor.data.Project;
-import com.boha.monitor.data.ProjectSiteTask;
-import com.boha.monitor.util.FileUtility;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -22,45 +17,26 @@ public class ProjectSiteTaskDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Integer projectSiteTaskID;
-    private String taskName;
-    private String taskDescription;
+    private TaskDTO task;
     private long dateRegistered;
     private Integer projectSiteID;
     private List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList = new ArrayList<>();
     private List<String> imageFileNameList;
 
-    public ProjectSiteTaskDTO() {
-    }
-
-    public ProjectSiteTaskDTO(ProjectSiteTask a) {
-        this.projectSiteTaskID = a.getProjectSiteTaskID();
-        this.taskName = a.getTaskName();
-        this.taskDescription = a.getTaskDescription();
-        this.dateRegistered = a.getDateRegistered().getTime();
-        this.projectSiteID = a.getProjectSite().getProjectSiteID();
-        Project p = a.getProjectSite().getProject();
-        try {
-            this.imageFileNameList = FileUtility.getImageFilesTask(p.getCompany().getCompanyID(),
-                    p.getProjectID(), a.getProjectSite().getProjectSiteID(), projectSiteTaskID);
-        } catch (Exception ex) {
-            Logger.getLogger(ProjectSiteTaskDTO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     public Integer getProjectSiteTaskID() {
         return projectSiteTaskID;
     }
 
+    public TaskDTO getTask() {
+        return task;
+    }
+
+    public void setTask(TaskDTO task) {
+        this.task = task;
+    }
+
     public void setProjectSiteTaskID(Integer projectSiteTaskID) {
         this.projectSiteTaskID = projectSiteTaskID;
-    }
-
-    public String getTaskName() {
-        return taskName;
-    }
-
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
     }
 
     public List<String> getImageFileNameList() {
@@ -69,14 +45,6 @@ public class ProjectSiteTaskDTO implements Serializable {
 
     public void setImageFileNameList(List<String> imageFileNameList) {
         this.imageFileNameList = imageFileNameList;
-    }
-
-    public String getTaskDescription() {
-        return taskDescription;
-    }
-
-    public void setTaskDescription(String taskDescription) {
-        this.taskDescription = taskDescription;
     }
 
     public long getDateRegistered() {

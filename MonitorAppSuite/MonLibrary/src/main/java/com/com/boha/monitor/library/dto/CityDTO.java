@@ -20,20 +20,13 @@ public class CityDTO implements Serializable {
     private Integer cityID;
     private String cityName;
     private List<TownshipDTO> townshipList;
-    private ProvinceDTO provinceID;
+    private Integer provinceID;
 
     public CityDTO() {
     }
 
     public CityDTO(Integer cityID) {
         this.cityID = cityID;
-    }
-
-    public CityDTO(Integer cityID, String cityName, double latitude, double longitude) {
-        this.cityID = cityID;
-        this.cityName = cityName;
-        this.latitude = latitude;
-        this.longitude = longitude;
     }
 
     public Integer getCityID() {
@@ -60,14 +53,15 @@ public class CityDTO implements Serializable {
         this.townshipList = townshipList;
     }
 
-  
-    public ProvinceDTO getProvinceID() {
+    public Integer getProvinceID() {
         return provinceID;
     }
 
-    public void setProvinceID(ProvinceDTO provinceID) {
+    public void setProvinceID(Integer provinceID) {
         this.provinceID = provinceID;
     }
+
+ 
 
     public Double getLatitude() {
         return latitude;

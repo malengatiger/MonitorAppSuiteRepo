@@ -83,7 +83,7 @@
                 style="@style/Title3TextStyleGrey"
                 android:textColor="@color/grey2"
                 android:layout_centerVertical="true"
-                android:text="@string/players"
+                android:text="@string/staff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

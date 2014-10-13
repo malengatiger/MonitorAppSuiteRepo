@@ -4,9 +4,6 @@
  */
 package com.com.boha.monitor.library.dto;
 
-import com.boha.monitor.data.ErrorStore;
-
-
 /**
  *
  * @author aubreyM
@@ -17,14 +14,6 @@ public class ErrorStoreDTO {
     private int statusCode;
     private String message, origin;
     private long dateOccured;
-
-    public ErrorStoreDTO(ErrorStore a) {
-        errorStoreID = a.getErrorStoreID();
-        statusCode = a.getStatusCode();
-        message = a.getMessage();
-        origin = a.getOrigin();
-        dateOccured = a.getDateOccured().getTime();
-    }
 
     public int getErrorStoreID() {
         return errorStoreID;

@@ -1,60 +1,44 @@
 package com.com.boha.monitor.library.pdf;
 
-import android.content.Context;
-import android.util.Log;
-
-import com.com.boha.monitor.library.dto.InvoiceDTO;
-import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfWriter;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-
 public class InvoicePDF {
 
-	
-
-	public static File getInvoicePDF(Context ctx, InvoiceDTO inv) throws DocumentException {
-		Document document = new Document(PageSize.A4, 10, 10, 10, 10);
-		File dir = ctx.getFilesDir();
-		// create company directory
-		File classDir = new File(dir, inv.getCompanyClient().getCompany().getCompanyName());
-		if (!classDir.exists()) {
-			classDir.mkdir();
-		}
-		File file = new File(classDir, inv.getCompanyClient().getClient().getClientName()
-				 + ".pdf");
-
-		if (file.exists()) {
-			file.delete();
-		}
-
-		try {
-			PdfWriter writer = PdfWriter.getInstance(document,
-					new FileOutputStream(file));
-			writer.setBoxSize("art", new Rectangle(10, 10, 559, 788));
-			document.open();
-			PDFUtil.addLogo(ctx, document);
-			//addPeriodHeader(document, className, startDate, endDate, list);
-			//addPeriodBody(document, list);
-			document.add(new Phrase("*** End of Period Attendance Report ***"));
-			document.close();
-		} catch (BadElementException ex) {
-			Log.e("AttendancePDF", "Bad element ", ex);
-			throw new DocumentException();
-		} catch (FileNotFoundException ex) {
-			Log.e("AttendancePDF", "Report file not found");
-			throw new DocumentException();
-		}
-
-		return file;
-	}
+//
+//    static final String LOG = InvoicePDF.class.getSimpleName();
+//	public static File getInvoicePDF(Context ctx, InvoiceDTO inv) throws DocumentException {
+//		Document document = new Document(PageSize.A4, 10, 10, 10, 10);
+//		File dir = ctx.getFilesDir();
+//		// create company directory
+//		File classDir = new File(dir, inv.getCompanyClient().getCompany().getCompanyName());
+//		if (!classDir.exists()) {
+//			classDir.mkdir();
+//		}
+//		File file = new File(classDir, inv.getCompanyClient().getClient().getClientName()
+//				 + ".pdf");
+//
+//		if (file.exists()) {
+//			file.delete();
+//		}
+//
+//		try {
+//			PdfWriter writer = PdfWriter.getInstance(document,
+//					new FileOutputStream(file));
+//			writer.setBoxSize("art", new Rectangle(10, 10, 559, 788));
+//			document.open();
+//			PDFUtil.addLogo(ctx, document);
+//			//addPeriodHeader(document, className, startDate, endDate, list);
+//			//addPeriodBody(document, list);
+//			document.add(new Phrase("*** End of Period Attendance Report ***"));
+//			document.close();
+//		} catch (BadElementException ex) {
+//			Log.e(LOG, "Bad element ", ex);
+//			throw new DocumentException();
+//		} catch (FileNotFoundException ex) {
+//			Log.e(LOG, "Report file not found");
+//			throw new DocumentException();
+//		}
+//
+//		return file;
+//	}
 
 //	public static void addPeriodHeader(Document doc, String className,
 //			long startDate, long endDate, List<AttendanceAggregate> list)

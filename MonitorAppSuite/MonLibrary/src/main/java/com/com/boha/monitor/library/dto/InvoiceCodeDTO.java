@@ -6,7 +6,6 @@
 
 package com.com.boha.monitor.library.dto;
 
-import com.boha.monitor.data.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -21,14 +20,6 @@ public class InvoiceCodeDTO implements Serializable {
     private String invoiceCodeNumber;
     private List<InvoiceItemDTO> invoiceItemList;
     private CompanyDTO company;
-
-    public InvoiceCodeDTO() {
-    }
-
-    public InvoiceCodeDTO(Integer invoiceCodeID) {
-        this.invoiceCodeID = invoiceCodeID;
-    }
-
     public Integer getInvoiceCodeID() {
         return invoiceCodeID;
     }

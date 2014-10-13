@@ -28,7 +28,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.boha.malengagolf.library.R;
+import com.boha.monitor.library.R;
 import com.fourmob.datetimepicker.Utils;
 
 import java.text.DateFormatSymbols;

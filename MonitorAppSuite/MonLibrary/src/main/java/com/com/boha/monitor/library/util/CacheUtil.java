@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.com.boha.monitor.library.dto.ResponseDTO;
+import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -26,11 +26,11 @@ public class CacheUtil {
     }
 
     static CacheUtilListener listener;
-    public static final int CACHE_COMPANY = 1, CACHE_SITE = 2;
+    public static final int CACHE_DATA = 1, CACHE_SITE = 2, CACHE_COUNTRIES = 3;
     static int dataType, siteID;
     static ResponseDTO response;
     static Context ctx;
-    static final String JSON_COMPANY_DATA = "companydata.json",
+    static final String JSON_DATA = "data.json", JSON_COUNTRIES = "countries.json",
             JSON_SITE_DATA = "site.json";
 
     public static void cacheData(Context context, ResponseDTO r, int type, CacheUtilListener cacheUtilListener) {
@@ -76,11 +76,21 @@ public class CacheUtil {
             try {
                 switch (dataType) {
 
-                    case CACHE_COMPANY:
+                    case CACHE_DATA:
                         json = gson.toJson(response);
-                        outputStream = ctx.openFileOutput(JSON_COMPANY_DATA, Context.MODE_PRIVATE);
+                        outputStream = ctx.openFileOutput(JSON_DATA, Context.MODE_PRIVATE);
                         write(outputStream, json);
-                        file = ctx.getFileStreamPath(JSON_COMPANY_DATA);
+                        file = ctx.getFileStreamPath(JSON_DATA);
+                        if (file != null) {
+                            Log.e(LOG, "......Data cache json written to disk,  - path: " + file.getAbsolutePath() +
+                                    " - length: " + file.length());
+                        }
+                        break;
+                    case CACHE_COUNTRIES:
+                        json = gson.toJson(response);
+                        outputStream = ctx.openFileOutput(JSON_COUNTRIES, Context.MODE_PRIVATE);
+                        write(outputStream, json);
+                        file = ctx.getFileStreamPath(JSON_COUNTRIES);
                         if (file != null) {
                             Log.e(LOG, "......Data cache json written to disk,  - path: " + file.getAbsolutePath() +
                                     " - length: " + file.length());
@@ -128,11 +138,14 @@ public class CacheUtil {
             Log.d(LOG, "########### doInBackground: getting cached data ....");
             try {
                 switch (dataType) {
-                    case CACHE_COMPANY:
-                        stream = ctx.openFileInput(JSON_COMPANY_DATA);
+                    case CACHE_DATA:
+                        stream = ctx.openFileInput(JSON_DATA);
                         response = getData(stream);
                         break;
-
+                    case CACHE_COUNTRIES:
+                        stream = ctx.openFileInput(JSON_COUNTRIES);
+                        response = getData(stream);
+                        break;
 
                 }
 

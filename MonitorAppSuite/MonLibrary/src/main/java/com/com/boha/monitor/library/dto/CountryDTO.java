@@ -21,14 +21,6 @@ public class CountryDTO implements Serializable {
     private String countryName;
     private String countryCode;
     private List<ProvinceDTO> provinceList;
-
-    public CountryDTO() {
-    }
-
-    public CountryDTO(Integer countryID) {
-        this.countryID = countryID;
-    }
-
     public CountryDTO(Integer countryID, String countryName, String countryCode, double latitude, double longitude) {
         this.countryID = countryID;
         this.countryName = countryName;

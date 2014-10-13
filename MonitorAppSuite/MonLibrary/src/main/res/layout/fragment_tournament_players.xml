@@ -35,7 +35,7 @@ android:padding="10dp"
             <TextView
                     android:id="@+id/TPLAYER_countLabel"
                     style="@style/Title3TextStyleGrey"
-                    android:text="@string/players"
+                    android:text="@string/staff"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@id/TPLAYER_count"
                     android:layout_width="wrap_content"

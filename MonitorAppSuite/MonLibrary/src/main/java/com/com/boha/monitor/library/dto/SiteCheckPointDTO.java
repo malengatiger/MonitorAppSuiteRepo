@@ -16,24 +16,12 @@ import java.util.Date;
 public class SiteCheckPointDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer siteCheckPointID;
-    private int checkPointID;
+    private CheckPointDTO checkPoint;
     private Date dateRegistered;
     private InvoiceDTO invoice;
     private ProjectSiteDTO projectSite;
     private ProjectSiteStaffDTO projectSiteStaff;
 
-    public SiteCheckPointDTO() {
-    }
-
-    public SiteCheckPointDTO(Integer siteCheckPointID) {
-        this.siteCheckPointID = siteCheckPointID;
-    }
-
-    public SiteCheckPointDTO(Integer siteCheckPointID, int checkPointID, Date dateRegistered) {
-        this.siteCheckPointID = siteCheckPointID;
-        this.checkPointID = checkPointID;
-        this.dateRegistered = dateRegistered;
-    }
 
     public Integer getSiteCheckPointID() {
         return siteCheckPointID;
@@ -43,13 +31,14 @@ public class SiteCheckPointDTO implements Serializable {
         this.siteCheckPointID = siteCheckPointID;
     }
 
-    public int getCheckPointID() {
-        return checkPointID;
+    public CheckPointDTO getCheckPoint() {
+        return checkPoint;
     }
 
-    public void setCheckPointID(int checkPointID) {
-        this.checkPointID = checkPointID;
+    public void setCheckPoint(CheckPointDTO checkPoint) {
+        this.checkPoint = checkPoint;
     }
+
 
     public Date getDateRegistered() {
         return dateRegistered;

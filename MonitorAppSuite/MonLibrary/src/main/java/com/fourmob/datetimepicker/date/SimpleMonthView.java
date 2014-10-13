@@ -11,7 +11,7 @@ import android.text.format.DateUtils;
 import android.text.format.Time;
 import android.view.MotionEvent;
 import android.view.View;
-import com.boha.malengagolf.library.R;
+import com.boha.monitor.library.R;
 import com.fourmob.datetimepicker.Utils;
 
 import java.security.InvalidParameterException;

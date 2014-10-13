@@ -12,7 +12,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.boha.malengagolf.library.R;
+import com.boha.monitor.library.R;
 import com.fourmob.datetimepicker.Utils;
 import com.nineoldandroids.animation.ObjectAnimator;
 

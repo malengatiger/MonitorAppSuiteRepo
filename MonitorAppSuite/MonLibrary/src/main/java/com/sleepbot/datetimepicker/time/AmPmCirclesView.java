@@ -23,7 +23,7 @@ import android.graphics.Paint.Align;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.View;
-import com.boha.malengagolf.library.R;
+import com.boha.monitor.library.R;
 
 import java.text.DateFormatSymbols;
 

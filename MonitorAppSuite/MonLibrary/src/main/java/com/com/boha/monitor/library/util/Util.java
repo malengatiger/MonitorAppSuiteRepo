@@ -17,7 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import com.boha.malengagolf.library.R;
+import com.boha.monitor.library.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

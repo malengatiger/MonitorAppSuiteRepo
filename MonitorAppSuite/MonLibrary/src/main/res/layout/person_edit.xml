@@ -35,7 +35,7 @@
                 style="@style/Title3TextStyleGrey"
                 android:layout_alignParentLeft="true"
                 android:inputType="textCapWords"
-                android:text="@string/group_name"/>
+                android:text="@string/company_name"/>
 
         <RelativeLayout
                 android:id="@+id/ED_PSN_space"
@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     style="@style/Title3TextStyleGrey"
                     android:layout_marginLeft="5dp"
-                    android:text="@string/player"/>
+                    android:text="@string/staff"/>
         </RelativeLayout>
 
         <EditText
@@ -96,18 +96,11 @@
                 android:layout_marginLeft="5dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"/>
-        <Button
-                android:id="@+id/ED_PSN_btnBirthDate"
-                android:layout_width="match_parent"
-                android:layout_below="@id/ED_PSN_email"
-                android:layout_marginTop="10dp"
-                style="@style/ButtonCancel"
-                android:text="@string/date_birth"
-                android:layout_height="wrap_content"/>
-        <com.boha.malengagolf.library.base.PaddedCheckBox
+
+        <CheckBox
                 android:id="@+id/ED_PSN_chkInvite"
                 android:layout_width="match_parent"
-                android:layout_below="@id/ED_PSN_btnBirthDate"
+                android:layout_below="@id/ED_PSN_email"
                 android:layout_marginTop="10dp" android:checked="true"
                 android:text="@string/subject"
                 android:layout_height="wrap_content"/>

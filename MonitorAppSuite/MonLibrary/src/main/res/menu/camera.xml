@@ -17,7 +17,7 @@
     <item
             android:id="@+id/menu_gallery"
             android:icon="@drawable/ic_action_picture"
-            android:title="@string/tourn_gallery"
+            android:title="@string/gallery"
             android:showAsAction="ifRoom"/>
 
 </menu>

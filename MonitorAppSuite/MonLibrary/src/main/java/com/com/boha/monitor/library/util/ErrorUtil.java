@@ -2,8 +2,8 @@ package com.com.boha.monitor.library.util;
 
 import android.content.Context;
 
-import com.boha.malengagolf.library.R;
-import com.com.boha.monitor.library.dto.ResponseDTO;
+import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 
 public class ErrorUtil {
 

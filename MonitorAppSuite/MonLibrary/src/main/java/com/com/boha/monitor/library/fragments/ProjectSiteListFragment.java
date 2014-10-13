@@ -9,16 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import com.boha.malengagolf.library.R;
-
+import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.adapters.ProjectSiteAdapter;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
-import com.com.boha.monitor.library.fragments.dummy.DummyContent;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.Util;
 
@@ -83,10 +80,7 @@ public class ProjectSiteListFragment extends Fragment implements AbsListView.OnI
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
-    }
+           }
 
     Context ctx;
     TextView txtCount, txtName;

@@ -34,7 +34,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.FrameLayout;
-import com.boha.malengagolf.library.R;
+import com.boha.monitor.library.R;
 import com.fourmob.datetimepicker.Utils;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;

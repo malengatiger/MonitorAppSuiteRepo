@@ -9,7 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/MonLibrary" />
-            <option value="$PROJECT_DIR$/MonitorAdmin" />
+            <option value="$PROJECT_DIR$/MonOperations" />
           </set>
         </option>
       </GradleProjectSettings>

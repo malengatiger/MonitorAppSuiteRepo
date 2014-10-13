@@ -5,10 +5,9 @@
  */
 package com.com.boha.monitor.library.dto;
 
-import com.boha.monitor.data.CompanyStaff;
-import com.boha.monitor.data.ProjectSiteStaff;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,20 +18,12 @@ public class ProjectSiteStaffDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Integer projectSiteStaffID, activeFlag;
-    private long dateRegistered;
+    private Date dateRegistered;
     private List<ProjectDiaryRecordDTO> projectDiaryRecordList = new ArrayList<>();
     private List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList = new ArrayList<>();
     private Integer projectSiteID;
-    private GcmDeviceDTO gcmDevice;
     private CompanyStaffDTO companyStaff;
     private String pin;
-
-    public ProjectSiteStaffDTO() {
-    }
-
-    public ProjectSiteStaffDTO(Integer projectSiteStaffID) {
-        this.projectSiteStaffID = projectSiteStaffID;
-    }
 
     public String getPin() {
         return pin;
@@ -51,17 +42,7 @@ public class ProjectSiteStaffDTO implements Serializable {
         this.activeFlag = activeFlag;
     }
 
-    public ProjectSiteStaffDTO(ProjectSiteStaff a) {
-        this.dateRegistered = a.getDateRegistered().getTime();
-        this.projectSiteStaffID = a.getProjectSiteStaffID();
-        this.projectSiteID = a.getProjectSite().getProjectSiteID();
-        CompanyStaff cs = a.getCompanyStaff();
-        this.companyStaff = new CompanyStaffDTO(cs);
-    }
 
-    public GcmDeviceDTO getGcmDevice() {
-        return gcmDevice;
-    }
 
     public CompanyStaffDTO getCompanyStaff() {
         return companyStaff;
@@ -71,9 +52,6 @@ public class ProjectSiteStaffDTO implements Serializable {
         this.companyStaff = companyStaff;
     }
 
-    public void setGcmDevice(GcmDeviceDTO gcmDevice) {
-        this.gcmDevice = gcmDevice;
-    }
 
     public Integer getProjectSiteStaffID() {
         return projectSiteStaffID;
@@ -99,11 +77,11 @@ public class ProjectSiteStaffDTO implements Serializable {
         this.projectSiteTaskStatusList = projectSiteTaskStatusList;
     }
 
-    public long getDateRegistered() {
+    public Date getDateRegistered() {
         return dateRegistered;
     }
 
-    public void setDateRegistered(long dateRegistered) {
+    public void setDateRegistered(Date dateRegistered) {
         this.dateRegistered = dateRegistered;
     }
 

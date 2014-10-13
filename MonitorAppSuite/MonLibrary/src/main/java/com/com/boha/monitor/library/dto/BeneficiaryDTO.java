@@ -27,12 +27,6 @@ public class BeneficiaryDTO implements Serializable {
     private CompanyDTO company;
     private TownshipDTO township;
 
-    public BeneficiaryDTO() {
-    }
-
-    public BeneficiaryDTO(Integer beneficiaryID) {
-        this.beneficiaryID = beneficiaryID;
-    }
 
     public Integer getBeneficiaryID() {
         return beneficiaryID;

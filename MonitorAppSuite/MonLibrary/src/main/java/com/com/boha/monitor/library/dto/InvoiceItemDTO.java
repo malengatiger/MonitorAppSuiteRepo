@@ -18,7 +18,7 @@ public class InvoiceItemDTO implements Serializable {
     private String description;
     private Integer quantity;
     private Double amount;
-    private InvoiceDTO invoice;
+    private Integer invoiceID;
     private InvoiceCodeDTO invoiceCode;
     private ProjectSiteDTO projectSite;
 
@@ -37,12 +37,12 @@ public class InvoiceItemDTO implements Serializable {
         this.invoiceItemID = invoiceItemID;
     }
 
-    public InvoiceDTO getInvoice() {
-        return invoice;
+    public Integer getInvoiceID() {
+        return invoiceID;
     }
 
-    public void setInvoice(InvoiceDTO invoice) {
-        this.invoice = invoice;
+    public void setInvoiceID(Integer invoiceID) {
+        this.invoiceID = invoiceID;
     }
 
     public InvoiceCodeDTO getInvoiceCode() {

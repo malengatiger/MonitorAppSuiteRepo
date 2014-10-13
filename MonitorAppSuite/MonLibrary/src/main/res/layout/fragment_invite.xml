@@ -6,7 +6,7 @@
                 android:padding="10dp"
                 android:layout_height="match_parent">
 
-    <com.boha.malengagolf.library.base.BannerGold
+    <com.boha.monitor.library.base.BannerGold
             android:id="@+id/INV_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -39,7 +39,7 @@
                 android:id="@+id/INV_txtMemberName"
                 style="@style/Title3TextStyleBlue"
                 android:layout_below="@id/INV_text"
-                android:text="@string/lb_viewer" android:layout_marginTop="5dp"
+                android:text="@string/company_name" android:layout_marginTop="5dp"
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-        <com.boha.malengagolf.library.base.PaddedCheckBox
+        <CheckBox
                 android:id="@+id/INV_chkPlayer"
                 android:text="@string/player_app"
                 android:layout_below="@id/INV_label"
@@ -99,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-        <com.boha.malengagolf.library.base.PaddedCheckBox
+        <CheckBox
                 android:id="@+id/INV_chkScorer"
                 android:text="@string/scorer_app"
                 android:layout_below="@id/INV_chkPlayer"
@@ -108,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-        <com.boha.malengagolf.library.base.PaddedCheckBox
+        <CheckBox
                 android:id="@+id/INV_chkLeaderboard"
                 android:text="@string/leaderbd_app"
                 android:layout_below="@id/INV_chkScorer"
@@ -117,7 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-        <com.boha.malengagolf.library.base.PaddedCheckBox
+        <CheckBox
                 android:id="@+id/INV_chkAdmin"
                 android:text="@string/admin_app"
                 android:layout_below="@id/INV_chkLeaderboard"

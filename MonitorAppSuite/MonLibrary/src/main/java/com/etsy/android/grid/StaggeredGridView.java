@@ -26,7 +26,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.boha.malengagolf.library.R;
+import com.boha.monitor.library.R;
 
 import java.util.Arrays;
 

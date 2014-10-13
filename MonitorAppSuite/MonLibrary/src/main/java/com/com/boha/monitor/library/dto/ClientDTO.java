@@ -23,19 +23,18 @@ public class ClientDTO implements Serializable {
     private String address;
     private String postCode;
     private Date dateRegistered;
-    private List<CompanyClientDTO> companyClientList;
+    private List<ProjectDTO> projectList;
+    private Integer companyID;
+
+    public List<ProjectDTO> getProjectList() {
+        return projectList;
+    }
+
+    public void setProjectList(List<ProjectDTO> projectList) {
+        this.projectList = projectList;
+    }
 
     public ClientDTO() {
-    }
-
-    public ClientDTO(Integer clientID) {
-        this.clientID = clientID;
-    }
-
-    public ClientDTO(Integer clientID, String clientName, String email) {
-        this.clientID = clientID;
-        this.clientName = clientName;
-        this.email = email;
     }
 
     public Integer getClientID() {
@@ -94,13 +93,11 @@ public class ClientDTO implements Serializable {
         this.dateRegistered = dateRegistered;
     }
 
-    public List<CompanyClientDTO> getCompanyClientList() {
-        return companyClientList;
+    public Integer getCompanyID() {
+        return companyID;
     }
 
-    public void setCompanyClientList(List<CompanyClientDTO> companyClientList) {
-        this.companyClientList = companyClientList;
+    public void setCompanyID(Integer companyID) {
+        this.companyID = companyID;
     }
-
-  
 }

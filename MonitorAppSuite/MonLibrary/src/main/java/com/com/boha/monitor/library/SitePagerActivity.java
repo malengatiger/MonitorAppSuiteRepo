@@ -12,11 +12,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.boha.malengagolf.library.R;
+import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
-import com.com.boha.monitor.library.dto.RequestDTO;
-import com.com.boha.monitor.library.dto.ResponseDTO;
+import com.com.boha.monitor.library.dto.transfer.RequestDTO;
+import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.fragments.PageFragment;
 import com.com.boha.monitor.library.fragments.ProjectSiteListFragment;
 import com.com.boha.monitor.library.toolbox.BaseVolley;

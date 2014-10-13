@@ -6,7 +6,6 @@
 
 package com.com.boha.monitor.library.dto;
 
-import com.boha.monitor.data.CompanyStaffType;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,14 +18,6 @@ public class CompanyStaffTypeDTO implements Serializable {
     private Integer companyStaffTypeID;
     private String companyStaffTypeName;
     private List<CompanyStaffDTO> companyStaffList;
-
-    public CompanyStaffTypeDTO() {
-    }
-
-    public CompanyStaffTypeDTO(CompanyStaffType a) {
-        this.companyStaffTypeID = a.getCompanyStaffTypeID();
-        this.companyStaffTypeName = a.getCompanyStaffTypeName();
-    }
 
   
     public Integer getCompanyStaffTypeID() {

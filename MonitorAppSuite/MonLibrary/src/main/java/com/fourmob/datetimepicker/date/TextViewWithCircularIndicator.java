@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.widget.TextView;
-import com.boha.malengagolf.library.R;
+import com.boha.monitor.library.R;
 
 public class TextViewWithCircularIndicator extends TextView {
     

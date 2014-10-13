@@ -6,7 +6,6 @@
 
 package com.com.boha.monitor.library.dto;
 
-import com.boha.monitor.data.ProjectDiaryRecord;
 import java.io.Serializable;
 
 /**
@@ -19,17 +18,6 @@ public class ProjectDiaryRecordDTO implements Serializable {
     private long diaryDate;
     private ProjectStatusTypeDTO projectStatusType;
     private ProjectSiteStaffDTO projectSiteStaff;
-
-    public ProjectDiaryRecordDTO() {
-    }
-
-
-    public ProjectDiaryRecordDTO(ProjectDiaryRecord a) {
-        this.projectDiaryRecordID = a.getProjectDiaryRecordID();
-        this.diaryDate = a.getDiaryDate().getTime();
-        this.projectSiteStaff = new ProjectSiteStaffDTO(a.getProjectSiteStaff());
-        this.projectStatusType = new ProjectStatusTypeDTO(a.getProjectStatusType());
-    }
 
     public Integer getProjectDiaryRecordID() {
         return projectDiaryRecordID;

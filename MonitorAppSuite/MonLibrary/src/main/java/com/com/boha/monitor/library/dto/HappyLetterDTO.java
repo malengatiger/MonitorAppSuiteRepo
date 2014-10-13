@@ -6,7 +6,6 @@
 
 package com.com.boha.monitor.library.dto;
 
-import com.boha.monitor.data.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,19 +17,8 @@ public class HappyLetterDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer happyLetterID;
     private Date letterDate;
-    private Beneficiary beneficiary;
+    private BeneficiaryDTO beneficiary;
 
-    public HappyLetterDTO() {
-    }
-
-    public HappyLetterDTO(Integer happyLetterID) {
-        this.happyLetterID = happyLetterID;
-    }
-
-    public HappyLetterDTO(Integer happyLetterID, Date letterDate) {
-        this.happyLetterID = happyLetterID;
-        this.letterDate = letterDate;
-    }
 
     public Integer getHappyLetterID() {
         return happyLetterID;
@@ -48,13 +36,11 @@ public class HappyLetterDTO implements Serializable {
         this.letterDate = letterDate;
     }
 
-    public Beneficiary getBeneficiary() {
+    public BeneficiaryDTO getBeneficiary() {
         return beneficiary;
     }
 
-    public void setBeneficiary(Beneficiary beneficiary) {
+    public void setBeneficiary(BeneficiaryDTO beneficiary) {
         this.beneficiary = beneficiary;
     }
-
-
 }

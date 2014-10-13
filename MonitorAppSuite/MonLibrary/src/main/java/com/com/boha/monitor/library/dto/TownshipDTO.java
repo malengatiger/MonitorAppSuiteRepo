@@ -19,22 +19,8 @@ public class TownshipDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer townshipID;
     private String townshipName;
-    private CityDTO city;
+    private Integer cityID;
     private List<BeneficiaryDTO> beneficiaryList;
-
-    public TownshipDTO() {
-    }
-
-    public TownshipDTO(Integer townshipID) {
-        this.townshipID = townshipID;
-    }
-
-    public TownshipDTO(Integer townshipID, String townshipName, double latitude, double longitude) {
-        this.townshipID = townshipID;
-        this.townshipName = townshipName;
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
 
     public Integer getTownshipID() {
         return townshipID;
@@ -52,13 +38,15 @@ public class TownshipDTO implements Serializable {
         this.townshipName = townshipName;
     }
 
-    public CityDTO getCity() {
-        return city;
+    public Integer getCityID() {
+        return cityID;
     }
 
-    public void setCity(CityDTO city) {
-        this.city = city;
+    public void setCityID(Integer cityID) {
+        this.cityID = cityID;
     }
+
+  
 
     public List<BeneficiaryDTO> getBeneficiaryList() {
         return beneficiaryList;

@@ -41,13 +41,13 @@
 
             <CheckBox
                     android:id="@+id/IMP_allCheck"
-                    android:text="@string/import_all_players"
+                    android:text="@string/import_all_staff"
                     android:layout_weight="2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             <Button
                     android:id="@+id/IMP_btnImport"
-                    android:text="@string/import_players"
+                    android:text="@string/import_staff"
                     android:layout_weight="2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -67,7 +67,7 @@
                 style="@style/Title2TextStyleGrey"
                 android:textColor="@color/grey2"
                 android:layout_centerVertical="true"
-                android:text="@string/players"
+                android:text="@string/staff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <TextView

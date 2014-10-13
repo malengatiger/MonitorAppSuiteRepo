@@ -3,8 +3,8 @@ package com.com.boha.monitor.library.util;
 import android.content.Context;
 import android.util.Log;
 
-import com.com.boha.monitor.library.dto.RequestDTO;
-import com.com.boha.monitor.library.dto.ResponseDTO;
+import com.com.boha.monitor.library.dto.transfer.RequestDTO;
+import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.google.gson.Gson;
 
 import org.java_websocket.client.WebSocketClient;
@@ -168,7 +168,7 @@ public class WebSocketUtil {
                     ResponseDTO r = gson.fromJson(response, ResponseDTO.class);
                     if (r.getStatusCode() == 0) {
                         if (r.getSessionID() != null) {
-                            // webSocketListener.onMessage(r);
+                            SharedUtil.saveSessionID(ctx,r.getSessionID());
                         }
                     } else {
                         webSocketListener.onError(r.getMessage());
@@ -209,8 +209,23 @@ public class WebSocketUtil {
 
     private static void parseData(ByteBuffer bb) {
         Log.i(LOG, "########## parseData ByteBuffer capacity: " + bb.capacity());
+        String content = null;
         try {
-            String content = ZipUtil.uncompressGZip(bb);
+            //check if dd is not compressed
+            try {
+                content = new String(bb.array());
+                ResponseDTO response = gson.fromJson(content, ResponseDTO.class);
+                if (response.getStatusCode() == 0) {
+                    webSocketListener.onMessage(response);
+                } else {
+                    webSocketListener.onError(response.getMessage());
+                }
+                return;
+
+            } catch (Exception e) {
+                content = ZipUtil.uncompressGZip(bb);
+            }
+
             if (content != null) {
                 Log.e(LOG, "############# parseData, resonse unpacked - elapsed: " + getElapsed()
                         + "\n" + content);

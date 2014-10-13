@@ -9,7 +9,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.boha.malengagolf.library.R;
+import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.util.Statics;
 

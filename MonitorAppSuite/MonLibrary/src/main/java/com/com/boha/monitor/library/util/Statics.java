@@ -5,7 +5,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.widget.TextView;
 
-import com.boha.malengagolf.library.R;
+import com.boha.monitor.library.R;
 
 public class Statics {
 
@@ -20,9 +20,9 @@ public class Statics {
     //google cloud http://mggolf-303.appspot.com/golf?JSON={requestType:38,golfGroupID:21}
     //public static final String URL = "http://mggolf-303.appspot.com/";
 
-    public static final String WEBSOCKET_URL = "ws://192.168.1.111:8050/mwp/";
-    public static final String URL = "http://192.168.1.111:8050/mwp/";
-    public static final String IMAGE_URL = "http://192.168.1.111:8050/monitor_images/";
+    public static final String WEBSOCKET_URL = "ws://192.168.1.111:8080/mwp/";
+    public static final String URL = "http://192.168.1.111:8080/mwp/";
+    public static final String IMAGE_URL = "http://192.168.1.111:8080/monitor_images/";
 
     public static final String INVITE_DESTINATION = "https://play.google.com/store/apps/details?id=";
     public static final String INVITE_ADMIN = INVITE_DESTINATION + "com.boha.malengagolf.admin";

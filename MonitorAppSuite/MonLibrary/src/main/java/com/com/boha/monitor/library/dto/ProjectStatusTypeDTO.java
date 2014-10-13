@@ -5,7 +5,6 @@
  */
 package com.com.boha.monitor.library.dto;
 
-import com.boha.monitor.data.ProjectStatusType;
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,16 +15,16 @@ import java.util.List;
 public class ProjectStatusTypeDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private Integer projectStatusTypeID;
+    private Integer projectStatusTypeID, companyID;
     private String projectStatusName;
     private List<ProjectDiaryRecordDTO> projectDiaryRecordList;
 
-    public ProjectStatusTypeDTO() {
+    public Integer getCompanyID() {
+        return companyID;
     }
 
-    public ProjectStatusTypeDTO(ProjectStatusType a) {
-        this.projectStatusTypeID = a.getProjectStatusTypeID();
-        this.projectStatusName = a.getProjectStatusName();
+    public void setCompanyID(Integer companyID) {
+        this.companyID = companyID;
     }
 
     public Integer getProjectStatusTypeID() {

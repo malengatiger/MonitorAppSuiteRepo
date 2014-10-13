@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MonLibrary/MonLibrary.iml" filepath="$PROJECT_DIR$/MonLibrary/MonLibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MonitorAdmin/MonitorAdmin.iml" filepath="$PROJECT_DIR$/MonitorAdmin/MonitorAdmin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MonOperations/MonOperations.iml" filepath="$PROJECT_DIR$/MonOperations/MonOperations.iml" />
       <module fileurl="file://$PROJECT_DIR$/MonitorAppSuite.iml" filepath="$PROJECT_DIR$/MonitorAppSuite.iml" />
     </modules>
   </component>

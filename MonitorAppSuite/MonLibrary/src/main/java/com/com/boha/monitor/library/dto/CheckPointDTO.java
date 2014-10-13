@@ -6,7 +6,6 @@
 
 package com.com.boha.monitor.library.dto;
 
-import com.boha.monitor.data.*;
 import java.io.Serializable;
 
 /**
@@ -16,14 +15,15 @@ import java.io.Serializable;
 public class CheckPointDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer checkPointID;
-    private String checkPointName;
-    private CompanyDTO company;
+    private String checkPointName, description;
+    private Integer companyID;
 
-    public CheckPointDTO() {
+    public String getDescription() {
+        return description;
     }
 
-    public CheckPointDTO(Integer checkPointID) {
-        this.checkPointID = checkPointID;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getCheckPointID() {
@@ -42,14 +42,11 @@ public class CheckPointDTO implements Serializable {
         this.checkPointName = checkPointName;
     }
 
-    public CompanyDTO getCompany() {
-        return company;
+    public Integer getCompanyID() {
+        return companyID;
     }
 
-    public void setCompany(CompanyDTO company) {
-        this.company = company;
+    public void setCompanyID(Integer companyID) {
+        this.companyID = companyID;
     }
-
-  
-    
 }
