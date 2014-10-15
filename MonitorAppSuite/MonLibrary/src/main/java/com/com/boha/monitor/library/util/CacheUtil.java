@@ -165,7 +165,7 @@ public class CacheUtil {
                 }
 
             } catch (IOException e) {
-                Log.e(LOG, "Failed to retrieve cache", e);
+                Log.d(LOG, "------------ Failed to retrieve cache", e);
             }
             return response;
         }

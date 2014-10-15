@@ -66,6 +66,8 @@ public class WebSocketUtil {
                 mWebSocketClient.send(json);
                 Log.d(LOG, "########### web socket message sent\n" + json);
             }
+
+
         } catch (WebsocketNotConnectedException e) {
             try {
                 Log.e(LOG, "WebsocketNotConnectedException. Problems with web socket", e);
@@ -204,6 +206,7 @@ public class WebSocketUtil {
         };
 
         Log.d(LOG, "### #### -------------> starting mWebSocketClient.connect ...");
+
         mWebSocketClient.connect();
     }
 

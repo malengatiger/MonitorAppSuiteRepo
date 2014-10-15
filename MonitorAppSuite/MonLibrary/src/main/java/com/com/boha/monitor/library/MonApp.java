@@ -51,8 +51,10 @@ public class MonApp extends Application {
 
         ACRA.init(this);
         CompanyDTO company = SharedUtil.getCompany(getApplicationContext());
-        ACRA.getErrorReporter().putCustomData("companyID", "" + company.getCompanyID());
-        ACRA.getErrorReporter().putCustomData("companyName", company.getCompanyName());
+        if (company != null) {
+            ACRA.getErrorReporter().putCustomData("companyID", "" + company.getCompanyID());
+            ACRA.getErrorReporter().putCustomData("companyName", company.getCompanyName());
+        }
 
         Log.e(LOG, "###### ACRA Crash Reporting has been initiated");
         initializeVolley(getApplicationContext());

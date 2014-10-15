@@ -63,7 +63,7 @@ public class ImageUtil {
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(mContext.getResources().getColor(R.color.white));
-        paint.setTextSize((int) (12 * scale));
+        paint.setTextSize((int) 14);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
 
         Paint paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -301,7 +301,7 @@ public class ImageUtil {
             if (rootDir == null) {
                 rootDir = Environment.getRootDirectory();
             }
-            File imgDir = new File(rootDir, "mggolf");
+            File imgDir = new File(rootDir, "monitor_app");
             if (!imgDir.exists()) {
                 imgDir.mkdir();
             }

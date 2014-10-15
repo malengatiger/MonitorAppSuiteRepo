@@ -33,6 +33,8 @@ import com.com.boha.monitor.library.util.WebSocketUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 
+import org.acra.ACRA;
+
 import java.util.ArrayList;
 
 
@@ -68,8 +70,7 @@ public class RegistrationActivity extends FragmentActivity implements
             finish();
             return;
         }
-        //getCountries();
-
+        registerGCMDevice();
     }
 
     private void registerGCMDevice() {
@@ -160,6 +161,10 @@ public class RegistrationActivity extends FragmentActivity implements
 
                         SharedUtil.saveCompanyStaff(ctx, response.getCompanyStaff());
                         SharedUtil.saveCompany(ctx, response.getCompany());
+                        if (response.getCompany() != null) {
+                            ACRA.getErrorReporter().putCustomData("companyID", "" + response.getCompany().getCompanyID());
+                            ACRA.getErrorReporter().putCustomData("companyName", response.getCompany().getCompanyName());
+                        }
 
                         ResponseDTO countries = new ResponseDTO();
                         countries.setCountryList(response.getCountryList());

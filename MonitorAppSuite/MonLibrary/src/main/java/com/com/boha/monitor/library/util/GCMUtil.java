@@ -38,7 +38,7 @@ public class GCMUtil {
         gcmUtilListener = listener;
         new GCMTask().execute();
     }
-    public static final String GCM_SENDER_ID = "327722367643";
+    public static final String GCM_SENDER_ID = "635788281460";
 
     static class GCMTask extends AsyncTask<Void, Void, Integer> {
 

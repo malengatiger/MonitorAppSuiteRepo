@@ -106,6 +106,7 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
     @Override
     public void onResume() {
         Log.d(LOG, "***************** onResume ************");
+        PhotoUploadService.uploadPendingPhotos(ctx);
         super.onResume();
     }
 
@@ -141,7 +142,10 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
 
     private void uploadPhotos() {
         Log.e(LOG, "..........starting service to upload photos ........ ");
-
+        type = PhotoUploadDTO.PROJECT_IMAGE; //TODO - REMOVE
+        project = new ProjectDTO();
+        project.setProjectID(11);
+        project.setCompanyID(24);
         switch (type) {
             case PhotoUploadDTO.PROJECT_IMAGE:
                 PhotoUploadService.uploadProjectPicture(ctx, project, currentFullFile, currentThumbFile);
@@ -154,6 +158,9 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
                 break;
             case PhotoUploadDTO.TASK_IMAGE:
                 PhotoUploadService.uploadSiteTaskPicture(ctx, projectSiteTask, currentFullFile, currentThumbFile);
+                break;
+            default:
+                PhotoUploadService.uploadPendingPhotos(ctx);
                 break;
 
         }
@@ -471,7 +478,6 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
                 try {
                     image.setImageBitmap(bitmapForScreen);
                     uploadPhotos();
-                    //TODO - send full images when on wifi
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

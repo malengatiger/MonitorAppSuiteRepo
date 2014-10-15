@@ -21,9 +21,18 @@ public class PhotoUploadDTO {
     public static final int SITE_IMAGE = 1, TASK_IMAGE = 2, PROJECT_IMAGE = 3, STAFF_IMAGE = 4;
     private int companyID, projectID, projectSiteID, projectSiteTaskID, pictureType, companyStaffID;
     private List<String> tags;
+    private boolean isFullPicture;
     private String imageFilePath, thumbFilePath;
 
     private Date dateThumbUploaded, dateFullPictureUploaded, dateTaken;
+
+    public boolean isFullPicture() {
+        return isFullPicture;
+    }
+
+    public void setFullPicture(boolean isFullPicture) {
+        this.isFullPicture = isFullPicture;
+    }
 
     public int getCompanyStaffID() {
         return companyStaffID;

@@ -51,6 +51,8 @@ public class MainPagerActivity extends FragmentActivity
         setTitle(SharedUtil.getCompany(ctx).getCompanyName());
         CompanyStaffDTO staff = SharedUtil.getCompanyStaff(ctx);
         getActionBar().setSubtitle(staff.getFullName() + " - " + staff.getCompanyStaffType().getCompanyStaffTypeName());
+        //
+       // PhotoUploadService.uploadPendingPhotos(ctx);
     }
 
     private void setDrawerList() {

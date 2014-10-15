@@ -14,18 +14,15 @@
         <meta-data
             android:name="com.google.android.apps.drive.APP_ID"
             android:value="id=166210361031" />
-        <!-- dev key: AIzaSyBWfqWoQbWs-XCypa9rNVSHI0ZwBcUL1pA -->
-        <!-- prod key : AIzaSyCjuswPnqV7meZduYKf0m78hfd21AwSdgY -->
-
 
         <!-- new credentials on the aubrey.malabie account -->
         <!--
-             //88:04:df:2b:68:40:60:a3:31:81:2f:71:1f:2d:71:fb:f7:71:f9:57  - dev - AIzaSyD9dJPJAkqHd-0qERdP3350yx7Z6DTw6A8
-            //4f:72:a0:21:0f:ad:8d:6b:ec:b5:83:49:13:cb:64:75:74:62:1a:a7  - prod - AIzaSyAfcu75gi3xoUCLHyQln2Cy9RaUfqzw13M
+             //88:04:df:2b:68:40:60:a3:31:81:2f:71:1f:2d:71:fb:f7:71:f9:57  - dev - AIzaSyCsgtnrR5JXX_w5jTYIZiFZv7aZX52iwgo
+            //4f:72:a0:21:0f:ad:8d:6b:ec:b5:83:49:13:cb:64:75:74:62:1a:a7  - prod - AIzaSyBG9wbuf9x0ipJt4gf2OAm_LY-4zqw8ymg
         -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAfcu75gi3xoUCLHyQln2Cy9RaUfqzw13M" />
+            android:value="AIzaSyCsgtnrR5JXX_w5jTYIZiFZv7aZX52iwgo" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="1413591595584751" />
@@ -47,6 +44,7 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity android:name="com.com.boha.monitor.library.PictureActivity"
             android:configChanges="orientation|keyboardHidden"/>
+        <service android:name="com.com.boha.monitor.library.services.PhotoUploadService" />
     </application>
 
     <permission
