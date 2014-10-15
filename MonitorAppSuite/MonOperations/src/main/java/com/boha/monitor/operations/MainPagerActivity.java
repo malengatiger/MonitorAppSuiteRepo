@@ -1,6 +1,7 @@
 package com.boha.monitor.operations;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.com.boha.monitor.library.PictureActivity;
 import com.com.boha.monitor.library.adapters.DrawerAdapter;
 import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
@@ -47,7 +49,8 @@ public class MainPagerActivity extends FragmentActivity
         titles = getResources().getStringArray(R.array.action_items);
         setDrawerList();
         setTitle(SharedUtil.getCompany(ctx).getCompanyName());
-
+        CompanyStaffDTO staff = SharedUtil.getCompanyStaff(ctx);
+        getActionBar().setSubtitle(staff.getFullName() + " - " + staff.getCompanyStaffType().getCompanyStaffTypeName());
     }
 
     private void setDrawerList() {
@@ -120,6 +123,8 @@ public class MainPagerActivity extends FragmentActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_add) {
+            Intent i = new Intent(this, PictureActivity.class);
+            startActivity(i);
             return true;
         }
         if (id == R.id.action_refresh) {

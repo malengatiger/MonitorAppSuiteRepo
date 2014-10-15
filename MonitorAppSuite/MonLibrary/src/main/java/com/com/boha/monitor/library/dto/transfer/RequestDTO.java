@@ -68,7 +68,9 @@ public class RequestDTO implements Serializable{
             GET_TASK_STATUS_LIST = 106,
             GET_COMPANY_STAFF_TYPE_LIST = 107,
             GET_COMPANY_DATA = 108,
-            GET_COUNTRY_LIST = 109;
+            GET_COUNTRY_LIST = 109,
+            GET_PROJECT_IMAGE_FILENAMES = 110,
+            GET_STAFF_IMAGE_FILENAMES = 111;
     //login's
     public static final int
             LOGIN = 200,
@@ -87,6 +89,7 @@ public class RequestDTO implements Serializable{
     public static final String PROJECT_DIR = "project";
     public static final String PROJECT_SITE_DIR = "projectsite";
     public static final String TASK_DIR = "task";
+    public static final String COMPANY_STAFF_DIR = "companyStaff";
 
     //
 

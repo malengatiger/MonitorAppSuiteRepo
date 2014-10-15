@@ -6,7 +6,9 @@
                 android:padding="10dp"
                 android:layout_height="match_parent">
 
-    <com.boha.monitor.library.base.BannerGold
+    <ImageView
+
+        android:src="@drawable/banner_blue"
             android:id="@+id/INV_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -75,7 +77,7 @@
 
         <ImageView
                 android:id="@+id/INV_image"
-                android:src="@drawable/ic_launcher"
+                android:src="@drawable/boy"
                 android:layout_width="48dp"
                 android:layout_height="48dp"/>
 

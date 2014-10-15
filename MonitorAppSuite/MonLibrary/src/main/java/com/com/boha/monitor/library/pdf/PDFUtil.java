@@ -58,7 +58,7 @@ public class PDFUtil {
 //
 //        try {
 //            Drawable d = ctx.getResources().getDrawable(R.drawable.xred_oval);
-//            Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+//            Bitmap bitmap = ((BitmapDrawable) d).drawTextToBitmap();
 //            ByteArrayOutputStream stream = new ByteArrayOutputStream();
 //            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 //            byte[] bitmapdata = stream.toByteArray();

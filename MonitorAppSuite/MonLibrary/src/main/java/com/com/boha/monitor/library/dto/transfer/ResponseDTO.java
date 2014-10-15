@@ -30,6 +30,7 @@ import com.com.boha.monitor.library.dto.SiteCheckPointDTO;
 import com.com.boha.monitor.library.dto.TaskDTO;
 import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.dto.TownshipDTO;
+import com.com.boha.monitor.library.util.PhotoCache;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ import java.util.List;
  */
 public class ResponseDTO implements Serializable {
 
+    private PhotoCache photoCache;
     private Integer statusCode;
     private String message, sessionID, GCMRegistrationID;
     private List<String> taskImageFileNameList;
@@ -73,6 +75,14 @@ public class ResponseDTO implements Serializable {
     //
     private CompanyDTO company;
     private CompanyStaffDTO companyStaff;
+
+    public PhotoCache getPhotoCache() {
+        return photoCache;
+    }
+
+    public void setPhotoCache(PhotoCache photoCache) {
+        this.photoCache = photoCache;
+    }
 
     public List<CountryDTO> getCountryList() {
         return countryList;

@@ -37,7 +37,7 @@
             android:id="@+id/GAL_image"
             android:scaleType="centerCrop"
             android:layout_alignParentTop="true"
-            android:src="@drawable/golf_pic1"
+            android:src="@drawable/boy"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

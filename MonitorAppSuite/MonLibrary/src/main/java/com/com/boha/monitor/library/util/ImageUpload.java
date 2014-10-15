@@ -66,11 +66,11 @@ public class ImageUpload {
 				}
 				HttpClient httpclient = new DefaultHttpClient();
 				HttpPost httppost = new HttpPost(Statics.URL + "photo");
-				Log.d(LOGTAG, "sending image upload to " + Statics.URL + "photo");
+				Log.d(LOGTAG, "-------->>> sending image upload to " + Statics.URL + "photo");
 
 				Gson gson = new Gson();
 				String json = gson.toJson(photoUpload);
-				Log.e(LOGTAG, "json to be sent: " + gson.toJson(photoUpload));
+				Log.e(LOGTAG, "*** json to be sent: " + gson.toJson(photoUpload));
 				reqEntity.addPart("JSON", new StringBody(json));
 
 				int idx = 1;
@@ -98,7 +98,7 @@ public class ImageUpload {
 				}
 
 			} catch (Exception e) {
-				Log.e(LOGTAG, "Upload failed", e);
+				Log.e(LOGTAG, "-------------- <<<< Upload failed", e);
 				return 9997;
 			} finally {
 				if (is != null) {
@@ -114,7 +114,7 @@ public class ImageUpload {
 
 		@Override
 		protected void onPostExecute(Integer result) {
-			Log.i(LOGTAG, "....ending image upload");
+			Log.i(LOGTAG, "onPostExecute...........ending image upload");
 			if (result > 0) {
 				imageUploadListener.onUploadError();
 				return;

@@ -97,7 +97,7 @@ public class GcmIntentService extends GCMBaseIntentService {
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setContentIntent(resultPendingIntent)
                 .addAction(R.drawable.ic_action_refresh, "More", resultPendingIntent)
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.drawable.xblack_oval)
 				.setContentTitle(dto.getProjectName())
 				.setContentText(dto.getProjectSiteName() + " - status updated");
 

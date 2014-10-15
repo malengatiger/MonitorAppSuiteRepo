@@ -5,6 +5,7 @@
  */
 package com.com.boha.monitor.library.dto.transfer;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,9 +14,64 @@ import java.util.List;
  */
 public class PhotoUploadDTO {
 
-    public static final int SITE_IMAGE = 1, TASK_IMAGE = 2;
-    private int companyID, projectID, projectSiteID, projectSiteTaskID, pictureType;
+    public interface PhotoUploadedListener {
+        public void onPhotoUploaded();
+        public void onPhotoUploadFailed();
+    }
+    public static final int SITE_IMAGE = 1, TASK_IMAGE = 2, PROJECT_IMAGE = 3, STAFF_IMAGE = 4;
+    private int companyID, projectID, projectSiteID, projectSiteTaskID, pictureType, companyStaffID;
     private List<String> tags;
+    private String imageFilePath, thumbFilePath;
+
+    private Date dateThumbUploaded, dateFullPictureUploaded, dateTaken;
+
+    public int getCompanyStaffID() {
+        return companyStaffID;
+    }
+
+    public void setCompanyStaffID(int companyStaffID) {
+        this.companyStaffID = companyStaffID;
+    }
+
+    public String getImageFilePath() {
+        return imageFilePath;
+    }
+
+    public void setImageFilePath(String imageFilePath) {
+        this.imageFilePath = imageFilePath;
+    }
+
+    public String getThumbFilePath() {
+        return thumbFilePath;
+    }
+
+    public void setThumbFilePath(String thumbFilePath) {
+        this.thumbFilePath = thumbFilePath;
+    }
+
+    public Date getDateThumbUploaded() {
+        return dateThumbUploaded;
+    }
+
+    public void setDateThumbUploaded(Date dateThumbUploaded) {
+        this.dateThumbUploaded = dateThumbUploaded;
+    }
+
+    public Date getDateFullPictureUploaded() {
+        return dateFullPictureUploaded;
+    }
+
+    public void setDateFullPictureUploaded(Date dateFullPictureUploaded) {
+        this.dateFullPictureUploaded = dateFullPictureUploaded;
+    }
+
+    public Date getDateTaken() {
+        return dateTaken;
+    }
+
+    public void setDateTaken(Date dateTaken) {
+        this.dateTaken = dateTaken;
+    }
 
     public int getPictureType() {
         return pictureType;

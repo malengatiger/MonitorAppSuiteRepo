@@ -26,6 +26,10 @@ public class CompanyStaffDTO implements Serializable {
     private List<ProjectSiteStaffDTO> projectSiteStaffList = new ArrayList<>();
     private GcmDeviceDTO gcmDevice;
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     public CompanyStaffDTO() {
     }
 

@@ -19,9 +19,17 @@ public class ProjectSiteTaskDTO implements Serializable {
     private Integer projectSiteTaskID;
     private TaskDTO task;
     private long dateRegistered;
-    private Integer projectSiteID;
+    private Integer projectSiteID, projectID;
     private List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList = new ArrayList<>();
     private List<String> imageFileNameList;
+
+    public Integer getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(Integer projectID) {
+        this.projectID = projectID;
+    }
 
     public Integer getProjectSiteTaskID() {
         return projectSiteTaskID;
