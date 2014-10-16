@@ -52,7 +52,7 @@ public class PhotoUploadService extends IntentService {
                 if (response != null) {
                     if (response.getPhotoCache() != null) {
                         list = response.getPhotoCache().getPhotoUploadList();
-                        list.add(dto);
+                        list.add(0,dto);
                     }
                 } else {
                     response = new ResponseDTO();
@@ -108,7 +108,7 @@ public class PhotoUploadService extends IntentService {
                 if (response != null) {
                     if (response.getPhotoCache() != null) {
                         list = response.getPhotoCache().getPhotoUploadList();
-                        list.add(dto);
+                        list.add(0,dto);
                     }
                 } else {
                     response = new ResponseDTO();
@@ -157,7 +157,7 @@ public class PhotoUploadService extends IntentService {
                 if (response != null) {
                     if (response.getPhotoCache() != null) {
                         list = response.getPhotoCache().getPhotoUploadList();
-                        list.add(dto);
+                        list.add(0,dto);
                     }
                 } else {
                     response = new ResponseDTO();
@@ -203,7 +203,7 @@ public class PhotoUploadService extends IntentService {
                 if (response != null) {
                     if (response.getPhotoCache() != null) {
                         list = response.getPhotoCache().getPhotoUploadList();
-                        list.add(dto);
+                        list.add(0,dto);
                     }
 
                 } else {
@@ -270,6 +270,8 @@ public class PhotoUploadService extends IntentService {
             if (webCheckResult.isWifiConnected() || webCheckResult.isMobileConnected()) {
                 Log.w(LOG,"####### starting thumb upload loop");
                 controlThumbUploads();
+            } else {
+                Log.e(LOG,"----- no network available for upload, will try later!");
             }
 
         }
@@ -279,7 +281,7 @@ public class PhotoUploadService extends IntentService {
     int index;
     WebCheckResult webCheckResult;
     private void controlThumbUploads() {
-        Log.d(LOG,"*** controlThumbUploads, index: " + index + " list: " + list.size());
+        //Log.d(LOG,"*** controlThumbUploads, index: " + index + " list: " + list.size());
         if (index < list.size()) {
             if (list.get(index).getDateThumbUploaded() == null) {
                 executeThumbUpload(list.get(index));
@@ -289,10 +291,9 @@ public class PhotoUploadService extends IntentService {
             }
         }
         if (index == list.size()) {
-            webCheckResult = WebCheck.checkNetworkAvailability(getApplicationContext());
+            //webCheckResult = WebCheck.checkNetworkAvailability(getApplicationContext());
             if (webCheckResult.isWifiConnected()) {
                 index = 0;
-                Log.w(LOG, "%%%%%% starting full picture upload loop");
                 controlFullPictureUploads();
             }
         }

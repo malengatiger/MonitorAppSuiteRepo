@@ -63,7 +63,7 @@ public class ImageUtil {
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(mContext.getResources().getColor(R.color.white));
-        paint.setTextSize((int) 12);
+        paint.setTextSize((int) 13);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
 
         Paint paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);

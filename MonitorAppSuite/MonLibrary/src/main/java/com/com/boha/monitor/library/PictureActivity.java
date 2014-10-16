@@ -3,6 +3,7 @@ package com.com.boha.monitor.library;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -105,7 +106,7 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
 
     @Override
     public void onResume() {
-        Log.d(LOG, "***************** onResume ************");
+        Log.w(LOG, "***************** onResume - starting pending uploads, if any");
         PhotoUploadService.uploadPendingPhotos(ctx);
         super.onResume();
     }
@@ -415,14 +416,7 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
                         options.inSampleSize = 2;
                         Bitmap bm = BitmapFactory.decodeFile(photoFile.getAbsolutePath(), options);
                         getLog(bm, "Raw Camera");
-                        //scale and rotate for the screen
-                        //Matrix matrix = new Matrix();
-                        //matrix.postScale(1.0f, 1.0f);
-                        //matrix.postRotate(rotate);
-                        //bitmapForScreen = Bitmap.createBitmap
-                        //        (bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
-                        //getLog(bitmapForScreen, "Screen");
-                        //get thumbnail for upload
+                          //get thumbnail for upload
                         Matrix matrixThumbnail = new Matrix();
                         matrixThumbnail.postScale(0.4f, 0.4f);
                         //matrixThumbnail.postRotate(rotate);
@@ -477,7 +471,13 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
                 pictureChanged = true;
                 try {
                     image.setImageBitmap(bitmapForScreen);
+
                     uploadPhotos();
+                    if (bitmapForScreen.getWidth() > bitmapForScreen.getHeight()) {
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    } else {
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
