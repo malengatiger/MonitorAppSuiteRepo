@@ -115,6 +115,8 @@ public class MainPagerActivity extends FragmentActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_pager, menu);
+
+        //PhotoUploadService.uploadPendingPhotos(ctx);
         return true;
     }
 

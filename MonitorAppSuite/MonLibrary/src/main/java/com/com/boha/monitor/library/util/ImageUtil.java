@@ -63,7 +63,7 @@ public class ImageUtil {
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(mContext.getResources().getColor(R.color.white));
-        paint.setTextSize((int) 14);
+        paint.setTextSize((int) 12);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
 
         Paint paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -93,8 +93,8 @@ public class ImageUtil {
         StringBuilder sb = new StringBuilder();
         sb.append(sdf.format(new Date()));
         if (loc != null) {
-            sb.append(" ** lat: ").append(loc.getLatitude());
-            sb.append(" long: ").append(loc.getLongitude());
+            sb.append(" - lat: ").append(loc.getLatitude());
+            sb.append(" lng: ").append(loc.getLongitude());
         }
         return sb.toString();
     }
