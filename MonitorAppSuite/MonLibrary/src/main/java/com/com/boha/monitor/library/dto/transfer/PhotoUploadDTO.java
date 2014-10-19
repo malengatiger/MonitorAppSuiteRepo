@@ -5,6 +5,7 @@
  */
 package com.com.boha.monitor.library.dto.transfer;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -12,19 +13,70 @@ import java.util.List;
  *
  * @author aubreyM
  */
-public class PhotoUploadDTO {
+public class PhotoUploadDTO implements Serializable{
 
     public interface PhotoUploadedListener {
         public void onPhotoUploaded();
         public void onPhotoUploadFailed();
     }
     public static final int SITE_IMAGE = 1, TASK_IMAGE = 2, PROJECT_IMAGE = 3, STAFF_IMAGE = 4;
-    private int companyID, projectID, projectSiteID, projectSiteTaskID, pictureType, companyStaffID;
+    private Integer index,companyID, projectID, projectSiteID,
+            projectSiteTaskID, pictureType, companyStaffID, thumbFlag;
     private List<String> tags;
     private boolean isFullPicture;
     private String imageFilePath, thumbFilePath;
+    private double latitude, longitude;
+    private long time;
 
-    private Date dateThumbUploaded, dateFullPictureUploaded, dateTaken;
+    private Date dateThumbUploaded, dateFullPictureUploaded, dateTaken, dateUploaded;
+
+    public Integer getThumbFlag() {
+        return thumbFlag;
+    }
+
+    public void setThumbFlag(Integer thumbFlag) {
+        this.thumbFlag = thumbFlag;
+    }
+
+    public Date getDateUploaded() {
+        return dateUploaded;
+    }
+
+    public void setDateUploaded(Date dateUploaded) {
+        this.dateUploaded = dateUploaded;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
 
     public boolean isFullPicture() {
         return isFullPicture;
@@ -34,11 +86,11 @@ public class PhotoUploadDTO {
         this.isFullPicture = isFullPicture;
     }
 
-    public int getCompanyStaffID() {
+    public Integer getCompanyStaffID() {
         return companyStaffID;
     }
 
-    public void setCompanyStaffID(int companyStaffID) {
+    public void setCompanyStaffID(Integer companyStaffID) {
         this.companyStaffID = companyStaffID;
     }
 
@@ -82,43 +134,43 @@ public class PhotoUploadDTO {
         this.dateTaken = dateTaken;
     }
 
-    public int getPictureType() {
+    public Integer getPictureType() {
         return pictureType;
     }
 
-    public void setPictureType(int pictureType) {
+    public void setPictureType(Integer pictureType) {
         this.pictureType = pictureType;
     }
 
-    public int getCompanyID() {
+    public Integer getCompanyID() {
         return companyID;
     }
 
-    public void setCompanyID(int companyID) {
+    public void setCompanyID(Integer companyID) {
         this.companyID = companyID;
     }
 
-    public int getProjectID() {
+    public Integer getProjectID() {
         return projectID;
     }
 
-    public void setProjectID(int projectID) {
+    public void setProjectID(Integer projectID) {
         this.projectID = projectID;
     }
 
-    public int getProjectSiteID() {
+    public Integer getProjectSiteID() {
         return projectSiteID;
     }
 
-    public void setProjectSiteID(int projectSiteID) {
+    public void setProjectSiteID(Integer projectSiteID) {
         this.projectSiteID = projectSiteID;
     }
 
-    public int getProjectSiteTaskID() {
+    public Integer getProjectSiteTaskID() {
         return projectSiteTaskID;
     }
 
-    public void setProjectSiteTaskID(int projectSiteTaskID) {
+    public void setProjectSiteTaskID(Integer projectSiteTaskID) {
         this.projectSiteTaskID = projectSiteTaskID;
     }
 

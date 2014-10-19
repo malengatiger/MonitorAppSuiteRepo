@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author aubreyM
  */
-public class ClientDTO implements Serializable {
+public class ClientDTO implements Serializable, Comparable<ClientDTO> {
     private static final long serialVersionUID = 1L;
     private Integer clientID;
     private String clientName;
@@ -25,6 +25,11 @@ public class ClientDTO implements Serializable {
     private Date dateRegistered;
     private List<ProjectDTO> projectList;
     private Integer companyID;
+
+    public static final int
+            ACTION_ADD = 10,
+            ACTION_UPDATE = 11,
+            ACTION_DELETE = 12;
 
     public List<ProjectDTO> getProjectList() {
         return projectList;
@@ -99,5 +104,22 @@ public class ClientDTO implements Serializable {
 
     public void setCompanyID(Integer companyID) {
         this.companyID = companyID;
+    }
+
+    /**
+     * Compares this object to the specified object to determine their relative
+     * order.
+     *
+     * @param another the object to compare to this instance.
+     * @return a negative integer if this instance is less than {@code another};
+     * a positive integer if this instance is greater than
+     * {@code another}; 0 if this instance has the same order as
+     * {@code another}.
+     * @throws ClassCastException if {@code another} cannot be converted into something
+     *                            comparable to {@code this} instance.
+     */
+    @Override
+    public int compareTo(ClientDTO another) {
+        return this.clientName.compareTo(another.clientName);
     }
 }

@@ -15,13 +15,16 @@ import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.toolbox.BitmapLruCache;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import org.acra.ACRA;
 import org.acra.ReportField;
 import org.acra.annotation.ReportsCrashes;
 
+import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -59,11 +62,24 @@ public class MonApp extends Application {
         Log.e(LOG, "###### ACRA Crash Reporting has been initiated");
         initializeVolley(getApplicationContext());
 
+        File cacheDir = StorageUtils.getCacheDirectory(this);
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+                .denyCacheImageMultipleSizesInMemory()
+                .memoryCache(new LruMemoryCache(4 * 1024 * 1024))
+                .memoryCacheSize(4 * 1024 * 1024)
+                .diskCacheSize(300 * 1024 * 1024)
+                .diskCacheFileCount(300)
+                .writeDebugLogs()
+                .build();
+        Log.w(LOG, "###### ImageLoaderConfiguration has been initialised");
+
+
+
         //Glide.get(this).register(GlideUrl.class, InputStream.class,
         //        new VolleyUrlLoader.Factory(requestQueue));
 
         Glide.get(this).register(GlideUrl.class, InputStream.class, new HttpUrlGlideUrlLoader.Factory());
-        Log.e(LOG, "###### Glide has been initialised");
+
 //        Glide.with(this)
 //                .load("")
 //                .centerCrop()

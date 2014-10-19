@@ -11,4 +11,9 @@
         android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="100"
         android:showAsAction="ifRoom" />
+    <item android:id="@+id/action_gallery"
+        android:title="@string/gallery"
+        android:icon="@drawable/ic_action_slideshow"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
 </menu>

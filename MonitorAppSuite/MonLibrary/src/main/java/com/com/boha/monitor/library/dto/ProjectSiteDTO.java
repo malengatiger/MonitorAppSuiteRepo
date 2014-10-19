@@ -6,6 +6,8 @@
 
 package com.com.boha.monitor.library.dto;
 
+import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +17,33 @@ import java.util.List;
  * @author aubreyM
  */
 public class ProjectSiteDTO implements Serializable {
+    public static final int ACTION_ADD = 10, ACTION_UPDATE = 11;
     private static final long serialVersionUID = 1L;
     private Integer projectSiteID;
-    private String projectSiteName;
+    private String projectSiteName, standErfNumber;
     private Double latitude;
     private Double longitude;
     private Integer activeFlag;
     private List<ProjectSiteTaskDTO> projectSiteTaskList = new ArrayList<>();
     private Integer projectID;
     private List<ProjectSiteStaffDTO> projectSiteStaffList = new ArrayList<>();
-    private List<String> imageFileNameList = new ArrayList<>();
+    private List<PhotoUploadDTO> photoUploadList;
+
+    public List<PhotoUploadDTO> getPhotoUploadList() {
+        return photoUploadList;
+    }
+
+    public void setPhotoUploadList(List<PhotoUploadDTO> photoUploadList) {
+        this.photoUploadList = photoUploadList;
+    }
+
+    public String getStandErfNumber() {
+        return standErfNumber;
+    }
+
+    public void setStandErfNumber(String standErfNumber) {
+        this.standErfNumber = standErfNumber;
+    }
 
     public Integer getProjectSiteID() {
         return projectSiteID;
@@ -40,14 +59,6 @@ public class ProjectSiteDTO implements Serializable {
 
     public void setProjectSiteName(String projectSiteName) {
         this.projectSiteName = projectSiteName;
-    }
-
-    public List<String> getImageFileNameList() {
-        return imageFileNameList;
-    }
-
-    public void setImageFileNameList(List<String> imageFileNameList) {
-        this.imageFileNameList = imageFileNameList;
     }
 
     public Double getLatitude() {

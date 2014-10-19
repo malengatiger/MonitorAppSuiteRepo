@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                style="@style/Title3TextStyleGrey"
+                style="@style/Title3TextStyleBlack"
                 android:layout_alignParentLeft="true"
                 android:inputType="textCapWords"
                 android:text="@string/company_name"/>
@@ -105,35 +105,21 @@
                 android:text="@string/subject"
                 android:layout_height="wrap_content"/>
 
-        <RadioGroup
-                android:id="@+id/ED_PSN_radioGroup"
+        <Spinner
+                android:id="@+id/ED_PSN_spinner"
                 android:layout_width="match_parent"
                 android:layout_below="@id/ED_PSN_chkInvite"
                 android:layout_marginTop="10dp"
                 android:padding="5dp"
                 android:background="@color/blue_pale"
                 android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"/>
 
-            <RadioButton
-                    android:id="@+id/ED_PSN_radioFemale"
-                    android:text="@string/female"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
 
-            <RadioButton
-                    android:id="@+id/ED_PSN_radioMale"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/male"
-                    android:layout_height="wrap_content"/>
-
-        </RadioGroup>
 
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_below="@id/ED_PSN_radioGroup"
+                android:layout_below="@id/ED_PSN_spinner"
                 android:layout_marginTop="10dp"
                 android:padding="5dp"
                 android:orientation="horizontal"

@@ -73,6 +73,7 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
         setContentView(R.layout.camera);
         setFields();
 
+
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setInterval(5000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -80,6 +81,12 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
 
         mLocationClient = new LocationClient(getApplicationContext(), this,
                 this);
+        //get objects
+        type = getIntent().getIntExtra("type",0);
+        project = (ProjectDTO)getIntent().getSerializableExtra("project");
+        projectSite = (ProjectSiteDTO)getIntent().getSerializableExtra("projectSite");
+        projectSiteTask = (ProjectSiteTaskDTO)getIntent().getSerializableExtra("projectSiteTask");
+        companyStaff = (CompanyStaffDTO)getIntent().getSerializableExtra("companyStaff");
 
         Log.e(LOG, "###### type: " + type);
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -143,22 +150,19 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
 
     private void uploadPhotos() {
         Log.e(LOG, "..........starting service to upload photos ........ ");
-        type = PhotoUploadDTO.PROJECT_IMAGE; //TODO - REMOVE
-        project = new ProjectDTO();
-        project.setProjectID(11);
-        project.setCompanyID(24);
+
         switch (type) {
             case PhotoUploadDTO.PROJECT_IMAGE:
-                PhotoUploadService.uploadProjectPicture(ctx, project, currentFullFile, currentThumbFile);
+                PhotoUploadService.uploadProjectPicture(ctx, project, currentFullFile, currentThumbFile,location);
                 break;
             case PhotoUploadDTO.SITE_IMAGE:
-                PhotoUploadService.uploadSitePicture(ctx, projectSite, currentFullFile, currentThumbFile);
+                PhotoUploadService.uploadSitePicture(ctx, projectSite, currentFullFile, currentThumbFile,location);
                 break;
             case PhotoUploadDTO.STAFF_IMAGE:
-                PhotoUploadService.uploadStaffPicture(ctx, companyStaff, currentFullFile, currentThumbFile);
+                PhotoUploadService.uploadStaffPicture(ctx, companyStaff, currentFullFile, currentThumbFile,location);
                 break;
             case PhotoUploadDTO.TASK_IMAGE:
-                PhotoUploadService.uploadSiteTaskPicture(ctx, projectSiteTask, currentFullFile, currentThumbFile);
+                PhotoUploadService.uploadSiteTaskPicture(ctx, projectSiteTask, currentFullFile, currentThumbFile,location);
                 break;
             default:
                 PhotoUploadService.uploadPendingPhotos(ctx);
@@ -237,16 +241,6 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
         }
     }
 
-    String mCurrentPhotoPath;
-    ProjectDTO project;
-    ProjectSiteDTO projectSite;
-    ProjectSiteTaskDTO projectSiteTask;
-    CompanyStaffDTO companyStaff;
-    File photoFile;
-    private VideoClipContainer vcc;
-    boolean isUploaded;
-    static final int REQUEST_VIDEO_CAPTURE = 1;
-
     private void dispatchTakeVideoIntent() {
         final Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 
@@ -324,8 +318,9 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
             dispatchTakeVideoIntent();
             return true;
         }
-        if (item.getItemId() == R.id.menu_upload) {
-            uploadPhotos();
+        if (item.getItemId() == R.id.menu_gallery) {
+            Intent i = new Intent(this, ImagePagerActivity.class);
+            startActivity(i);
             return true;
         }
         if (item.getItemId() == R.id.menu_camera) {
@@ -379,15 +374,6 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
         super.onSaveInstanceState(b);
     }
 
-    Menu mMenu;
-    int type;
-
-    boolean pictureChanged;
-    Context ctx;
-    Uri fileUri;
-    public static final int CAPTURE_IMAGE = 3, SITE_PICTURE = 1, PROJECT_PICTURE = 2, STAFF_PICTURE = 5;
-
-    Bitmap bitmapForScreen;
 
     class PhotoTask extends AsyncTask<Void, Void, Integer> {
 
@@ -499,11 +485,6 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
         Log.i(LOG, "Full file length: " + currentFullFile.length());
 
     }
-
-    ImageView image;
-    File currentThumbFile, currentFullFile;
-    Uri thumbUri, fullUri;
-    static final String LOG = "PictureActivity";
 
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
@@ -685,6 +666,15 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
         GLToolbox.initTexParams();
     }
 
+    String mCurrentPhotoPath;
+    ProjectDTO project;
+    ProjectSiteDTO projectSite;
+    ProjectSiteTaskDTO projectSiteTask;
+    CompanyStaffDTO companyStaff;
+    File photoFile;
+    private VideoClipContainer vcc;
+    boolean isUploaded;
+    static final int REQUEST_VIDEO_CAPTURE = 1;
     private GLSurfaceView mEffectView;
     private int[] mTextures = new int[2];
     private EffectContext mEffectContext;
@@ -694,4 +684,20 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
     private int mImageHeight;
     private boolean mInitialized = false;
     int mCurrentEffect;
+
+    ImageView image;
+    File currentThumbFile, currentFullFile;
+    Uri thumbUri, fullUri;
+    static final String LOG = "PictureActivity";
+
+    Menu mMenu;
+    int type;
+
+    boolean pictureChanged;
+    Context ctx;
+    Uri fileUri;
+    public static final int CAPTURE_IMAGE = 3, SITE_PICTURE = 1, PROJECT_PICTURE = 2, STAFF_PICTURE = 5;
+
+    Bitmap bitmapForScreen;
+
 }

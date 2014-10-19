@@ -6,6 +6,8 @@
 
 package com.com.boha.monitor.library.dto;
 
+import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,15 @@ import java.util.List;
  *
  * @author aubreyM
  */
-public class CompanyStaffDTO implements Serializable {
+public class CompanyStaffDTO implements Serializable, Comparable<CompanyStaffDTO> {
+    public static final int
+            OPERATIONS_MANAGER = 1,
+            PROJECT_MANAGER = 4,
+            EXECUTIVE_STAFF = 3,
+            SITE_SUPERVISOR = 2,
+            ACTION_ADD = 10,
+            ACTION_UPDATE = 11,
+            ACTION_DELETE = 12;
     private static final long serialVersionUID = 1L;
     private Integer companyStaffID, activeFlag;
     private String firstName;
@@ -25,6 +35,15 @@ public class CompanyStaffDTO implements Serializable {
     private Integer companyID;
     private List<ProjectSiteStaffDTO> projectSiteStaffList = new ArrayList<>();
     private GcmDeviceDTO gcmDevice;
+    private List<PhotoUploadDTO> photoUploadList;
+
+    public List<PhotoUploadDTO> getPhotoUploadList() {
+        return photoUploadList;
+    }
+
+    public void setPhotoUploadList(List<PhotoUploadDTO> photoUploadList) {
+        this.photoUploadList = photoUploadList;
+    }
 
     public String getFullName() {
         return firstName + " " + lastName;
@@ -155,5 +174,22 @@ public class CompanyStaffDTO implements Serializable {
     public String toString() {
         return "com.boha.monitor.data.CompanyStaff[ companyStaffID=" + companyStaffID + " ]";
     }
-    
+
+    /**
+     * Compares this object to the specified object to determine their relative
+     * order.
+     *
+     * @param another the object to compare to this instance.
+     * @return a negative integer if this instance is less than {@code another};
+     * a positive integer if this instance is greater than
+     * {@code another}; 0 if this instance has the same order as
+     * {@code another}.
+     * @throws ClassCastException if {@code another} cannot be converted into something
+     *                            comparable to {@code this} instance.
+     */
+    @Override
+    public int compareTo(CompanyStaffDTO another) {
+
+        return this.getFullName().compareTo(another.getFullName());
+    }
 }

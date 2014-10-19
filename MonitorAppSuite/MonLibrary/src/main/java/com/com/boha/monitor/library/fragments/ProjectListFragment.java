@@ -20,6 +20,7 @@ import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -69,7 +70,21 @@ public class ProjectListFragment extends Fragment implements AbsListView.OnItemC
         }
 
         mListView = (AbsListView) view.findViewById(android.R.id.list);
-        adapter = new ProjectAdapter(ctx, R.layout.project_item, projectList);
+        adapter = new ProjectAdapter(ctx, R.layout.project_item, projectList, new ProjectAdapter.ProjectAdapterListener() {
+            @Override
+            public void onEditRequested(ProjectDTO project) {
+                mListener.onProjectEditDialogRequested(project);
+            }
+
+            @Override
+            public void onProjectSitesRequested(ProjectDTO project) {
+                mListener.onProjectSitesRequested(project);
+            }
+            @Override
+            public void onPictureRequested(ProjectDTO project) {
+                mListener.onProjectPictureRequested(project);
+            }
+        });
         mListView.setAdapter(adapter);
         txtProjectCount = (TextView)view.findViewById(R.id.PROJ_LIST_projectCount);
         txtStatusCount = (TextView)view.findViewById(R.id.PROJ_LIST_statusCount);
@@ -139,6 +154,23 @@ public class ProjectListFragment extends Fragment implements AbsListView.OnItemC
         }
     }
 
+
+    public void addProject(ProjectDTO project) {
+        if (projectList == null) {
+            projectList = new ArrayList<>();
+        }
+        projectList.add(0,project);
+        //Collections.sort(clientList);
+        adapter.notifyDataSetChanged();
+        txtProjectCount.setText("" + projectList.size());
+        try {
+            Thread.sleep(1000);
+            Util.animateRotationY(txtProjectCount,500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
     /**
      * The default content for this Fragment has a TextView that is shown when
      * the list is empty. If you would like to change the text, call this method
@@ -164,6 +196,9 @@ public class ProjectListFragment extends Fragment implements AbsListView.OnItemC
     */
     public interface ProjectListListener {
         public void onProjectClicked(ProjectDTO project);
+        public void onProjectEditDialogRequested(ProjectDTO project);
+        public void onProjectSitesRequested(ProjectDTO project);
+        public void onProjectPictureRequested(ProjectDTO project);
     }
 
     private List<ProjectDTO> projectList;

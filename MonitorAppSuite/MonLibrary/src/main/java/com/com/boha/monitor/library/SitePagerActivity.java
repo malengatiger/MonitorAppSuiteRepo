@@ -1,6 +1,7 @@
 package com.com.boha.monitor.library;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.dialogs.ProjectSiteDialog;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
@@ -33,14 +35,15 @@ import java.util.List;
 
 public class SitePagerActivity extends FragmentActivity implements com.google.android.gms.location.LocationListener,
         GooglePlayServicesClient.ConnectionCallbacks,
-        GooglePlayServicesClient.OnConnectionFailedListener, ProjectSiteListFragment.ProjectSiteListListener {
+        GooglePlayServicesClient.OnConnectionFailedListener,
+        ProjectSiteListFragment.ProjectSiteListListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_pager);
+        setContentView(R.layout.activity_site_pager);
         ctx = getApplicationContext();
-        mPager = (ViewPager)findViewById(R.id.pager);
+        mPager = (ViewPager)findViewById(R.id.SITE_pager);
 
         project = (ProjectDTO)getIntent().getSerializableExtra("project");
         buildPages();
@@ -50,7 +53,7 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_pager, menu);
+        getMenuInflater().inflate(R.menu.site_pager, menu);
         mMenu = menu;
         return true;
     }
@@ -61,7 +64,39 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_refresh) {
+        if (id == R.id.action_help) {
+            ToastUtil.toast(ctx,ctx.getString(R.string.under_cons));
+            return true;
+        }
+        if (id == R.id.action_add) {
+
+            ProjectSiteDialog d = new ProjectSiteDialog();
+            d.setContext(ctx);
+            d.setProject(project);
+            d.setProjectSite(new ProjectSiteDTO());
+            d.setAction(ProjectSiteDTO.ACTION_ADD);
+            d.setListener(new ProjectSiteDialog.ProjectSiteDialogListener() {
+                @Override
+                public void onProjectSiteAdded(final ProjectSiteDTO site) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            projectSiteListFragment.addProjectSite(site);
+                        }
+                    });
+                }
+
+                @Override
+                public void onProjectSiteUpdated(ProjectSiteDTO project) {
+
+                }
+
+                @Override
+                public void onError(String message) {
+
+                }
+            });
+            d.show(getFragmentManager(), "PSD_DIAG");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -223,6 +258,47 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
     public void onProjectSiteClicked(ProjectSiteDTO projectSite) {
 
     }
+
+    @Override
+    public void onProjectSiteEditRequested(ProjectSiteDTO projectSite) {
+
+        ProjectSiteDialog d = new ProjectSiteDialog();
+        d.setContext(ctx);
+        d.setProject(project);
+        d.setProjectSite(projectSite);
+        d.setAction(ProjectSiteDTO.ACTION_UPDATE);
+        d.setListener(new ProjectSiteDialog.ProjectSiteDialogListener() {
+            @Override
+            public void onProjectSiteAdded(final ProjectSiteDTO site) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        projectSiteListFragment.addProjectSite(site);
+                    }
+                });
+            }
+
+            @Override
+            public void onProjectSiteUpdated(ProjectSiteDTO project) {
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
+        d.show(getFragmentManager(), "PSD_DIAG");
+    }
+
+    @Override
+    public void onProjectSiteTasksRequested(ProjectSiteDTO projectSite) {
+
+        Intent i = new Intent(this,TaskAssignmentActivity.class);
+        i.putExtra("projectSite",projectSite);
+        startActivity(i);
+    }
+
 
     private class PagerAdapter extends FragmentStatePagerAdapter {
 

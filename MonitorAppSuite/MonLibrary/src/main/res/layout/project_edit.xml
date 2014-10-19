@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:background="@color/grey"
+                android:padding="0dp"
+                android:visibility="visible"
+                android:id="@+id/PE__layout0"
+                android:layout_height="wrap_content">
+
+    <RelativeLayout
+            android:id="@+id/PE__mainLayout"
+            android:layout_width="match_parent"
+            android:background="@drawable/xwhite_rounded_corners"
+            android:layout_height="wrap_content">
+
+
+
+        <ProgressBar
+                android:id="@+id/PE__progress"
+                android:layout_alignParentTop="true"
+                android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                style="@android:style/Widget.ProgressBar.Small"
+                android:layout_height="wrap_content"/>
+
+
+        <TextView
+                android:id="@+id/PE__groupName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                style="@style/Title3TextStyleBlack"
+                android:layout_alignParentLeft="true"
+                android:inputType="textCapWords"
+                android:text="@string/company_name"/>
+
+        <RelativeLayout
+                android:id="@+id/PE__space"
+                android:layout_width="match_parent"
+                android:background="@color/beige_pale"
+                android:layout_below="@id/PE__groupName"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/PE__personType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Title3TextStyleGrey"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/company_projects"/>
+        </RelativeLayout>
+
+        <EditText
+                android:id="@+id/PE__projectName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/PE__space"
+                android:inputType="textCapWords"
+                android:textSize="24sp"
+                android:layout_marginLeft="5dp"
+                android:hint="@string/projectname"/>
+
+        <EditText
+                android:id="@+id/PE__desc"
+                android:layout_width="match_parent"
+                android:layout_below="@id/PE__projectName"
+                android:inputType="textCapSentences"
+                android:lines="3"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/description"/>
+
+
+        <Spinner
+                android:id="@+id/PE__spinner"
+                android:layout_width="match_parent"
+                android:layout_below="@id/PE__desc"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:background="@color/blue_pale"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"/>
+
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_below="@id/PE__spinner"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+            <Button
+                    android:id="@+id/PE__btnCancel"
+                    style="@style/ButtonCancel"
+                    android:text="@string/cancel"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <Button
+                    android:id="@+id/PE__btnSave"
+                    style="@style/ButtonSave"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:text="@string/save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/PE__btnDelete"
+                style="@style/ButtonRed"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:text="@string/delete"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

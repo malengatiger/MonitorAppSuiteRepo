@@ -25,12 +25,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt"
+            android:text="@string/company_projects"
             android:id="@+id/PROJ_txtName"
             style="@style/Title3TextStyleBlack"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/PROJ_image" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/client_name"
+            android:id="@+id/PROJ_txtClientName"
+            style="@style/Title3TextStyleBlue"
+
+            android:layout_marginLeft="55dp"
+            android:layout_below="@+id/PROJ_txtName"
+            android:layout_marginTop="15dp"/>
 
     </RelativeLayout>
 
@@ -81,6 +91,13 @@
             android:textSize="16sp"
 
             android:layout_marginLeft="10dp" />
+        <ImageView
+            android:id="@+id/PROJ_camera"
+            android:src="@drawable/camera_a32"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -88,6 +105,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/PROJ_staffLayout"
         android:layout_marginTop="16dp"
+        android:visibility="gone"
         android:layout_alignLeft="@id/PROJ_layout"
         android:layout_below="@id/PROJ_layout">
 

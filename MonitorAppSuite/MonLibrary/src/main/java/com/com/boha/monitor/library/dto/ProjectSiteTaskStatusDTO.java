@@ -7,6 +7,7 @@
 package com.com.boha.monitor.library.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -15,12 +16,61 @@ import java.io.Serializable;
 public class ProjectSiteTaskStatusDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer projectSiteTaskStatusID;
-    private long dateUpdated;
+    private Date dateUpdated;
+    private Date statusDate;
     private TaskStatusDTO taskStatus;
+    private TaskDTO task;
     private Integer projectSiteTaskID;
-    private Integer projectSiteStaffID, companyStaffID;
+    private Integer companyStaffID;
     private String projectSiteName, projectName, staffName;
 
+    public TaskDTO getTask() {
+        return task;
+    }
+
+    public void setTask(TaskDTO task) {
+        this.task = task;
+    }
+
+    public Integer getProjectSiteTaskStatusID() {
+        return projectSiteTaskStatusID;
+    }
+
+    public void setProjectSiteTaskStatusID(Integer projectSiteTaskStatusID) {
+        this.projectSiteTaskStatusID = projectSiteTaskStatusID;
+    }
+
+    public Date getDateUpdated() {
+        return dateUpdated;
+    }
+
+    public void setDateUpdated(Date dateUpdated) {
+        this.dateUpdated = dateUpdated;
+    }
+
+    public Date getStatusDate() {
+        return statusDate;
+    }
+
+    public void setStatusDate(Date statusDate) {
+        this.statusDate = statusDate;
+    }
+
+    public TaskStatusDTO getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(TaskStatusDTO taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+
+    public Integer getProjectSiteTaskID() {
+        return projectSiteTaskID;
+    }
+
+    public void setProjectSiteTaskID(Integer projectSiteTaskID) {
+        this.projectSiteTaskID = projectSiteTaskID;
+    }
 
     public Integer getCompanyStaffID() {
         return companyStaffID;
@@ -53,76 +103,4 @@ public class ProjectSiteTaskStatusDTO implements Serializable {
     public void setStaffName(String staffName) {
         this.staffName = staffName;
     }
-
-   
-
-    public Integer getProjectSiteTaskStatusID() {
-        return projectSiteTaskStatusID;
-    }
-
-    public void setProjectSiteTaskStatusID(Integer projectSiteTaskStatusID) {
-        this.projectSiteTaskStatusID = projectSiteTaskStatusID;
-    }
-
-    public long getDateUpdated() {
-        return dateUpdated;
-    }
-
-    public void setDateUpdated(long dateUpdated) {
-        this.dateUpdated = dateUpdated;
-    }
-
-   
-
-    public TaskStatusDTO getTaskStatus() {
-        return taskStatus;
-    }
-
-    public void setTaskStatus(TaskStatusDTO taskStatus) {
-        this.taskStatus = taskStatus;
-    }
-
-    public Integer getProjectSiteTaskID() {
-        return projectSiteTaskID;
-    }
-
-    public void setProjectSiteTaskID(Integer projectSiteTaskID) {
-        this.projectSiteTaskID = projectSiteTaskID;
-    }
-
-    public Integer getProjectSiteStaffID() {
-        return projectSiteStaffID;
-    }
-
-    public void setProjectSiteStaffID(Integer projectSiteStaffID) {
-        this.projectSiteStaffID = projectSiteStaffID;
-    }
-
-   
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (projectSiteTaskStatusID != null ? projectSiteTaskStatusID.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProjectSiteTaskStatusDTO)) {
-            return false;
-        }
-        ProjectSiteTaskStatusDTO other = (ProjectSiteTaskStatusDTO) object;
-        if ((this.projectSiteTaskStatusID == null && other.projectSiteTaskStatusID != null) || (this.projectSiteTaskStatusID != null && !this.projectSiteTaskStatusID.equals(other.projectSiteTaskStatusID))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.boha.monitor.data.ProjectSiteTaskStatus[ projectSiteTaskStatusID=" + projectSiteTaskStatusID + " ]";
-    }
-    
 }

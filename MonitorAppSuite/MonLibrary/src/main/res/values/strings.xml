@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string-array name="action_items">
         <item>Projects</item>
         <item>Staff</item>
@@ -12,6 +13,7 @@
         <item>Company Clients</item>
         <item>Status Notifications</item>
     </string-array>
+
     <string name="pay_mobile">Payment via Mobile</string>
     <string name="pay_credit">Payment via Google Play</string>
     <string name="subs">mgGolf Subscription</string>
@@ -54,11 +56,21 @@
     <string name="error_duplicate">Attempting to put duplicate data in database, ignored</string>
     <string name="welcome_aboard">Welcome Aboard! Thanks for signing up!</string>
     <string name="app_name">Monitor</string>
+    <string name="change_item">Change this item</string>
+    <string name="remove_item">Remove this item</string>
+    <string name="delete">Delete</string>
+    <string name="select_client">Select Client</string>
+    <string name="select_staff_type">Please select Staff Type</string>
+    <string name="select_task">Select Task</string>
     <string name="pages">Page</string>
     <string name="firstname">First Name</string>
+    <string name="projectname">Project Name</string>
+    <string name="client_name">Client Name</string>
     <string name="golfgroup_number">Golf Group Number</string>
     <string name="tourney_name">Tournament Name</string>
     <string name="lastname">Surname</string>
+    <string name="description">Detailed Project Description</string>
+    <string name="address">Address</string>
     <string name="start_date">Start Date</string>
     <string name="end_date">End Date</string>
     <string name="cellphone">Cellphone</string>
@@ -96,6 +108,7 @@
     <string name="club_directions">Do you want directions from your location to this Club?</string>
     <string name="text_msg">Text Message</string>
     <string name="email">Email</string>
+    <string name="postcode">Postal Code</string>
     <string name="zero">00</string>
     <string name="tee">Tee</string>
     <string name="enter_pin">Enter PIN</string>
@@ -122,8 +135,12 @@
     <string name="site_tasks">Project Site Tasks</string>
     <string name="site_staff">Project Site Staff</string>
     <string name="company_projects">Company Projects</string>
+    <string name="task_status">Task Status</string>
+    <string name="project_status">Project Status</string>
     <string name="company_staff">Company Staff</string>
     <string name="closed">Closed</string>
+    <string name="project_site">Project Site</string>
+    <string name="project_site_details">Project Site Details</string>
     <string name="status_update_week">Task Status Updates this Week</string>
     <string name="status_updates">Status Updates</string>
     <string name="take_pic">Take Picture</string>
@@ -141,6 +158,10 @@
     <string name="change">Change Information</string>
     <string name="upload_video">Upload Video</string>
     <string name="camera">Camera</string>
+    <string name="client_list">Client List</string>
+    <string name="task_status_list">Task Status List</string>
+    <string name="project_statustype_list">Project Status List</string>
+    <string name="beneficiary_list">Beneficiary List</string>
     <string name="camera_error">Unable to get picture from camera. Please try again.</string>
     <string name="combined_leaderboard">Combined Leaderboard</string>
     <string name="existing_acct">Sign in to existing account</string>
@@ -149,6 +170,7 @@
     <string name="gallery">Gallery</string>
     <string name="staff_name">Staff Name</string>
     <string name="staff">Staff</string>
+    <string name="client">Client</string>
     <string name="staff_operations">Operations Staff</string>
     <string name="save">Save</string>
     <string name="selected">Selected</string>
@@ -168,7 +190,13 @@
     <string name="enter_comp_name">Enter Company Name</string>
     <string name="enter_firstname">Enter First Name</string>
     <string name="enter_lastname">Enter Surname</string>
+    <string name="enter_desc">Enter Description</string>
     <string name="enter_cell">Enter Cellphone Number</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_address">Enter Address</string>
+    <string name="enter_project_site">Enter Project Site Name</string>
+    <string name="enter_erf">Enter Stand/Erf Number</string>
+    <string name="enter_postcode">Enter Postal Code</string>
     <string name="enter_email">Enter Email address</string>
     <string name="enter_startdate">Enter Start Date</string>
     <string name="enter_enddate">Enter End Date</string>
@@ -179,5 +207,7 @@
     <string name="action_refresh">Refresh</string>
     <string name="title_activity_task_status_notification">TaskStatusNotificationActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_image">ImageActivity</string>
+    <string name="title_activity_task_assignment">TaskAssignmentActivity</string>
 
 </resources>

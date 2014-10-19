@@ -20,15 +20,24 @@ import java.util.Locale;
 
 public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
 
+    public interface ProjectSiteAdapterListener {
+        public void onEditRequested(ProjectSiteDTO site);
+
+        public void onTasksRequested(ProjectSiteDTO site);
+    }
+
     private final LayoutInflater mInflater;
     private final int mLayoutRes;
     private List<ProjectSiteDTO> mList;
     private Context ctx;
+    private ProjectSiteAdapterListener listener;
 
-   public ProjectSiteAdapter(Context context, int textViewResourceId,
-                             List<ProjectSiteDTO> list) {
+    public ProjectSiteAdapter(Context context, int textViewResourceId,
+                              List<ProjectSiteDTO> list,
+                              ProjectSiteAdapterListener listener) {
         super(context, textViewResourceId, list);
         this.mLayoutRes = textViewResourceId;
+        this.listener = listener;
         mList = list;
         ctx = context;
         this.mInflater = (LayoutInflater) context
@@ -57,16 +66,16 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
             item.txtTaskCount = (TextView) convertView
                     .findViewById(R.id.SITE_txtTaskCount);
             item.txtStaffCount = (TextView) convertView
-                   .findViewById(R.id.SITE_txtStaffCount);
+                    .findViewById(R.id.SITE_txtStaffCount);
 
             convertView.setTag(item);
         } else {
             item = (ViewHolderItem) convertView.getTag();
         }
 
-        ProjectSiteDTO p = mList.get(position);
+        final ProjectSiteDTO p = mList.get(position);
         item.txtName.setText(p.getProjectSiteName());
-        item.txtNumber.setText(""+(position+ 1));
+        item.txtNumber.setText("" + (position + 1));
         if (p.getProjectSiteTaskList() == null) {
             item.txtTaskCount.setText("0");
         } else {
@@ -78,8 +87,20 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
         } else {
             item.txtStaffCount.setText("" + p.getProjectSiteStaffList().size());
         }
-        Statics.setRobotoFontLight(ctx,item.txtNumber);
-        Statics.setRobotoFontBold(ctx,item.txtName);
+        item.txtNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onEditRequested(p);
+            }
+        });
+        item.txtTaskCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onTasksRequested(p);
+            }
+        });
+        Statics.setRobotoFontLight(ctx, item.txtNumber);
+        Statics.setRobotoFontBold(ctx, item.txtName);
 
         animateView(convertView);
         return (convertView);

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
@@ -19,6 +18,7 @@ import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,37 +32,12 @@ import java.util.List;
  */
 public class ProjectSiteListFragment extends Fragment implements AbsListView.OnItemClickListener, PageFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private ProjectSiteListListener mListener;
 
     /**
      * The fragment's ListView/GridView.
      */
     private AbsListView mListView;
-
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
-    private ListAdapter mAdapter;
-
-    // TODO: Rename and change types of parameters
-    public static ProjectSiteListFragment newInstance(String param1, String param2) {
-        ProjectSiteListFragment fragment = new ProjectSiteListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -75,15 +50,12 @@ public class ProjectSiteListFragment extends Fragment implements AbsListView.OnI
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
-           }
+    }
 
     Context ctx;
     TextView txtCount, txtName;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,14 +67,24 @@ public class ProjectSiteListFragment extends Fragment implements AbsListView.OnI
             projectSiteList = project.getProjectSiteList();
         }
 
-        txtCount = (TextView)view.findViewById(R.id.SITE_LIST_siteCount);
-        txtName = (TextView)view.findViewById(R.id.SITE_LIST_projectName);
+        txtCount = (TextView) view.findViewById(R.id.SITE_LIST_siteCount);
+        txtName = (TextView) view.findViewById(R.id.SITE_LIST_projectName);
         txtName.setText(project.getProjectName());
-        Statics.setRobotoFontLight(ctx,txtName);
+        Statics.setRobotoFontLight(ctx, txtName);
         txtCount.setText("" + projectSiteList.size());
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
-        projectSiteAdapter = new ProjectSiteAdapter(ctx, R.layout.site_item, projectSiteList);
+        projectSiteAdapter = new ProjectSiteAdapter(ctx, R.layout.site_item, projectSiteList, new ProjectSiteAdapter.ProjectSiteAdapterListener() {
+            @Override
+            public void onEditRequested(ProjectSiteDTO site) {
+                mListener.onProjectSiteEditRequested(site);
+            }
+
+            @Override
+            public void onTasksRequested(ProjectSiteDTO site) {
+                mListener.onProjectSiteTasksRequested(site);
+            }
+        });
         mListView.setAdapter(projectSiteAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
@@ -110,6 +92,22 @@ public class ProjectSiteListFragment extends Fragment implements AbsListView.OnI
         return view;
     }
 
+    public void addProjectSite(ProjectSiteDTO site) {
+        if (projectSiteList == null) {
+            projectSiteList = new ArrayList<>();
+        }
+        projectSiteList.add(0,site);
+        //Collections.sort(clientList);
+        projectSiteAdapter.notifyDataSetChanged();
+        txtCount.setText("" + projectSiteList.size());
+        try {
+            Thread.sleep(1000);
+            Util.animateRotationY(txtCount,500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -137,10 +135,13 @@ public class ProjectSiteListFragment extends Fragment implements AbsListView.OnI
             mListener.onProjectSiteClicked(projectSite);
         }
     }
+
     ProjectSiteDTO projectSite;
+
     public ProjectSiteDTO getProjectSite() {
         return projectSite;
     }
+
     /**
      * The default content for this Fragment has a TextView that is shown when
      * the list is empty. If you would like to change the text, call this method
@@ -156,7 +157,7 @@ public class ProjectSiteListFragment extends Fragment implements AbsListView.OnI
 
     @Override
     public void animateCounts() {
-        Util.animateRotationY(txtCount,500);
+        Util.animateRotationY(txtCount, 500);
 
     }
 
@@ -172,6 +173,8 @@ public class ProjectSiteListFragment extends Fragment implements AbsListView.OnI
      */
     public interface ProjectSiteListListener {
         public void onProjectSiteClicked(ProjectSiteDTO projectSite);
+        public void onProjectSiteEditRequested(ProjectSiteDTO projectSite);
+        public void onProjectSiteTasksRequested(ProjectSiteDTO projectSite);
     }
 
     ProjectDTO project;

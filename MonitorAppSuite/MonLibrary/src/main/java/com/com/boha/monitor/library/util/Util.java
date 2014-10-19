@@ -127,6 +127,14 @@ public class Util {
         an.setInterpolator(new AccelerateDecelerateInterpolator());
         an.start();
     }
+    public static void animateSlideRight(View view, long duration) {
+        final ObjectAnimator an = ObjectAnimator.ofFloat(
+                view, "translate", 0, 100,0,100);
+        //an.setRepeatCount(ObjectAnimator.REVERSE);
+        an.setDuration(duration);
+        an.setInterpolator(new AccelerateDecelerateInterpolator());
+        an.start();
+    }
 
     public static void animateFlipFade(Context ctx, View v) {
         AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(ctx,

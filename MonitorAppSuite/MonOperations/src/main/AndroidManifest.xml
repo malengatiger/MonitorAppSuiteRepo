@@ -36,12 +36,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.com.boha.monitor.library.ImagePagerActivity"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".MainPagerActivity"
+            android:screenOrientation="portrait"
+            android:name=".OperationsPagerActivity"
             android:label="@string/title_activity_main_pager"></activity>
         <activity
             android:name="com.com.boha.monitor.library.CameraActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
         <activity android:name="com.com.boha.monitor.library.PictureActivity"
             android:configChanges="orientation|keyboardHidden"/>
         <service android:name="com.com.boha.monitor.library.services.PhotoUploadService" />

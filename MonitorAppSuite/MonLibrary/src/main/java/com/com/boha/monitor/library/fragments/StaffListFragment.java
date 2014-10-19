@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
@@ -19,6 +18,8 @@ import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.Util;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,16 +31,8 @@ import java.util.List;
  * Activities containing this fragment MUST implement the ProjectSiteListListener
  * interface.
  */
-public class StaffListFragment extends Fragment implements AbsListView.OnItemClickListener, PageFragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class StaffListFragment extends Fragment
+        implements AbsListView.OnItemClickListener, PageFragment {
 
     private CompanyStaffListListener mListener;
 
@@ -48,26 +41,6 @@ public class StaffListFragment extends Fragment implements AbsListView.OnItemCli
      */
     private AbsListView mListView;
 
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
-    private ListAdapter mAdapter;
-
-    // TODO: Rename and change types of parameters
-    public static StaffListFragment newInstance(String param1, String param2) {
-        StaffListFragment fragment = new StaffListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public StaffListFragment() {
     }
 
@@ -75,15 +48,12 @@ public class StaffListFragment extends Fragment implements AbsListView.OnItemCli
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
-           }
+    }
 
     Context ctx;
     TextView txtCount, txtName;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,14 +65,25 @@ public class StaffListFragment extends Fragment implements AbsListView.OnItemCli
             companyStaffList = r.getCompany().getCompanyStaffList();
         }
 
-        txtCount = (TextView)view.findViewById(R.id.STAFF_LIST_staffCount);
+        txtCount = (TextView) view.findViewById(R.id.STAFF_LIST_staffCount);
         //txtName = (TextView)view.findViewById(R.id.sta);
         //txtName.setText(SharedUtil.getCompany(ctx).getCompanyName());
         //Statics.setRobotoFontLight(ctx,txtName);
         txtCount.setText("" + companyStaffList.size());
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
-        staffAdapter = new StaffAdapter(ctx, R.layout.person_item, companyStaffList);
+        staffAdapter = new StaffAdapter(ctx, R.layout.person_item,
+                companyStaffList, new StaffAdapter.StaffAdapterListener() {
+            @Override
+            public void onPictureRequested(CompanyStaffDTO staff) {
+                mListener.onCompanyStaffPictureRequested(staff);
+            }
+
+            @Override
+            public void onStatusUpdatesRequested(CompanyStaffDTO staff) {
+
+            }
+        });
         mListView.setAdapter(staffAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
@@ -135,10 +116,13 @@ public class StaffListFragment extends Fragment implements AbsListView.OnItemCli
             mListener.onCompanyStaffClicked(companyStaffDTO);
         }
     }
+
     CompanyStaffDTO companyStaffDTO;
+
     public CompanyStaffDTO getCompanyStaffDTO() {
         return companyStaffDTO;
     }
+
     /**
      * The default content for this Fragment has a TextView that is shown when
      * the list is empty. If you would like to change the text, call this method
@@ -154,7 +138,24 @@ public class StaffListFragment extends Fragment implements AbsListView.OnItemCli
 
     @Override
     public void animateCounts() {
-        Util.animateRotationY(txtCount,500);
+        Util.animateRotationY(txtCount, 500);
+
+    }
+
+    public void addCompanyStaff(CompanyStaffDTO staff) {
+        if (companyStaffList == null) {
+            companyStaffList = new ArrayList<>();
+        }
+        companyStaffList.add(staff);
+        Collections.sort(companyStaffList);
+        staffAdapter.notifyDataSetChanged();
+        txtCount.setText("" + companyStaffList.size());
+        try {
+            Thread.sleep(1000);
+            Util.animateRotationY(txtCount, 500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -170,6 +171,8 @@ public class StaffListFragment extends Fragment implements AbsListView.OnItemCli
      */
     public interface CompanyStaffListListener {
         public void onCompanyStaffClicked(CompanyStaffDTO companyStaff);
+
+        public void onCompanyStaffPictureRequested(CompanyStaffDTO companyStaff);
     }
 
     ProjectDTO project;

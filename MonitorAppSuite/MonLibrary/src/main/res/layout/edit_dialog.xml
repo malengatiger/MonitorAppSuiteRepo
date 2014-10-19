@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/EDD_top"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/EDD_progress"
+            style="@android:style/Widget.ProgressBar.Small"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/EDD_title"
+            style="@style/Title3TextStyleBlack"
+            android:text="Dialog Title"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/EDD_edit"
+            android:layout_below="@id/EDD_title"
+            android:layout_marginTop="10dp"
+            android:hint="Something to delete or change"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/EDD_desc"
+            android:layout_below="@id/EDD_edit"
+            android:layout_marginTop="10dp"
+            android:hint="Item description where appropriate and required by the business rule under consideration. Looks fine in multiple lines, eh?"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/EDD_top"
+        android:padding="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/EDD_btnChange"
+            android:text="@string/change_item"
+            android:background="@color/blue"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/EDD_btnDelete"
+            android:layout_below="@id/EDD_btnChange"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/yellow"
+            android:text="@string/remove_item"
+            android:background="@color/absa_red"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/EDD_btnCancel"
+            android:layout_below="@id/EDD_btnDelete"
+            android:layout_marginTop="16dp"
+            android:text="@string/cancel"
+            android:background="@color/grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+</RelativeLayout>

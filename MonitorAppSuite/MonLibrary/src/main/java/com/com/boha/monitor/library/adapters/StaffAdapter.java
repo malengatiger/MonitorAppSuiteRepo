@@ -1,6 +1,7 @@
 package com.com.boha.monitor.library.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,11 @@ import android.widget.TextView;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
+import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -21,15 +26,24 @@ import java.util.Locale;
 
 public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
 
+    public interface StaffAdapterListener {
+        public void onPictureRequested(CompanyStaffDTO staff);
+
+        public void onStatusUpdatesRequested(CompanyStaffDTO staff);
+    }
+
     private final LayoutInflater mInflater;
     private final int mLayoutRes;
     private List<CompanyStaffDTO> mList;
     private Context ctx;
+    private StaffAdapterListener listener;
 
-   public StaffAdapter(Context context, int textViewResourceId,
-                       List<CompanyStaffDTO> list) {
+    public StaffAdapter(Context context, int textViewResourceId,
+                        List<CompanyStaffDTO> list,
+                        StaffAdapterListener listener) {
         super(context, textViewResourceId, list);
         this.mLayoutRes = textViewResourceId;
+        this.listener = listener;
         mList = list;
         ctx = context;
         this.mInflater = (LayoutInflater) context
@@ -47,7 +61,7 @@ public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolderItem item;
+        final ViewHolderItem item;
         if (convertView == null) {
             convertView = mInflater.inflate(mLayoutRes, null);
             item = new ViewHolderItem();
@@ -66,7 +80,7 @@ public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
 //            item.imgHistory = (ImageView) convertView
 //                    .findViewById(R.id.PA_imgStaffHistory);
             item.imgCamera = (ImageView) convertView
-                   .findViewById(R.id.PA_imgCamera);
+                    .findViewById(R.id.PA_imgCamera);
             item.imgEdit = (ImageView) convertView
                     .findViewById(R.id.PA_imgEdit);
             item.imgInvite = (ImageView) convertView
@@ -81,7 +95,7 @@ public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
             item = (ViewHolderItem) convertView.getTag();
         }
 
-        CompanyStaffDTO p = mList.get(position);
+        final CompanyStaffDTO p = mList.get(position);
         item.txtName.setText(p.getFirstName() + " " + p.getLastName());
         item.txtEmail.setText(p.getEmail());
         item.txtStaffType.setText(p.getCompanyStaffType().getCompanyStaffTypeName());
@@ -90,11 +104,43 @@ public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
         } else {
             item.txtCellphone.setText(p.getCellphone());
         }
-        item.txtNumber.setText(""+(position+ 1));
+        item.txtNumber.setText("" + (position + 1));
+        item.photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onPictureRequested(p);
+            }
+        });
+        Statics.setRobotoFontLight(ctx, item.txtNumber);
+        Statics.setRobotoFontLight(ctx, item.txtEmail);
+        Statics.setRobotoFontBold(ctx, item.txtName);
+        StringBuilder sb = new StringBuilder();
+        sb.append(Statics.IMAGE_URL);
+        sb.append("company").append(SharedUtil.getCompany(ctx).getCompanyID());
+        sb.append("/companyStaff/t").append(p.getCompanyStaffID()).append(".jpg");
 
-        Statics.setRobotoFontLight(ctx,item.txtNumber);
-        Statics.setRobotoFontLight(ctx,item.txtEmail);
-        Statics.setRobotoFontBold(ctx,item.txtName);
+        System.out.println(sb.toString());
+        ImageLoader.getInstance().displayImage(sb.toString(),item.photo, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String s, View view) {
+
+            }
+
+            @Override
+            public void onLoadingFailed(String s, View view, FailReason failReason) {
+                item.photo.setImageDrawable(ctx.getResources().getDrawable(R.drawable.boy));
+            }
+
+            @Override
+            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+
+            }
+
+            @Override
+            public void onLoadingCancelled(String s, View view) {
+
+            }
+        });
 
 
         animateView(convertView);

@@ -80,6 +80,11 @@ public class MainPagerActivity extends FragmentActivity implements com.google.an
         if (id == R.id.action_add) {
             return true;
         }
+        if (id == R.id.action_gallery) {
+            Intent i = new Intent(this,ImagePagerActivity.class);
+            startActivity(i);
+            return true;
+        }
         if (id == R.id.action_refresh) {
             isRefresh = true;
             getData();
@@ -271,6 +276,21 @@ public class MainPagerActivity extends FragmentActivity implements com.google.an
         Intent i = new Intent(this, SitePagerActivity.class);
         i.putExtra("project", project);
         startActivity(i);
+    }
+
+    @Override
+    public void onProjectEditDialogRequested(ProjectDTO project) {
+
+    }
+
+    @Override
+    public void onProjectSitesRequested(ProjectDTO project) {
+
+    }
+
+    @Override
+    public void onProjectPictureRequested(ProjectDTO project) {
+
     }
 
     @Override

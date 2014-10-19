@@ -39,6 +39,15 @@
             android:name="com.com.boha.monitor.library.services.PhotoUploadService"
             android:exported="false" >
         </service>
+
+        <activity
+            android:name="com.com.boha.monitor.library.ImageActivity"
+            android:label="@string/title_activity_image" >
+        </activity>
+        <activity
+            android:name="com.com.boha.monitor.library.TaskAssignmentActivity"
+            android:label="@string/title_activity_task_assignment" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

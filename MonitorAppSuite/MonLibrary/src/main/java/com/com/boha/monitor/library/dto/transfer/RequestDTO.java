@@ -6,7 +6,10 @@
 
 package com.com.boha.monitor.library.dto.transfer;
 
+import com.com.boha.monitor.library.dto.BeneficiaryDTO;
+import com.com.boha.monitor.library.dto.CheckPointDTO;
 import com.com.boha.monitor.library.dto.CityDTO;
+import com.com.boha.monitor.library.dto.ClientDTO;
 import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.com.boha.monitor.library.dto.GcmDeviceDTO;
@@ -17,6 +20,8 @@ import com.com.boha.monitor.library.dto.ProjectSiteStaffDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.ProjectStatusTypeDTO;
+import com.com.boha.monitor.library.dto.TaskDTO;
+import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.dto.TownshipDTO;
 
 import java.io.Serializable;
@@ -35,6 +40,9 @@ public class RequestDTO implements Serializable{
     private ProjectSiteDTO projectSite;
     private ProjectSiteStaffDTO projectSiteStaff;
     private GcmDeviceDTO gcmDevice;
+    private TaskStatusDTO taskStatus;
+    private TaskDTO task;
+    private CheckPointDTO checkPoint;
     
     private ProjectSiteTaskDTO projectSiteTask;
     private ProjectDiaryRecordDTO projectDiaryRecord;
@@ -42,21 +50,23 @@ public class RequestDTO implements Serializable{
     private ProjectStatusTypeDTO projectStatusType;
     private CityDTO city;
     private TownshipDTO township;
+    private ClientDTO client;
+    private BeneficiaryDTO beneficiary;
     //register actors
     public static final int
             REGISTER_COMPANY = 1,
             REGISTER_COMPANY_STAFF = 2,
             REGISTER_PROJECT = 3,
             REGISTER_PROJECT_SITE = 4,
-            REGISTER_PROJECT_SITE_STAFF = 5;
+            REGISTER_PROJECT_SITE_STAFF = 5,
+            REGISTER_CLIENT = 6,
+            REGISTER_BENEFICIARY = 7;
     //add stuff
     public static final int
             ADD_PROJECT_SITE_TASK = 11,
             ADD_PROJECT_DIARY_RECORD = 12,
             ADD_PROJECT_SITE_TASK_STATUS = 13,
             ADD_PROJECT_STATUS_TYPE = 14,
-            ADD_SITE_IMAGE = 15,
-            ADD_TASK_IMAGE = 16,
             ADD_DEVICE = 17;
     //get stuff
     public static final int
@@ -82,7 +92,29 @@ public class RequestDTO implements Serializable{
             ADD_COMPANY_PROJECT_STATUS_TYPE = 303,
             ADD_COMPANY_CHECKPOINT = 304,
             ADD_CITY = 305,
-            ADD_TOWNSHIP = 306;
+            ADD_TOWNSHIP = 306,
+            ADD_SITE_TASK = 307;
+    //updates
+    public static final int
+            UPDATE_COMPANY_TASK = 401,
+            UPDATE_COMPANY_TASK_STATUS = 402,
+            UPDATE_COMPANY_PROJECT_STATUS_TYPE = 403,
+            UPDATE_COMPANY_CHECKPOINT = 404,
+            UPDATE_PROJECT = 405,
+            UPDATE_PROJECT_SITE = 406;
+    //invoice
+    public static final int
+            ADD_INVOICE = 501,
+            ADD_INVOICE_ITEM = 502,
+            REMOVE_INVOICE_ITEM = 503,
+            CREATE_INVOICE_PDF = 504,
+            DELETE_INVOICE = 505;
+    //reports
+    public static final int
+            REPORT_PROJECT = 601,
+            REPORT_SITE = 602,
+            GET_PROJECT_STATUS_LIST = 603,
+            GET_PROJECT_SITE_STATUS_LIST = 604;
 
 
     public static final String COMPANY_DIR = "company";
@@ -92,6 +124,46 @@ public class RequestDTO implements Serializable{
     public static final String COMPANY_STAFF_DIR = "companyStaff";
 
     //
+
+    public BeneficiaryDTO getBeneficiary() {
+        return beneficiary;
+    }
+
+    public void setBeneficiary(BeneficiaryDTO beneficiary) {
+        this.beneficiary = beneficiary;
+    }
+
+    public ClientDTO getClient() {
+        return client;
+    }
+
+    public void setClient(ClientDTO client) {
+        this.client = client;
+    }
+
+    public TaskDTO getTask() {
+        return task;
+    }
+
+    public void setTask(TaskDTO task) {
+        this.task = task;
+    }
+
+    public CheckPointDTO getCheckPoint() {
+        return checkPoint;
+    }
+
+    public void setCheckPoint(CheckPointDTO checkPoint) {
+        this.checkPoint = checkPoint;
+    }
+
+    public TaskStatusDTO getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(TaskStatusDTO taskStatus) {
+        this.taskStatus = taskStatus;
+    }
 
     public CityDTO getCity() {
         return city;

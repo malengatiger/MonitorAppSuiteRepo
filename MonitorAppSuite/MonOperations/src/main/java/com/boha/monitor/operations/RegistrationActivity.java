@@ -65,7 +65,7 @@ public class RegistrationActivity extends FragmentActivity implements
                 registerGCMDevice();
             }
 
-            Intent intent = new Intent(ctx, MainPagerActivity.class);
+            Intent intent = new Intent(ctx, OperationsPagerActivity.class);
             startActivity(intent);
             finish();
             return;
@@ -194,7 +194,7 @@ public class RegistrationActivity extends FragmentActivity implements
                         });
 
 
-                        Intent intent = new Intent(ctx, MainPagerActivity.class);
+                        Intent intent = new Intent(ctx, OperationsPagerActivity.class);
                         startActivity(intent);
                         finish();
                     }
@@ -254,7 +254,7 @@ public class RegistrationActivity extends FragmentActivity implements
 
                         SharedUtil.saveCompany(ctx, response.getCompany());
                         SharedUtil.saveCompanyStaff(ctx, response.getCompanyStaff());
-                        Intent intent = new Intent(ctx, MainPagerActivity.class);
+                        Intent intent = new Intent(ctx, OperationsPagerActivity.class);
                         startActivity(intent);
 
                         CacheUtil.cacheData(ctx, response, CacheUtil.CACHE_DATA, new CacheUtil.CacheUtilListener() {

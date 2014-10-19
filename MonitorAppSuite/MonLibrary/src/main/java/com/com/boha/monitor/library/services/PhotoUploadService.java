@@ -3,6 +3,7 @@ package com.com.boha.monitor.library.services;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.util.Log;
 
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
@@ -37,51 +38,12 @@ public class PhotoUploadService extends IntentService {
      * @param thumb
      */
     public static void uploadStaffPicture(final Context context, final CompanyStaffDTO staff,
-                                         final File fullPicture, final File thumb) {
-        final PhotoUploadDTO dto = new PhotoUploadDTO();
-        dto.setCompanyID(SharedUtil.getCompany(context).getCompanyID());
+                                         final File fullPicture, final File thumb,
+                                         Location location) {
+        final PhotoUploadDTO dto = getObject(context,fullPicture,thumb,location);
         dto.setCompanyStaffID(staff.getCompanyStaffID());
-        dto.setThumbFilePath(thumb.getAbsolutePath());
-        dto.setImageFilePath(fullPicture.getAbsolutePath());
-        dto.setDateTaken(new Date());
         dto.setPictureType(PhotoUploadDTO.STAFF_IMAGE);
-
-        CacheUtil.getCachedData(context,CacheUtil.CACHE_PHOTOS,new CacheUtil.CacheUtilListener() {
-            @Override
-            public void onFileDataDeserialized(ResponseDTO response) {
-                if (response != null) {
-                    if (response.getPhotoCache() != null) {
-                        list = response.getPhotoCache().getPhotoUploadList();
-                        list.add(0,dto);
-                    }
-                } else {
-                    response = new ResponseDTO();
-                    list = new ArrayList<>();
-                    list.add(dto);
-                }
-
-                response.setPhotoCache(new PhotoCache());
-                response.getPhotoCache().setPhotoUploadList(list);
-                CacheUtil.cacheData(context,response,CacheUtil.CACHE_PHOTOS, new CacheUtil.CacheUtilListener() {
-                    @Override
-                    public void onFileDataDeserialized(ResponseDTO response) {
-
-                    }
-
-                    @Override
-                    public void onDataCached() {
-
-                    }
-                });
-                Intent intent = new Intent(context, PhotoUploadService.class);
-                context.startService(intent);
-            }
-
-            @Override
-            public void onDataCached() {
-
-            }
-        });
+        cachePhotos(context,dto);
     }
     /**
      * Upload site picture
@@ -92,111 +54,47 @@ public class PhotoUploadService extends IntentService {
      * @param thumb
      */
     public static void uploadSitePicture(final Context context, final ProjectSiteDTO site,
-                                         final File fullPicture, final File thumb) {
-        final PhotoUploadDTO dto = new PhotoUploadDTO();
-        dto.setCompanyID(SharedUtil.getCompany(context).getCompanyID());
+                                         final File fullPicture, final File thumb,
+                                         Location location) {
+        final PhotoUploadDTO dto = getObject(context,fullPicture,thumb,location);
         dto.setProjectID(site.getProjectID());
         dto.setProjectSiteID(site.getProjectSiteID());
-        dto.setThumbFilePath(thumb.getAbsolutePath());
-        dto.setImageFilePath(fullPicture.getAbsolutePath());
-        dto.setDateTaken(new Date());
         dto.setPictureType(PhotoUploadDTO.SITE_IMAGE);
-
-        CacheUtil.getCachedData(context, CacheUtil.CACHE_PHOTOS, new CacheUtil.CacheUtilListener() {
-            @Override
-            public void onFileDataDeserialized(ResponseDTO response) {
-                if (response != null) {
-                    if (response.getPhotoCache() != null) {
-                        list = response.getPhotoCache().getPhotoUploadList();
-                        list.add(0,dto);
-                    }
-                } else {
-                    response = new ResponseDTO();
-                    list = new ArrayList<>();
-                    list.add(dto);
-                }
-                response.setPhotoCache(new PhotoCache());
-                response.getPhotoCache().setPhotoUploadList(list);
-                CacheUtil.cacheData(context,response,CacheUtil.CACHE_PHOTOS, new CacheUtil.CacheUtilListener() {
-                    @Override
-                    public void onFileDataDeserialized(ResponseDTO response) {
-
-                    }
-
-                    @Override
-                    public void onDataCached() {
-
-                    }
-                });
-                //
-                Intent intent = new Intent(context, PhotoUploadService.class);
-                context.startService(intent);
-            }
-
-            @Override
-            public void onDataCached() {
-
-            }
-        });
+        cachePhotos(context,dto);
     }
     public static void uploadSiteTaskPicture(final Context context, final ProjectSiteTaskDTO siteTask,
-                                         final File fullPicture, final File thumb) {
-        final PhotoUploadDTO dto = new PhotoUploadDTO();
-        dto.setCompanyID(SharedUtil.getCompany(context).getCompanyID());
+                                         final File fullPicture, final File thumb,
+                                         Location location) {
+        final PhotoUploadDTO dto = getObject(context,fullPicture,thumb,location);
         dto.setProjectID(siteTask.getProjectID());
         dto.setProjectSiteID(siteTask.getProjectSiteID());
         dto.setProjectSiteTaskID(siteTask.getProjectSiteTaskID());
-        dto.setThumbFilePath(thumb.getAbsolutePath());
-        dto.setImageFilePath(fullPicture.getAbsolutePath());
-        dto.setDateTaken(new Date());
         dto.setPictureType(PhotoUploadDTO.TASK_IMAGE);
+        cachePhotos(context,dto);
 
-        CacheUtil.getCachedData(context, CacheUtil.CACHE_PHOTOS, new CacheUtil.CacheUtilListener() {
-            @Override
-            public void onFileDataDeserialized(ResponseDTO response) {
-                if (response != null) {
-                    if (response.getPhotoCache() != null) {
-                        list = response.getPhotoCache().getPhotoUploadList();
-                        list.add(0,dto);
-                    }
-                } else {
-                    response = new ResponseDTO();
-                    list = new ArrayList<>();
-                    list.add(dto);
-                }
-                response.setPhotoCache(new PhotoCache());
-                response.getPhotoCache().setPhotoUploadList(list);
-                CacheUtil.cacheData(context, response, CacheUtil.CACHE_PHOTOS, new CacheUtil.CacheUtilListener() {
-                    @Override
-                    public void onFileDataDeserialized(ResponseDTO response) {
-
-                    }
-
-                    @Override
-                    public void onDataCached() {
-
-                    }
-                });
-                //
-                Intent intent = new Intent(context, PhotoUploadService.class);
-                context.startService(intent);
-            }
-
-            @Override
-            public void onDataCached() {
-
-            }
-        });
     }
-    public static void uploadProjectPicture(final Context context, final ProjectDTO project, final File fullPicture, final File thumb) {
-        final PhotoUploadDTO dto = new PhotoUploadDTO();
-        dto.setCompanyID(SharedUtil.getCompany(context).getCompanyID());
+    public static void uploadProjectPicture(final Context context,
+                 final ProjectDTO project, final File fullPicture, final File thumb,
+                 Location location) {
+        final PhotoUploadDTO dto = getObject(context,fullPicture,thumb, location);
         dto.setProjectID(project.getProjectID());
-        dto.setThumbFilePath(thumb.getAbsolutePath());
-        dto.setImageFilePath(fullPicture.getAbsolutePath());
-        dto.setDateTaken(new Date());
         dto.setPictureType(PhotoUploadDTO.PROJECT_IMAGE);
 
+       cachePhotos(context,dto);
+    }
+    private static PhotoUploadDTO getObject(Context context,final File fullPicture, final File thumb,
+                                     Location location) {
+        PhotoUploadDTO dto = new PhotoUploadDTO();
+        dto.setCompanyID(SharedUtil.getCompany(context).getCompanyID());
+        dto.setThumbFilePath(thumb.getAbsolutePath());
+        dto.setImageFilePath(fullPicture.getAbsolutePath());
+        dto.setDateTaken(new Date());
+        dto.setLatitude(location.getLatitude());
+        dto.setLongitude(location.getLongitude());
+        dto.setTime(new Date().getTime());
+        return dto;
+    }
+    private static void cachePhotos(final Context context, final PhotoUploadDTO dto) {
         CacheUtil.getCachedData(context, CacheUtil.CACHE_PHOTOS, new CacheUtil.CacheUtilListener() {
             @Override
             public void onFileDataDeserialized(ResponseDTO response) {
