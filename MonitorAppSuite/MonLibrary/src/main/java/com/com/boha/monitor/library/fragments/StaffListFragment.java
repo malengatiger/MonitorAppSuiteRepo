@@ -17,6 +17,7 @@ import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.Util;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,15 +25,15 @@ import java.util.List;
 
 /**
  * A fragment representing a list of Items.
- * <p/>
+ * <project/>
  * Large screen devices (such as tablets) are supported by replacing the ListView
  * with a GridView.
- * <p/>
+ * <project/>
  * Activities containing this fragment MUST implement the ProjectSiteListListener
  * interface.
  */
 public class StaffListFragment extends Fragment
-        implements AbsListView.OnItemClickListener, PageFragment {
+        implements  PageFragment {
 
     private CompanyStaffListListener mListener;
 
@@ -53,11 +54,12 @@ public class StaffListFragment extends Fragment
 
     Context ctx;
     TextView txtCount, txtName;
+    View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_staff_list, container, false);
+        view = inflater.inflate(R.layout.fragment_staff_list, container, false);
         ctx = getActivity();
         Bundle b = getArguments();
         if (b != null) {
@@ -70,24 +72,7 @@ public class StaffListFragment extends Fragment
         //txtName.setText(SharedUtil.getCompany(ctx).getCompanyName());
         //Statics.setRobotoFontLight(ctx,txtName);
         txtCount.setText("" + companyStaffList.size());
-        // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
-        staffAdapter = new StaffAdapter(ctx, R.layout.person_item,
-                companyStaffList, new StaffAdapter.StaffAdapterListener() {
-            @Override
-            public void onPictureRequested(CompanyStaffDTO staff) {
-                mListener.onCompanyStaffPictureRequested(staff);
-            }
-
-            @Override
-            public void onStatusUpdatesRequested(CompanyStaffDTO staff) {
-
-            }
-        });
-        mListView.setAdapter(staffAdapter);
-
-        // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
+        setList();
         return view;
     }
 
@@ -108,13 +93,33 @@ public class StaffListFragment extends Fragment
         mListener = null;
     }
 
+    private void setList() {
+        // Set the adapter
+        mListView = (AbsListView) view.findViewById(android.R.id.list);
+        staffAdapter = new StaffAdapter(ctx, R.layout.person_item,
+                companyStaffList, new StaffAdapter.StaffAdapterListener() {
+            @Override
+            public void onPictureRequested(CompanyStaffDTO staff) {
+                mListener.onCompanyStaffPictureRequested(staff);
+            }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            companyStaffDTO = companyStaffList.get(position);
-            mListener.onCompanyStaffClicked(companyStaffDTO);
-        }
+            @Override
+            public void onStatusUpdatesRequested(CompanyStaffDTO staff) {
+
+            }
+        });
+        mListView.setAdapter(staffAdapter);
+
+        // Set OnItemClickListener so we can be notified on item clicks
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (null != mListener) {
+                    companyStaffDTO = companyStaffList.get(position);
+                    mListener.onCompanyStaffClicked(companyStaffDTO);
+                }
+            }
+        });
     }
 
     CompanyStaffDTO companyStaffDTO;
@@ -159,12 +164,29 @@ public class StaffListFragment extends Fragment
 
     }
 
+    public void refreshList(CompanyStaffDTO staff) {
+        ImageLoader.getInstance().clearDiskCache();
+        ImageLoader.getInstance().clearMemoryCache();
+        setList();
+
+        int index = 0;
+        for (CompanyStaffDTO c: companyStaffList) {
+            if (staff.getCompanyStaffID() == c.getCompanyStaffID()) {
+                break;
+            }
+            index++;
+        }
+        if (index < companyStaffList.size()) {
+            mListView.setSelection(index);
+        }
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
+     * <project/>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.

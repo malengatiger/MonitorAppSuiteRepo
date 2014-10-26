@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +13,25 @@ import android.widget.TextView;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.adapters.ImageAdapter;
+import com.com.boha.monitor.library.dto.ProjectDTO;
+import com.com.boha.monitor.library.dto.ProjectSiteDTO;
+import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
 import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 import com.com.boha.monitor.library.util.PhotoCache;
+import com.com.boha.monitor.library.util.Statics;
+import com.etsy.android.grid.StaggeredGridView;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A fragment representing a list of Items.
- * <p/>
+ * <project/>
  * Large screen devices (such as tablets) are supported by replacing the ListView
  * with a GridView.
- * <p/>
+ * <project/>
  * Activities containing this fragment MUST implement the ProjectSiteListListener
  * interface.
  */
@@ -41,10 +47,6 @@ public class ImageGridFragment extends Fragment implements PageFragment {
         return fragment;
     }
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public ImageGridFragment() {
     }
 
@@ -53,51 +55,108 @@ public class ImageGridFragment extends Fragment implements PageFragment {
         super.onCreate(savedInstanceState);
 
         Bundle b = getArguments();
-        int count = 0;
         if (b != null) {
-            photoCache = (PhotoCache) b.getSerializable("photoCache");
-            pathList = new ArrayList<>();
-            for (PhotoUploadDTO dto : photoCache.getPhotoUploadList()) {
-                pathList.add(dto.getThumbFilePath());
-            }
-            Log.i(LOG,"**** photoCache: " + pathList.size());
+            projectSite = (ProjectSiteDTO) b.getSerializable("projectSite");
+            project = (ProjectDTO) b.getSerializable("project");
+            projectSiteTask = (ProjectSiteTaskDTO) b.getSerializable("projectSiteTask");
+            if (projectSite != null) pathList = projectSite.getPhotoUploadList();
+            if (project != null) pathList = project.getPhotoUploadList();
+            if (projectSiteTask != null) pathList = projectSiteTask.getPhotoUploadList();
         }
     }
 
+    ProjectSiteDTO projectSite;
+    ProjectDTO project;
+    ProjectSiteTaskDTO projectSiteTask;
     private Context ctx;
     private PhotoCache photoCache;
     private GridView gridView;
+    StaggeredGridView staggeredGridView;
     private ImageAdapter imageAdapter;
-    private TextView txtCount, txtName;
-    private List<String> pathList;
+    private TextView txtCount, txtName, txtTitle, txtSubTitle, txtPeriod;
+    private View header, footer;
+    private List<PhotoUploadDTO> pathList;
+    private static final Locale loc = Locale.getDefault();
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMMM yyyy HH:mm", loc);
     static final String LOG = ImageGridFragment.class.getSimpleName();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_image_grid, container, false);
         ctx = getActivity();
-        setFields();
+        header = inflater.inflate(R.layout.header_image_grid, container, false);
+        footer = inflater.inflate(R.layout.footer_image_grid, container, false);
+        setFields(inflater);
 
         return view;
     }
-    private void setFields() {
+
+    private void setFields(LayoutInflater inflater) {
+
+        txtTitle = (TextView) header.findViewById(R.id.HIG_title);
+        txtSubTitle = (TextView) header.findViewById(R.id.HIG_subtitle);
+        txtCount = (TextView) header.findViewById(R.id.HIG_imageCount);
+        txtPeriod = (TextView) footer.findViewById(R.id.FIG_period);
+        Statics.setRobotoFontLight(ctx,txtTitle);
+        Statics.setRobotoFontLight(ctx,txtSubTitle);
 
         gridView = (GridView) view.findViewById(R.id.grid);
+        staggeredGridView = (StaggeredGridView) view.findViewById(R.id.staggeredGrid);
         imageAdapter = new ImageAdapter(ctx, R.layout.image_item, pathList);
 
-        Log.w(LOG,"------ setting adapter to GRID");
-        gridView.setAdapter(imageAdapter);
+        gridView.setVisibility(View.GONE);
         imageAdapter.notifyDataSetChanged();
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mListener.onImageClicked(position);
+                mListener.onImageClicked(pathList.get(position), position);
+            }
+        });
+
+        if (projectSite != null) {
+            txtTitle.setText(projectSite.getProjectName());
+            txtSubTitle.setText(projectSite.getProjectSiteName());
+            if (projectSite.getPhotoUploadList() != null) {
+                txtCount.setText("" + (projectSite.getPhotoUploadList().size()));
+                Date end = projectSite.getPhotoUploadList().get(0).getDateTaken();
+                int size = projectSite.getPhotoUploadList().size();
+                Date start = projectSite.getPhotoUploadList().get(size - 1).getDateTaken();
+                txtPeriod.setText(sdf.format(start) + " - " + sdf.format(end));
+            } else {
+                txtCount.setText("0");
+                txtPeriod.setVisibility(View.GONE);
+            }
+        }
+        if (project != null) {
+            txtTitle.setText(project.getProjectName());
+            txtSubTitle.setVisibility(View.GONE);
+            if (project.getPhotoUploadList() != null) {
+                txtCount.setText("" + (project.getPhotoUploadList().size()));
+                Date end = project.getPhotoUploadList().get(0).getDateTaken();
+                int size = project.getPhotoUploadList().size();
+                Date start = project.getPhotoUploadList().get(size - 1).getDateTaken();
+                txtPeriod.setText(sdf.format(start) + " - " + sdf.format(end));
+            } else {
+                txtCount.setText("0");
+                txtPeriod.setVisibility(View.GONE);
+            }
+        }
+        staggeredGridView.addHeaderView(header);
+        staggeredGridView.addFooterView(footer);
+        gridView.setAdapter(imageAdapter);
+        staggeredGridView.setAdapter(imageAdapter);
+        staggeredGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mListener.onImageClicked(pathList.get(position), position);
             }
         });
     }
 
     View view;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -127,10 +186,10 @@ public class ImageGridFragment extends Fragment implements PageFragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
+     * <project/>
      */
     public interface ImageListener {
-        public void onImageClicked(int index);
+        public void onImageClicked(PhotoUploadDTO photo, int index);
     }
 
 

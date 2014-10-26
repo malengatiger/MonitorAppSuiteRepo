@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/IMG_top"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/IMG_title"
+            style="@style/TextStyleSmall"
+            android:text="Title/Project or Site Name"
+            android:textColor="@color/blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/IMG_subtitle"
+            style="@style/TextStyleSmall"
+            android:layout_toRightOf="@id/IMG_title"
+            android:layout_marginLeft="10dp"
+            android:text="Other information here as subTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/IMG_date"
+            style="@style/TextStyleSmall"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/IMG_subtitle"
+            android:textColor="@color/absa_red"
+            android:text="30 December 2056 13:13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/IMG_image"
+        android:src="@drawable/under_construction"
+        android:layout_below="@id/IMG_top"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/IMG_number"
+        style="@style/RedCircle"
+        android:text="00"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/IMG_prev"
+        style="@style/TransparentCircle"
+        android:text="Prev"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/IMG_next"
+        style="@style/TransparentCircle"
+        android:text="Next"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

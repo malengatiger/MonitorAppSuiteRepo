@@ -92,8 +92,8 @@
                 android:layout_height="wrap_content"/>
 
         <CheckBox
-                android:id="@+id/INV_chkPlayer"
-                android:text="@string/player_app"
+                android:id="@+id/INV_chkSupervisor"
+                android:text="@string/supervisor_app"
                 android:layout_below="@id/INV_label"
                 android:layout_marginTop="10dp"
                 android:textSize="16sp"
@@ -102,27 +102,27 @@
                 android:layout_height="wrap_content"/>
 
         <CheckBox
-                android:id="@+id/INV_chkScorer"
-                android:text="@string/scorer_app"
-                android:layout_below="@id/INV_chkPlayer"
+                android:id="@+id/INV_chkExecutive"
+                android:text="@string/exec_app"
+                android:layout_below="@id/INV_chkSupervisor"
                 android:layout_marginTop="10dp"
                 android:textSize="16sp" android:enabled="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
         <CheckBox
-                android:id="@+id/INV_chkLeaderboard"
-                android:text="@string/leaderbd_app"
-                android:layout_below="@id/INV_chkScorer"
+                android:id="@+id/INV_chkOperations"
+                android:text="@string/operations_app"
+                android:layout_below="@id/INV_chkExecutive"
                 android:layout_marginTop="10dp"
                 android:textSize="16sp" android:enabled="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
         <CheckBox
-                android:id="@+id/INV_chkAdmin"
-                android:text="@string/admin_app"
-                android:layout_below="@id/INV_chkLeaderboard"
+                android:id="@+id/INV_chkManager"
+                android:text="@string/pm_app"
+                android:layout_below="@id/INV_chkOperations"
                 android:layout_marginTop="10dp" android:enabled="false"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -133,7 +133,7 @@
                 android:text="@string/send_inv"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:layout_below="@id/INV_chkAdmin"
+                android:layout_below="@id/INV_chkManager"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="20dp"

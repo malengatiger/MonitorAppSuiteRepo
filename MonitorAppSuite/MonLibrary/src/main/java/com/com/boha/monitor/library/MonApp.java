@@ -6,7 +6,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
@@ -17,6 +16,7 @@ import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
@@ -29,11 +29,9 @@ import java.io.InputStream;
 
 /**
  * Created by aubreyM on 2014/05/17.
+ * Copyright (c) 2014 Aubrey Malabie. All rights reserved.
  */
 
-/**
- * Created by aubreyM on 2014/05/17.
- */
 
 @ReportsCrashes(
         formKey = "",
@@ -71,6 +69,7 @@ public class MonApp extends Application {
                 .diskCacheFileCount(300)
                 .writeDebugLogs()
                 .build();
+        com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
         Log.w(LOG, "###### ImageLoaderConfiguration has been initialised");
 
 
@@ -102,7 +101,7 @@ public class MonApp extends Application {
         // Use 1/8th of the available memory for this memory cache.
         int cacheSize = 1024 * 1024 * memClass / 8;
         bitmapLruCache = new BitmapLruCache(cacheSize);
-        imageLoader = new ImageLoader(requestQueue, bitmapLruCache);
+       // imageLoader = new ImageLoader(requestQueue, bitmapLruCache);
         Log.i(LOG, "********** Yebo! Volley Networking has been initialized, cache size: " + (cacheSize / 1024) + " KB");
 
         // Create global configuration and initialize ImageLoader with this configuration
@@ -114,12 +113,10 @@ public class MonApp extends Application {
                 .defaultDisplayImageOptions(defaultOptions)
                 .build();
 
-        com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
+        ImageLoader.getInstance().init(config);
     }
 
-    public ImageLoader getImageLoader() {
-        return imageLoader;
-    }
+
 
     public RequestQueue getRequestQueue() {
         return requestQueue;
@@ -129,7 +126,6 @@ public class MonApp extends Application {
         return bitmapLruCache;
     }
 
-    ImageLoader imageLoader;
     RequestQueue requestQueue;
     BitmapLruCache bitmapLruCache;
     static final String LOG = "MonApp";

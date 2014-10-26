@@ -12,23 +12,31 @@
         <TextView
             android:id="@+id/IMG_title"
             style="@style/Title3TextStyleBlue"
-            android:text="Title/Date of Image"
-            android:layout_centerHorizontal="true"
+            android:text="Title/Project or Site Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/IMG_subtitle"
             style="@style/TextStyle"
             android:layout_below="@id/IMG_title"
+            android:layout_marginLeft="10dp"
             android:text="Other information here as subTitle"
-            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/IMG_date"
+            style="@style/TextStyleSmall"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/absa_red"
+            android:layout_below="@id/IMG_subtitle"
+            android:text="30 December 2056 13:13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         </RelativeLayout>
 
     <ImageView
         android:id="@+id/IMG_image"
-        android:src="@drawable/boy"
+        android:src="@drawable/under_construction"
         android:layout_below="@id/IMG_top"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
@@ -38,7 +46,7 @@
         style="@style/RedCircle"
         android:text="00"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:layout_marginRight="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

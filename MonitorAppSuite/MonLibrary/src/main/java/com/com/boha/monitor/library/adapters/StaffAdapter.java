@@ -28,7 +28,6 @@ public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
 
     public interface StaffAdapterListener {
         public void onPictureRequested(CompanyStaffDTO staff);
-
         public void onStatusUpdatesRequested(CompanyStaffDTO staff);
     }
 
@@ -133,7 +132,16 @@ public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
 
             @Override
             public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-
+//                try {
+//                    File f = ImageUtil.getFileFromBitmap(bitmap, "file.jpg");
+//                    Location loc = Util.getLocationFromExif(f.getAbsolutePath());
+//                    if (loc != null) {
+//                        Log.e("StaffAdapter", "### lat: " + loc.getLatitude()
+//                                + " lng: " + loc.getLongitude());
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
             }
 
             @Override

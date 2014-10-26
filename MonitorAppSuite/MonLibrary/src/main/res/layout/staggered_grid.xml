@@ -6,7 +6,7 @@
                 android:background="@color/black"
                 android:layout_height="match_parent">
 
-    <com.etsy.android.grid.StaggeredGridView
+    <com.etsy.android.gridold.StaggeredGridViewOld
             android:id="@+id/staggeredGrid"
             android:padding="0dp"
             android:layout_width="match_parent"

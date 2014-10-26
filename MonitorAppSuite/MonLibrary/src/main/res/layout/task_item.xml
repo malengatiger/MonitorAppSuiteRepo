@@ -5,22 +5,37 @@
     android:padding="10dp"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/TSK_number"
-        style="@style/RedCircle"
-        android:text="01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:id="@+id/TSK_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/TSK_taskName"
-        style="@style/TextStyle"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/TSK_number"
-        android:layout_marginLeft="10dp"
-        android:text="Task name here and over there. truly, James?"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/TSK_number"
+            style="@style/RedCircle"
+            android:text="01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/TSK_taskName"
+            style="@style/TextStyle"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/TSK_number"
+            android:layout_marginLeft="10dp"
+            android:text="Task name here and over there. truly, James?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/TSK_bottom"
+        android:layout_below="@id/TSK_top"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/task_actions" />
+        </RelativeLayout>
+
 
 
 </RelativeLayout>

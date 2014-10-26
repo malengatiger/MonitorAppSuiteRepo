@@ -1,6 +1,7 @@
 package com.com.boha.monitor.library.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,25 +13,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 import com.com.boha.monitor.library.util.Statics;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import java.io.File;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class ImageAdapter extends ArrayAdapter<String> {
+public class ImageAdapter extends ArrayAdapter<PhotoUploadDTO> {
 
     private final LayoutInflater mInflater;
     private final int mLayoutRes;
-    private List<String> mList;
+    private List<PhotoUploadDTO> mList;
     private Context ctx;
 
    public ImageAdapter(Context context, int textViewResourceId,
-                       List<String> list) {
+                       List<PhotoUploadDTO> list) {
         super(context, textViewResourceId);
         this.mLayoutRes = textViewResourceId;
         mList = list;
@@ -68,21 +70,35 @@ public class ImageAdapter extends ArrayAdapter<String> {
             item = (ViewHolderItem) convertView.getTag();
         }
 
-        String p = mList.get(position);
-        //Log.d(LOG, "----path: " + p);
+        PhotoUploadDTO p = mList.get(position);
+
         item.txtNumber.setText("" +(position + 1));
-        File f = new File(p);
-        Picasso.with(ctx).load(f).into(item.img, new Callback() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(Statics.IMAGE_URL);
+        sb.append(p.getUri());
+
+        ImageLoader.getInstance().displayImage(sb.toString(),item.img, new ImageLoadingListener() {
             @Override
-            public void onSuccess() {
+            public void onLoadingStarted(String s, View view) {
 
             }
 
             @Override
-            public void onError() {
-                Log.e(LOG,"---------- ERROR picasso file load");
+            public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+            }
+
+            @Override
+            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+
+            }
+
+            @Override
+            public void onLoadingCancelled(String s, View view) {
+
             }
         });
+
 
         Statics.setRobotoFontLight(ctx,item.txtNumber);
        // animateView(convertView);

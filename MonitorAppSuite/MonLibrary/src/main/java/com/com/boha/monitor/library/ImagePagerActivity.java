@@ -7,15 +7,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
+import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.fragments.ImageFragment;
@@ -38,28 +42,65 @@ import java.util.List;
 
 public class ImagePagerActivity extends FragmentActivity implements ImageGridFragment.ImageListener {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_pager);
         ctx = getApplicationContext();
         mPager = (ViewPager) findViewById(R.id.pager);
+        PagerTitleStrip strip = (PagerTitleStrip)findViewById(R.id.pager_title_strip);
+        strip.setVisibility(View.GONE);
         setTitle(ctx.getResources().getString(R.string.app_name));
+        if (savedInstanceState != null) {
+            Log.w(LOG,"##### savedInstanceState not null");
+            type = savedInstanceState.getInt("type");
+            projectSite = (ProjectSiteDTO)savedInstanceState.getSerializable("projectSite");
+            project = (ProjectDTO)savedInstanceState.getSerializable("project");
+            isRefresh = true;
+            getData();
+        } else {
+            type = getIntent().getIntExtra("type", 0);
+            projectSite = (ProjectSiteDTO) getIntent().getSerializableExtra("projectSite");
+            project = (ProjectDTO) getIntent().getSerializableExtra("project");
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle b) {
+        b.putInt("type", type);
+        if (project != null)
+            b.putSerializable("project", project);
+        if (projectSite != null)
+            b.putSerializable("projectSite", projectSite);
+        super.onSaveInstanceState(b);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_pager, menu);
+        getMenuInflater().inflate(R.menu.image_pager, menu);
         mMenu = menu;
         getData();
         return true;
     }
 
+    static final int PICTURE_REQ = 231;
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_add) {
+        if (id == R.id.action_camera) {
+            Intent i = new Intent(this, PictureActivity.class);
+            if (projectSite != null) {
+                i.putExtra("type", PhotoUploadDTO.SITE_IMAGE);
+                i.putExtra("projectSite", projectSite);
+            }
+            if (project != null) {
+                i.putExtra("type", PhotoUploadDTO.PROJECT_IMAGE);
+                i.putExtra("project", project);
+            }
+            startActivityForResult(i, PICTURE_REQ);
             return true;
         }
         if (id == R.id.action_refresh) {
@@ -67,12 +108,27 @@ public class ImagePagerActivity extends FragmentActivity implements ImageGridFra
             getData();
             return true;
         }
+        if (id == R.id.action_help) {
+            ToastUtil.toast(ctx, ctx.getString(R.string.under_cons));
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
-    static final int PROJECT = 1, SITE = 2, TASK = 3, STAFF = 4, CACHE = 5;
+    @Override
+    public void onActivityResult(int req, int res, Intent data) {
+        if (req == PICTURE_REQ) {
+            if (res == RESULT_OK) {
+                isRefresh = true;
+                getData();
+            }
+        }
+    }
+
+    public static final int PROJECT = 1, SITE = 2, TASK = 3, STAFF = 4, CACHE = 5;
     int type;
     CompanyDTO company;
+
 
     private void getData() {
         company = SharedUtil.getCompany(ctx);
@@ -99,10 +155,22 @@ public class ImagePagerActivity extends FragmentActivity implements ImageGridFra
                 });
                 break;
             case PROJECT:
-                w.setRequestType(RequestDTO.GET_PROJECT_IMAGE_FILENAMES);
+                w.setRequestType(RequestDTO.GET_PROJECT_IMAGES);
                 w.setCompanyID(company.getCompanyID());
                 w.setProjectID(project.getProjectID());
                 getServerData(w);
+                break;
+            case SITE:
+                if (isRefresh) {
+                    isRefresh = false;
+                    w.setRequestType(RequestDTO.GET_SITE_IMAGES);
+                    w.setCompanyID(company.getCompanyID());
+                    w.setProjectSiteID(projectSite.getProjectSiteID());
+                    getServerData(w);
+
+                } else {
+                    buildPages();
+                }
                 break;
         }
 
@@ -126,22 +194,12 @@ public class ImagePagerActivity extends FragmentActivity implements ImageGridFra
                         }
                         response = r;
                         buildPages();
-                        setTitle(response.getCompany().getCompanyName());
+                        //setTitle(response.getCompany().getCompanyName());
                         if (isRefresh) {
                             isRefresh = false;
                             mPager.setCurrentItem(currentPageIndex);
                         }
-                        CacheUtil.cacheData(ctx, response, CacheUtil.CACHE_DATA, new CacheUtil.CacheUtilListener() {
-                            @Override
-                            public void onFileDataDeserialized(ResponseDTO response) {
 
-                            }
-
-                            @Override
-                            public void onDataCached() {
-
-                            }
-                        });
                     }
                 });
 
@@ -178,22 +236,18 @@ public class ImagePagerActivity extends FragmentActivity implements ImageGridFra
 
         switch (type) {
             case CACHE:
-                ResponseDTO r1 = new ResponseDTO();
                 Bundle data1 = new Bundle();
                 data1.putSerializable("photoCache", photoCache);
                 imageGridFragment.setArguments(data1);
-                pageFragmentList.add(imageGridFragment);
-//                int count = 0;
-//                for (PhotoUploadDTO s : photoCache.getPhotoUploadList()) {
-//                    ImageFragment f = ImageFragment.newInstance(s.getImageFilePath());
-//                    pageFragmentList.add(f);
-//                    count++;
-//                    if (count > 20) {
-//                        break;
-//                    }
-//                }
+                break;
+            case SITE:
+                setTitle(projectSite.getProjectSiteName());
+                Bundle data2 = new Bundle();
+                data2.putSerializable("projectSite", projectSite);
+                imageGridFragment.setArguments(data2);
                 break;
         }
+        pageFragmentList.add(imageGridFragment);
         initializeAdapter();
 
     }
@@ -227,14 +281,20 @@ public class ImagePagerActivity extends FragmentActivity implements ImageGridFra
     }
 
     @Override
-    public void onImageClicked(int index) {
+    public void onImageClicked(PhotoUploadDTO photo, int index) {
 
         switch (type) {
             case CACHE:
-                Intent i = new Intent(this,ImageActivity.class);
+                Intent i = new Intent(this, ImageActivity.class);
                 i.putExtra("photoCache", photoCache);
-                i.putExtra("index",index);
+                i.putExtra("index", index);
                 startActivity(i);
+                break;
+            case SITE:
+                Intent i2 = new Intent(this, ImageActivity.class);
+                i2.putExtra("projectSite", projectSite);
+                i2.putExtra("index", index);
+                startActivity(i2);
                 break;
         }
 
@@ -261,6 +321,12 @@ public class ImagePagerActivity extends FragmentActivity implements ImageGridFra
         public CharSequence getPageTitle(int position) {
             String title = "";
             switch (type) {
+                case SITE:
+                    title = projectSite.getProjectSiteName();
+                    break;
+                case PROJECT:
+                    title = project.getProjectName();
+                    break;
                 case CACHE:
                     if (pageFragmentList.get(position) instanceof ImageFragment) {
                         ImageFragment f = (ImageFragment) pageFragmentList.get(position);

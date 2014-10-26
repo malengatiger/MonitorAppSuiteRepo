@@ -15,6 +15,8 @@ public class PictureUtil {
     public static void uploadImage(PhotoUploadDTO dto, boolean isFullPicture,
                                    Context ctx, final PhotoUploadDTO.PhotoUploadedListener listener) {
 
+        if (dto.getDateUploaded() != null) return;
+        if (dto.getThumbFilePath() == null) return;
         File imageFile = new File(dto.getThumbFilePath());
         if (isFullPicture) {
             imageFile = new File(dto.getImageFilePath());

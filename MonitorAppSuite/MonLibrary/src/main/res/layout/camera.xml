@@ -53,7 +53,7 @@
 
             <ImageView
                 android:id="@+id/CAM_image"
-                android:src="@drawable/boy"
+                android:src="@drawable/under_construction"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

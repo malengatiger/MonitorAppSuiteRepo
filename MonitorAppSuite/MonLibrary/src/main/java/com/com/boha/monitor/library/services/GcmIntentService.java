@@ -11,7 +11,6 @@ import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.boha.monitor.library.R;
-import com.com.boha.monitor.library.MainPagerActivity;
 import com.com.boha.monitor.library.TaskStatusNotificationActivity;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.util.GCMUtil;
@@ -89,7 +88,7 @@ public class GcmIntentService extends GCMBaseIntentService {
 
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(MainPagerActivity.class);
+        //stackBuilder.addParentStack(MainPagerActivity.class);
         stackBuilder.addNextIntent(resultIntent);
 
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);

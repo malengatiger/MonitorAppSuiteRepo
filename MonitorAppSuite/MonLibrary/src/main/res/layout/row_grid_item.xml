@@ -6,7 +6,7 @@
     android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal" >
 
-    <com.etsy.android.grid.util.DynamicHeightImageView
+    <com.etsy.android.gridold.util.DynamicHeightImageView
         android:id="@+id/imgView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

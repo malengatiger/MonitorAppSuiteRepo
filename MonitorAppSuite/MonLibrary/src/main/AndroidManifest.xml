@@ -4,11 +4,6 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk
-        android:maxSdkVersion="20"
-        android:minSdkVersion="15"
-        android:targetSdkVersion="20" />
-
     <application android:label="@string/app_name" >
         <receiver
             android:name="com.com.boha.monitor.library.services.GcmBroadcastReceiver"
@@ -16,38 +11,17 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
-                <category android:name="com.boha.malengagolf.admin" />
+                <category android:name="com.boha.monitor.library" />
             </intent-filter>
         </receiver>
 
         <service android:name="com.com.boha.monitor.library.services.GcmIntentService" />
 
-        <activity android:name="com.com.boha.monitor.library.MainPagerActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.com.boha.monitor.library.SitePagerActivity" />
-        <activity
-            android:name="com.com.boha.monitor.library.TaskStatusNotificationActivity"
-            android:label="@string/title_activity_task_status_notification" >
-        </activity>
-
         <service
             android:name="com.com.boha.monitor.library.services.PhotoUploadService"
-            android:exported="false" >
-        </service>
+            android:exported="false" />
 
-        <activity
-            android:name="com.com.boha.monitor.library.ImageActivity"
-            android:label="@string/title_activity_image" >
-        </activity>
-        <activity
-            android:name="com.com.boha.monitor.library.TaskAssignmentActivity"
-            android:label="@string/title_activity_task_assignment" >
-        </activity>
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

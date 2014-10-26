@@ -25,10 +25,10 @@ import java.util.List;
 
 /**
  * A fragment representing a list of Items.
- * <p/>
+ * <project/>
  * Large screen devices (such as tablets) are supported by replacing the ListView
  * with a GridView.
- * <p/>
+ * <project/>
  * Activities containing this fragment MUST implement the ProjectSiteListListener
  * interface.
  */

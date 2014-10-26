@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +38,7 @@ import com.com.boha.monitor.library.fragments.PageFragment;
 import com.com.boha.monitor.library.fragments.ProjectListFragment;
 import com.com.boha.monitor.library.fragments.ProjectStatusTypeListFragment;
 import com.com.boha.monitor.library.fragments.StaffListFragment;
+import com.com.boha.monitor.library.fragments.TaskAssignmentFragment;
 import com.com.boha.monitor.library.fragments.TaskStatusListFragment;
 import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
@@ -465,6 +467,7 @@ public class OperationsPagerActivity extends FragmentActivity
 
         Intent i = new Intent(this, SitePagerActivity.class);
         i.putExtra("project",project);
+        i.putExtra("type", TaskAssignmentFragment.OPERATIONS);
         startActivity(i);
 
     }
@@ -482,15 +485,26 @@ public class OperationsPagerActivity extends FragmentActivity
 
     }
 
+    static final int PICTURE_REQUESTED = 9133;
+    CompanyStaffDTO companyStaff;
     @Override
     public void onCompanyStaffPictureRequested(CompanyStaffDTO companyStaff) {
-
+        this.companyStaff = companyStaff;
         Intent i = new Intent(this, PictureActivity.class);
         i.putExtra("companyStaff",companyStaff);
         i.putExtra("type", PhotoUploadDTO.STAFF_IMAGE);
-        startActivity(i);
+        startActivityForResult(i,PICTURE_REQUESTED);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICTURE_REQUESTED) {
+            if (resultCode == RESULT_OK) {
+                Log.e("OperationsPagerActivity","############# refresh picture,  stafflist ");
+                staffListFragment.refreshList(companyStaff);
+            }
+        }
+    }
     @Override
     public void onTaskStatusClicked(TaskStatusDTO taskStatus) {
         EditDialog d = new EditDialog();

@@ -23,12 +23,45 @@ public class PhotoUploadDTO implements Serializable{
     private Integer index,companyID, projectID, projectSiteID,
             projectSiteTaskID, pictureType, companyStaffID, thumbFlag;
     private List<String> tags;
+    String projectName, projectSiteName, projectSiteTask, uri;
     private boolean isFullPicture;
     private String imageFilePath, thumbFilePath;
     private double latitude, longitude;
     private long time;
 
     private Date dateThumbUploaded, dateFullPictureUploaded, dateTaken, dateUploaded;
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getProjectSiteName() {
+        return projectSiteName;
+    }
+
+    public void setProjectSiteName(String projectSiteName) {
+        this.projectSiteName = projectSiteName;
+    }
+
+    public String getProjectSiteTask() {
+        return projectSiteTask;
+    }
+
+    public void setProjectSiteTask(String projectSiteTask) {
+        this.projectSiteTask = projectSiteTask;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
 
     public Integer getThumbFlag() {
         return thumbFlag;

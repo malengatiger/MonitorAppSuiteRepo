@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.andexert.library.RippleView;
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.adapters.ProjectAdapter;
 import com.com.boha.monitor.library.dto.ProjectDTO;
@@ -25,10 +27,10 @@ import java.util.List;
 
 /**
  * A fragment representing a list of Items.
- * <p />
+ * <project />
  * Large screen devices (such as tablets) are supported by replacing the ListView
  * with a GridView.
- * <p />
+ * <project />
  * Activities containing this fragment MUST implement the ProjectListListener
  * interface.
  */
@@ -68,7 +70,16 @@ public class ProjectListFragment extends Fragment implements AbsListView.OnItemC
             ResponseDTO r = (ResponseDTO)b.getSerializable("response");
             projectList = r.getCompany().getProjectList();
         }
+        final RippleView rippleView = (RippleView) view.findViewById(R.id.more);
 
+        rippleView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Log.e("Sample", "Click Rect !");
+            }
+        });
         mListView = (AbsListView) view.findViewById(android.R.id.list);
         adapter = new ProjectAdapter(ctx, R.layout.project_item, projectList, new ProjectAdapter.ProjectAdapterListener() {
             @Override
@@ -189,7 +200,7 @@ public class ProjectListFragment extends Fragment implements AbsListView.OnItemC
     * fragment to allow an interaction in this fragment to be communicated
     * to the activity and potentially other fragments contained in that
     * activity.
-    * <p>
+    * <project>
     * See the Android Training lesson <a href=
     * "http://developer.android.com/training/basics/fragments/communicating.html"
     * >Communicating with Other Fragments</a> for more information.

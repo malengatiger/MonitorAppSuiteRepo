@@ -116,5 +116,29 @@
             android:layout_marginLeft="10dp" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/SITE_actionLayout"
+        android:layout_marginTop="10dp"
+        android:background="@color/beige_pale"
+        android:layout_below="@id/SITE_staffLayout">
 
+        <ImageView
+            android:id="@+id/SITE_camera"
+            android:src="@drawable/camera_a32"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/SITE_imageCount"
+            android:layout_toRightOf="@id/SITE_camera"
+            android:text="0"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            style="@style/Title1TextStyleBlue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        </RelativeLayout>
 </RelativeLayout>

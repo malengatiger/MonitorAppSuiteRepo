@@ -297,11 +297,11 @@ public class RegistrationActivity extends FragmentActivity implements
 
 
     private void setFields() {
-        spinnerEmail = (Spinner) findViewById(R.id.EP_emailSpinner);
         spinnerCountry = (Spinner) findViewById(R.id.EP_countrySpinner);
         eFirstName = (EditText) findViewById(R.id.EP_firstName);
         eLastName = (EditText) findViewById(R.id.EP_lastName);
         ePin = (EditText) findViewById(R.id.EP_password);
+        spinnerEmail = (Spinner) findViewById(R.id.EP_emailSpinner);
         eGroup = (EditText) findViewById(R.id.EP_groupName);
         mainEPLayout = findViewById(R.id.REG_ediLayout);
         mainRegLayout = findViewById(R.id.REG_mainLayout);

@@ -3,7 +3,6 @@ package com.com.boha.monitor.library;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -54,8 +53,6 @@ import org.acra.ACRA;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -82,12 +79,22 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
         mLocationClient = new LocationClient(getApplicationContext(), this,
                 this);
         //get objects
-        type = getIntent().getIntExtra("type",0);
-        project = (ProjectDTO)getIntent().getSerializableExtra("project");
-        projectSite = (ProjectSiteDTO)getIntent().getSerializableExtra("projectSite");
-        projectSiteTask = (ProjectSiteTaskDTO)getIntent().getSerializableExtra("projectSiteTask");
-        companyStaff = (CompanyStaffDTO)getIntent().getSerializableExtra("companyStaff");
-
+        if (savedInstanceState != null) {
+            Log.e(LOG,"##### savedInstanceState is LOADED");
+            type = savedInstanceState.getInt("type",0);
+            projectSite = (ProjectSiteDTO)savedInstanceState.getSerializable("projectSite");
+            project = (ProjectDTO)savedInstanceState.getSerializable("project");
+            String path = savedInstanceState.getString("photoFile");
+            if (path != null) {
+                photoFile = new File(path);
+            }
+        } else {
+            type = getIntent().getIntExtra("type", 0);
+            project = (ProjectDTO) getIntent().getSerializableExtra("project");
+            projectSite = (ProjectSiteDTO) getIntent().getSerializableExtra("projectSite");
+            projectSiteTask = (ProjectSiteTaskDTO) getIntent().getSerializableExtra("projectSiteTask");
+            companyStaff = (CompanyStaffDTO) getIntent().getSerializableExtra("companyStaff");
+        }
         Log.e(LOG, "###### type: " + type);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
@@ -131,10 +138,13 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
     @Override
     public void onActivityResult(final int requestCode, final int resultCode,
                                  final Intent data) {
+        Log.e(LOG,"##### onActivityResult ");
         switch (requestCode) {
             case CAPTURE_IMAGE:
                 if (resultCode == Activity.RESULT_OK) {
                     if (resultCode == Activity.RESULT_OK) {
+                        if (photoFile != null)
+                        Log.e(LOG,"---------> hopefully photo file has a length: " + photoFile.length());
                         new PhotoTask().execute();
                     }
                     pictureChanged = true;
@@ -169,8 +179,10 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
                 break;
 
         }
+        isUploaded = true;
 
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -281,8 +293,7 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
 
     private File createImageFile() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        String imageFileName = "pic" + System.currentTimeMillis();
         File storageDir;
         if (Util.hasStorage(true)) {
             Log.i(LOG, "###### get file from getExternalStoragePublicDirectory");
@@ -365,11 +376,22 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
     }
     @Override
     public void onSaveInstanceState(Bundle b) {
-        Log.w(LOG,"########### onSaveInstanceState");
+        Log.e(LOG,"############################## onSaveInstanceState");
+        b.putInt("type",type);
         if (currentFullFile != null) {
             b.putString("filePath", currentFullFile.getAbsolutePath());
             b.putString("thumbPath", currentThumbFile.getAbsolutePath());
         }
+        if (photoFile != null) {
+            b.putString("photoFile", photoFile.getAbsolutePath());
+        }
+        if (projectSite != null) {
+            b.putSerializable("projectSite", projectSite);
+        }
+        if (project != null) {
+            b.putSerializable("project", project);
+        }
+
 
         super.onSaveInstanceState(b);
     }
@@ -401,6 +423,9 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
                         BitmapFactory.Options options = new BitmapFactory.Options();
                         options.inSampleSize = 2;
                         Bitmap bm = BitmapFactory.decodeFile(photoFile.getAbsolutePath(), options);
+                        if (bm == null) {
+                            Log.w(LOG,"Bitmap is null, file length: " + photoFile.length());
+                        }
                         getLog(bm, "Raw Camera");
                           //get thumbnail for upload
                         Matrix matrixThumbnail = new Matrix();
@@ -421,8 +446,8 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
 
                         getLog(fullBm, "Full");
                         //append date and gps coords to bitmap
-                        fullBm = ImageUtil.drawTextToBitmap(ctx,fullBm,location);
-                        thumb = ImageUtil.drawTextToBitmap(ctx,thumb,location);
+                        //fullBm = ImageUtil.drawTextToBitmap(ctx,fullBm,location);
+                        //thumb = ImageUtil.drawTextToBitmap(ctx,thumb,location);
 
                         currentFullFile = ImageUtil.getFileFromBitmap(fullBm, "m" + System.currentTimeMillis() + ".jpg");
                         currentThumbFile = ImageUtil.getFileFromBitmap(thumb, "t" + System.currentTimeMillis() + ".jpg");
@@ -430,12 +455,16 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
 
                         thumbUri = Uri.fromFile(currentThumbFile);
                         fullUri = Uri.fromFile(currentFullFile);
+                        //write exif data
+                        Util.writeLocationToExif(currentFullFile.getAbsolutePath(),location);
+                        Util.writeLocationToExif(currentThumbFile.getAbsolutePath(),location);
                         fullBm = null;
                         thumb = null;
                         bm = null;
                         getFileLengths();
                     } catch (Exception e) {
-                        Log.e("pic", "Fuck it!", e);
+                        Log.e("pic", "Fuck it! unable to process bitmap", e);
+                        return 9;
                     }
 
                 } catch (Exception e) {
@@ -457,13 +486,12 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
                 pictureChanged = true;
                 try {
                     image.setImageBitmap(bitmapForScreen);
-
                     uploadPhotos();
-                    if (bitmapForScreen.getWidth() > bitmapForScreen.getHeight()) {
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                    } else {
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                    }
+//                    if (bitmapForScreen.getWidth() > bitmapForScreen.getHeight()) {
+//                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//                    } else {
+//                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -696,7 +724,7 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
     boolean pictureChanged;
     Context ctx;
     Uri fileUri;
-    public static final int CAPTURE_IMAGE = 3, SITE_PICTURE = 1, PROJECT_PICTURE = 2, STAFF_PICTURE = 5;
+    public static final int CAPTURE_IMAGE = 3013;
 
     Bitmap bitmapForScreen;
 

@@ -115,7 +115,7 @@
         <item name="android:textColor">@color/navy_blue</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:padding">5dp</item>
+
     </style>
 
     <style name="Title2TextStyleBlack" parent="@android:style/TextAppearance.Medium">
@@ -276,11 +276,13 @@
 
     <style name="TextStyleRedSmall" parent="@android:style/TextAppearance.Small">
         <item name="android:textStyle">normal</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/translucent_red</item>
     </style>
 
     <style name="TextStyleSmall" parent="@android:style/TextAppearance.Small">
         <item name="android:textStyle">normal</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="TextStyleBold" parent="@android:style/TextAppearance.Medium">
@@ -316,8 +318,8 @@
 
     <style name="BlackCountBoxSmall" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:textSize">12sp</item>
+        <item name="android:gravity">center</item>
         <item name="android:background">@drawable/xblack_box</item>
     </style>
 

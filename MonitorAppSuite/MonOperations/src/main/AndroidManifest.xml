@@ -32,7 +32,6 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -45,6 +44,23 @@
         <activity
             android:name="com.com.boha.monitor.library.CameraActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
+            android:name="com.com.boha.monitor.library.SitePagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.com.boha.monitor.library.ImageActivity"
+            android:label="@string/title_activity_image" />
+        <activity
+            android:name="com.com.boha.monitor.library.TaskAssignmentActivity"
+            android:label="@string/title_activity_task_assignment" />
+        <activity
+            android:name="com.com.boha.monitor.library.MonitorMapActivity"
+            android:label="@string/title_activity_monitor_map"
+            android:parentActivityName="com.com.boha.monitor.library.ImageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.com.boha.monitor.library.ImageActivity" />
+        </activity>
 
         <activity android:name="com.com.boha.monitor.library.PictureActivity"
             android:configChanges="orientation|keyboardHidden"/>

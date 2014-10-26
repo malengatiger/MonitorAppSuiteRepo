@@ -20,7 +20,7 @@ public class ProjectSiteDTO implements Serializable {
     public static final int ACTION_ADD = 10, ACTION_UPDATE = 11;
     private static final long serialVersionUID = 1L;
     private Integer projectSiteID;
-    private String projectSiteName, standErfNumber;
+    private String projectSiteName, standErfNumber, projectName;
     private Double latitude;
     private Double longitude;
     private Integer activeFlag;
@@ -35,6 +35,14 @@ public class ProjectSiteDTO implements Serializable {
 
     public void setPhotoUploadList(List<PhotoUploadDTO> photoUploadList) {
         this.photoUploadList = photoUploadList;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
     public String getStandErfNumber() {

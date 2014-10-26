@@ -47,6 +47,7 @@ public class ResponseDTO implements Serializable {
     private String message, sessionID, GCMRegistrationID;
     private List<String> taskImageFileNameList;
     private List<String> siteImageFileNameList;
+    private List<PhotoUploadDTO> photoUploadList;
     private List<TaskStatusDTO> taskStatusList = new ArrayList<>();
     private List<ProjectStatusTypeDTO> projectStatusTypeList = new ArrayList<>();
     private List<ProjectSiteDTO> projectSiteList = new ArrayList<>();
@@ -75,6 +76,14 @@ public class ResponseDTO implements Serializable {
     //
     private CompanyDTO company;
     private CompanyStaffDTO companyStaff;
+
+    public List<PhotoUploadDTO> getPhotoUploadList() {
+        return photoUploadList;
+    }
+
+    public void setPhotoUploadList(List<PhotoUploadDTO> photoUploadList) {
+        this.photoUploadList = photoUploadList;
+    }
 
     public PhotoCache getPhotoCache() {
         return photoCache;

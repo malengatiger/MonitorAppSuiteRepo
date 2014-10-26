@@ -16,7 +16,7 @@
         <TextView
             android:id="@+id/AST_title"
             style="@style/Title2TextStyleGrey"
-            android:text="Assign Tasks to Site"
+            android:text="@string/site_tasks"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_below="@id/AST_spinner"
             android:layout_width="match_parent"
             android:orientation="horizontal"
@@ -51,19 +51,20 @@
                 android:text="99"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <TextView
-                android:layout_width="20dp"
-                android:layout_height="wrap_content" />
+
+
 
             <Button
                 android:id="@+id/AST_btnAssign"
                 style="@style/ButtonSave"
+                android:layout_marginLeft="35dp"
+                android:layout_toRightOf="@id/AST_number"
                 android:text="@string/save"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
 
-        </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 
     <ListView

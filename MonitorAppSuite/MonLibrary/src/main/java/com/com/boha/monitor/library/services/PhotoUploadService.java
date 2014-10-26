@@ -56,6 +56,7 @@ public class PhotoUploadService extends IntentService {
     public static void uploadSitePicture(final Context context, final ProjectSiteDTO site,
                                          final File fullPicture, final File thumb,
                                          Location location) {
+        Log.w(LOG,"**** uploadSitePicture .........");
         final PhotoUploadDTO dto = getObject(context,fullPicture,thumb,location);
         dto.setProjectID(site.getProjectID());
         dto.setProjectSiteID(site.getProjectSiteID());
@@ -95,6 +96,7 @@ public class PhotoUploadService extends IntentService {
         return dto;
     }
     private static void cachePhotos(final Context context, final PhotoUploadDTO dto) {
+        Log.w(LOG,"**** cachePhotos starting ...");
         CacheUtil.getCachedData(context, CacheUtil.CACHE_PHOTOS, new CacheUtil.CacheUtilListener() {
             @Override
             public void onFileDataDeserialized(ResponseDTO response) {
@@ -109,6 +111,7 @@ public class PhotoUploadService extends IntentService {
                     list = new ArrayList<>();
                     list.add(dto);
                 }
+                Log.w(LOG,"**** setting cache...about to cache: " + list.size());
                 response.setPhotoCache(new PhotoCache());
                 response.getPhotoCache().setPhotoUploadList(list);
                 CacheUtil.cacheData(context, response, CacheUtil.CACHE_PHOTOS, new CacheUtil.CacheUtilListener() {
@@ -119,7 +122,7 @@ public class PhotoUploadService extends IntentService {
 
                     @Override
                     public void onDataCached() {
-
+                        Log.e(LOG, "=======> photos have been cached: " +list.size());
                     }
                 });
                 //
@@ -145,8 +148,9 @@ public class PhotoUploadService extends IntentService {
                         return;
                     }
 
+                } else {
+                    Log.w(LOG, "##### no photos found in cache for upload, response is NULL");
                 }
-                Log.w(LOG, "##### no photos found in cache for upload");
             }
 
             @Override

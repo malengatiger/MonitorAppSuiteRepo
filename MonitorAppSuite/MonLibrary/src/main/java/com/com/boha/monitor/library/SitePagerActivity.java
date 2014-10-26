@@ -17,10 +17,12 @@ import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dialogs.ProjectSiteDialog;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
+import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.fragments.PageFragment;
 import com.com.boha.monitor.library.fragments.ProjectSiteListFragment;
+import com.com.boha.monitor.library.fragments.TaskAssignmentFragment;
 import com.com.boha.monitor.library.toolbox.BaseVolley;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.Statics;
@@ -43,33 +45,81 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_site_pager);
         ctx = getApplicationContext();
-        mPager = (ViewPager)findViewById(R.id.SITE_pager);
+        mPager = (ViewPager) findViewById(R.id.SITE_pager);
 
-        project = (ProjectDTO)getIntent().getSerializableExtra("project");
+        project = (ProjectDTO) getIntent().getSerializableExtra("project");
+        type = getIntent().getIntExtra("type", TaskAssignmentFragment.OPERATIONS);
         buildPages();
     }
 
+    private void getProjectPhotos() {
+        RequestDTO w = new RequestDTO(RequestDTO.GET_ALL_PROJECT_IMAGES);
+        w.setProjectID(project.getProjectID());
+
+        setRefreshActionButtonState(true);
+        WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
+            @Override
+            public void onMessage(final ResponseDTO response) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setRefreshActionButtonState(false);
+                        for (ProjectSiteDTO ps : project.getProjectSiteList()) {
+                            ps.setPhotoUploadList(new ArrayList<PhotoUploadDTO>());
+                            for (PhotoUploadDTO ph : response.getPhotoUploadList()) {
+                                if (ph.getProjectSiteID().intValue() == ps.getProjectSiteID().intValue()) {
+                                    if (ph.getThumbFlag() != null) {
+                                        ps.getPhotoUploadList().add(ph);
+                                    }
+                                }
+                            }
+
+                        }
+                        Log.i(LOG, "----- returned photos: " + response.getPhotoUploadList().size());
+                        buildPages();
+                    }
+                });
+            }
+
+            @Override
+            public void onClose() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.errorToast(ctx, "Websocket closed. Please retry request");
+                    }
+                });
+            }
+
+            @Override
+            public void onError(final String message) {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.errorToast(ctx, message);
+                    }
+                });
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.site_pager, menu);
         mMenu = menu;
+        getProjectPhotos();
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_help) {
-            ToastUtil.toast(ctx,ctx.getString(R.string.under_cons));
+            ToastUtil.toast(ctx, ctx.getString(R.string.under_cons));
             return true;
         }
         if (id == R.id.action_add) {
-
             ProjectSiteDialog d = new ProjectSiteDialog();
             d.setContext(ctx);
             d.setProject(project);
@@ -101,7 +151,9 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
         }
         return super.onOptionsItemSelected(item);
     }
+
     boolean isRefresh;
+
     private void getData() {
         RequestDTO w = new RequestDTO();
         w.setRequestType(RequestDTO.GET_COMPANY_DATA);
@@ -118,10 +170,10 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
                     @Override
                     public void run() {
                         setRefreshActionButtonState(false);
-                        if (!ErrorUtil.checkServerError(ctx,r)) {
+                        if (!ErrorUtil.checkServerError(ctx, r)) {
                             return;
                         }
-                       //TODO - use for refresh
+                        //TODO - use for refresh
                     }
                 });
 
@@ -143,12 +195,13 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
                     @Override
                     public void run() {
                         setRefreshActionButtonState(false);
-                        ToastUtil.errorToast(ctx,message);
+                        ToastUtil.errorToast(ctx, message);
                     }
                 });
             }
         });
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -192,6 +245,7 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
 
 
     }
+
     @Override
     public void onConnected(Bundle bundle) {
         Log.i(LOG,
@@ -217,6 +271,16 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.e(LOG,
                 "### ---> PlayServices onConnectionFailed: " + connectionResult.toString());
+    }
+
+    boolean photosLoaded;
+
+    @Override
+    public void onResume() {
+        Log.e(LOG, "######### onResume .........getProjectPhotos");
+        getProjectPhotos();
+
+        super.onResume();
     }
 
     private void buildPages() {
@@ -294,9 +358,34 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
     @Override
     public void onProjectSiteTasksRequested(ProjectSiteDTO projectSite) {
 
-        Intent i = new Intent(this,TaskAssignmentActivity.class);
-        i.putExtra("projectSite",projectSite);
+        Intent i = new Intent(this, TaskAssignmentActivity.class);
+        i.putExtra("projectSite", projectSite);
+        i.putExtra("type", type);
         startActivity(i);
+    }
+
+    @Override
+    public void onCameraRequested(ProjectSiteDTO projectSite) {
+        Intent i = new Intent(this, PictureActivity.class);
+        i.putExtra("projectSite", projectSite);
+        i.putExtra("type", PhotoUploadDTO.SITE_IMAGE);
+        startActivityForResult(i, SITE_PICTURE_REQUEST);
+    }
+
+    @Override
+    public void onPhotoListUpdated(final ProjectSiteDTO projectSite) {
+        Log.w(LOG, "------ onPhotoListUpdated site photos: " + projectSite.getPhotoUploadList().size());
+        photosLoaded = true;
+
+    }
+
+    @Override
+    public void onActivityResult(int reqCode, int res, Intent data) {
+        if (reqCode == SITE_PICTURE_REQUEST) {
+            if (res == RESULT_OK) {
+                projectSiteListFragment.refreshPhotoList();
+            }
+        }
     }
 
 
@@ -359,10 +448,13 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
     Location mCurrentLocation;
     Context ctx;
     ViewPager mPager;
+    int type;
     Menu mMenu;
     int currentPageIndex;
     PagerAdapter adapter;
     ProjectDTO project;
     LocationClient mLocationClient;
     static final String LOG = SitePagerActivity.class.getSimpleName();
+    static final int SITE_PICTURE_REQUEST = 113,
+            SITE_TASK_PICTURE_REQUEST = 114;
 }

@@ -20,7 +20,8 @@ public class InvoiceDTO implements Serializable {
     private Integer invoiceID;
     private Date invoiceDate;
     private Date invoiceDueDate;
-    private Date dateRegistered;
+    private Date dateRegistered, invoicePaidDate;
+    private String reference;
     private Double totalAmount;
     private ClientDTO client;
     private CompanyDTO company;
@@ -28,6 +29,21 @@ public class InvoiceDTO implements Serializable {
     private List<InvoiceItemDTO> invoiceItemList;
     private List<SiteCheckPointDTO> siteCheckPointList;
 
+    public Date getInvoicePaidDate() {
+        return invoicePaidDate;
+    }
+
+    public void setInvoicePaidDate(Date invoicePaidDate) {
+        this.invoicePaidDate = invoicePaidDate;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
 
     public InvoiceDTO(Integer invoiceID, Date invoiceDate) {
         this.invoiceID = invoiceID;

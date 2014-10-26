@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MonLibrary/MonLibrary.iml" filepath="$PROJECT_DIR$/MonLibrary/MonLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/MonOperations/MonOperations.iml" filepath="$PROJECT_DIR$/MonOperations/MonOperations.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MonProject/MonProject.iml" filepath="$PROJECT_DIR$/MonProject/MonProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/MonitorAppSuite.iml" filepath="$PROJECT_DIR$/MonitorAppSuite.iml" />
     </modules>
   </component>

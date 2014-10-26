@@ -59,6 +59,13 @@
     <string name="change_item">Change this item</string>
     <string name="remove_item">Remove this item</string>
     <string name="delete">Delete</string>
+    <string name="no_directions">You are less than a hundred metres away. You really don\'t need directions.</string>
+    <string name="check_image">Check Image on Map</string>
+    <string name="check_image_text">Do you want to see where this picture was taken?</string>
+    <string name="delete_task">Delete Task</string>
+    <string name="directions">Directions</string>
+    <string name="directions_text">Do you want directions to this site?</string>
+    <string name="delete_task_text">Do you really want to delete this site task? </string>
     <string name="select_client">Select Client</string>
     <string name="select_staff_type">Please select Staff Type</string>
     <string name="select_task">Select Task</string>
@@ -94,12 +101,12 @@
     <string name="import_all_staff">Select All Staff</string>
     <string name="select_str">Select</string>
     <string name="send_inv">Send Invitation</string>
-    <string name="scorer_app">Scorer App</string>
-    <string name="player_app">Player App</string>
-    <string name="leaderbd_app">Leaderboard App</string>
-    <string name="admin_app">Administration App</string>
+    <string name="supervisor_app">Site Supervisor App</string>
+    <string name="operations_app">Operations App</string>
+    <string name="exec_app">Executive Dashboard App</string>
+    <string name="pm_app">Project Manager App</string>
     <string name="invite_title">Invite Golf Group members to download apps</string>
-    <string name="mg_apps">mgGolf Apps</string>
+    <string name="mg_apps">ProjectMonitor Apps</string>
     <string name="invite_dialog">Are you sure you want to invite a download of this app? \nThe user will be an Administrator and may add and change data in your group</string>
     <string name="invite_confirm">Do you want to invite someone to download mgGolf Leaderboard App?</string>
     <string name="yes">Yes</string>
@@ -209,5 +216,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_image">ImageActivity</string>
     <string name="title_activity_task_assignment">TaskAssignmentActivity</string>
+    <string name="title_activity_monitor_map">MonitorMapActivity</string>
 
 </resources>
