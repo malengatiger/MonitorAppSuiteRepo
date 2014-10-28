@@ -86,7 +86,8 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx, "Websocket closed. Please retry request");
+                        Log.e(LOG, "--------------- websocket closed");
+                        //ToastUtil.errorToast(ctx, "Websocket closed. Please retry request");
                     }
                 });
             }

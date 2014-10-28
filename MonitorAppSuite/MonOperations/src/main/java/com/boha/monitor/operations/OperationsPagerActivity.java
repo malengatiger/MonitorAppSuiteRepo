@@ -130,6 +130,11 @@ public class OperationsPagerActivity extends FragmentActivity
             public void onDataCached() {
 
             }
+
+            @Override
+            public void onError() {
+
+            }
         });
     }
 
@@ -160,6 +165,11 @@ public class OperationsPagerActivity extends FragmentActivity
 
                     @Override
                     public void onDataCached() {
+
+                    }
+
+                    @Override
+                    public void onError() {
 
                     }
                 });

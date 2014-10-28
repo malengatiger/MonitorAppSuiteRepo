@@ -89,6 +89,15 @@ public class MonitorMapActivity extends FragmentActivity
     private void setGoogleMap() {
         googleMap.setMyLocationEnabled(true);
         googleMap.setBuildingsEnabled(true);
+        //TODO - remove after test
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                location.setLatitude(latLng.latitude);
+                location.setLongitude(latLng.longitude);
+                Log.w(LOG, "********* onMapClick");
+            }
+        });
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
@@ -149,7 +158,7 @@ public class MonitorMapActivity extends FragmentActivity
     private void startDirectionsMap(double lat, double lng) {
         Log.i(LOG, "startDirectionsMap ..........");
         String url = "http://maps.google.com/maps?saddr="
-                + lat + "," + lng
+                + location.getLatitude() + "," + location.getLongitude()
                 + "&daddr=" + lat + "," + lng + "&mode=driving";
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url));
         intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");

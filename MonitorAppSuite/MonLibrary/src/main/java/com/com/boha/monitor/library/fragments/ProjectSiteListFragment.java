@@ -106,6 +106,16 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
                 lastIndex = index;
                 mListener.onProjectSiteTasksRequested(site);
             }
+
+            @Override
+            public void onDeleteRequested(ProjectSiteDTO site, int index) {
+
+            }
+
+            @Override
+            public void onStatusListRequested(ProjectSiteDTO site, int index) {
+
+            }
         });
         mListView.setAdapter(projectSiteAdapter);
         mListView.setSelection(lastIndex);

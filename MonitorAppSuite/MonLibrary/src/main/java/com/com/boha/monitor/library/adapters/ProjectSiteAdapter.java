@@ -26,8 +26,9 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
         public void onEditRequested(ProjectSiteDTO site, int index);
         public void onGalleryRequested(ProjectSiteDTO site, int index);
         public void onCameraRequested(ProjectSiteDTO site, int index);
-
         public void onTasksRequested(ProjectSiteDTO site, int index);
+        public void onDeleteRequested(ProjectSiteDTO site, int index);
+        public void onStatusListRequested(ProjectSiteDTO site, int index);
     }
 
     private final LayoutInflater mInflater;
@@ -53,9 +54,9 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
 
     static class ViewHolderItem {
         TextView txtName, txtStaffCount;
-        TextView txtTaskCount, txtImageCount;
-        TextView txtNumber;
-        ImageView imgCamera;
+        TextView txtTaskCount, txtImageCount, txtStatusCount;
+        TextView txtNumber, txtDate;
+        ImageView imgCamera,  imgDelete;
     }
 
     @Override
@@ -70,11 +71,16 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
                     .findViewById(R.id.SITE_image);
             item.txtTaskCount = (TextView) convertView
                     .findViewById(R.id.SITE_txtTaskCount);
-            item.txtStaffCount = (TextView) convertView
-                    .findViewById(R.id.SITE_txtStaffCount);
+
             item.txtImageCount = (TextView) convertView
                     .findViewById(R.id.SITE_imageCount);
+            item.txtStatusCount = (TextView) convertView
+                    .findViewById(R.id.SITE_txtStatusCount);
+            item.txtDate = (TextView) convertView
+                    .findViewById(R.id.SITE_lastStatusDate);
+
             item.imgCamera = (ImageView) convertView.findViewById(R.id.SITE_camera);
+            item.imgDelete = (ImageView) convertView.findViewById(R.id.SITE_delete);
 
             convertView.setTag(item);
         } else {
@@ -101,11 +107,22 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
             item.txtTaskCount.setText("" + p.getProjectSiteTaskList().size());
         }
 
-        if (p.getProjectSiteStaffList() == null) {
-            item.txtStaffCount.setText("0");
-        } else {
-            item.txtStaffCount.setText("" + p.getProjectSiteStaffList().size());
-        }
+        item.txtDate.setText("Date not available yet");
+
+        item.txtStatusCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onStatusListRequested(p,position);
+            }
+        });
+
+        item.imgDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onDeleteRequested(p,position);
+            }
+        });
+
         item.txtImageCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,6 +149,7 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
         });
         Statics.setRobotoFontLight(ctx, item.txtNumber);
         Statics.setRobotoFontLight(ctx, item.txtImageCount);
+        Statics.setRobotoFontLight(ctx, item.txtDate);
         Statics.setRobotoFontBold(ctx, item.txtName);
 
         animateView(convertView);

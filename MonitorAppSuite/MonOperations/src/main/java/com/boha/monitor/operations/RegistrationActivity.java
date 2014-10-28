@@ -188,7 +188,17 @@ public class RegistrationActivity extends FragmentActivity implements
                                     public void onDataCached() {
 
                                     }
+
+                                    @Override
+                                    public void onError() {
+
+                                    }
                                 });
+
+                            }
+
+                            @Override
+                            public void onError() {
 
                             }
                         });
@@ -265,6 +275,11 @@ public class RegistrationActivity extends FragmentActivity implements
 
                             @Override
                             public void onDataCached() {
+
+                            }
+
+                            @Override
+                            public void onError() {
 
                             }
                         });

@@ -142,6 +142,11 @@ public class PersonDialog extends DialogFragment {
             public void onDataCached() {
 
             }
+
+            @Override
+            public void onError() {
+
+            }
         });
     }
     private void fillForm() {

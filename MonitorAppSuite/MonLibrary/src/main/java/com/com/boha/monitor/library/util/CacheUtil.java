@@ -22,7 +22,10 @@ public class CacheUtil {
 
     public interface CacheUtilListener {
         public void onFileDataDeserialized(ResponseDTO response);
+
         public void onDataCached();
+
+        public void onError();
     }
 
     static CacheUtilListener listener;
@@ -41,6 +44,7 @@ public class CacheUtil {
         ctx = context;
         new CacheTask().execute();
     }
+
     public static void cacheData(Context context, ResponseDTO r, int type, int id, CacheUtilListener cacheUtilListener) {
         dataType = type;
         response = r;
@@ -57,6 +61,7 @@ public class CacheUtil {
         ctx = context;
         new CacheRetrieveTask().execute();
     }
+
     public static void getCachedData(Context context, int type, int id, CacheUtilListener cacheUtilListener) {
         Log.d(LOG, "################ getting cached data ..................");
         dataType = type;
@@ -67,10 +72,10 @@ public class CacheUtil {
     }
 
 
-    static class CacheTask extends AsyncTask<Void, Void, Void> {
+    static class CacheTask extends AsyncTask<Void, Void, Integer> {
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected Integer doInBackground(Void... voids) {
             String json = null;
             File file = null;
             FileOutputStream outputStream;
@@ -116,8 +121,9 @@ public class CacheUtil {
 
             } catch (IOException e) {
                 Log.e(LOG, "Failed to cache data", e);
+                return 9;
             }
-            return null;
+            return 0;
         }
 
         private void write(FileOutputStream outputStream, String json) throws IOException {
@@ -126,8 +132,11 @@ public class CacheUtil {
         }
 
         @Override
-        protected void onPostExecute(Void v) {
-            listener.onDataCached();
+        protected void onPostExecute(Integer v) {
+            if (v > 0) {
+                listener.onError();
+            } else
+                listener.onDataCached();
         }
     }
 
@@ -136,9 +145,6 @@ public class CacheUtil {
         private ResponseDTO getData(FileInputStream stream) throws IOException {
             String json = getStringFromInputStream(stream);
             ResponseDTO response = gson.fromJson(json, ResponseDTO.class);
-            if (response == null) {
-                response = new ResponseDTO();
-            }
             return response;
         }
 
@@ -165,17 +171,21 @@ public class CacheUtil {
                 }
 
             } catch (IOException e) {
-                Log.d(LOG, "------------ Failed to retrieve cache", e);
+                Log.v(LOG, "------------ Failed to retrieve cache", e);
             }
+
             return response;
         }
 
         @Override
         protected void onPostExecute(ResponseDTO v) {
             if (v != null) {
-                Log.e(LOG, "$$$$$$$$$$$$ cached data retrieved");
+                Log.i(LOG, "$$$$$$$$$$$$ cached data retrieved");
+                listener.onFileDataDeserialized(v);
+            } else {
+                listener.onError();
             }
-            listener.onFileDataDeserialized(v);
+
         }
     }
 

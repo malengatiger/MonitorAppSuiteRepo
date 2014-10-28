@@ -22,7 +22,7 @@ public class Statics {
 //
 //    public static final String WEBSOCKET_URL = "ws://10.50.75.28:8080/mwp/";
 //    public static final String URL = "http://10.50.75.28:8080/mwp/";
-//    public static final String IMAGE_URL = "http://10.50.75.28:8080/monitor_images/";
+//    public static final String IMAGE_URL = "http://10.50.75.28:8080/";
 
     public static final String WEBSOCKET_URL = "ws://192.168.1.111:8080/mwp/";
     public static final String URL = "http://192.168.1.111:8080/mwp/";
@@ -33,7 +33,6 @@ public class Statics {
     public static final String INVITE_PLAYER = INVITE_DESTINATION + "com.boha.malengagolf.player";
     public static final String INVITE_SCORER = INVITE_DESTINATION + "com.boha.malengagolf.scorer";
     public static final String INVITE_LEADERBORAD = INVITE_DESTINATION + "com.boha.malengagolf.leaderboard";
-
 
     public static final String UPLOAD_URL_REQUEST = "uploadUrl?";
     public static final String UPLOAD_BLOB = "uploadBlob?";

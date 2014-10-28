@@ -43,7 +43,7 @@ public class PhotoUploadService extends IntentService {
         final PhotoUploadDTO dto = getObject(context,fullPicture,thumb,location);
         dto.setCompanyStaffID(staff.getCompanyStaffID());
         dto.setPictureType(PhotoUploadDTO.STAFF_IMAGE);
-        cachePhotos(context,dto);
+        addPhotoToCache(context, dto);
     }
     /**
      * Upload site picture
@@ -61,7 +61,7 @@ public class PhotoUploadService extends IntentService {
         dto.setProjectID(site.getProjectID());
         dto.setProjectSiteID(site.getProjectSiteID());
         dto.setPictureType(PhotoUploadDTO.SITE_IMAGE);
-        cachePhotos(context,dto);
+        addPhotoToCache(context, dto);
     }
     public static void uploadSiteTaskPicture(final Context context, final ProjectSiteTaskDTO siteTask,
                                          final File fullPicture, final File thumb,
@@ -71,7 +71,7 @@ public class PhotoUploadService extends IntentService {
         dto.setProjectSiteID(siteTask.getProjectSiteID());
         dto.setProjectSiteTaskID(siteTask.getProjectSiteTaskID());
         dto.setPictureType(PhotoUploadDTO.TASK_IMAGE);
-        cachePhotos(context,dto);
+        addPhotoToCache(context, dto);
 
     }
     public static void uploadProjectPicture(final Context context,
@@ -81,7 +81,7 @@ public class PhotoUploadService extends IntentService {
         dto.setProjectID(project.getProjectID());
         dto.setPictureType(PhotoUploadDTO.PROJECT_IMAGE);
 
-       cachePhotos(context,dto);
+       addPhotoToCache(context, dto);
     }
     private static PhotoUploadDTO getObject(Context context,final File fullPicture, final File thumb,
                                      Location location) {
@@ -95,8 +95,8 @@ public class PhotoUploadService extends IntentService {
         dto.setTime(new Date().getTime());
         return dto;
     }
-    private static void cachePhotos(final Context context, final PhotoUploadDTO dto) {
-        Log.w(LOG,"**** cachePhotos starting ...");
+    private static void addPhotoToCache(final Context context, final PhotoUploadDTO dto) {
+        Log.w(LOG,"**** addPhotoToCache starting ...");
         CacheUtil.getCachedData(context, CacheUtil.CACHE_PHOTOS, new CacheUtil.CacheUtilListener() {
             @Override
             public void onFileDataDeserialized(ResponseDTO response) {
@@ -124,8 +124,13 @@ public class PhotoUploadService extends IntentService {
                     public void onDataCached() {
                         Log.e(LOG, "=======> photos have been cached: " +list.size());
                     }
+
+                    @Override
+                    public void onError() {
+
+                    }
                 });
-                //
+                //start service to upload images in cache
                 Intent intent = new Intent(context, PhotoUploadService.class);
                 context.startService(intent);
             }
@@ -134,12 +139,18 @@ public class PhotoUploadService extends IntentService {
             public void onDataCached() {
 
             }
+
+            @Override
+            public void onError() {
+
+            }
         });
     }
     public static void uploadPendingPhotos(final Context context) {
         CacheUtil.getCachedData(context,CacheUtil.CACHE_PHOTOS,new CacheUtil.CacheUtilListener() {
             @Override
             public void onFileDataDeserialized(ResponseDTO response) {
+                Log.e(LOG, "##### cached photo list returned - may start service if needed");
                 if (response != null) {
                     if (response.getPhotoCache() != null) {
                         list = response.getPhotoCache().getPhotoUploadList();
@@ -155,6 +166,11 @@ public class PhotoUploadService extends IntentService {
 
             @Override
             public void onDataCached() {
+
+            }
+
+            @Override
+            public void onError() {
 
             }
         });
@@ -260,20 +276,7 @@ public class PhotoUploadService extends IntentService {
     }
     private void saveCache() {
         Log.d(LOG,"*** saveCache starting............");
-//        List<PhotoUploadDTO> pendingList = new ArrayList<>();
-//        for (PhotoUploadDTO d: list) {
-//            if (d.getDateThumbUploaded() == null) {
-//                pendingList.add(d);
-//                continue;
-//            }
-//            if (d.getDateFullPictureUploaded() == null) {
-//                pendingList.add(d);
-//                continue;
-//            }
-//
-//        }
-//        Log.e(LOG,"---- photo cache saveCache complete, pending uploads: " + pendingList.size());
-//        list = pendingList;
+
         ResponseDTO r = new ResponseDTO();
         PhotoCache pc = new PhotoCache();
         pc.setPhotoUploadList(list);
@@ -286,6 +289,11 @@ public class PhotoUploadService extends IntentService {
 
             @Override
             public void onDataCached() {
+
+            }
+
+            @Override
+            public void onError() {
 
             }
         });

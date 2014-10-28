@@ -102,10 +102,12 @@ public class ImageGridFragment extends Fragment implements PageFragment {
         Statics.setRobotoFontLight(ctx,txtSubTitle);
 
         gridView = (GridView) view.findViewById(R.id.grid);
+        gridView.setVisibility(View.GONE);
+        //
         staggeredGridView = (StaggeredGridView) view.findViewById(R.id.staggeredGrid);
         imageAdapter = new ImageAdapter(ctx, R.layout.image_item, pathList);
 
-        gridView.setVisibility(View.GONE);
+
         imageAdapter.notifyDataSetChanged();
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -145,12 +147,15 @@ public class ImageGridFragment extends Fragment implements PageFragment {
         }
         staggeredGridView.addHeaderView(header);
         staggeredGridView.addFooterView(footer);
-        gridView.setAdapter(imageAdapter);
+
+        //gridView.setAdapter(imageAdapter);
         staggeredGridView.setAdapter(imageAdapter);
         staggeredGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mListener.onImageClicked(pathList.get(position), position);
+                if (position == 0) return;
+                if (position == pathList.size() - 1) return;
+                mListener.onImageClicked(pathList.get(position), position - 1);
             }
         });
     }

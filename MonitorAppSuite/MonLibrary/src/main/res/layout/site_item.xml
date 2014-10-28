@@ -96,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00"
-            android:id="@+id/SITE_txtStaffCount"
+            android:id="@+id/SITE_txtStatusCount"
             style="@style/GreenCircle"
             android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
@@ -105,16 +105,38 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/site_staff"
+            android:text="@string/site_status"
             android:id="@+id/SITE_txtlabel2"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/SITE_txtStaffCount"
+            android:layout_toLeftOf="@id/SITE_txtStatusCount"
             android:layout_marginRight="20dp"
             style="@style/TextStyleGrey"
             android:textSize="16sp"
 
             android:layout_marginLeft="10dp" />
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/SITE_bottom"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/SITE_staffLayout">
+        <TextView
+            android:id="@+id/SITE_label"
+            style="@style/TextStyleGrey"
+            android:text="@string/last_status_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/SITE_lastStatusDate"
+            style="@style/TextStyleBoldBlueSmall"
+            android:text="30 December 2059 13:30"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/SITE_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -122,7 +144,7 @@
         android:id="@+id/SITE_actionLayout"
         android:layout_marginTop="10dp"
         android:background="@color/beige_pale"
-        android:layout_below="@id/SITE_staffLayout">
+        android:layout_below="@id/SITE_bottom">
 
         <ImageView
             android:id="@+id/SITE_camera"
@@ -137,6 +159,15 @@
             android:layout_marginLeft="20dp"
             android:layout_centerVertical="true"
             style="@style/Title1TextStyleBlue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/SITE_delete"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:src="@android:drawable/ic_delete"
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

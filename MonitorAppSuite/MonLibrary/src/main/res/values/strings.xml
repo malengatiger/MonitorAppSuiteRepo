@@ -140,6 +140,7 @@
     <string name="delete_video">Remove Video from Device</string>
     <string name="video">Video</string>
     <string name="site_tasks">Project Site Tasks</string>
+    <string name="site_status">Project Site Status</string>
     <string name="site_staff">Project Site Staff</string>
     <string name="company_projects">Company Projects</string>
     <string name="task_status">Task Status</string>
@@ -161,6 +162,7 @@
     <string name="map">Map</string>
     <string name="list">List</string>
     <string name="send_mail">Send eMail</string>
+    <string name="last_status_date">Last Status Date</string>
     <string name="send_text">Send Text Message</string>
     <string name="change">Change Information</string>
     <string name="upload_video">Upload Video</string>

@@ -61,7 +61,7 @@ public class ImageActivity extends Activity {
         }
         setFields();
         txtNumber.setText("" + (index));
-        index--;
+
 
         photoCache = new PhotoCache();
         StringBuilder sb = new StringBuilder();

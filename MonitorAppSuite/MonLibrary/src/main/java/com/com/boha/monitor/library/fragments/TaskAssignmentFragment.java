@@ -331,6 +331,11 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
             public void onDataCached() {
 
             }
+
+            @Override
+            public void onError() {
+
+            }
         });
     }
 

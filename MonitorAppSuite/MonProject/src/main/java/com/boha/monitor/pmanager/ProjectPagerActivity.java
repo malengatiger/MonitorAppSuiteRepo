@@ -115,6 +115,11 @@ public class ProjectPagerActivity extends FragmentActivity
             public void onDataCached() {
 
             }
+
+            @Override
+            public void onError() {
+
+            }
         });
     }
 
@@ -145,6 +150,11 @@ public class ProjectPagerActivity extends FragmentActivity
 
                     @Override
                     public void onDataCached() {
+
+                    }
+
+                    @Override
+                    public void onError() {
 
                     }
                 });

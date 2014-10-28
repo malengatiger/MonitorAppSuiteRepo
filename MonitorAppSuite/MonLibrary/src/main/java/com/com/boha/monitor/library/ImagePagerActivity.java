@@ -152,6 +152,11 @@ public class ImagePagerActivity extends FragmentActivity implements ImageGridFra
                     public void onDataCached() {
 
                     }
+
+                    @Override
+                    public void onError() {
+
+                    }
                 });
                 break;
             case PROJECT:
