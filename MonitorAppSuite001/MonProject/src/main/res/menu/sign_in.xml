@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.boha.monitor.pmanager.SignInActivity" >
+    <item android:id="@+id/action_help"
+        android:title="@string/help_me"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_action_help"
+        android:showAsAction="ifRoom" />
+</menu>
