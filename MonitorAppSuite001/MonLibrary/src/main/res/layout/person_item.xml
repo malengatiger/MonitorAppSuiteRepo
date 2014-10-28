@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/xwhite_rounded_corners"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/PSN_imagex"
+        android:padding="5dp"
+        android:scaleType="centerCrop"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/boy" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/zero"
+        android:id="@+id/PSN_txtNum"
+        android:layout_marginTop="10dp"
+        style="@style/Title2TextStyleGrey"
+        android:layout_marginLeft="50dp"
+        android:layout_below="@+id/PSN_imagex" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/txt"
+        android:id="@+id/PSN_txtName"
+        style="@style/Title3TextStyleBlue"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/PSN_imagex" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="email@address"
+        android:layout_marginTop="5dp"
+        android:id="@+id/PSN_txtEmail"
+        android:layout_below="@+id/PSN_txtName"
+        android:layout_alignLeft="@id/PSN_txtName"
+        style="@style/TextStyle"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="099 999 9999"
+        android:id="@+id/PSN_txtCell"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="2dp"
+        android:layout_alignLeft="@id/PSN_txtName"
+        android:layout_below="@+id/PSN_txtEmail"
+        style="@style/TextStyleBlue"
+        android:textSize="14sp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Staff Type"
+        android:id="@+id/PSN_txtStaffType"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignLeft="@id/PSN_txtName"
+        android:layout_below="@+id/PSN_txtCell"
+        style="@style/TextStyle"
+        android:layout_centerHorizontal="true" />
+
+    <RelativeLayout
+        android:id="@+id/PSN_layoutCount"
+        android:layout_below="@+id/PSN_txtStaffType"
+        android:layout_alignLeft="@id/PSN_txtName"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content">
+
+
+
+        <TextView
+            android:id="@+id/PSN_txtCounter"
+            android:text="@string/zero"
+            style="@style/RedCircle"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/PSN_txtCounterLabel"
+            android:text="@string/status_updates"
+            style="@style/TextStyleGrey"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_toLeftOf="@id/PSN_txtCounter"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/PSN_playerActions"
+        android:layout_below="@id/PSN_layoutCount"
+        android:layout_marginTop="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--<include layout="@layout/player_actions" /> -->
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/PSD_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/PSD_project"
+            style="@style/Title3TextStyleBlack"
+            android:text="Project Name"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/PSD_bottom"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/PSD_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/PSD_title"
+            style="@style/Title2TextStyleGrey"
+            android:text="@string/project_site_details"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/PSD_editName"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/PSD_title"
+            android:hint="@string/enter_project_site"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/PSD_editStand"
+            android:layout_marginTop="16dp"
+            android:layout_below="@id/PSD_editName"
+            android:hint="@string/enter_erf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:layout_below="@id/PSD_editStand"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/PSD_btnCancel"
+                style="@style/ButtonCancel"
+                android:text="@string/cancel"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/PSD_btnSave"
+                android:layout_below="@id/PSD_btnCancel"
+                style="@style/ButtonSave"
+                android:layout_marginTop="16dp"
+                android:text="@string/save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/PSD_btnDelete"
+                style="@style/ButtonDelete"
+                android:layout_marginTop="16dp"
+                android:layout_below="@id/PSD_btnSave"
+                android:text="@string/delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/PSD_number"
+        style="@style/TransparentCircle"
+        android:text="00"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ProgressBar
+        android:id="@+id/PSD_progress"
+        android:layout_marginTop="56dp"
+        style="@android:style/Widget.ProgressBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

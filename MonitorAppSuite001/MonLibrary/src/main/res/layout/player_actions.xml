@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/PA_layoutActions"
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_height="wrap_content">
+
+    <LinearLayout
+            android:id="@+id/PA_layoutActions1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+        <ImageView
+                android:id="@+id/PA_imgPlayerHistory"
+                android:layout_weight="1"
+                android:src="@drawable/clipboard32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+
+        <ImageView
+                android:id="@+id/PA_imgCamera"
+                android:layout_weight="1"
+                android:src="@drawable/ic_action_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <ImageView
+                android:id="@+id/PA_imgMessage"
+                android:layout_weight="1"
+                android:src="@drawable/ic_action_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <ImageView
+                android:id="@+id/PA_imgEdit"
+                android:src="@drawable/ic_action_edit"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+        <ImageView
+                android:id="@+id/PA_imgInvite"
+                android:layout_weight="1"
+                android:src="@android:drawable/ic_menu_share"
+                android:layout_width="32dp"
+                android:layout_height="32dp"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

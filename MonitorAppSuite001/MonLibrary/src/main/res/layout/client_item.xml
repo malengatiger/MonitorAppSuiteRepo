@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/CI_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/CI_number"
+            style="@style/BlueCircle"
+            android:text="00"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/CI_name"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/CI_number"
+            android:layout_centerVertical="true"
+            style="@style/Title3TextStyleBlack"
+            android:text="@string/client_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/CI_bottom"
+        android:layout_below="@id/CI_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/CI_number2"
+            style="@style/BlueCircle"
+            android:text="00"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/CI_address"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/CI_number2"
+            style="@style/TextStyleBlue"
+            android:text="@string/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/CI_email"
+            android:layout_alignLeft="@id/CI_address"
+            android:layout_below="@id/CI_address"
+            style="@style/Title3TextStyleBlack"
+            android:text="@string/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+</RelativeLayout>

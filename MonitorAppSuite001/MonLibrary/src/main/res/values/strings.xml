@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="action_items">
+        <item>Projects</item>
+        <item>Staff</item>
+        <item>Manage Data</item>
+        <item>Site Reports</item>
+        <item>Beneficiaries</item>
+        <item>Project Maps</item>
+        <item>Invoices</item>
+        <item>Happy Letters</item>
+        <item>Company Clients</item>
+        <item>Status Notifications</item>
+    </string-array>
+
+    <string name="pay_mobile">Payment via Mobile</string>
+    <string name="pay_credit">Payment via Google Play</string>
+    <string name="subs">mgGolf Subscription</string>
+    <string name="subs_text">Please select the payment type that you prefer</string>
+    <string name="done_label">Done</string>
+    <string name="day_picker_description">Month grid of days</string>
+    <string name="year_picker_description">Year list</string>
+    <string name="select_day">Select month and day</string>
+    <string name="select_year">Select year</string>
+    <string name="item_is_selected">%1$s selected</string>
+    <string name="sans_serif" translatable="false">sans-serif</string>
+    <string name="day_of_week_label_typeface" translatable="false">sans-serif</string>
+    <string name="time_placeholder" translatable="false">--</string>
+    <string name="time_separator" translatable="false">:</string>
+    <string name="hour_picker_description">Hours circular slider</string>
+    <string name="minute_picker_description">Minutes circular slider</string>
+    <string name="radial_numbers_typeface" translatable="false">sans-serif</string>
+    <string name="select_hours">Select hours</string>
+    <string name="select_minutes">Select minutes</string>
+    <string name="done">Done</string>
+    <string name="get_number">Get Number</string>
+    <string name="number_tourn">Tournaments</string>
+    <string name="number_rounds">Number of Rounds</string>
+    <string name="rounds">Rounds</string>
+    <string name="avg_per_round">Strokes Per Round</string>
+    <string name="last_hole">Last Recorded Hole</string>
+    <string name="last_hole_short">Last Hole</string>
+    <string name="current_round">Current Round</string>
+    <string name="view_players">View Player List</string>
+    <string name="go">Go</string>
+    <string name="error_email">Problem sending email</string>
+    <string name="choose_photo">Select Profile Photo</string>
+    <string name="error_date">Enter end date equal or later than start date</string>
+    <string name="error_database">Database error. Contact The CourseMaker support on the web site</string>
+    <string name="error_local_databse">Local Database error. Contact The CourseMaker support on the web site</string>
+    <string name="error_network_unavailable">Network unavailable. Check settings and signal strength</string>
+    <string name="error_server_unavailable">Server is unavailable due to maintenance. Please try later.</string>
+    <string name="error_encoding">Error encoding request. Contact support</string>
+    <string name="error_server_comms">Problem communicating with the server. Please try again or contact mgGolf support</string>
+    <string name="error_duplicate">Attempting to put duplicate data in database, ignored</string>
+    <string name="welcome_aboard">Welcome Aboard! Thanks for signing up!</string>
+    <string name="app_name">Monitor</string>
+    <string name="change_item">Change this item</string>
+    <string name="remove_item">Remove this item</string>
+    <string name="delete">Delete</string>
+    <string name="no_directions">You are less than a hundred metres away. You really don\'t need directions.</string>
+    <string name="check_image">Check Image on Map</string>
+    <string name="check_image_text">Do you want to see where this picture was taken?</string>
+    <string name="delete_task">Delete Task</string>
+    <string name="directions">Directions</string>
+    <string name="directions_text">Do you want directions to this site?</string>
+    <string name="delete_task_text">Do you really want to delete this site task? </string>
+    <string name="select_client">Select Client</string>
+    <string name="select_staff_type">Please select Staff Type</string>
+    <string name="select_task">Select Task</string>
+    <string name="pages">Page</string>
+    <string name="firstname">First Name</string>
+    <string name="projectname">Project Name</string>
+    <string name="client_name">Client Name</string>
+    <string name="golfgroup_number">Golf Group Number</string>
+    <string name="tourney_name">Tournament Name</string>
+    <string name="lastname">Surname</string>
+    <string name="description">Detailed Project Description</string>
+    <string name="address">Address</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="cellphone">Cellphone</string>
+    <string name="search_map">Use Map for Club search</string>
+    <string name="invited">You are invited to download this app\:</string>
+    <string name="click_link">Click or tap the link below to navigate to Google Play</string>
+    <string name="enjoy">Enjoy the game!</string>
+    <string name="select_players_imp">Please select Players for import</string>
+    <string name="subject">Invitation to Project Monitor</string>
+    <string name="off">Normal</string>
+    <string name="message_from">Message from</string>
+    <string name="on">Satellite</string>
+    <string name="select_email">Please select eMail address</string>
+    <string name="pin_note">Please note your pin below. The pin is needed when you login the first time</string>
+    <string name="messaging">Messaging</string>
+    <string name="admin">Administrator</string>
+    <string name="select_imp_playr">Select Player for import</string>
+    <string name="select_msg_playr">Select Player for message</string>
+    <string name="import_files">Files for Import</string>
+    <string name="import_staff">Import Staff</string>
+    <string name="import_all_staff">Select All Staff</string>
+    <string name="select_str">Select</string>
+    <string name="send_inv">Send Invitation</string>
+    <string name="supervisor_app">Site Supervisor App</string>
+    <string name="operations_app">Operations App</string>
+    <string name="exec_app">Executive Dashboard App</string>
+    <string name="pm_app">Project Manager App</string>
+    <string name="invite_title">Invite Golf Group members to download apps</string>
+    <string name="mg_apps">ProjectMonitor Apps</string>
+    <string name="invite_dialog">Are you sure you want to invite a download of this app? \nThe user will be an Administrator and may add and change data in your group</string>
+    <string name="invite_confirm">Do you want to invite someone to download mgGolf Leaderboard App?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="par">Par</string>
+    <string name="club_directions">Do you want directions from your location to this Club?</string>
+    <string name="text_msg">Text Message</string>
+    <string name="email">Email</string>
+    <string name="postcode">Postal Code</string>
+    <string name="zero">00</string>
+    <string name="tee">Tee</string>
+    <string name="enter_pin">Enter PIN</string>
+    <string name="select_acct">Please select account</string>
+    <string name="select_province">State/Province</string>
+    <string name="player_already_in_tourn">This Player is already entered in the Tournament</string>
+    <string name="txt">Text for Design Purpose</string>
+    <string name="register">Register</string>
+    <string name="sign_in">Sign In</string>
+    <string name="cancel">Cancel</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="project_sites">Project Sites</string>
+    <string name="project_staff">Project Staff</string>
+    <string name="pin">Pin Number</string>
+    <string name="refresh">Refresh</string>
+    <string name="upload_pic">Upload Picture</string>
+    <string name="failed_import">Failed to import Players</string>
+    <string name="import_ok">Players successfully imported into Group\'s database</string>
+    <string name="nine_holes_reminder">9 hole tournament. Score the front OR the the back nine.</string>
+    <string name="view_video">Watch Video</string>
+    <string name="delete_video">Remove Video from Device</string>
+    <string name="video">Video</string>
+    <string name="site_tasks">Project Site Tasks</string>
+    <string name="site_status">Project Site Status</string>
+    <string name="site_staff">Project Site Staff</string>
+    <string name="company_projects">Company Projects</string>
+    <string name="task_status">Task Status</string>
+    <string name="project_status">Project Status</string>
+    <string name="company_staff">Company Staff</string>
+    <string name="closed">Closed</string>
+    <string name="project_site">Project Site</string>
+    <string name="project_site_details">Project Site Details</string>
+    <string name="status_update_week">Task Status Updates this Week</string>
+    <string name="status_updates">Status Updates</string>
+    <string name="take_pic">Take Picture</string>
+    <string name="tourn_pics">Pictures</string>
+    <string name="tourn_player_pics">Tournament Players</string>
+    <string name="take_vid">Make a Video Clip</string>
+    <string name="no_pics">There are no tournament pictures available at this time. Enjoy this one!</string>
+    <string name="help_me">Help Me</string>
+    <string name="under_cons">Feature under Construction. Please check later!</string>
+    <string name="select_subs">Please select Subscription type</string>
+    <string name="map">Map</string>
+    <string name="list">List</string>
+    <string name="send_mail">Send eMail</string>
+    <string name="last_status_date">Last Status Date</string>
+    <string name="send_text">Send Text Message</string>
+    <string name="change">Change Information</string>
+    <string name="upload_video">Upload Video</string>
+    <string name="camera">Camera</string>
+    <string name="client_list">Client List</string>
+    <string name="task_status_list">Task Status List</string>
+    <string name="project_statustype_list">Project Status List</string>
+    <string name="beneficiary_list">Beneficiary List</string>
+    <string name="camera_error">Unable to get picture from camera. Please try again.</string>
+    <string name="combined_leaderboard">Combined Leaderboard</string>
+    <string name="existing_acct">Sign in to existing account</string>
+    <string name="register_new_company">Register New Company</string>
+    <string name="company_name">Company Name</string>
+    <string name="gallery">Gallery</string>
+    <string name="staff_name">Staff Name</string>
+    <string name="staff">Staff</string>
+    <string name="client">Client</string>
+    <string name="staff_operations">Operations Staff</string>
+    <string name="save">Save</string>
+    <string name="selected">Selected</string>
+    <string name="welcome">Welcome Aboard!</string>
+    <string name="company_reg">Company Registration</string>
+    <string name="company_signin">Company SignIn</string>
+    <string name="signin_or_register">If you have an existing account please Sign In otherwise please register new Company</string>
+    <string name="videofile_not_found">Video file not found</string>
+    <string name="crash_toast">gf</string>
+    <string name="crash_toast_text">Ooooops ! I crashed, but a report has been sent to my developer to help fix the issue !</string>
+    <string name="crash_dialog_title">CrashTest has crashed</string>
+    <string name="crash_dialog_text">An unexpected error occurred forcing the
+    application to stop. Please help us fix this by sending us error data,
+    all you have to do is click OK.</string>
+    <string name="crash_dialog_comment_prompt">You might add your comments about the problem below:</string>
+    <string name="crash_dialog_ok_toast">Thank you !</string>
+    <string name="enter_comp_name">Enter Company Name</string>
+    <string name="enter_firstname">Enter First Name</string>
+    <string name="enter_lastname">Enter Surname</string>
+    <string name="enter_desc">Enter Description</string>
+    <string name="enter_cell">Enter Cellphone Number</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_address">Enter Address</string>
+    <string name="enter_project_site">Enter Project Site Name</string>
+    <string name="enter_erf">Enter Stand/Erf Number</string>
+    <string name="enter_postcode">Enter Postal Code</string>
+    <string name="enter_email">Enter Email address</string>
+    <string name="enter_startdate">Enter Start Date</string>
+    <string name="enter_enddate">Enter End Date</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="select_country">Please select country</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_add">Add New</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="title_activity_task_status_notification">TaskStatusNotificationActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_image">ImageActivity</string>
+    <string name="title_activity_task_assignment">TaskAssignmentActivity</string>
+    <string name="title_activity_monitor_map">MonitorMapActivity</string>
+
+</resources>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@color/grey"
+    tools:context="com.com.boha.monitor.library.fragments.ProjectSiteListFragment">
+
+    <RelativeLayout
+        android:id="@+id/SITE_LIST_layoutx"
+        android:padding="16dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/SITE_LIST_siteCount"
+            android:text="00"
+            style="@style/GreyCircle"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/SITE_LIST_projectName"
+            style="@style/Title2TextStyleBlack"
+            android:text="Project Name Here"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+    <ListView
+        android:background="@color/white"
+        android:id="@android:id/list"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/SITE_LIST_layoutx"
+        android:dividerHeight="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center" />
+
+</RelativeLayout>

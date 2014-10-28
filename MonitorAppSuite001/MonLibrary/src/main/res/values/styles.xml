@@ -1,0 +1,479 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Holo.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
+        <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
+        <item name="android:spinnerDropDownItemStyle">@style/RobotoSpinnerTextStyle</item>
+        <item name="android:spinnerItemStyle">@style/RobotoSpinnerTextStyle</item>
+    </style>
+
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="RobotoSpinnerTextStyle" parent="android:Widget.Holo.Light.TextView.SpinnerItem">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+    <style name="RobotoSpinnerDropDownStyle" parent="android:Widget.Holo.Light.TextView.SpinnerItem">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+    <style name="mgStyle">
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="Pager">
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="PagerSmall">
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Title1TextStyleBlue" parent="@android:style/TextAppearance.Large">
+        <item name="android:textColor">@color/navy_blue</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="Title1TextStyleGreen" parent="@android:style/TextAppearance.Large">
+        <item name="android:textColor">@color/green</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="Title1TextStyleGrey" parent="@android:style/TextAppearance.Large">
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="Title1TextStyleBlack" parent="@android:style/TextAppearance.Large">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="Title1TextStyleRed" parent="@android:style/TextAppearance.Large">
+        <item name="android:textColor">@color/maroon</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="Title2TextStyleGrey" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/grey2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="Title3TextStyleGrey" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/grey2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="SmallTextGrey" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/grey2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Title2TextStyleBlue" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/navy_blue</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:padding">3dp</item>
+    </style>
+
+    <style name="Title3TextStyleBlue" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/navy_blue</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+
+    </style>
+
+    <style name="Title2TextStyleBlack" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="Title3TextStyleBlack" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="Title3TextStyleGreen" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/green</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="Title3TextStyleRed" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/translucent_red</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="Title2TextStyleGreen" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/green</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="TextStyleBlue" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/navy_blue</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="TextStyleGreen" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/green</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="TextStyleGreenSmall" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/green</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="TextStyleNavyBlue" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/navy_blue</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ButtonSave" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@drawable/xbluelight_rounded_corners</item>
+    </style>
+
+    <style name="ButtonSaveSmall" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:background">@drawable/xbluelight_rounded_corners</item>
+    </style>
+
+    <style name="ButtonNavyBlue" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@drawable/xbluelight_rounded_corners</item>
+    </style>
+
+    <style name="ButtonNavyBlueSmall" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:background">@drawable/xbluelight_rounded_corners</item>
+        <item name="android:drawableLeft">@android:drawable/ic_menu_send</item>
+    </style>
+
+    <style name="ButtonRed" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@drawable/xred_dark_rounded_corners</item>
+    </style>
+
+    <style name="ButtonCancel" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@drawable/xgrey_rounded_corners</item>
+    </style>
+
+    <style name="ButtonDelete" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@drawable/xred_dark_rounded_corners</item>
+    </style>
+
+    <style name="ButtonCancelSmall" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:background">@drawable/xgrey_rounded_corners</item>
+    </style>
+    <style name="ThinGreyBox" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:background">@drawable/xthin_grey_box</item>
+    </style>
+
+    <style name="TextStyleGrey" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextStyleGreySmall" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MediumTextStyle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="MediumTextStyleBold" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextStyle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="TextStyle20" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextStyleRed" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/translucent_red</item>
+    </style>
+
+    <style name="TextStyleRedSmall" parent="@android:style/TextAppearance.Small">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/translucent_red</item>
+    </style>
+
+    <style name="TextStyleSmall" parent="@android:style/TextAppearance.Small">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextStyleBold" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textStyle">bold</item>
+        <item name="android:color">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextStyleBoldSmall" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextStyleBoldBlueSmall" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/navy_blue</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="BlueCountBox" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@drawable/xblue_box</item>
+    </style>
+
+    <style name="BlueCountBoxSmall" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:background">@drawable/xblue_box</item>
+    </style>
+
+    <style name="BlackCountBoxSmall" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/xblack_box</item>
+    </style>
+
+    <style name="BlackCountOvalSmall" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:background">@drawable/xblack_oval</item>
+    </style>
+
+    <style name="BlackCountBox" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/xblack_box</item>
+    </style>
+    <style name="LeaderBoardNumber" parent="@android:style/TextAppearance.Large">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="LeaderBoardNumberMedium" parent="@android:style/TextAppearance.Large">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+    <style name="LeaderBoardNumberLarge" parent="@android:style/TextAppearance.Large">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+    <style name="LeaderBoardNumberNormal" parent="@android:style/TextAppearance.Large">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="RedCountBox" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@drawable/xred_box</item>
+    </style>
+
+    <style name="RedCountBoxSmall" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:background">@drawable/xred_box</item>
+    </style>
+    <style name="RedCircle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/xred_oval</item>
+    </style>
+    <style name="RedCircleSmall" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/xred_oval_small</item>
+    </style>
+    <style name="TransparentCircle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/xtransparent_oval</item>
+    </style>
+    <style name="GreenCircle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/xgreen_oval</item>
+    </style>
+    <style name="BlackCircle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/xblack_oval</item>
+    </style>
+    <style name="GreyCircle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/xgrey_oval</item>
+    </style>
+    <style name="GreyCircleSmall" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/xgrey_oval_small</item>
+    </style>
+    <style name="YellowCircle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/absa_red</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/xyellow_oval</item>
+    </style>
+    <style name="BlueCircle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/xblue_oval</item>
+    </style>
+
+    <style name="GreenCountBox" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@drawable/xgreen_box</item>
+    </style>
+
+    <style name="GreenCountBoxSmall" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:background">@drawable/xgreen_box</item>
+    </style>
+
+    <style name="GreyCountBox" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@drawable/xgrey_box</item>
+    </style>
+
+    <style name="GreyCountBoxSmall" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:background">@drawable/xgrey_box</item>
+    </style>
+
+    <style name="time_label">
+        <item name="android:textSize">@dimen/time_label_size</item>
+        <item name="android:textColor">@color/numbers_text_color</item>
+    </style>
+
+    <style name="ampm_label">
+        <item name="android:textSize">@dimen/ampm_label_size</item>
+        <item name="android:textColor">@color/ampm_text_color</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="day_of_week_label_condensed" />
+
+</resources>

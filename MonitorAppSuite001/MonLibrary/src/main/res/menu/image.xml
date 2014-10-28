@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.com.boha.monitor.library.ImageActivity" >
+    <item android:id="@+id/action_camera"
+        android:title="@string/take_pic"
+        android:orderInCategory="100"
+        android:icon="@drawable/camera_a32"
+        android:showAsAction="ifRoom" />
+    <item android:id="@+id/action_help"
+        android:title="@string/help_me"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_action_help"
+        android:showAsAction="never" />
+</menu>
