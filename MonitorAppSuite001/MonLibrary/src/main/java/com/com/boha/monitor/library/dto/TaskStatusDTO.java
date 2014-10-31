@@ -16,6 +16,20 @@ public class TaskStatusDTO implements Serializable, Comparable<TaskStatusDTO> {
     private static final long serialVersionUID = 1L;
     private Integer taskStatusID, companyID;
     private String taskStatusName;
+    private Short statusColor;
+
+    public static final int
+            STATUS_COLOR_RED = 3,
+            STATUS_COLOR_GREEN = 1,
+            STATUS_COLOR_YELLOW = 2;
+
+    public Short getStatusColor() {
+        return statusColor;
+    }
+
+    public void setStatusColor(Short statusColor) {
+        this.statusColor = statusColor;
+    }
 
     public Integer getCompanyID() {
         return companyID;

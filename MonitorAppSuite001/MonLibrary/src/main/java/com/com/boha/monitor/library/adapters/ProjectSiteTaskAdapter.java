@@ -63,8 +63,8 @@ public class ProjectSiteTaskAdapter extends ArrayAdapter<ProjectSiteTaskDTO> {
 
 
     static class ViewHolderItem {
-        TextView txtName;
-        TextView txtNumber;
+        TextView txtName, txtStatus, txtStaff;
+        TextView txtNumber, txtLastDate, txtStatusCount;
         ImageView imgStatus, imgDelete, imgCamera;
         View actions;
     }
@@ -80,6 +80,14 @@ public class ProjectSiteTaskAdapter extends ArrayAdapter<ProjectSiteTaskDTO> {
                     .findViewById(R.id.TSK_taskName);
             item.txtNumber = (TextView) convertView
                     .findViewById(R.id.TSK_number);
+            item.txtLastDate = (TextView) convertView
+                    .findViewById(R.id.TSK_lastStatusDate);
+            item.txtStatusCount = (TextView) convertView
+                    .findViewById(R.id.TSK_statusCount);
+            item.txtStatus = (TextView) convertView
+                    .findViewById(R.id.TSK_lastStatus);
+            item.txtStaff = (TextView) convertView
+                    .findViewById(R.id.TSK_staff);
 
             item.imgCamera = (ImageView) convertView
                     .findViewById(R.id.TAC_imgCamera);
@@ -98,9 +106,27 @@ public class ProjectSiteTaskAdapter extends ArrayAdapter<ProjectSiteTaskDTO> {
 
         item.txtName.setText(p.getTask().getTaskName());
         item.txtNumber.setText("" + (position + 1));
+        if (p.getProjectSiteTaskStatusList() != null) {
+            item.txtStatusCount.setText("" + p.getProjectSiteTaskStatusList().size());
+            if (p.getProjectSiteTaskStatusList().size() > 0) {
+                item.txtLastDate.setVisibility(View.VISIBLE);
+                item.txtStatus.setVisibility(View.VISIBLE);
+                item.txtStaff.setVisibility(View.VISIBLE);
+                item.txtLastDate.setText(sdf.format(p.getProjectSiteTaskStatusList().get(0).getStatusDate()));
+                item.txtStatus.setText(p.getProjectSiteTaskStatusList().get(0).getTaskStatus().getTaskStatusName());
+                item.txtStaff.setText(p.getProjectSiteTaskStatusList().get(0).getStaffName());
+
+            } else {
+                item.txtLastDate.setVisibility(View.GONE);
+                item.txtStatus.setVisibility(View.GONE);
+                item.txtStaff.setVisibility(View.GONE);
+            }
+        }
 
         Statics.setRobotoFontLight(ctx, item.txtNumber);
-        Statics.setRobotoFontLight(ctx, item.txtName);
+        Statics.setRobotoFontRegular(ctx, item.txtName);
+        Statics.setRobotoFontBold(ctx, item.txtStatusCount);
+        Statics.setRobotoFontRegular(ctx, item.txtLastDate);
 
         if (listener == null) {
             item.actions.setVisibility(View.GONE);
@@ -138,6 +164,6 @@ public class ProjectSiteTaskAdapter extends ArrayAdapter<ProjectSiteTaskDTO> {
     }
 
     static final Locale x = Locale.getDefault();
-    static final SimpleDateFormat y = new SimpleDateFormat("dd MMMM yyyy", x);
+    static final SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm", x);
     static final DecimalFormat df = new DecimalFormat("###,###,##0.0");
 }

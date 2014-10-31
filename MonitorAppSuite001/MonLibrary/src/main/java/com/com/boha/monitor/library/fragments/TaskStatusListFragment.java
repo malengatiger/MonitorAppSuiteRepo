@@ -36,42 +36,10 @@ import java.util.List;
  */
 public class TaskStatusListFragment extends Fragment implements AbsListView.OnItemClickListener, PageFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private TaskStatusListListener mListener;
-
-    /**
-     * The fragment's ListView/GridView.
-     */
     private AbsListView mListView;
-
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
     private ListAdapter mAdapter;
 
-    // TODO: Rename and change types of parameters
-    public static TaskStatusListFragment newInstance(String param1, String param2) {
-        TaskStatusListFragment fragment = new TaskStatusListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public TaskStatusListFragment() {
     }
 
@@ -177,16 +145,7 @@ public class TaskStatusListFragment extends Fragment implements AbsListView.OnIt
         }
 
     }
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <project/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface TaskStatusListListener {
         public void onTaskStatusClicked(TaskStatusDTO taskStatus);
     }

@@ -22,7 +22,6 @@ import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.com.boha.monitor.library.dto.GcmDeviceDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
-import com.com.boha.monitor.library.services.PhotoUploadService;
 import com.com.boha.monitor.library.toolbox.BaseVolley;
 import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.GCMUtil;
@@ -67,7 +66,8 @@ public class SignInActivity extends Activity {
 
             Intent intent = new Intent(ctx, ProjectPagerActivity.class);
             startActivity(intent);
-            PhotoUploadService.uploadPendingPhotos(ctx);
+            //
+            //PhotoUploadService.uploadPendingPhotos(ctx);
             finish();
             return;
         }

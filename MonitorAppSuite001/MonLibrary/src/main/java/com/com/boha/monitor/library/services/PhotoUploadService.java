@@ -92,6 +92,7 @@ public class PhotoUploadService extends IntentService {
         dto.setDateTaken(new Date());
         dto.setLatitude(location.getLatitude());
         dto.setLongitude(location.getLongitude());
+        dto.setAccuracy(location.getAccuracy());
         dto.setTime(new Date().getTime());
         return dto;
     }
@@ -142,11 +143,12 @@ public class PhotoUploadService extends IntentService {
 
             @Override
             public void onError() {
-
+                Log.e(LOG,"******* error in service");
             }
         });
     }
     public static void uploadPendingPhotos(final Context context) {
+        Log.e(LOG, "############### uploadPendingPhotos, will start service");
         CacheUtil.getCachedData(context,CacheUtil.CACHE_PHOTOS,new CacheUtil.CacheUtilListener() {
             @Override
             public void onFileDataDeserialized(ResponseDTO response) {
@@ -228,6 +230,16 @@ public class PhotoUploadService extends IntentService {
                 controlFullPictureUploads();
             }
         }
+    //
+        Log.w(LOG,"*** check and remove photos uploaded from cache");
+        List<PhotoUploadDTO> pendingList = new ArrayList<>();
+        for (PhotoUploadDTO dto: list) {
+            if (dto.getDateThumbUploaded() == null || dto.getDateFullPictureUploaded() == null) {
+                pendingList.add(dto);
+            }
+        }
+        list = pendingList;
+        saveCache();
 
     }
     private void executeThumbUpload(final PhotoUploadDTO dto) {

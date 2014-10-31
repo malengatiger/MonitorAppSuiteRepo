@@ -7,7 +7,9 @@
     <TextView
         android:id="@+id/TST_txtNumber"
         android:text="00"
-        style="@style/BlackCircle"
+        android:background="@drawable/xgreen_oval"
+        android:textColor="@color/white"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView

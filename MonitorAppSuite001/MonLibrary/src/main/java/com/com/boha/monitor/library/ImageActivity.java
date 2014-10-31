@@ -60,7 +60,7 @@ public class ImageActivity extends Activity {
             index = getIntent().getIntExtra("index", 0);
         }
         setFields();
-        txtNumber.setText("" + (index));
+        txtNumber.setText("" + (index + 1));
 
 
         photoCache = new PhotoCache();

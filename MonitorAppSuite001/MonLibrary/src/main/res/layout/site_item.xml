@@ -2,12 +2,21 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:padding="10dp"
+    android:padding="0dp"
     android:background="@color/white"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/SITE_heroImage"
+        android:src="@drawable/under_construction"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="140dp" />
+
     <RelativeLayout
         android:id="@+id/SITE_top"
+        android:padding="8dp"
+        android:layout_below="@id/SITE_heroImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -15,13 +24,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/SITE_image"
-            android:textColor="@color/yellow"
             android:layout_centerVertical="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:text="00"
-            style="@style/BlackCircle" />
+            style="@style/GreyCircleSmall" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -56,7 +64,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/SITE_layout"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="48dp"
         android:layout_alignLeft="@id/SITE_top"
         android:layout_below="@id/SITE_top">
 
@@ -66,7 +75,7 @@
             android:text="00"
             android:id="@+id/SITE_txtTaskCount"
             style="@style/BlueCircle"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="4dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true" />
 
@@ -88,7 +97,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/SITE_staffLayout"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="48dp"
         android:layout_alignLeft="@id/SITE_layout"
         android:layout_below="@id/SITE_layout">
 
@@ -98,14 +108,14 @@
             android:text="00"
             android:id="@+id/SITE_txtStatusCount"
             style="@style/GreenCircle"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="4dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/site_status"
+            android:text="@string/site_status_count"
             android:id="@+id/SITE_txtlabel2"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/SITE_txtStatusCount"
@@ -115,36 +125,98 @@
 
             android:layout_marginLeft="10dp" />
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/SITE_divider"
+        android:layout_below="@id/SITE_staffLayout"
+        android:layout_width="260dp"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="32dp"
+        android:paddingLeft="16dp"
+        android:background="@color/grey"
+        android:layout_height="1dp" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/SITE_bottom"
-        android:layout_marginTop="15dp"
-        android:layout_below="@id/SITE_staffLayout">
-        <TextView
-            android:id="@+id/SITE_label"
-            style="@style/TextStyleGrey"
-            android:text="@string/last_status_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/SITE_divider">
+
         <TextView
             android:id="@+id/SITE_lastStatusDate"
             style="@style/TextStyleBoldBlueSmall"
             android:text="30 December 2059 13:30"
-            android:layout_marginLeft="20dp"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/SITE_label"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/SITE_label"
+            style="@style/TextStyleGrey"
+            android:text="@string/last_status"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:layout_toLeftOf="@id/SITE_lastStatusDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/SITE_layoutStatus"
+        android:layout_below="@id/SITE_bottom"
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/SITE_statusColor"
+            android:background="@drawable/xgreen_box"
+            android:paddingLeft="44dp"
+            android:text="                       "
+            android:textSize="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/SITE_lastStatus"
+            style="@style/TextStyleBoldSmall"
+            android:text="Delayed - Weather"
+            android:layout_marginLeft="16dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/SITE_statusColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/SITE_task"
+        android:layout_below="@id/SITE_layoutStatus"
+        style="@style/TextStyleGreySmall"
+        android:layout_marginTop="8dp"
+        android:layout_margin="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentRight="true"
+        android:text="Build a foundation of concrete and steel beams. Let it dry completely before attempting to start putting up the wall."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/SITE_actionLayout"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
         android:background="@color/beige_pale"
-        android:layout_below="@id/SITE_bottom">
+        android:layout_below="@id/SITE_task">
 
         <ImageView
             android:id="@+id/SITE_camera"
@@ -152,6 +224,7 @@
             android:layout_width="wrap_content"
             android:layout_centerVertical="true"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/SITE_imageCount"
             android:layout_toRightOf="@id/SITE_camera"
@@ -171,5 +244,5 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        </RelativeLayout>
+    </RelativeLayout>
 </RelativeLayout>

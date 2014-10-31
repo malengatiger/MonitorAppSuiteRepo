@@ -8,10 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dialogs.ProjectSiteDialog;
@@ -46,10 +48,14 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
         setContentView(R.layout.activity_site_pager);
         ctx = getApplicationContext();
         mPager = (ViewPager) findViewById(R.id.SITE_pager);
+        PagerTitleStrip strip = (PagerTitleStrip)findViewById(R.id.pager_title_strip);
+        strip.setVisibility(View.GONE);
 
         project = (ProjectDTO) getIntent().getSerializableExtra("project");
         type = getIntent().getIntExtra("type", TaskAssignmentFragment.OPERATIONS);
         buildPages();
+        setTitle(ctx.getString(R.string.project_sites));
+        getActionBar().setSubtitle(project.getProjectName());
     }
 
     private void getProjectPhotos() {
@@ -290,6 +296,7 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
         projectSiteListFragment = new ProjectSiteListFragment();
         Bundle data1 = new Bundle();
         data1.putSerializable("project", project);
+        data1.putInt("index",selectedSiteIndex);
         projectSiteListFragment.setArguments(data1);
 
 
@@ -320,13 +327,13 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
     }
 
     @Override
-    public void onProjectSiteClicked(ProjectSiteDTO projectSite) {
-
+    public void onProjectSiteClicked(ProjectSiteDTO projectSite, int index) {
+        selectedSiteIndex = index;
     }
 
     @Override
-    public void onProjectSiteEditRequested(ProjectSiteDTO projectSite) {
-
+    public void onProjectSiteEditRequested(ProjectSiteDTO projectSite, int index) {
+        selectedSiteIndex = index;
         ProjectSiteDialog d = new ProjectSiteDialog();
         d.setContext(ctx);
         d.setProject(project);
@@ -357,8 +364,9 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
     }
 
     @Override
-    public void onProjectSiteTasksRequested(ProjectSiteDTO projectSite) {
-
+    public void onProjectSiteTasksRequested(ProjectSiteDTO projectSite, int index) {
+        selectedSiteIndex = index;
+        this.projectSite = projectSite;
         Intent i = new Intent(this, TaskAssignmentActivity.class);
         i.putExtra("projectSite", projectSite);
         i.putExtra("type", type);
@@ -366,7 +374,9 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
     }
 
     @Override
-    public void onCameraRequested(ProjectSiteDTO projectSite) {
+    public void onCameraRequested(ProjectSiteDTO projectSite, int index) {
+        selectedSiteIndex = index;
+        this.projectSite = projectSite;
         Intent i = new Intent(this, PictureActivity.class);
         i.putExtra("projectSite", projectSite);
         i.putExtra("type", PhotoUploadDTO.SITE_IMAGE);
@@ -374,17 +384,36 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
     }
 
     @Override
-    public void onPhotoListUpdated(final ProjectSiteDTO projectSite) {
+    public void onGalleryRequested(ProjectSiteDTO projectSite, int index) {
+        selectedSiteIndex = index;
+        this.projectSite = projectSite;
+        Intent i = new Intent(this, ImagePagerActivity.class);
+        i.putExtra("projectSite",projectSite);
+        i.putExtra("type", ImagePagerActivity.SITE);
+        startActivity(i);
+    }
+
+    @Override
+    public void onPhotoListUpdated(final ProjectSiteDTO projectSite, int index) {
         Log.w(LOG, "------ onPhotoListUpdated site photos: " + projectSite.getPhotoUploadList().size());
         photosLoaded = true;
+        selectedSiteIndex = index;
+        this.projectSite = projectSite;
 
+    }
+
+    @Override
+    public void onStatusListRequested(ProjectSiteDTO projectSite, int index) {
+        Intent i = new Intent(this,StatusReportActivity.class);
+        i.putExtra("projectSite",projectSite);
+        startActivity(i);
     }
 
     @Override
     public void onActivityResult(int reqCode, int res, Intent data) {
         if (reqCode == SITE_PICTURE_REQUEST) {
             if (res == RESULT_OK) {
-                projectSiteListFragment.refreshPhotoList();
+                projectSiteListFragment.refreshPhotoList(projectSite);
             }
         }
     }
@@ -443,6 +472,8 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
         }
     }
 
+    int selectedSiteIndex;
+    ProjectSiteDTO projectSite;
     ProjectSiteListFragment projectSiteListFragment;
     List<PageFragment> pageFragmentList;
     double latitude, longitude;

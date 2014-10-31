@@ -2,9 +2,9 @@ package com.com.boha.monitor.library.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +13,11 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
-import com.com.boha.monitor.library.ImagePagerActivity;
 import com.com.boha.monitor.library.adapters.ProjectSiteAdapter;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
+import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
+import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.ErrorUtil;
@@ -25,6 +26,8 @@ import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -53,26 +56,48 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
     TextView txtCount, txtName;
     int lastIndex;
     View view;
+    static final String LOG = ProjectSiteListFragment.class.getSimpleName();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
          view = inflater.inflate(R.layout.fragment_projectsite, container, false);
+        Log.i(LOG,"------------- onCreateView");
         ctx = getActivity();
         Bundle b = getArguments();
         if (b != null) {
+            Log.e(LOG,"++++ getting project object from getArguments");
             project = (ProjectDTO) b.getSerializable("project");
+            lastIndex = b.getInt("index",0);
         }
-
+        if (savedInstanceState != null) {
+            lastIndex = savedInstanceState.getInt("lastIndex",0);
+            Log.e(LOG,"++++ lastIndex in savedInstanceState: " + lastIndex);
+        }
         txtCount = (TextView) view.findViewById(R.id.SITE_LIST_siteCount);
-        txtName = (TextView) view.findViewById(R.id.SITE_LIST_projectName);
-        txtName.setText(project.getProjectName());
-        Statics.setRobotoFontLight(ctx, txtName);
+
+        Statics.setRobotoFontLight(ctx, txtCount);
         setList();
         return view;
     }
 
     private void setList() {
         txtCount.setText("" + project.getProjectSiteList().size());
+        for (ProjectSiteDTO site: project.getProjectSiteList()) {
+            List<ProjectSiteTaskStatusDTO> taskStatusList = new ArrayList<>();
+            for (ProjectSiteTaskDTO task: site.getProjectSiteTaskList()) {
+                taskStatusList.addAll(task.getProjectSiteTaskStatusList());
+            }
+            Collections.sort(taskStatusList);
+            site.setStatusCount(taskStatusList.size());
+            if (taskStatusList.size() > 0) {
+                ProjectSiteTaskStatusDTO x = taskStatusList.get(0);
+                site.setLastTaskStatus(x);
+                Log.e(LOG, "taskStatus: " + site.getProjectSiteName() + " status: " + taskStatusList.size() + " " + x.getTaskStatus().getTaskStatusName());
+            } else {
+                Log.w(LOG,"########## no status found, site: " + site.getProjectSiteName());
+            }
+
+        }
         mListView = (AbsListView) view.findViewById(android.R.id.list);
         projectSiteAdapter = new ProjectSiteAdapter(ctx, R.layout.site_item,
                 project.getProjectSiteList(), new ProjectSiteAdapter.ProjectSiteAdapterListener() {
@@ -80,31 +105,29 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
             public void onEditRequested(ProjectSiteDTO site, int index) {
                 projectSite = project.getProjectSiteList().get(index);
                 lastIndex = index;
-                mListener.onProjectSiteEditRequested(site);
+                mListener.onProjectSiteEditRequested(site, index);
             }
 
             @Override
             public void onGalleryRequested(ProjectSiteDTO site, int index) {
                 projectSite = project.getProjectSiteList().get(index);
                 lastIndex = index;
-                Intent i = new Intent(getActivity(), ImagePagerActivity.class);
-                i.putExtra("projectSite",site);
-                i.putExtra("type", ImagePagerActivity.SITE);
-                startActivity(i);
+                mListener.onGalleryRequested(site,index);
+
             }
 
             @Override
             public void onCameraRequested(ProjectSiteDTO site, int index) {
                 projectSite = project.getProjectSiteList().get(index);
                 lastIndex = index;
-                mListener.onCameraRequested(site);
+                mListener.onCameraRequested(site,index);
             }
 
             @Override
             public void onTasksRequested(ProjectSiteDTO site, int index) {
                 projectSite = project.getProjectSiteList().get(index);
                 lastIndex = index;
-                mListener.onProjectSiteTasksRequested(site);
+                mListener.onProjectSiteTasksRequested(site,index);
             }
 
             @Override
@@ -114,7 +137,7 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
 
             @Override
             public void onStatusListRequested(ProjectSiteDTO site, int index) {
-
+                mListener.onStatusListRequested(site,index);
             }
         });
         mListView.setAdapter(projectSiteAdapter);
@@ -126,17 +149,20 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
                 if (null != mListener) {
                     lastIndex = position;
                     projectSite = project.getProjectSiteList().get(position);
-                    mListener.onProjectSiteClicked(projectSite);
+                    mListener.onProjectSiteClicked(projectSite, position);
                 }
             }
         });
     }
     int index;
-    public void refreshPhotoList() {
+
+    public void refreshPhotoList(ProjectSiteDTO site) {
+
+        Log.i(LOG,"###### refreshPhotoList");
         if (projectSite == null) throw new UnsupportedOperationException("ProjectSiteDTO is null");
         RequestDTO w = new RequestDTO();
         w.setRequestType(RequestDTO.GET_SITE_IMAGES);
-        w.setProjectSiteID(projectSite.getProjectSiteID());
+        w.setProjectSiteID(site.getProjectSiteID());
 
         WebSocketUtil.sendRequest(ctx,Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
             @Override
@@ -158,7 +184,7 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
                             index++;
                         }
                         mListView.setSelection(index);
-                        mListener.onPhotoListUpdated(projectSite);
+                        mListener.onPhotoListUpdated(projectSite, index);
                     }
                 });
             }
@@ -175,6 +201,9 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
         });
 
 
+    }
+    public void setListPosition(int index) {
+        lastIndex = index;
     }
     public void addProjectSite(ProjectSiteDTO site) {
         if (project.getProjectSiteList() == null) {
@@ -246,11 +275,13 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface ProjectSiteListListener {
-        public void onProjectSiteClicked(ProjectSiteDTO projectSite);
-        public void onProjectSiteEditRequested(ProjectSiteDTO projectSite);
-        public void onProjectSiteTasksRequested(ProjectSiteDTO projectSite);
-        public void onCameraRequested(ProjectSiteDTO projectSite);
-        public void onPhotoListUpdated(ProjectSiteDTO projectSite);
+        public void onProjectSiteClicked(ProjectSiteDTO projectSite, int index);
+        public void onProjectSiteEditRequested(ProjectSiteDTO projectSite, int index);
+        public void onProjectSiteTasksRequested(ProjectSiteDTO projectSite, int index);
+        public void onCameraRequested(ProjectSiteDTO projectSite, int index);
+        public void onGalleryRequested(ProjectSiteDTO projectSite, int index);
+        public void onPhotoListUpdated(ProjectSiteDTO projectSite, int index);
+        public void onStatusListRequested(ProjectSiteDTO projectSite, int index);
     }
 
     ProjectDTO project;

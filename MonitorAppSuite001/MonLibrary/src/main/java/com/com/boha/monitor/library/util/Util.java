@@ -196,6 +196,15 @@ public class Util {
         an.setInterpolator(new AccelerateDecelerateInterpolator());
         an.start();
     }
+
+    public static void animateRollup(View view, long duration) {
+        final ObjectAnimator an = ObjectAnimator.ofFloat(view, View.SCALE_Y, 0.0f);
+        //an.setRepeatCount(ObjectAnimator.REVERSE);
+        an.setDuration(duration);
+        an.setInterpolator(new AccelerateDecelerateInterpolator());
+        an.start();
+    }
+
     public static void animateSlideRight(View view, long duration) {
         final ObjectAnimator an = ObjectAnimator.ofFloat(
                 view, "translate", 0, 100,0,100);

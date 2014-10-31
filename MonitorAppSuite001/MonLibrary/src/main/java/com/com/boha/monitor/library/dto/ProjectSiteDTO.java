@@ -19,11 +19,13 @@ import java.util.List;
 public class ProjectSiteDTO implements Serializable {
     public static final int ACTION_ADD = 10, ACTION_UPDATE = 11;
     private static final long serialVersionUID = 1L;
-    private Integer projectSiteID;
+    private Float accuracy;
+    private Integer projectSiteID, statusCount;
     private String projectSiteName, standErfNumber, projectName;
     private Double latitude;
     private Double longitude;
     private Integer activeFlag;
+    private ProjectSiteTaskStatusDTO lastTaskStatus;
     private List<ProjectSiteTaskDTO> projectSiteTaskList = new ArrayList<>();
     private Integer projectID;
     private List<ProjectSiteStaffDTO> projectSiteStaffList = new ArrayList<>();
@@ -35,6 +37,30 @@ public class ProjectSiteDTO implements Serializable {
 
     public void setPhotoUploadList(List<PhotoUploadDTO> photoUploadList) {
         this.photoUploadList = photoUploadList;
+    }
+
+    public ProjectSiteTaskStatusDTO getLastTaskStatus() {
+        return lastTaskStatus;
+    }
+
+    public void setLastTaskStatus(ProjectSiteTaskStatusDTO lastTaskStatus) {
+        this.lastTaskStatus = lastTaskStatus;
+    }
+
+    public Float getAccuracy() {
+        return accuracy;
+    }
+
+    public void setAccuracy(Float accuracy) {
+        this.accuracy = accuracy;
+    }
+
+    public Integer getStatusCount() {
+        return statusCount;
+    }
+
+    public void setStatusCount(Integer statusCount) {
+        this.statusCount = statusCount;
     }
 
     public String getProjectName() {

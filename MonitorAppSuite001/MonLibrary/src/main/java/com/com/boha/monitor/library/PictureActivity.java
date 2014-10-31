@@ -72,7 +72,7 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
 
 
         mLocationRequest = LocationRequest.create();
-        mLocationRequest.setInterval(5000);
+        mLocationRequest.setInterval(2000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setFastestInterval(1000);
 
@@ -195,8 +195,18 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
     }
     @Override
     public void onLocationChanged(Location location) {
-        this.location = location;
-        Log.e(LOG, "Location has changed to lat: " + location.getLatitude() + " long: " + location.getLongitude());
+        Log.w(LOG,"############## onLocationChanged ...");
+        if (this.location == null) {
+           this.location = location;
+        } else {
+            Log.w(LOG, "Old Location lat: " + this.location.getLatitude() +
+                    " long: " + this.location.getLongitude() + " - accuracy: " + this.location.getAccuracy());
+            if (this.location.getAccuracy() > location.getAccuracy()) {
+                this.location = location;
+            }
+        }
+        Log.e(LOG, "Location has changed to lat: " + location.getLatitude() +
+                " long: " + location.getLongitude() + " - accuracy: " + location.getAccuracy());
     }
 
     Location location;

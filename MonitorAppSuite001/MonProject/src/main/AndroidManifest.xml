@@ -37,7 +37,8 @@
             android:label="@string/title_activity_image" />
         <activity
             android:name="com.com.boha.monitor.library.TaskAssignmentActivity"
-            android:label="@string/title_activity_task_assignment" />
+            android:screenOrientation="portrait"
+            android:label="@string/assign_status" />
         <activity
             android:name="com.com.boha.monitor.library.MonitorMapActivity"
             android:label="@string/title_activity_monitor_map"

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -41,7 +42,7 @@ import java.util.List;
 
 
 public class ProjectPagerActivity extends FragmentActivity
-        implements ProjectListFragment.ProjectListListener{
+        implements ProjectListFragment.ProjectListListener {
 
     private DrawerLayout mDrawerLayout;
     private DrawerAdapter mDrawerAdapter;
@@ -53,12 +54,14 @@ public class ProjectPagerActivity extends FragmentActivity
         ctx = getApplicationContext();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mPager = (ViewPager) findViewById(R.id.pager);
+        PagerTitleStrip strip = (PagerTitleStrip) findViewById(R.id.pager_title_strip);
+        strip.setVisibility(View.GONE);
         drawerListView = (ListView) findViewById(R.id.left_drawer);
         titles = getResources().getStringArray(R.array.action_items);
         setDrawerList();
         setTitle(SharedUtil.getCompany(ctx).getCompanyName());
         CompanyStaffDTO staff = SharedUtil.getCompanyStaff(ctx);
-        getActionBar().setSubtitle(staff.getFullName() + " - " + staff.getCompanyStaffType().getCompanyStaffTypeName());
+        getActionBar().setSubtitle(staff.getFirstName() + " - " + staff.getCompanyStaffType().getCompanyStaffTypeName());
         //
         // PhotoUploadService.uploadPendingPhotos(ctx);
     }
@@ -69,9 +72,15 @@ public class ProjectPagerActivity extends FragmentActivity
             public void onFileDataDeserialized(ResponseDTO r) {
                 CompanyDTO company = new CompanyDTO();
                 if (r != null) {
-                    response = r;
-                    company = r.getCompany();
-                    buildPages();
+                    if (r.getCompany() != null) {
+                        response = r;
+                        company = r.getCompany();
+                        buildPages();
+                    } else {
+                        getCompanyData();
+                    }
+                } else {
+                    getCompanyData();
                 }
                 for (String s : titles) {
                     sTitles.add(s);
@@ -108,7 +117,7 @@ public class ProjectPagerActivity extends FragmentActivity
                         }
                     }
                 });
-                getCompanyData();
+
             }
 
             @Override
@@ -128,12 +137,14 @@ public class ProjectPagerActivity extends FragmentActivity
         w.setRequestType(RequestDTO.GET_COMPANY_DATA);
         w.setCompanyID(SharedUtil.getCompany(ctx).getCompanyID());
 
+        setRefreshActionButtonState(true);
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO r) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        setRefreshActionButtonState(false);
                         if (!ErrorUtil.checkServerError(ctx, r)) {
                             return;
                         }
@@ -170,6 +181,7 @@ public class ProjectPagerActivity extends FragmentActivity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        setRefreshActionButtonState(false);
                         ToastUtil.errorToast(ctx, message);
                     }
                 });
@@ -181,63 +193,32 @@ public class ProjectPagerActivity extends FragmentActivity
             STAFF = 1, MANAGE_DATA = 2, SITE_REPORTS = 3, BENEFICIARIES = 4, PROJECT_MAPS = 5,
             INVOICES = 6, HAPPY_LETTERS = 7, STATUS_NOTIFICATIONS = 8;
 
+    Menu mMenu;
+    public void setRefreshActionButtonState(final boolean refreshing) {
+        if (mMenu != null) {
+            final MenuItem refreshItem = mMenu.findItem(R.id.action_refresh);
+            if (refreshItem != null) {
+                if (refreshing) {
+                    refreshItem.setActionView(R.layout.action_bar_progess);
+                } else {
+                    refreshItem.setActionView(null);
+                }
+            }
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.manager_pager, menu);
-
+        mMenu = menu;
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_add) {
 
-            switch (currentPageIndex) {
-                case 0:
-                    ProjectDialog pd = new ProjectDialog();
-                    pd.setContext(ctx);
-                    pd.setAction(ProjectDTO.ACTION_ADD);
-                    pd.setProject(new ProjectDTO());
-                    pd.setListener(new ProjectDialog.ProjectDialogListener() {
-                        @Override
-                        public void onProjectAdded(final ProjectDTO project) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    projectListFragment.addProject(project);
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onProjectUpdated(ProjectDTO project) {
-
-                        }
-
-                        @Override
-                        public void onError(String message) {
-
-                        }
-                    });
-                    pd.show(getFragmentManager(), "PROJ_DIAG");
-                    break;
-                case 1:
-                    break;
-                case 2:
-
-                    break;
-                case 3:
-
-                    break;
-                case 4:
-
-                    break;
-            }
-
+        if (id == R.id.action_help) {
+            ToastUtil.toast(ctx,ctx.getString(R.string.under_cons));
             return true;
         }
         if (id == R.id.action_refresh) {
@@ -253,7 +234,6 @@ public class ProjectPagerActivity extends FragmentActivity
     }
 
 
-
     private void buildPages() {
 
         pageFragmentList = new ArrayList<>();
@@ -261,7 +241,6 @@ public class ProjectPagerActivity extends FragmentActivity
         Bundle data1 = new Bundle();
         data1.putSerializable("response", response);
         projectListFragment.setArguments(data1);
-
 
 
         pageFragmentList.add(projectListFragment);
@@ -337,7 +316,7 @@ public class ProjectPagerActivity extends FragmentActivity
     public void onProjectSitesRequested(ProjectDTO project) {
 
         Intent i = new Intent(this, SitePagerActivity.class);
-        i.putExtra("project",project);
+        i.putExtra("project", project);
         i.putExtra("type", TaskAssignmentFragment.PROJECT_MANAGER);
         startActivity(i);
 
@@ -345,9 +324,9 @@ public class ProjectPagerActivity extends FragmentActivity
 
     @Override
     public void onProjectPictureRequested(ProjectDTO project) {
-        Intent i = new Intent(this,PictureActivity.class);
+        Intent i = new Intent(this, PictureActivity.class);
         i.putExtra("type", PhotoUploadDTO.PROJECT_IMAGE);
-        i.putExtra("project",project);
+        i.putExtra("project", project);
         startActivity(i);
     }
 

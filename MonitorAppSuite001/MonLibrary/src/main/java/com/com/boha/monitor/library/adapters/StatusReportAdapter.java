@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.util.Statics;
 
@@ -20,15 +21,15 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class TaskStatusAdapter extends ArrayAdapter<TaskStatusDTO> {
+public class StatusReportAdapter extends ArrayAdapter<ProjectSiteTaskStatusDTO> {
 
     private final LayoutInflater mInflater;
     private final int mLayoutRes;
-    private List<TaskStatusDTO> mList;
+    private List<ProjectSiteTaskStatusDTO> mList;
     private Context ctx;
 
-   public TaskStatusAdapter(Context context, int textViewResourceId,
-                            List<TaskStatusDTO> list) {
+   public StatusReportAdapter(Context context, int textViewResourceId,
+                              List<ProjectSiteTaskStatusDTO> list) {
         super(context, textViewResourceId, list);
         this.mLayoutRes = textViewResourceId;
         mList = list;
@@ -42,8 +43,8 @@ public class TaskStatusAdapter extends ArrayAdapter<TaskStatusDTO> {
 
 
     static class ViewHolderItem {
-        TextView txtName;
-        TextView txtNumber;
+        TextView txtTaskName, txtStatus,txtDate;
+        TextView txtNumber, txtColor;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -53,36 +54,43 @@ public class TaskStatusAdapter extends ArrayAdapter<TaskStatusDTO> {
         if (convertView == null) {
             convertView = mInflater.inflate(mLayoutRes, null);
             item = new ViewHolderItem();
-            item.txtName = (TextView) convertView
-                    .findViewById(R.id.TST_txtName);
+            item.txtTaskName = (TextView) convertView
+                    .findViewById(R.id.ROW_task);
             item.txtNumber = (TextView) convertView
-                    .findViewById(R.id.TST_txtNumber);
+                    .findViewById(R.id.ROW_number);
+            item.txtStatus = (TextView) convertView
+                    .findViewById(R.id.ROW_status);
+            item.txtDate = (TextView) convertView
+                    .findViewById(R.id.ROW_date);
+            item.txtColor = (TextView) convertView
+                    .findViewById(R.id.ROW_color);
 
             convertView.setTag(item);
         } else {
             item = (ViewHolderItem) convertView.getTag();
         }
 
-        final TaskStatusDTO p = mList.get(position);
-        item.txtName.setText(p.getTaskStatusName());
+        final ProjectSiteTaskStatusDTO p = mList.get(position);
+        item.txtTaskName.setText(p.getTask().getTaskName());
         item.txtNumber.setText(""+(position+ 1));
+        item.txtDate.setText(sdf.format(p.getStatusDate()));
+        item.txtStatus.setText(p.getTaskStatus().getTaskStatusName());
 
-        final int color = p.getStatusColor();
-        switch (p.getStatusColor()) {
+        switch (p.getTaskStatus().getStatusColor()) {
             case TaskStatusDTO.STATUS_COLOR_GREEN:
-                item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
+                item.txtColor.setBackground(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
                 break;
             case TaskStatusDTO.STATUS_COLOR_RED:
-                item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xred_oval));
+                item.txtColor.setBackground(ctx.getResources().getDrawable(R.drawable.xred_oval));
                 break;
             case TaskStatusDTO.STATUS_COLOR_YELLOW:
-                item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xorange_oval));
+                item.txtColor.setBackground(ctx.getResources().getDrawable(R.drawable.xorange_oval));
                 break;
         }
 
 
-        Statics.setRobotoFontLight(ctx,item.txtNumber);
-        Statics.setRobotoFontLight(ctx, item.txtName);
+        Statics.setRobotoFontLight(ctx,item.txtDate);
+        Statics.setRobotoFontLight(ctx, item.txtStatus);
 
         animateView(convertView);
         return (convertView);
@@ -97,6 +105,6 @@ public class TaskStatusAdapter extends ArrayAdapter<TaskStatusDTO> {
     }
 
     static final Locale x = Locale.getDefault();
-    static final SimpleDateFormat y = new SimpleDateFormat("dd MMMM yyyy", x);
+    static final SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm", x);
     static final DecimalFormat df = new DecimalFormat("###,###,##0.0");
 }

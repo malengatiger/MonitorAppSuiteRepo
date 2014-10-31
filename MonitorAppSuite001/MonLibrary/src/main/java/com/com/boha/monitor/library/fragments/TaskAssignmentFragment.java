@@ -1,5 +1,7 @@
 package com.com.boha.monitor.library.fragments;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -10,10 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -24,6 +28,7 @@ import com.com.boha.monitor.library.adapters.ProjectSiteTaskAdapter;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
+import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.TaskDTO;
 import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
@@ -53,6 +58,7 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
         public void onTaskClicked(ProjectSiteTaskDTO task);
         public void onProjectSiteTaskAdded(ProjectSiteTaskDTO task);
         public void onProjectSiteTaskDeleted();
+        public void onStatusDialogRequested(ProjectSiteDTO projectSite, ProjectSiteTaskDTO siteTask);
         public void setBusy();
         public void setNotBusy();
         public void onCameraRequested(ProjectSiteTaskDTO siteTask, int type);
@@ -78,7 +84,9 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
     Button btnAssign;
     ProjectSiteDTO projectSite;
     List<TaskDTO> taskList;
+    View addView;
     ProgressBar progressBar;
+    ImageView imgClose;
 
     public void setProjectSite(ProjectSiteDTO projectSite, int type) {
         Log.d(LOG, "########## setProjectSite");
@@ -98,7 +106,9 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
             projectSite = (ProjectSiteDTO) b.getSerializable("projectSite");
             projectSiteTaskList = projectSite.getProjectSiteTaskList();
         }
-
+        addView = view.findViewById(R.id.AST_top);
+        addView.setVisibility(View.GONE);
+        imgClose = (ImageView)view.findViewById(R.id.AST_close);
         txtCount = (TextView) view.findViewById(R.id.AST_number);
         txtSiteName = (TextView) view.findViewById(R.id.AST_siteName);
         spinner = (Spinner) view.findViewById(R.id.AST_spinner);
@@ -106,31 +116,46 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
         mListView = (AbsListView) view.findViewById(R.id.AST_list);
         TextView title = (TextView) view.findViewById(R.id.AST_title);
 
-        title.setOnClickListener(new View.OnClickListener() {
+        imgClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isHidden) {
-                    showActions();
-                } else {
-                    hideActions();
-                }
+                final ObjectAnimator an = ObjectAnimator.ofFloat(addView, View.SCALE_Y, 1f, 0.0f);
+                //an.setRepeatCount(ObjectAnimator.REVERSE);
+                an.setDuration(500);
+                an.setInterpolator(new AccelerateDecelerateInterpolator());
+                an.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        addView.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
+                an.start();
+
+                //
             }
         });
+
         Statics.setRobotoFontLight(ctx,title);
         Statics.setRobotoFontBold(ctx, txtSiteName);
         if (projectSite != null) {
             setList();
         }
-        txtSiteName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isHidden) {
-                    showActions();
-                } else {
-                    hideActions();
-                }
-            }
-        });
+
         txtCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,18 +172,7 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
         return view;
     }
     boolean isHidden = false;
-    private void hideActions() {
-        spinner.setVisibility(View.GONE);
-        btnAssign.setVisibility(View.GONE);
-        txtCount.setVisibility(View.GONE);
-        isHidden = true;
-    }
-    private void showActions() {
-        spinner.setVisibility(View.VISIBLE);
-        btnAssign.setVisibility(View.VISIBLE);
-        txtCount.setVisibility(View.VISIBLE);
-        isHidden = false;
-    }
+
 
     private void sendTask() {
         if (task == null) {
@@ -247,7 +261,7 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
 
                     @Override
                     public void onStatusRequested(ProjectSiteTaskDTO siteTask) {
-
+                        mListener.onStatusDialogRequested(projectSite, siteTask);
                     }
 
                     @Override
@@ -286,6 +300,15 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
                 mListener.onTaskClicked(t);
             }
         });
+        Util.animateRotationY(txtCount,1000);
+    }
+    public void updateList(ProjectSiteTaskStatusDTO taskStatus) {
+        for (ProjectSiteTaskDTO task: projectSiteTaskList) {
+            if (task.getProjectSiteTaskID().intValue() == taskStatus.getProjectSiteTaskID().intValue()) {
+                task.getProjectSiteTaskStatusList().add(0,taskStatus);
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
     private void deleteTask(ProjectSiteTaskDTO siteTask) {
         RequestDTO req = new RequestDTO();
@@ -381,7 +404,15 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
 
     }
 
-    public void addProjectSiteTaskDTO(ProjectSiteTaskDTO task) {
+    public void openTaskPane() {
+        addView.setVisibility(View.VISIBLE);
+        final ObjectAnimator an = ObjectAnimator.ofFloat(addView, View.SCALE_Y, 0f, 1f);
+        //an.setRepeatCount(ObjectAnimator.REVERSE);
+        an.setDuration(500);
+        an.setInterpolator(new AccelerateDecelerateInterpolator());
+        an.start();
+    }
+    private void addProjectSiteTaskDTO(ProjectSiteTaskDTO task) {
         if (projectSiteTaskList == null) {
             projectSiteTaskList = new ArrayList<>();
         }

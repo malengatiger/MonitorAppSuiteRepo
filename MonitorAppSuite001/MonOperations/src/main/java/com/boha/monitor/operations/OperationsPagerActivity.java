@@ -519,6 +519,7 @@ public class OperationsPagerActivity extends FragmentActivity
     public void onTaskStatusClicked(TaskStatusDTO taskStatus) {
         EditDialog d = new EditDialog();
         d.setContext(ctx);
+        d.setAction(EditDialog.ACTION_UPDATE);
         d.setTaskStatus(taskStatus);
         d.setListener(new EditDialog.EditDialogListener() {
             @Override

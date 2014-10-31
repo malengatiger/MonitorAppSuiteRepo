@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="12dp"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/ROW_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/ROW_number"
+            android:text="99"
+            android:padding="4dp"
+            style="@style/GreyCircleSmall"
+            android:textStyle="normal"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+
+        <TextView
+            android:id="@+id/ROW_task"
+            android:text="Task Name"
+            android:padding="4dp"
+            style="@style/MediumTextStyle"
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/ROW_number"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ROW_bottom"
+        android:layout_below="@id/ROW_top"
+        android:layout_marginLeft="44dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/ROW_date"
+            android:text="30-12-2056"
+            android:padding="4dp"
+            android:layout_centerVertical="true"
+            style="@style/TextStyleBoldBlueSmall"
+            android:textStyle="normal"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ROW_stat2"
+        android:layout_below="@id/ROW_bottom"
+        android:layout_alignLeft="@id/ROW_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/ROW_color"
+            android:text="       "
+            android:layout_centerVertical="true"
+
+            android:background="@color/absa_red"
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
+
+        <TextView
+            android:id="@+id/ROW_status"
+            android:text="Status Name"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/ROW_color"
+            style="@style/TextStyleSmall"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

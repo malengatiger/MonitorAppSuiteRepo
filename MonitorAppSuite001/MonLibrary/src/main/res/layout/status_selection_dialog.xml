@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/SSD_top"
+        android:layout_width="match_parent"
+        android:padding="16dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/SSD_siteName"
+            style="@style/Title2TextStyleBlack"
+            android:text="Project Site Name"
+            android:layout_centerHorizontal="true"
+            android:padding="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/SSD_taskName"
+            style="@style/Title3TextStyleBlue"
+            android:text="Task Name"
+            android:layout_centerHorizontal="true"
+            android:padding="8dp"
+            android:layout_below="@id/SSD_siteName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/SSD_label"
+            android:layout_below="@id/SSD_taskName"
+            android:layout_marginTop="16dp"
+            android:text="@string/assign_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:id="@+id/SSD_spinner"
+            android:layout_below="@id/SSD_label"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <ProgressBar
+            android:id="@+id/SSD_progress"
+            style="@android:style/Widget.ProgressBar.Small"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/SSD_bottom"
+        android:layout_below="@id/SSD_top"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/SSD_btnCancel"
+            android:text="@string/cancel"
+            style="@style/ButtonCancelSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/SSD_btnSave"
+            android:text="@string/save"
+            style="@style/ButtonRed"
+            android:layout_marginTop="24dp"
+            android:layout_below="@id/SSD_btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+</RelativeLayout>

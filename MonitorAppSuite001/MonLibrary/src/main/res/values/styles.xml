@@ -158,7 +158,7 @@
         <item name="android:textStyle">normal</item>
     </style>
 
-    <style name="TextStyleGreen" parent="@android:style/TextAppearance.Medium">
+    <style name="TextStyleGreen" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">@color/green</item>
         <item name="android:textStyle">normal</item>
     </style>
@@ -240,7 +240,6 @@
     <style name="TextStyleGrey" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/grey</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="TextStyleGreySmall" parent="@android:style/TextAppearance.Small">
@@ -261,7 +260,6 @@
     <style name="TextStyle" parent="@android:style/TextAppearance.Medium">
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">16sp</item>
     </style>
     <style name="TextStyle20" parent="@android:style/TextAppearance.Medium">
         <item name="android:textStyle">normal</item>
@@ -291,15 +289,14 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="TextStyleBoldSmall" parent="@android:style/TextAppearance.Medium">
+    <style name="TextStyleBoldSmall" parent="@android:style/TextAppearance.Small">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="TextStyleBoldBlueSmall" parent="@android:style/TextAppearance.Medium">
+    <style name="TextStyleBoldBlueSmall" parent="@android:style/TextAppearance.Small">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/navy_blue</item>
-        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="BlueCountBox" parent="@android:style/TextAppearance.Medium">
@@ -377,10 +374,9 @@
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/xred_oval</item>
     </style>
-    <style name="RedCircleSmall" parent="@android:style/TextAppearance.Medium">
+    <style name="RedCircleSmall" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/xred_oval_small</item>
     </style>
@@ -411,11 +407,11 @@
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/xgrey_oval</item>
+
     </style>
-    <style name="GreyCircleSmall" parent="@android:style/TextAppearance.Medium">
+    <style name="GreyCircleSmall" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/xgrey_oval_small</item>
     </style>

@@ -4,16 +4,19 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 /**
  * Created by aubreyM on 2014/06/30.
@@ -29,7 +32,7 @@ public class CacheUtil {
     }
 
     static CacheUtilListener listener;
-    public static final int CACHE_DATA = 1, CACHE_SITE = 2, CACHE_COUNTRIES = 3, CACHE_PHOTOS = 4;
+    public static final int CACHE_DATA = 1, CACHE_COUNTRIES = 3, CACHE_PHOTOS = 4;
     static int dataType, siteID;
     static ResponseDTO response;
     static Context ctx;
@@ -55,7 +58,6 @@ public class CacheUtil {
     }
 
     public static void getCachedData(Context context, int type, CacheUtilListener cacheUtilListener) {
-        Log.d(LOG, "################ getting cached data ..................");
         dataType = type;
         listener = cacheUtilListener;
         ctx = context;
@@ -152,7 +154,6 @@ public class CacheUtil {
         protected ResponseDTO doInBackground(Void... voids) {
             ResponseDTO response = null;
             FileInputStream stream;
-            Log.d(LOG, "########### doInBackground: getting cached data ....");
             try {
                 switch (dataType) {
                     case CACHE_PHOTOS:
@@ -170,6 +171,15 @@ public class CacheUtil {
 
                 }
 
+            } catch (FileNotFoundException e) {
+                Log.d(LOG,"############# cache file not found. not initialised yet. no problem, creating responseDTO");
+                if (dataType == CACHE_PHOTOS) {
+                    response = new ResponseDTO();
+                    PhotoCache pc = new PhotoCache();
+                    pc.setPhotoUploadList(new ArrayList<PhotoUploadDTO>());
+                    response.setPhotoCache(pc);
+                }
+
             } catch (IOException e) {
                 Log.v(LOG, "------------ Failed to retrieve cache", e);
             }
@@ -183,6 +193,7 @@ public class CacheUtil {
                 Log.i(LOG, "$$$$$$$$$$$$ cached data retrieved");
                 listener.onFileDataDeserialized(v);
             } else {
+                Log.e(LOG,"------ No cache, util returns null response object");
                 listener.onError();
             }
 

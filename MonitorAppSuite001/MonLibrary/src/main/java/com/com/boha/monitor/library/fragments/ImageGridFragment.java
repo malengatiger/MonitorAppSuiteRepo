@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -147,15 +148,21 @@ public class ImageGridFragment extends Fragment implements PageFragment {
         }
         staggeredGridView.addHeaderView(header);
         staggeredGridView.addFooterView(footer);
-
         //gridView.setAdapter(imageAdapter);
         staggeredGridView.setAdapter(imageAdapter);
         staggeredGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.e(LOG,"####### staggeredGridView position: " + position + " pathList size: " + pathList.size());
                 if (position == 0) return;
-                if (position == pathList.size() - 1) return;
-                mListener.onImageClicked(pathList.get(position), position - 1);
+
+                if (position > pathList.size()) return;
+                if (position == pathList.size()) {
+                    mListener.onImageClicked(pathList.get(position - 1), position -1);
+                } else {
+
+                    mListener.onImageClicked(pathList.get(position), position - 1);
+                }
             }
         });
     }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
@@ -35,6 +36,7 @@ public class EditDialog extends DialogFragment {
     EditText editName, editDesc;
     ProgressBar progressBar;
     Button btnCancel, btnSave, btnDelete;
+    RadioButton radioRed, radioGreen, radioYellow;
     CompanyStaffDTO companyStaff;
     View view;
     int action;
@@ -52,6 +54,10 @@ public class EditDialog extends DialogFragment {
         editName = (EditText) view.findViewById(R.id.EDD_edit);
         editDesc = (EditText) view.findViewById(R.id.EDD_desc);
         txtTitle = (TextView) view.findViewById(R.id.EDD_title);
+        radioGreen = (RadioButton) view.findViewById(R.id.EDD_radioGreen);
+        radioRed = (RadioButton) view.findViewById(R.id.EDD_radioRed);
+        radioYellow = (RadioButton) view.findViewById(R.id.EDD_radioYellow);
+
         if (taskStatus != null)
             txtTitle.setText(context.getResources().getString(R.string.task_status));
         if (projectStatusType != null)
@@ -116,39 +122,79 @@ public class EditDialog extends DialogFragment {
         if (taskStatus != null) {
             editName.setText(taskStatus.getTaskStatusName());
             txtTitle.setText(context.getResources().getString(R.string.task_status));
+            if (taskStatus.getStatusColor() != null) {
+                switch (taskStatus.getStatusColor()) {
+                    case TaskStatusDTO.STATUS_COLOR_YELLOW:
+                        radioYellow.setChecked(true);
+                        break;
+                    case TaskStatusDTO.STATUS_COLOR_GREEN:
+                        radioGreen.setChecked(true);
+                        break;
+                    case TaskStatusDTO.STATUS_COLOR_RED:
+                        radioRed.setChecked(true);
+                        break;
+                }
+            }
         }
         if (projectStatusType != null) {
             editName.setText(projectStatusType.getProjectStatusName());
             txtTitle.setText(context.getResources().getString(R.string.project_status));
+            switch (projectStatusType.getStatusColor()) {
+                case TaskStatusDTO.STATUS_COLOR_YELLOW:
+                    radioYellow.setChecked(true);
+                    break;
+                case TaskStatusDTO.STATUS_COLOR_GREEN:
+                    radioGreen.setChecked(true);
+                    break;
+                case TaskStatusDTO.STATUS_COLOR_RED:
+                    radioRed.setChecked(true);
+                    break;
+            }
         }
         if (project != null) {
             editName.setText(project.getProjectName());
             editDesc.setText(project.getDescription());
             editDesc.setVisibility(View.VISIBLE);
             txtTitle.setText(context.getResources().getString(R.string.company_projects));
-
+            radioRed.setVisibility(View.GONE);
+            radioYellow.setVisibility(View.GONE);
+            radioGreen.setVisibility(View.GONE);
         }
+
 
     }
 
     private void update() {
         RequestDTO w = new RequestDTO();
         if (editName.getText().toString().isEmpty()) {
-            ToastUtil.toast(context,context.getString(R.string.enter_name));
+            ToastUtil.toast(context, context.getString(R.string.enter_name));
             return;
         }
+        Short color = null;
+        if (project == null) {
+            if (!radioRed.isChecked() && !radioGreen.isChecked() && !radioYellow.isChecked()) {
+                ToastUtil.toast(context, context.getString(R.string.select_status_color));
+                return;
+            }
+            if (radioGreen.isChecked()) color = (short) TaskStatusDTO.STATUS_COLOR_GREEN;
+            if (radioYellow.isChecked()) color = (short) TaskStatusDTO.STATUS_COLOR_YELLOW;
+            if (radioRed.isChecked()) color = (short) TaskStatusDTO.STATUS_COLOR_RED;
+        }
+
         switch (action) {
             case ACTION_ADD:
                 if (taskStatus != null) {
                     w.setRequestType(RequestDTO.ADD_COMPANY_TASK_STATUS);
                     taskStatus.setCompanyID(SharedUtil.getCompany(context).getCompanyID());
                     taskStatus.setTaskStatusName(editName.getText().toString());
+                    taskStatus.setStatusColor(color);
                     w.setTaskStatus(taskStatus);
                 }
                 if (projectStatusType != null) {
                     w.setRequestType(RequestDTO.ADD_COMPANY_PROJECT_STATUS_TYPE);
                     projectStatusType.setCompanyID(SharedUtil.getCompany(context).getCompanyID());
                     projectStatusType.setProjectStatusName(editName.getText().toString());
+                    projectStatusType.setStatusColor(color);
                     w.setProjectStatusType(projectStatusType);
                 }
                 if (project != null) {
@@ -163,24 +209,28 @@ public class EditDialog extends DialogFragment {
             case ACTION_UPDATE:
                 if (taskStatus != null) {
                     w.setRequestType(RequestDTO.UPDATE_COMPANY_TASK_STATUS);
+                    taskStatus.setStatusColor(color);
+                    taskStatus.setTaskStatusName(editName.getText().toString());
                     w.setTaskStatus(taskStatus);
                 }
                 if (projectStatusType != null) {
                     w.setRequestType(RequestDTO.UPDATE_COMPANY_PROJECT_STATUS_TYPE);
+                    projectStatusType.setStatusColor(color);
+                    projectStatusType.setProjectStatusName(editName.getText().toString());
                     w.setProjectStatusType(projectStatusType);
                 }
                 break;
         }
 
         progressBar.setVisibility(View.VISIBLE);
-        WebSocketUtil.sendRequest(context, Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
+        WebSocketUtil.sendRequest(context, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         progressBar.setVisibility(View.GONE);
-                        if (!ErrorUtil.checkServerError(context,response)) {
+                        if (!ErrorUtil.checkServerError(context, response)) {
                             return;
                         }
                         dismiss();
@@ -197,7 +247,7 @@ public class EditDialog extends DialogFragment {
 
             @Override
             public void onError(final String message) {
-               listener.onError(message);
+                listener.onError(message);
                 //dismiss();
             }
         });
@@ -215,10 +265,13 @@ public class EditDialog extends DialogFragment {
     public void setProjectStatusType(ProjectStatusTypeDTO projectStatusType) {
         this.projectStatusType = projectStatusType;
     }
+
     public interface EditDialogListener {
         public void onComplete();
+
         public void onError(String message);
     }
+
     EditDialogListener listener;
 
     public void setListener(EditDialogListener listener) {

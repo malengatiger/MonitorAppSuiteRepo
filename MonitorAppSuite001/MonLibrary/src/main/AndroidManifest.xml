@@ -16,12 +16,14 @@
         </receiver>
 
         <service android:name="com.com.boha.monitor.library.services.GcmIntentService" />
-
         <service
             android:name="com.com.boha.monitor.library.services.PhotoUploadService"
             android:exported="false" />
 
-
+        <activity
+            android:name="com.com.boha.monitor.library.StatusReportActivity"
+            android:label="@string/title_activity_status_report" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

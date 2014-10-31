@@ -78,6 +78,7 @@
     <string name="lastname">Surname</string>
     <string name="description">Detailed Project Description</string>
     <string name="address">Address</string>
+    <string name="add_site_task">Add Task</string>
     <string name="start_date">Start Date</string>
     <string name="end_date">End Date</string>
     <string name="cellphone">Cellphone</string>
@@ -141,6 +142,7 @@
     <string name="video">Video</string>
     <string name="site_tasks">Project Site Tasks</string>
     <string name="site_status">Project Site Status</string>
+    <string name="site_status_count">Site Status Count</string>
     <string name="site_staff">Project Site Staff</string>
     <string name="company_projects">Company Projects</string>
     <string name="task_status">Task Status</string>
@@ -163,6 +165,7 @@
     <string name="list">List</string>
     <string name="send_mail">Send eMail</string>
     <string name="last_status_date">Last Status Date</string>
+    <string name="last_status">Last Status</string>
     <string name="send_text">Send Text Message</string>
     <string name="change">Change Information</string>
     <string name="upload_video">Upload Video</string>
@@ -182,6 +185,9 @@
     <string name="client">Client</string>
     <string name="staff_operations">Operations Staff</string>
     <string name="save">Save</string>
+    <string name="select_status">Please select status</string>
+    <string name="select_status_color">Please select status colour</string>
+    <string name="assign_status">Assign Current Status to Task</string>
     <string name="selected">Selected</string>
     <string name="welcome">Welcome Aboard!</string>
     <string name="company_reg">Company Registration</string>
@@ -219,5 +225,6 @@
     <string name="title_activity_image">ImageActivity</string>
     <string name="title_activity_task_assignment">TaskAssignmentActivity</string>
     <string name="title_activity_monitor_map">MonitorMapActivity</string>
+    <string name="title_activity_status_report">StatusReportActivity</string>
 
 </resources>

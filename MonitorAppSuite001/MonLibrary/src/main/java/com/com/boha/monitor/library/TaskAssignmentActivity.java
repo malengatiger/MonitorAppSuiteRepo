@@ -8,8 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.dialogs.StatusDialog;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
+import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 import com.com.boha.monitor.library.fragments.TaskAssignmentFragment;
 import com.com.boha.monitor.library.util.ToastUtil;
@@ -28,13 +30,14 @@ public class TaskAssignmentActivity extends FragmentActivity implements
                 .getSerializableExtra("projectSite");
         int type = getIntent().getIntExtra("type", TaskAssignmentFragment.OPERATIONS);
 
-        TaskAssignmentFragment taf = (TaskAssignmentFragment)
+         taf = (TaskAssignmentFragment)
                 getSupportFragmentManager().findFragmentById(R.id.fragment);
         taf.setProjectSite(site, type);
-        setTitle(ctx.getString(R.string.app_name));
+        setTitle(site.getProjectSiteName());
+        getActionBar().setSubtitle(site.getProjectName());
     }
 
-
+    TaskAssignmentFragment taf;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.task_assignment, menu);
@@ -45,6 +48,10 @@ public class TaskAssignmentActivity extends FragmentActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        if (id == R.id.action_add) {
+            taf.openTaskPane();
+            return true;
+        }
         if (id == R.id.action_help) {
             ToastUtil.toast(ctx, ctx.getString(R.string.under_cons));
             return true;
@@ -71,6 +78,26 @@ public class TaskAssignmentActivity extends FragmentActivity implements
     @Override
     public void onProjectSiteTaskDeleted() {
 
+    }
+
+    @Override
+    public void onStatusDialogRequested(ProjectSiteDTO projectSite, ProjectSiteTaskDTO siteTask) {
+        StatusDialog d = new StatusDialog();
+        d.setProjectSite(projectSite);
+        d.setProjectSiteTask(siteTask);
+        d.setContext(getApplicationContext());
+        d.setListener(new StatusDialog.StatusDialogListener() {
+            @Override
+            public void onStatusAdded(ProjectSiteTaskStatusDTO taskStatus) {
+                taf.updateList(taskStatus);
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
+        d.show(getFragmentManager(),"DIAG_STATUS");
     }
 
     @Override

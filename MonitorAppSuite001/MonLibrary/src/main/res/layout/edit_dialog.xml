@@ -20,10 +20,9 @@
 
         <TextView
             android:id="@+id/EDD_title"
-            style="@style/Title3TextStyleBlack"
+            style="@style/Title2TextStyleBlack"
             android:text="Dialog Title"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -31,7 +30,7 @@
             android:id="@+id/EDD_edit"
             android:layout_below="@id/EDD_title"
             android:layout_marginTop="10dp"
-            android:hint="Something to delete or change"
+            android:hint="Tap to enter text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <EditText
@@ -42,9 +41,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </RelativeLayout>
+    <RadioGroup
+        android:id="@+id/EDD_radios"
+        android:layout_below="@id/EDD_top"
+        android:padding="10dp" android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/EDD_radioGreen"
+            android:text="Green"
+            android:paddingRight="8dp"
+            android:layout_weight="1"
+            android:textColor="@color/green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/EDD_radioYellow"
+            android:text="Yellow"
+            android:paddingRight="8dp"
+            android:layout_weight="1"
+            android:textColor="@color/orange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/EDD_radioRed"
+            android:text="Red"
+            android:paddingRight="8dp"
+            android:layout_weight="1"
+            android:textColor="@color/absa_red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        </RadioGroup>
 
     <RelativeLayout
-        android:layout_below="@id/EDD_top"
+        android:layout_below="@id/EDD_radios"
         android:padding="10dp"
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
