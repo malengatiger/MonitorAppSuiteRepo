@@ -19,6 +19,10 @@ public class CompanyStaffTypeDTO implements Serializable {
     private String companyStaffTypeName;
     private List<CompanyStaffDTO> companyStaffList;
 
+    public CompanyStaffTypeDTO() {
+    }
+
+
   
     public Integer getCompanyStaffTypeID() {
         return companyStaffTypeID;

@@ -20,6 +20,7 @@ public class GcmDeviceDTO {
     private String serialNumber, androidVersion;
     private Integer companyStaffID, companyID, projectSiteID;
    
+    
 
     public Integer getCompanyID() {
         return companyID;

@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.com.boha.monitor.library.ImagePagerActivity;
+import com.com.boha.monitor.library.MonitorMapActivity;
 import com.com.boha.monitor.library.PictureActivity;
 import com.com.boha.monitor.library.SitePagerActivity;
 import com.com.boha.monitor.library.adapters.DrawerAdapter;
@@ -29,6 +30,7 @@ import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectStatusTypeDTO;
+import com.com.boha.monitor.library.dto.TaskDTO;
 import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
@@ -39,6 +41,7 @@ import com.com.boha.monitor.library.fragments.ProjectListFragment;
 import com.com.boha.monitor.library.fragments.ProjectStatusTypeListFragment;
 import com.com.boha.monitor.library.fragments.StaffListFragment;
 import com.com.boha.monitor.library.fragments.TaskAssignmentFragment;
+import com.com.boha.monitor.library.fragments.TaskListFragment;
 import com.com.boha.monitor.library.fragments.TaskStatusListFragment;
 import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
@@ -56,7 +59,7 @@ public class OperationsPagerActivity extends FragmentActivity
         StaffListFragment.CompanyStaffListListener,
         TaskStatusListFragment.TaskStatusListListener,
         ProjectStatusTypeListFragment.ProjectStatusTypeListListener,
-        ClientListFragment.ClientListListener{
+        ClientListFragment.ClientListListener, TaskListFragment.TaskListListener{
 
     private DrawerLayout mDrawerLayout;
     private DrawerAdapter mDrawerAdapter;
@@ -322,6 +325,9 @@ public class OperationsPagerActivity extends FragmentActivity
                     });
                     d2.show(getFragmentManager(), "EDIT_DIALOG");
                     break;
+                case 5:
+                    taskListFragment.openEditPanel();
+                    break;
             }
 
             return true;
@@ -395,12 +401,15 @@ public class OperationsPagerActivity extends FragmentActivity
         clientListFragment = new ClientListFragment();
         clientListFragment.setArguments(data1);
 
+        taskListFragment = new TaskListFragment();
+
 
         pageFragmentList.add(projectListFragment);
         pageFragmentList.add(staffListFragment);
         pageFragmentList.add(clientListFragment);
         pageFragmentList.add(taskStatusListFragment);
         pageFragmentList.add(projectStatusTypeListFragment);
+        pageFragmentList.add(taskListFragment);
 
         initializeAdapter();
 
@@ -431,6 +440,7 @@ public class OperationsPagerActivity extends FragmentActivity
     TaskStatusListFragment taskStatusListFragment;
     ProjectStatusTypeListFragment projectStatusTypeListFragment;
     ClientListFragment clientListFragment;
+    TaskListFragment taskListFragment;
     PagerAdapter adapter;
     ViewPager mPager;
     Context ctx;
@@ -486,6 +496,21 @@ public class OperationsPagerActivity extends FragmentActivity
     public void onProjectPictureRequested(ProjectDTO project) {
         Intent i = new Intent(this,PictureActivity.class);
         i.putExtra("type", PhotoUploadDTO.PROJECT_IMAGE);
+        i.putExtra("project",project);
+        startActivity(i);
+    }
+
+    @Override
+    public void onGalleryRequested(ProjectDTO project) {
+        Intent i = new Intent(this,ImagePagerActivity.class);
+        i.putExtra("project",project);
+        i.putExtra("type",ImagePagerActivity.PROJECT);
+        startActivity(i);
+    }
+
+    @Override
+    public void onMapRequested(ProjectDTO project) {
+        Intent i = new Intent(this, MonitorMapActivity.class);
         i.putExtra("project",project);
         startActivity(i);
     }
@@ -596,6 +621,17 @@ public class OperationsPagerActivity extends FragmentActivity
         cd.show(getFragmentManager(),"PICD");
     }
 
+    @Override
+    public void onTaskClicked(TaskDTO task) {
+
+    }
+
+    @Override
+    public void onSequenceClicked(TaskDTO task) {
+        //TODO - show up/down dialog
+        //when updated - taskListFragment.updateSequence
+    }
+
     private class PagerAdapter extends FragmentStatePagerAdapter {
 
         public PagerAdapter(FragmentManager fm) {
@@ -634,6 +670,8 @@ public class OperationsPagerActivity extends FragmentActivity
                     title = ctx.getResources().getString(R.string.project_status);
                     break;
 
+                case 5:
+                    title = ctx.getString(R.string.tasks);
                 default:
                     break;
             }

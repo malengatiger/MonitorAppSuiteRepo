@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.com.boha.monitor.library.dto;
 
 import java.io.Serializable;
@@ -14,6 +13,7 @@ import java.util.Date;
  * @author aubreyM
  */
 public class BeneficiaryDTO implements Serializable {
+
     private static final long serialVersionUID = 1L;
     private Integer beneficiaryID;
     private String firstName;
@@ -22,27 +22,48 @@ public class BeneficiaryDTO implements Serializable {
     private String iDNumber;
     private String email;
     private String cellphone;
-    private Date dateRegistered;
-    private ProjectSiteDTO projectSite;
+    private Double amountAuthorized, amountPaid;
+    private Date dateRegistered, phbDate;
     private CompanyDTO company;
     private TownshipDTO township;
 
 
+    public BeneficiaryDTO(Integer beneficiaryID) {
+        this.beneficiaryID = beneficiaryID;
+    }
+
     public Integer getBeneficiaryID() {
         return beneficiaryID;
+    }
+
+    public Double getAmountAuthorized() {
+        return amountAuthorized;
+    }
+
+    public void setAmountAuthorized(Double amountAuthorized) {
+        this.amountAuthorized = amountAuthorized;
+    }
+
+    public Double getAmountPaid() {
+        return amountPaid;
+    }
+
+    public void setAmountPaid(Double amountPaid) {
+        this.amountPaid = amountPaid;
     }
 
     public void setBeneficiaryID(Integer beneficiaryID) {
         this.beneficiaryID = beneficiaryID;
     }
 
-    public ProjectSiteDTO getProjectSite() {
-        return projectSite;
+    public Date getPhbDate() {
+        return phbDate;
     }
 
-    public void setProjectSite(ProjectSiteDTO projectSite) {
-        this.projectSite = projectSite;
+    public void setPhbDate(Date phbDate) {
+        this.phbDate = phbDate;
     }
+
 
     public CompanyDTO getCompany() {
         return company;
@@ -124,5 +145,4 @@ public class BeneficiaryDTO implements Serializable {
         this.township = township;
     }
 
-   
 }

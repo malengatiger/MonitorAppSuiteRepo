@@ -54,7 +54,6 @@
     <style name="Title1TextStyleBlue" parent="@android:style/TextAppearance.Large">
         <item name="android:textColor">@color/navy_blue</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:padding">5dp</item>
         <item name="android:textSize">30sp</item>
     </style>
 
@@ -75,14 +74,12 @@
     <style name="Title1TextStyleBlack" parent="@android:style/TextAppearance.Large">
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:padding">5dp</item>
         <item name="android:textSize">30sp</item>
     </style>
 
     <style name="Title1TextStyleRed" parent="@android:style/TextAppearance.Large">
         <item name="android:textColor">@color/maroon</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:padding">5dp</item>
         <item name="android:textSize">30sp</item>
     </style>
 
@@ -108,7 +105,6 @@
         <item name="android:textColor">@color/navy_blue</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">22sp</item>
-        <item name="android:padding">3dp</item>
     </style>
 
     <style name="Title3TextStyleBlue" parent="@android:style/TextAppearance.Medium">
@@ -122,35 +118,30 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">24sp</item>
-        <item name="android:padding">5dp</item>
     </style>
 
     <style name="Title3TextStyleBlack" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:padding">5dp</item>
     </style>
 
     <style name="Title3TextStyleGreen" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/green</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:padding">5dp</item>
     </style>
 
     <style name="Title3TextStyleRed" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/translucent_red</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:padding">5dp</item>
     </style>
 
     <style name="Title2TextStyleGreen" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/green</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">24sp</item>
-        <item name="android:padding">5dp</item>
     </style>
 
     <style name="TextStyleBlue" parent="@android:style/TextAppearance.Medium">
@@ -382,50 +373,42 @@
     </style>
     <style name="TransparentCircle" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/xtransparent_oval</item>
     </style>
     <style name="GreenCircle" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/xgreen_oval</item>
     </style>
+    <style name="GreenCircleSmall" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/xgreen_oval_small</item>
+    </style>
     <style name="BlackCircle" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/xblack_oval</item>
     </style>
     <style name="GreyCircle" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/xgrey_oval</item>
 
     </style>
     <style name="GreyCircleSmall" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/xgrey_oval_small</item>
     </style>
     <style name="YellowCircle" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/absa_red</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/xyellow_oval</item>
     </style>
     <style name="BlueCircle" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/xblue_oval</item>
     </style>
@@ -433,7 +416,6 @@
     <style name="GreenCountBox" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">20sp</item>
         <item name="android:background">@drawable/xgreen_box</item>
     </style>
 

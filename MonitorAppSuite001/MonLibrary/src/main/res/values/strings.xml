@@ -140,11 +140,11 @@
     <string name="view_video">Watch Video</string>
     <string name="delete_video">Remove Video from Device</string>
     <string name="video">Video</string>
-    <string name="site_tasks">Project Site Tasks</string>
-    <string name="site_status">Project Site Status</string>
+    <string name="site_tasks">Site Tasks</string>
+    <string name="site_status">Site Status</string>
     <string name="site_status_count">Site Status Count</string>
     <string name="site_staff">Project Site Staff</string>
-    <string name="company_projects">Company Projects</string>
+    <string name="company_projects">Projects</string>
     <string name="task_status">Task Status</string>
     <string name="project_status">Project Status</string>
     <string name="company_staff">Company Staff</string>
@@ -209,6 +209,9 @@
     <string name="enter_cell">Enter Cellphone Number</string>
     <string name="enter_name">Enter Name</string>
     <string name="enter_address">Enter Address</string>
+    <string name="enter_task_name">Enter Name of Task</string>
+    <string name="enter_task_number">Enter Number of Task</string>
+    <string name="task_name_explained">This Task Name will appear in reports and invoices</string>
     <string name="enter_project_site">Enter Project Site Name</string>
     <string name="enter_erf">Enter Stand/Erf Number</string>
     <string name="enter_postcode">Enter Postal Code</string>
@@ -226,5 +229,7 @@
     <string name="title_activity_task_assignment">TaskAssignmentActivity</string>
     <string name="title_activity_monitor_map">MonitorMapActivity</string>
     <string name="title_activity_status_report">StatusReportActivity</string>
+    <string name="task_seq_no">Task Sequence Number</string>
+    <string name="tasks">Site Tasks</string>
 
 </resources>

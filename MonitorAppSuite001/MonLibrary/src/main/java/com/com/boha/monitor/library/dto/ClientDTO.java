@@ -25,22 +25,17 @@ public class ClientDTO implements Serializable, Comparable<ClientDTO> {
     private Date dateRegistered;
     private List<ProjectDTO> projectList;
     private Integer companyID;
-
-    public static final int
-            ACTION_ADD = 10,
-            ACTION_UPDATE = 11,
-            ACTION_DELETE = 12;
-
-    public List<ProjectDTO> getProjectList() {
-        return projectList;
-    }
-
-    public void setProjectList(List<ProjectDTO> projectList) {
-        this.projectList = projectList;
-    }
+    public static final int ACTION_ADD = 1,
+            ACTION_UPDATE = 2, ACTION_DELETE = 3;
+    
 
     public ClientDTO() {
     }
+
+    public ClientDTO(Integer clientID) {
+        this.clientID = clientID;
+    }
+
 
     public Integer getClientID() {
         return clientID;
@@ -48,6 +43,14 @@ public class ClientDTO implements Serializable, Comparable<ClientDTO> {
 
     public void setClientID(Integer clientID) {
         this.clientID = clientID;
+    }
+
+    public List<ProjectDTO> getProjectList() {
+        return projectList;
+    }
+
+    public void setProjectList(List<ProjectDTO> projectList) {
+        this.projectList = projectList;
     }
 
     public String getClientName() {
@@ -105,6 +108,7 @@ public class ClientDTO implements Serializable, Comparable<ClientDTO> {
     public void setCompanyID(Integer companyID) {
         this.companyID = companyID;
     }
+
 
     /**
      * Compares this object to the specified object to determine their relative

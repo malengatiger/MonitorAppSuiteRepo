@@ -22,12 +22,36 @@ public class InvoiceDTO implements Serializable {
     private Date invoiceDueDate;
     private Date dateRegistered, invoicePaidDate;
     private String reference;
+    private String documentURI;
     private Double totalAmount;
     private ClientDTO client;
     private CompanyDTO company;
     private ProjectDTO project;
     private List<InvoiceItemDTO> invoiceItemList;
     private List<SiteCheckPointDTO> siteCheckPointList;
+
+    public InvoiceDTO() {
+    }
+    public InvoiceDTO(Integer invoiceID, Date invoiceDate) {
+        this.invoiceID = invoiceID;
+        this.invoiceDate = invoiceDate;
+    }
+
+    public String getDocumentURI() {
+        return documentURI;
+    }
+
+    public void setDocumentURI(String documentURI) {
+        this.documentURI = documentURI;
+    }
+
+    public Integer getInvoiceID() {
+        return invoiceID;
+    }
+
+    public void setInvoiceID(Integer invoiceID) {
+        this.invoiceID = invoiceID;
+    }
 
     public Date getInvoicePaidDate() {
         return invoicePaidDate;
@@ -43,43 +67,6 @@ public class InvoiceDTO implements Serializable {
 
     public void setReference(String reference) {
         this.reference = reference;
-    }
-
-    public InvoiceDTO(Integer invoiceID, Date invoiceDate) {
-        this.invoiceID = invoiceID;
-        this.invoiceDate = invoiceDate;
-    }
-
-    public Integer getInvoiceID() {
-        return invoiceID;
-    }
-
-    public void setInvoiceID(Integer invoiceID) {
-        this.invoiceID = invoiceID;
-    }
-
-    public Date getInvoiceDate() {
-        return invoiceDate;
-    }
-
-    public void setInvoiceDate(Date invoiceDate) {
-        this.invoiceDate = invoiceDate;
-    }
-
-    public Date getInvoiceDueDate() {
-        return invoiceDueDate;
-    }
-
-    public void setInvoiceDueDate(Date invoiceDueDate) {
-        this.invoiceDueDate = invoiceDueDate;
-    }
-
-    public Date getDateRegistered() {
-        return dateRegistered;
-    }
-
-    public void setDateRegistered(Date dateRegistered) {
-        this.dateRegistered = dateRegistered;
     }
 
     public Double getTotalAmount() {
@@ -112,6 +99,30 @@ public class InvoiceDTO implements Serializable {
 
     public void setProject(ProjectDTO project) {
         this.project = project;
+    }
+
+    public Date getInvoiceDate() {
+        return invoiceDate;
+    }
+
+    public void setInvoiceDate(Date invoiceDate) {
+        this.invoiceDate = invoiceDate;
+    }
+
+    public Date getInvoiceDueDate() {
+        return invoiceDueDate;
+    }
+
+    public void setInvoiceDueDate(Date invoiceDueDate) {
+        this.invoiceDueDate = invoiceDueDate;
+    }
+
+    public Date getDateRegistered() {
+        return dateRegistered;
+    }
+
+    public void setDateRegistered(Date dateRegistered) {
+        this.dateRegistered = dateRegistered;
     }
 
     public List<InvoiceItemDTO> getInvoiceItemList() {

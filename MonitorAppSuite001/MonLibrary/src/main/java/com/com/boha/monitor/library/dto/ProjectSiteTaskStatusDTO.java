@@ -24,6 +24,10 @@ public class ProjectSiteTaskStatusDTO implements Serializable, Comparable<Projec
     private Integer companyStaffID;
     private String projectSiteName, projectName, staffName;
 
+    public ProjectSiteTaskStatusDTO() {
+    }
+
+
     public TaskDTO getTask() {
         return task;
     }
@@ -32,12 +36,13 @@ public class ProjectSiteTaskStatusDTO implements Serializable, Comparable<Projec
         this.task = task;
     }
 
-    public Integer getProjectSiteTaskStatusID() {
-        return projectSiteTaskStatusID;
+    
+    public Integer getCompanyStaffID() {
+        return companyStaffID;
     }
 
-    public void setProjectSiteTaskStatusID(Integer projectSiteTaskStatusID) {
-        this.projectSiteTaskStatusID = projectSiteTaskStatusID;
+    public void setCompanyStaffID(Integer companyStaffID) {
+        this.companyStaffID = companyStaffID;
     }
 
     public Date getDateUpdated() {
@@ -54,30 +59,6 @@ public class ProjectSiteTaskStatusDTO implements Serializable, Comparable<Projec
 
     public void setStatusDate(Date statusDate) {
         this.statusDate = statusDate;
-    }
-
-    public TaskStatusDTO getTaskStatus() {
-        return taskStatus;
-    }
-
-    public void setTaskStatus(TaskStatusDTO taskStatus) {
-        this.taskStatus = taskStatus;
-    }
-
-    public Integer getProjectSiteTaskID() {
-        return projectSiteTaskID;
-    }
-
-    public void setProjectSiteTaskID(Integer projectSiteTaskID) {
-        this.projectSiteTaskID = projectSiteTaskID;
-    }
-
-    public Integer getCompanyStaffID() {
-        return companyStaffID;
-    }
-
-    public void setCompanyStaffID(Integer companyStaffID) {
-        this.companyStaffID = companyStaffID;
     }
 
     public String getProjectSiteName() {
@@ -104,6 +85,38 @@ public class ProjectSiteTaskStatusDTO implements Serializable, Comparable<Projec
         this.staffName = staffName;
     }
 
+   
+
+    public Integer getProjectSiteTaskStatusID() {
+        return projectSiteTaskStatusID;
+    }
+
+    public void setProjectSiteTaskStatusID(Integer projectSiteTaskStatusID) {
+        this.projectSiteTaskStatusID = projectSiteTaskStatusID;
+    }
+
+    public TaskStatusDTO getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(TaskStatusDTO taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+
+    public Integer getProjectSiteTaskID() {
+        return projectSiteTaskID;
+    }
+
+    public void setProjectSiteTaskID(Integer projectSiteTaskID) {
+        this.projectSiteTaskID = projectSiteTaskID;
+    }
+
+ 
+    @Override
+    public String toString() {
+        return "com.boha.monitor.data.ProjectSiteTaskStatus[ projectSiteTaskStatusID=" + projectSiteTaskStatusID + " ]";
+    }
+
     /**
      * Compares this object to the specified object to determine their relative
      * order.
@@ -118,10 +131,10 @@ public class ProjectSiteTaskStatusDTO implements Serializable, Comparable<Projec
      */
     @Override
     public int compareTo(ProjectSiteTaskStatusDTO another) {
-        if (this.statusDate.after(another.getStatusDate())) {
+        if (this.statusDate.before(another.statusDate)) {
             return -1;
         }
-        if (this.statusDate.before(another.getStatusDate())) {
+        if (this.statusDate.after(another.statusDate)) {
             return 1;
         }
         return 0;

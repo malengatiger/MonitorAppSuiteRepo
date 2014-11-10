@@ -13,7 +13,7 @@
 
         <TextView
             android:id="@+id/TSK_number"
-            style="@style/GreyCircle"
+            style="@style/GreyCircleSmall"
             android:text="01"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

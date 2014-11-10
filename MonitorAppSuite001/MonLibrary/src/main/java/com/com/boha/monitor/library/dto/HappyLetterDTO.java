@@ -19,6 +19,13 @@ public class HappyLetterDTO implements Serializable {
     private Date letterDate;
     private BeneficiaryDTO beneficiary;
 
+    public HappyLetterDTO() {
+    }
+
+    public HappyLetterDTO(Integer happyLetterID) {
+        this.happyLetterID = happyLetterID;
+    }
+
 
     public Integer getHappyLetterID() {
         return happyLetterID;
@@ -43,4 +50,6 @@ public class HappyLetterDTO implements Serializable {
     public void setBeneficiary(BeneficiaryDTO beneficiary) {
         this.beneficiary = beneficiary;
     }
+
+
 }

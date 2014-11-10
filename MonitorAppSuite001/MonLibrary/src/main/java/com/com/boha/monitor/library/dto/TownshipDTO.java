@@ -22,6 +22,13 @@ public class TownshipDTO implements Serializable {
     private Integer cityID;
     private List<BeneficiaryDTO> beneficiaryList;
 
+    public TownshipDTO() {
+    }
+
+    public TownshipDTO(Integer townshipID) {
+        this.townshipID = townshipID;
+    }
+
     public Integer getTownshipID() {
         return townshipID;
     }

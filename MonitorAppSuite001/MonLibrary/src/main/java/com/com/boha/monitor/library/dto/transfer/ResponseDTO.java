@@ -5,6 +5,8 @@
  */
 package com.com.boha.monitor.library.dto.transfer;
 
+import com.com.boha.monitor.library.dto.BankDTO;
+import com.com.boha.monitor.library.dto.BankDetailDTO;
 import com.com.boha.monitor.library.dto.BeneficiaryDTO;
 import com.com.boha.monitor.library.dto.CheckPointDTO;
 import com.com.boha.monitor.library.dto.CityDTO;
@@ -12,16 +14,17 @@ import com.com.boha.monitor.library.dto.ClientDTO;
 import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.com.boha.monitor.library.dto.CompanyStaffTypeDTO;
+import com.com.boha.monitor.library.dto.ContractorClaimDTO;
+import com.com.boha.monitor.library.dto.ContractorClaimSiteDTO;
 import com.com.boha.monitor.library.dto.CountryDTO;
 import com.com.boha.monitor.library.dto.ErrorStoreAndroidDTO;
 import com.com.boha.monitor.library.dto.ErrorStoreDTO;
 import com.com.boha.monitor.library.dto.HappyLetterDTO;
-import com.com.boha.monitor.library.dto.InvoiceCodeDTO;
 import com.com.boha.monitor.library.dto.InvoiceDTO;
+import com.com.boha.monitor.library.dto.InvoiceItemDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectDiaryRecordDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
-import com.com.boha.monitor.library.dto.ProjectSiteStaffDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.ProjectStatusTypeDTO;
@@ -46,14 +49,14 @@ public class ResponseDTO implements Serializable {
     private Integer statusCode;
     private String message, sessionID, GCMRegistrationID;
     private List<String> taskImageFileNameList;
+    private List<BankDTO> bankList;
     private List<String> siteImageFileNameList;
-    private List<PhotoUploadDTO> photoUploadList;
+    private List<PhotoUploadDTO> photoUploadList = new ArrayList<>();
     private List<TaskStatusDTO> taskStatusList = new ArrayList<>();
     private List<ProjectStatusTypeDTO> projectStatusTypeList = new ArrayList<>();
     private List<ProjectSiteDTO> projectSiteList = new ArrayList<>();
     private List<ProjectDTO> projectList = new ArrayList<>();
     private List<CompanyStaffDTO> companyStaffList = new ArrayList<>();
-    private List<ProjectSiteStaffDTO> projectSiteStaffList = new ArrayList<>();
     private List<CompanyStaffTypeDTO> companyStaffTypeList = new ArrayList<>();
     private List<ProjectDiaryRecordDTO> projectDiaryRecordList = new ArrayList<>();
     private List<ProjectSiteTaskDTO> projectSiteTaskList = new ArrayList<>();
@@ -66,13 +69,15 @@ public class ResponseDTO implements Serializable {
     private List<ProvinceDTO> provinceList = new ArrayList<>();
     private List<HappyLetterDTO> happyLetterList = new ArrayList<>();
     private List<SiteCheckPointDTO> siteCheckPointList = new ArrayList<>();
-    private List<InvoiceCodeDTO> invoiceCodeList = new ArrayList<>();
     private List<ClientDTO> clientList = new ArrayList<>();
     private List<TaskDTO> taskList = new ArrayList<>();
     private List<CityDTO> cityList = new ArrayList<>();
     private List<TownshipDTO> townshipList = new ArrayList<>();
-    private List<CountryDTO> countryList;
-
+    private List<CountryDTO> countryList = new ArrayList<>();
+    private List<ContractorClaimDTO> contractorClaimList = new ArrayList<>();
+    private List<ContractorClaimSiteDTO> contractorClaimSiteList = new ArrayList<>();
+    private List<InvoiceItemDTO> invoiceItemList;
+    private List<BankDetailDTO> bankDetailList;
     //
     private CompanyDTO company;
     private CompanyStaffDTO companyStaff;
@@ -181,13 +186,6 @@ public class ResponseDTO implements Serializable {
         this.siteCheckPointList = siteCheckPointList;
     }
 
-    public List<InvoiceCodeDTO> getInvoiceCodeList() {
-        return invoiceCodeList;
-    }
-
-    public void setInvoiceCodeList(List<InvoiceCodeDTO> invoiceCodeList) {
-        this.invoiceCodeList = invoiceCodeList;
-    }
 
     public CompanyStaffDTO getCompanyStaff() {
         return companyStaff;
@@ -301,12 +299,44 @@ public class ResponseDTO implements Serializable {
         this.companyStaffList = companyStaffList;
     }
 
-    public List<ProjectSiteStaffDTO> getProjectSiteStaffList() {
-        return projectSiteStaffList;
+    public List<BankDTO> getBankList() {
+        return bankList;
     }
 
-    public void setProjectSiteStaffList(List<ProjectSiteStaffDTO> projectSiteStaffList) {
-        this.projectSiteStaffList = projectSiteStaffList;
+    public void setBankList(List<BankDTO> bankList) {
+        this.bankList = bankList;
+    }
+
+    public List<ContractorClaimDTO> getContractorClaimList() {
+        return contractorClaimList;
+    }
+
+    public void setContractorClaimList(List<ContractorClaimDTO> contractorClaimList) {
+        this.contractorClaimList = contractorClaimList;
+    }
+
+    public List<ContractorClaimSiteDTO> getContractorClaimSiteList() {
+        return contractorClaimSiteList;
+    }
+
+    public void setContractorClaimSiteList(List<ContractorClaimSiteDTO> contractorClaimSiteList) {
+        this.contractorClaimSiteList = contractorClaimSiteList;
+    }
+
+    public List<InvoiceItemDTO> getInvoiceItemList() {
+        return invoiceItemList;
+    }
+
+    public void setInvoiceItemList(List<InvoiceItemDTO> invoiceItemList) {
+        this.invoiceItemList = invoiceItemList;
+    }
+
+    public List<BankDetailDTO> getBankDetailList() {
+        return bankDetailList;
+    }
+
+    public void setBankDetailList(List<BankDetailDTO> bankDetailList) {
+        this.bankDetailList = bankDetailList;
     }
 
     public List<CompanyStaffTypeDTO> getCompanyStaffTypeList() {

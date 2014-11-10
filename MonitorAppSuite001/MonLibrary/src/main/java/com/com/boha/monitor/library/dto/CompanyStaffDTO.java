@@ -6,10 +6,10 @@
 
 package com.com.boha.monitor.library.dto;
 
+
 import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,14 +17,6 @@ import java.util.List;
  * @author aubreyM
  */
 public class CompanyStaffDTO implements Serializable, Comparable<CompanyStaffDTO> {
-    public static final int
-            OPERATIONS_MANAGER = 1,
-            PROJECT_MANAGER = 4,
-            EXECUTIVE_STAFF = 3,
-            SITE_SUPERVISOR = 2,
-            ACTION_ADD = 10,
-            ACTION_UPDATE = 11,
-            ACTION_DELETE = 12;
     private static final long serialVersionUID = 1L;
     private Integer companyStaffID, activeFlag;
     private String firstName;
@@ -33,9 +25,15 @@ public class CompanyStaffDTO implements Serializable, Comparable<CompanyStaffDTO
     private String cellphone, pin;
     private CompanyStaffTypeDTO companyStaffType;
     private Integer companyID;
-    private List<ProjectSiteStaffDTO> projectSiteStaffList = new ArrayList<>();
     private GcmDeviceDTO gcmDevice;
     private List<PhotoUploadDTO> photoUploadList;
+
+    public static final int ACTION_ADD = 1,
+            ACTION_UPDATE = 2, ACTION_DELETE = 3;
+
+    public CompanyStaffDTO() {
+    }
+
 
     public List<PhotoUploadDTO> getPhotoUploadList() {
         return photoUploadList;
@@ -43,13 +41,6 @@ public class CompanyStaffDTO implements Serializable, Comparable<CompanyStaffDTO
 
     public void setPhotoUploadList(List<PhotoUploadDTO> photoUploadList) {
         this.photoUploadList = photoUploadList;
-    }
-
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
-
-    public CompanyStaffDTO() {
     }
 
     public Integer getActiveFlag() {
@@ -140,16 +131,6 @@ public class CompanyStaffDTO implements Serializable, Comparable<CompanyStaffDTO
     public void setCompanyID(Integer companyID) {
         this.companyID = companyID;
     }
-
-
-    public List<ProjectSiteStaffDTO> getProjectSiteStaffList() {
-        return projectSiteStaffList;
-    }
-
-    public void setProjectSiteStaffList(List<ProjectSiteStaffDTO> projectSiteStaffList) {
-        this.projectSiteStaffList = projectSiteStaffList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -189,7 +170,10 @@ public class CompanyStaffDTO implements Serializable, Comparable<CompanyStaffDTO
      */
     @Override
     public int compareTo(CompanyStaffDTO another) {
-
-        return this.getFullName().compareTo(another.getFullName());
+        return (this.lastName + this.firstName).compareTo(another.lastName + another.firstName
+        );
+    }
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 }

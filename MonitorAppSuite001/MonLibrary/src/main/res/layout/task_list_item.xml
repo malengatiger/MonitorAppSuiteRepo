@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="8dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/TTS_number"
+        style="@style/GreyCircleSmall"
+        android:text="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/TTS_name"
+        style="@style/TextStyle"
+        android:layout_toRightOf="@id/TTS_number"
+        android:layout_marginLeft="8dp"
+        android:text="Name of task comes here and can be as long as you like!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_below="@id/TTS_name"
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/TTS_sequenceNumber"
+            style="@style/GreenCircleSmall"
+            android:text="99"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/TTS_label"
+            style="@style/TextStyleGrey"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@id/TTS_sequenceNumber"
+            android:text="@string/task_seq_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

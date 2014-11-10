@@ -17,19 +17,15 @@ public class TaskStatusDTO implements Serializable, Comparable<TaskStatusDTO> {
     private Integer taskStatusID, companyID;
     private String taskStatusName;
     private Short statusColor;
-
-    public static final int
+    
+    public static final int 
             STATUS_COLOR_RED = 3,
             STATUS_COLOR_GREEN = 1,
             STATUS_COLOR_YELLOW = 2;
 
-    public Short getStatusColor() {
-        return statusColor;
+    public TaskStatusDTO() {
     }
 
-    public void setStatusColor(Short statusColor) {
-        this.statusColor = statusColor;
-    }
 
     public Integer getCompanyID() {
         return companyID;
@@ -37,6 +33,14 @@ public class TaskStatusDTO implements Serializable, Comparable<TaskStatusDTO> {
 
     public void setCompanyID(Integer companyID) {
         this.companyID = companyID;
+    }
+
+    public Short getStatusColor() {
+        return statusColor;
+    }
+
+    public void setStatusColor(Short statusColor) {
+        this.statusColor = statusColor;
     }
 
     public Integer getTaskStatusID() {
@@ -94,6 +98,6 @@ public class TaskStatusDTO implements Serializable, Comparable<TaskStatusDTO> {
      */
     @Override
     public int compareTo(TaskStatusDTO another) {
-        return this.getTaskStatusName().compareTo(another.getTaskStatusName());
+        return this.taskStatusName.compareTo(another.taskStatusName);
     }
 }

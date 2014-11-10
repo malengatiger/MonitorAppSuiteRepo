@@ -6,17 +6,23 @@
 
 package com.com.boha.monitor.library.dto.transfer;
 
+
+import com.com.boha.monitor.library.dto.BankDTO;
+import com.com.boha.monitor.library.dto.BankDetailDTO;
 import com.com.boha.monitor.library.dto.BeneficiaryDTO;
 import com.com.boha.monitor.library.dto.CheckPointDTO;
 import com.com.boha.monitor.library.dto.CityDTO;
 import com.com.boha.monitor.library.dto.ClientDTO;
 import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
+import com.com.boha.monitor.library.dto.ContractorClaimDTO;
+import com.com.boha.monitor.library.dto.ContractorClaimSiteDTO;
 import com.com.boha.monitor.library.dto.GcmDeviceDTO;
+import com.com.boha.monitor.library.dto.InvoiceDTO;
+import com.com.boha.monitor.library.dto.InvoiceItemDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectDiaryRecordDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
-import com.com.boha.monitor.library.dto.ProjectSiteStaffDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.ProjectStatusTypeDTO;
@@ -31,30 +37,37 @@ import java.io.Serializable;
  * @author aubreyM
  */
 public class RequestDTO implements Serializable{
-    public RequestDTO() {}
     public RequestDTO(Integer requestType) {
         this.requestType = requestType;
     }
-    private Integer requestType, companyID, companyStaffID, projectID, 
-            projectSiteID, projectSiteTaskID, loginType;
+    public RequestDTO() {}
+    private Integer requestType, companyID, companyStaffID, projectID,
+            projectSiteID, projectSiteTaskID,loginType, countryID;
     private String email, pin, gcmRegistrationID;
+    private Double latitude, longitude;
     private CompanyDTO company;
     private CompanyStaffDTO companyStaff;
     private ProjectDTO project;
+    private CityDTO city;
+    private TownshipDTO township;
     private ProjectSiteDTO projectSite;
-    private ProjectSiteStaffDTO projectSiteStaff;
     private GcmDeviceDTO gcmDevice;
-    private TaskStatusDTO taskStatus;
+    private BankDTO bank;
+    private BankDetailDTO bankDetail;
+    private ContractorClaimDTO contractorClaim;
+    private ContractorClaimSiteDTO contractorClaimSite;
+    private InvoiceDTO invoice;
+    private InvoiceItemDTO invoiceItem;
+
     private TaskDTO task;
     private CheckPointDTO checkPoint;
-    
+    private TaskStatusDTO taskStatus;
+    private ClientDTO client;
+
     private ProjectSiteTaskDTO projectSiteTask;
     private ProjectDiaryRecordDTO projectDiaryRecord;
     private ProjectSiteTaskStatusDTO projectSiteTaskStatus;
     private ProjectStatusTypeDTO projectStatusType;
-    private CityDTO city;
-    private TownshipDTO township;
-    private ClientDTO client;
     private BeneficiaryDTO beneficiary;
     //register actors
     public static final int
@@ -99,7 +112,10 @@ public class RequestDTO implements Serializable{
             ADD_COMPANY_CHECKPOINT = 304,
             ADD_CITY = 305,
             ADD_TOWNSHIP = 306,
-            ADD_SITE_TASK = 307;
+            ADD_SITE_TASK = 307,
+            ADD_BANK_DETAILS = 308,
+            ADD_BANK = 309;
+
     //updates
     public static final int
             UPDATE_COMPANY_TASK = 401,
@@ -108,13 +124,18 @@ public class RequestDTO implements Serializable{
             UPDATE_COMPANY_CHECKPOINT = 404,
             UPDATE_PROJECT = 405,
             UPDATE_PROJECT_SITE = 406;
-    //invoice
+    //invoice * claim
     public static final int
             ADD_INVOICE = 501,
             ADD_INVOICE_ITEM = 502,
             REMOVE_INVOICE_ITEM = 503,
             CREATE_INVOICE_PDF = 504,
-            DELETE_INVOICE = 505;
+            REMOVE_INVOICE = 505,
+            REMOVE_CONTRACTOR_CLAIM = 507,
+            REMOVE_CONTRACTOR_CLAIM_SITE = 508,
+            GET_PROJECT_INVOICES = 506,
+            ADD_CONTRACTOR_CLAIM = 511,
+            ADD_CONTRACTOR_CLAIM_SITE = 512;
     //reports
     public static final int
             REPORT_PROJECT = 601,
@@ -124,123 +145,17 @@ public class RequestDTO implements Serializable{
 
 
     public static final String COMPANY_DIR = "company";
+    public static final String COMPANY_STAFF_DIR = "companyStaff";
     public static final String PROJECT_DIR = "project";
     public static final String PROJECT_SITE_DIR = "projectsite";
     public static final String TASK_DIR = "task";
-    public static final String COMPANY_STAFF_DIR = "companyStaff";
 
     //
 
-    public Integer getProjectSiteTaskID() {
-        return projectSiteTaskID;
-    }
-
-    public void setProjectSiteTaskID(Integer projectSiteTaskID) {
-        this.projectSiteTaskID = projectSiteTaskID;
-    }
-
-    public BeneficiaryDTO getBeneficiary() {
-        return beneficiary;
-    }
-
-    public void setBeneficiary(BeneficiaryDTO beneficiary) {
-        this.beneficiary = beneficiary;
-    }
-
-    public ClientDTO getClient() {
-        return client;
-    }
-
-    public void setClient(ClientDTO client) {
-        this.client = client;
-    }
-
-    public TaskDTO getTask() {
-        return task;
-    }
-
-    public void setTask(TaskDTO task) {
-        this.task = task;
-    }
-
-    public CheckPointDTO getCheckPoint() {
-        return checkPoint;
-    }
-
-    public void setCheckPoint(CheckPointDTO checkPoint) {
-        this.checkPoint = checkPoint;
-    }
-
-    public TaskStatusDTO getTaskStatus() {
-        return taskStatus;
-    }
-
-    public void setTaskStatus(TaskStatusDTO taskStatus) {
-        this.taskStatus = taskStatus;
-    }
-
-    public CityDTO getCity() {
-        return city;
-    }
-
-    public void setCity(CityDTO city) {
-        this.city = city;
-    }
-
-    public TownshipDTO getTownship() {
-        return township;
-    }
-
-    public void setTownship(TownshipDTO township) {
-        this.township = township;
-    }
-
-    public String getGcmRegistrationID() {
-        return gcmRegistrationID;
-    }
-
-    public void setGcmRegistrationID(String gcmRegistrationID) {
-        this.gcmRegistrationID = gcmRegistrationID;
-    }
-
-    public Integer getLoginType() {
-        return loginType;
-    }
-
-    public void setLoginType(Integer loginType) {
-        this.loginType = loginType;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPin() {
-        return pin;
-    }
-
-    public void setPin(String pin) {
-        this.pin = pin;
-    }
-    
-    
     public Integer getRequestType() {
         return requestType;
     }
 
-    public GcmDeviceDTO getGcmDevice() {
-        return gcmDevice;
-    }
-
-    public void setGcmDevice(GcmDeviceDTO gcmDevice) {
-        this.gcmDevice = gcmDevice;
-    }
-
-    
     public void setRequestType(Integer requestType) {
         this.requestType = requestType;
     }
@@ -277,6 +192,70 @@ public class RequestDTO implements Serializable{
         this.projectSiteID = projectSiteID;
     }
 
+    public Integer getProjectSiteTaskID() {
+        return projectSiteTaskID;
+    }
+
+    public void setProjectSiteTaskID(Integer projectSiteTaskID) {
+        this.projectSiteTaskID = projectSiteTaskID;
+    }
+
+    public Integer getLoginType() {
+        return loginType;
+    }
+
+    public void setLoginType(Integer loginType) {
+        this.loginType = loginType;
+    }
+
+    public Integer getCountryID() {
+        return countryID;
+    }
+
+    public void setCountryID(Integer countryID) {
+        this.countryID = countryID;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
+    }
+
+    public String getGcmRegistrationID() {
+        return gcmRegistrationID;
+    }
+
+    public void setGcmRegistrationID(String gcmRegistrationID) {
+        this.gcmRegistrationID = gcmRegistrationID;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
     public CompanyDTO getCompany() {
         return company;
     }
@@ -301,7 +280,21 @@ public class RequestDTO implements Serializable{
         this.project = project;
     }
 
-   
+    public CityDTO getCity() {
+        return city;
+    }
+
+    public void setCity(CityDTO city) {
+        this.city = city;
+    }
+
+    public TownshipDTO getTownship() {
+        return township;
+    }
+
+    public void setTownship(TownshipDTO township) {
+        this.township = township;
+    }
 
     public ProjectSiteDTO getProjectSite() {
         return projectSite;
@@ -311,12 +304,92 @@ public class RequestDTO implements Serializable{
         this.projectSite = projectSite;
     }
 
-    public ProjectSiteStaffDTO getProjectSiteStaff() {
-        return projectSiteStaff;
+    public GcmDeviceDTO getGcmDevice() {
+        return gcmDevice;
     }
 
-    public void setProjectSiteStaff(ProjectSiteStaffDTO projectSiteStaff) {
-        this.projectSiteStaff = projectSiteStaff;
+    public void setGcmDevice(GcmDeviceDTO gcmDevice) {
+        this.gcmDevice = gcmDevice;
+    }
+
+    public BankDTO getBank() {
+        return bank;
+    }
+
+    public void setBank(BankDTO bank) {
+        this.bank = bank;
+    }
+
+    public BankDetailDTO getBankDetail() {
+        return bankDetail;
+    }
+
+    public void setBankDetail(BankDetailDTO bankDetail) {
+        this.bankDetail = bankDetail;
+    }
+
+    public ContractorClaimDTO getContractorClaim() {
+        return contractorClaim;
+    }
+
+    public void setContractorClaim(ContractorClaimDTO contractorClaim) {
+        this.contractorClaim = contractorClaim;
+    }
+
+    public ContractorClaimSiteDTO getContractorClaimSite() {
+        return contractorClaimSite;
+    }
+
+    public void setContractorClaimSite(ContractorClaimSiteDTO contractorClaimSite) {
+        this.contractorClaimSite = contractorClaimSite;
+    }
+
+    public InvoiceDTO getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(InvoiceDTO invoice) {
+        this.invoice = invoice;
+    }
+
+    public InvoiceItemDTO getInvoiceItem() {
+        return invoiceItem;
+    }
+
+    public void setInvoiceItem(InvoiceItemDTO invoiceItem) {
+        this.invoiceItem = invoiceItem;
+    }
+
+    public TaskDTO getTask() {
+        return task;
+    }
+
+    public void setTask(TaskDTO task) {
+        this.task = task;
+    }
+
+    public CheckPointDTO getCheckPoint() {
+        return checkPoint;
+    }
+
+    public void setCheckPoint(CheckPointDTO checkPoint) {
+        this.checkPoint = checkPoint;
+    }
+
+    public TaskStatusDTO getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(TaskStatusDTO taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+
+    public ClientDTO getClient() {
+        return client;
+    }
+
+    public void setClient(ClientDTO client) {
+        this.client = client;
     }
 
     public ProjectSiteTaskDTO getProjectSiteTask() {
@@ -350,6 +423,12 @@ public class RequestDTO implements Serializable{
     public void setProjectStatusType(ProjectStatusTypeDTO projectStatusType) {
         this.projectStatusType = projectStatusType;
     }
-    
-    
+
+    public BeneficiaryDTO getBeneficiary() {
+        return beneficiary;
+    }
+
+    public void setBeneficiary(BeneficiaryDTO beneficiary) {
+        this.beneficiary = beneficiary;
+    }
 }

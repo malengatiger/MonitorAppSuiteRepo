@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:text="00"
             android:id="@+id/SITE_txtTaskCount"
-            style="@style/BlueCircle"
+            style="@style/BlackCircle"
             android:layout_marginRight="4dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true" />
@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:text="00"
             android:id="@+id/SITE_txtStatusCount"
-            style="@style/GreenCircle"
+            style="@style/BlackCircle"
             android:layout_marginRight="4dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true" />

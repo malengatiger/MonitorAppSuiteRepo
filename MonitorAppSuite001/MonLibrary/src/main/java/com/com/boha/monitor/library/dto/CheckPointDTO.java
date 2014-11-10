@@ -18,6 +18,10 @@ public class CheckPointDTO implements Serializable {
     private String checkPointName, description;
     private Integer companyID;
 
+    public CheckPointDTO(Integer checkPointID) {
+        this.checkPointID = checkPointID;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -49,4 +53,7 @@ public class CheckPointDTO implements Serializable {
     public void setCompanyID(Integer companyID) {
         this.companyID = companyID;
     }
+
+  
+    
 }

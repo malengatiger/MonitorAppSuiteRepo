@@ -417,7 +417,7 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
             projectSiteTaskList = new ArrayList<>();
         }
         projectSiteTaskList.add(task);
-        //Collections.sort(taskStatusList);
+        //Collections.sort(taskList);
         adapter.notifyDataSetChanged();
         txtCount.setText("" + projectSiteTaskList.size());
         try {

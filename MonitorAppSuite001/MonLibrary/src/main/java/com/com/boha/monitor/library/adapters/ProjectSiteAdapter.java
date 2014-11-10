@@ -135,12 +135,18 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
             switch (p.getLastTaskStatus().getTaskStatus().getStatusColor()) {
                 case TaskStatusDTO.STATUS_COLOR_GREEN:
                     item.txtStatusColor.setBackground(ctx.getResources().getDrawable(R.drawable.xgreen_box));
+                    item.txtStatusCount.setBackground(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
+                    item.txtTaskCount.setBackground(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
                     break;
                 case TaskStatusDTO.STATUS_COLOR_YELLOW:
                     item.txtStatusColor.setBackground(ctx.getResources().getDrawable(R.drawable.xorange_box));
+                    item.txtStatusCount.setBackground(ctx.getResources().getDrawable(R.drawable.xorange_oval));
+                    item.txtTaskCount.setBackground(ctx.getResources().getDrawable(R.drawable.xorange_oval));
                     break;
                 case TaskStatusDTO.STATUS_COLOR_RED:
                     item.txtStatusColor.setBackground(ctx.getResources().getDrawable(R.drawable.xred_box));
+                    item.txtStatusCount.setBackground(ctx.getResources().getDrawable(R.drawable.xred_oval));
+                    item.txtTaskCount.setBackground(ctx.getResources().getDrawable(R.drawable.xred_oval));
                     break;
             }
 

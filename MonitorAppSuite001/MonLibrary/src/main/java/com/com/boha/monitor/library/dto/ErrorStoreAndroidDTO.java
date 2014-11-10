@@ -16,6 +16,7 @@ public class ErrorStoreAndroidDTO {
             brand, appVersionCode, appVersionName, packageName, phoneModel;
     private long errorDate;
 
+
     public int getErrorStoreAndroidID() {
         return errorStoreAndroidID;
     }

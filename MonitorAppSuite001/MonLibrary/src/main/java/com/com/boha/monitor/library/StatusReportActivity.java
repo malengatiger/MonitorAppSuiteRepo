@@ -19,6 +19,7 @@ public class StatusReportActivity extends FragmentActivity implements StatusRepo
         StatusReportFragment srf = (StatusReportFragment)getSupportFragmentManager().findFragmentById(R.id.fragment);
         ProjectSiteDTO ps = (ProjectSiteDTO)getIntent().getSerializableExtra("projectSite");
         srf.setProjectSite(ps);
+        setTitle(getApplicationContext().getResources().getString(R.string.task_status));
     }
 
 

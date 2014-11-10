@@ -4,6 +4,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -32,6 +33,7 @@ import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import org.acra.ACRA;
 
@@ -74,7 +76,8 @@ public class RegistrationActivity extends FragmentActivity implements
     }
 
     private void registerGCMDevice() {
-        boolean ok = GCMUtil.checkPlayServices(getApplicationContext(), this);
+        boolean ok = checkPlayServices();
+
         if (ok) {
             Log.e(LOG, "############# Starting Google Cloud Messaging registration");
             GCMUtil.startGCMRegistration(getApplicationContext(), new GCMUtil.GCMUtilListener() {
@@ -98,6 +101,24 @@ public class RegistrationActivity extends FragmentActivity implements
                 }
             });
         }
+    }
+
+    public boolean checkPlayServices() {
+        Log.w(LOG, "checking GooglePlayServices .................");
+        int resultCode = GooglePlayServicesUtil
+                .isGooglePlayServicesAvailable(ctx);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+               // GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+               //         PLAY_SERVICES_RESOLUTION_REQUEST).show();
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.google.android.gms")));
+                return false;
+            } else {
+                Log.i(LOG, "This device is not supported.");
+                throw new UnsupportedOperationException("GooglePlayServicesUtil resultCode: " + resultCode);
+            }
+        }
+        return true;
     }
 
     private void sendRegistration() {
@@ -293,12 +314,12 @@ public class RegistrationActivity extends FragmentActivity implements
             }
 
             @Override
-            public void onError(String message) {
+            public void onError(final String message) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         setRefreshActionButtonState(false);
-                        ToastUtil.errorToast(ctx, ctx.getResources().getString(R.string.error_server_comms));
+                        ToastUtil.errorToast(ctx, message);
                     }
                 });
             }

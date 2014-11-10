@@ -14,7 +14,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
+import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
+import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
+import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 import com.com.boha.monitor.library.util.ToastUtil;
 import com.google.android.gms.common.ConnectionResult;
@@ -36,11 +40,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
 public class MonitorMapActivity extends FragmentActivity
-    implements LocationListener,
+        implements LocationListener,
         GooglePlayServicesClient.ConnectionCallbacks,
         GooglePlayServicesClient.OnConnectionFailedListener {
 
@@ -59,18 +64,20 @@ public class MonitorMapActivity extends FragmentActivity
     // Unique tag for the error dialog fragment
     private static final String DIALOG_ERROR = "dialog_error";
     ProjectSiteDTO projectSite;
+    ProjectDTO project;
     int index;
     static final Locale loc = Locale.getDefault();
     static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.w(LOG,"#### onCreate");
+        Log.w(LOG, "#### onCreate");
         super.onCreate(savedInstanceState);
         ctx = getApplicationContext();
         setContentView(R.layout.activity_monitor_map);
-        projectSite = (ProjectSiteDTO)getIntent().getSerializableExtra("projectSite");
-        index = getIntent().getIntExtra("index",0);
+        projectSite = (ProjectSiteDTO) getIntent().getSerializableExtra("projectSite");
+        project = (ProjectDTO) getIntent().getSerializableExtra("project");
+        index = getIntent().getIntExtra("index", 0);
 
         mLocationClient = new LocationClient(getApplicationContext(), this,
                 this);
@@ -107,22 +114,82 @@ public class MonitorMapActivity extends FragmentActivity
                 loc.setLongitude(latLng.longitude);
 
                 float mf = location.distanceTo(loc);
-                Log.w(LOG,"######### distance, again: " + mf);
+                Log.w(LOG, "######### distance, again: " + mf);
 
                 if (mf > 100) {
-                    showDirectionsDialog(latLng.latitude,latLng.longitude);
+                    showDirectionsDialog(latLng.latitude, latLng.longitude);
                 } else {
-                    ToastUtil.toast(ctx,"You are currently " + df.format(mf) + " metres from where the picture was taken");
+                    ToastUtil.toast(ctx, "You are currently " + df.format(mf) + " metres from where the picture was taken");
                 }
                 return false;
             }
         });
-        setOneMarker(projectSite.getPhotoUploadList().get(index));
+        if (projectSite != null) {
+            setOneMarker(projectSite.getPhotoUploadList().get(index));
+        }
+        if (project != null) {
+            setProjectMarkers();
+        }
 
     }
+
     static final DecimalFormat df = new DecimalFormat("###,##0.00");
+
+    private void setProjectMarkers() {
+
+        LatLng point = null;
+        int index = 0;
+        for (ProjectSiteDTO site : project.getProjectSiteList()) {
+            LatLng pnt = new LatLng(site.getLatitude(), site.getLongitude());
+            if (index == 0) {
+                point = pnt;
+            }
+            BitmapDescriptor desc = null;
+            Short color = getLastStatus(site);
+            if (color == null) {
+                desc = BitmapDescriptorFactory.fromResource(R.drawable.bullet_black_32);
+            } else {
+                switch (color) {
+                    case TaskStatusDTO.STATUS_COLOR_RED:
+                        desc = BitmapDescriptorFactory.fromResource(R.drawable.bullet_red);
+                        break;
+                    case TaskStatusDTO.STATUS_COLOR_GREEN:
+                        desc = BitmapDescriptorFactory.fromResource(R.drawable.bullet_green_32);
+                        break;
+                    case TaskStatusDTO.STATUS_COLOR_YELLOW:
+                        desc = BitmapDescriptorFactory.fromResource(R.drawable.bullet_yellow_32);
+                        break;
+                }
+            }
+            Marker m =
+                    googleMap.addMarker(new MarkerOptions()
+                            .title(site.getProjectSiteName())
+                            .icon(desc)
+                            .snippet(site.getProjectName())
+                            .position(pnt));
+            markers.add(m);
+            index++;
+        }
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 1.0f));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(12.0f));
+        setTitle(project.getProjectName());
+    }
+
+    private Short getLastStatus(ProjectSiteDTO site) {
+        Short s = null;
+        List<ProjectSiteTaskStatusDTO> stList = new ArrayList<>();
+        for (ProjectSiteTaskDTO task : site.getProjectSiteTaskList()) {
+            stList.addAll(task.getProjectSiteTaskStatusList());
+        }
+        Collections.sort(stList);
+        if (!stList.isEmpty()) {
+            s = stList.get(0).getTaskStatus().getStatusColor();
+        }
+        return s;
+    }
+
     private void setOneMarker(PhotoUploadDTO dto) {
-        LatLng pnt = new LatLng(dto.getLatitude(),dto.getLongitude());
+        LatLng pnt = new LatLng(dto.getLatitude(), dto.getLongitude());
         BitmapDescriptor desc = BitmapDescriptorFactory.fromResource(R.drawable.number_1);
         Marker m =
                 googleMap.addMarker(new MarkerOptions()
@@ -137,6 +204,7 @@ public class MonitorMapActivity extends FragmentActivity
         setTitle(projectSite.getProjectName());
         getActionBar().setSubtitle(projectSite.getProjectSiteName());
     }
+
     private void showDirectionsDialog(final double lat, final double lng) {
         AlertDialog.Builder d = new AlertDialog.Builder(this);
         d.setTitle(ctx.getString(R.string.directions))
@@ -144,10 +212,10 @@ public class MonitorMapActivity extends FragmentActivity
                 .setPositiveButton(ctx.getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        startDirectionsMap(lat,lng);
+                        startDirectionsMap(lat, lng);
                     }
                 })
-                .setNegativeButton(ctx.getString(R.string.no),new DialogInterface.OnClickListener() {
+                .setNegativeButton(ctx.getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -155,6 +223,7 @@ public class MonitorMapActivity extends FragmentActivity
                 })
                 .show();
     }
+
     private void startDirectionsMap(double lat, double lng) {
         Log.i(LOG, "startDirectionsMap ..........");
         String url = "http://maps.google.com/maps?saddr="
@@ -164,6 +233,7 @@ public class MonitorMapActivity extends FragmentActivity
         intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
         startActivity(intent);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -186,7 +256,7 @@ public class MonitorMapActivity extends FragmentActivity
     @Override
     public void onLocationChanged(Location location) {
         this.location = location;
-        Log.e(LOG,"####### onLocationChanged");
+        Log.e(LOG, "####### onLocationChanged");
     }
 
     @Override
@@ -211,6 +281,7 @@ public class MonitorMapActivity extends FragmentActivity
         }
         super.onStop();
     }
+
     @Override
     public void onConnected(Bundle bundle) {
         Log.e(LOG, "########### onConnected .... what is in the bundle...?");
@@ -248,6 +319,7 @@ public class MonitorMapActivity extends FragmentActivity
             mResolvingError = true;
         }
     }
+
     /* Creates a dialog for an error message */
     private void showErrorDialog(int errorCode) {
         // Create a fragment for the error dialog
@@ -263,6 +335,7 @@ public class MonitorMapActivity extends FragmentActivity
     public void onDialogDismissed() {
         mResolvingError = false;
     }
+
     List<BitmapDescriptor> bmdList = new ArrayList<BitmapDescriptor>();
 
     private void loadIcons() {

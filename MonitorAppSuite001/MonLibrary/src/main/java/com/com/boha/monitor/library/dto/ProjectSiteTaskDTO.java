@@ -5,6 +5,7 @@
  */
 package com.com.boha.monitor.library.dto;
 
+
 import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 
 import java.io.Serializable;
@@ -15,7 +16,7 @@ import java.util.List;
  *
  * @author aubreyM
  */
-public class ProjectSiteTaskDTO implements Serializable {
+public class ProjectSiteTaskDTO implements Serializable, Comparable<ProjectSiteTaskDTO> {
 
     private static final long serialVersionUID = 1L;
     private Integer projectSiteTaskID;
@@ -23,7 +24,11 @@ public class ProjectSiteTaskDTO implements Serializable {
     private long dateRegistered;
     private Integer projectSiteID, projectID;
     private List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList = new ArrayList<>();
-    private List<PhotoUploadDTO> photoUploadList;
+    private List<PhotoUploadDTO> photoUploadList = new ArrayList<>();
+
+    public ProjectSiteTaskDTO() {
+    }
+
 
     public List<PhotoUploadDTO> getPhotoUploadList() {
         return photoUploadList;
@@ -106,4 +111,20 @@ public class ProjectSiteTaskDTO implements Serializable {
         return "com.boha.monitor.data.ProjectSiteTask[ projectSiteTaskID=" + projectSiteTaskID + " ]";
     }
 
+    /**
+     * Compares this object to the specified object to determine their relative
+     * order.
+     *
+     * @param another the object to compare to this instance.
+     * @return a negative integer if this instance is less than {@code another};
+     * a positive integer if this instance is greater than
+     * {@code another}; 0 if this instance has the same order as
+     * {@code another}.
+     * @throws ClassCastException if {@code another} cannot be converted into something
+     *                            comparable to {@code this} instance.
+     */
+    @Override
+    public int compareTo(ProjectSiteTaskDTO another) {
+        return 0;
+    }
 }

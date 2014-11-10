@@ -1,8 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.com.boha.monitor.library.StatusReportActivity" >
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+    <item android:id="@+id/action_camera"
+        android:title="@string/take_pic"
+        android:icon="@drawable/camera_a32"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom" />
+    <item android:id="@+id/action_gallery"
+        android:title="@string/gallery"
+        android:icon="@drawable/ic_action_slideshow"
         android:orderInCategory="100"
         android:showAsAction="never" />
 </menu>

@@ -16,8 +16,9 @@ import java.util.List;
  */
 public class CompanyDTO implements Serializable {
     private static final long serialVersionUID = 1L;
-    private Integer companyID;
+    private Integer companyID, countryID;
     private String companyName;
+    private String address, vatNumber, taxNumber;
     
     private List<ProjectDTO> projectList = new ArrayList<>();
     private List<ProjectStatusTypeDTO> projectStatusTypeList = new ArrayList<>();
@@ -26,10 +27,90 @@ public class CompanyDTO implements Serializable {
     private List<TaskDTO> taskList = new ArrayList<>();
     private List<ClientDTO> clientList = new ArrayList<>();
     private List<CheckPointDTO> checkPointList = new ArrayList<>();
-    private List<InvoiceCodeDTO> invoiceCodeList = new ArrayList<>();
     private List<InvoiceDTO> invoiceList = new ArrayList<>();
     private List<BeneficiaryDTO> beneficiaryList = new ArrayList<>();
+    private List<BankDetailDTO> bankDetailList = new ArrayList<>();
     private List<GcmDeviceDTO> gcmDeviceList = new ArrayList<>();
+    private List<ContractorClaimDTO> contractorClaimList = new ArrayList<>();
+    private List<CompanyStaffTypeDTO> companyStaffTypeList = new ArrayList<>();
+    
+
+    public CompanyDTO() {
+    }
+
+
+    private void log() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("###### Company Data #############").append("\n");
+        sb.append("Clients: ").append(clientList.size()).append("\n");
+        sb.append("Projects: ").append(projectList.size()).append("\n");
+        sb.append("Staff: ").append(companyStaffList.size()).append("\n");
+        sb.append("Invoices: ").append(invoiceList.size()).append("\n");
+        sb.append("Tasks: ").append(taskList.size()).append("\n");
+        sb.append("TaskStatus: ").append(taskStatusList.size()).append("\n");
+        sb.append("ProjectStatusTypes: ").append(projectStatusTypeList.size()).append("\n");
+        sb.append("Beneficiaries: ").append(beneficiaryList.size()).append("\n");
+        sb.append("Devices: ").append(gcmDeviceList.size()).append("\n");
+        sb.append("CheckPoints: ").append(checkPointList.size()).append("\n");
+        sb.append("#######################");
+        System.out.println(sb.toString());
+    }
+
+    public List<ContractorClaimDTO> getContractorClaimList() {
+        return contractorClaimList;
+    }
+
+    public void setContractorClaimList(List<ContractorClaimDTO> contractorClaimList) {
+        this.contractorClaimList = contractorClaimList;
+    }
+
+    public Integer getCountryID() {
+        return countryID;
+    }
+
+    public void setCountryID(Integer countryID) {
+        this.countryID = countryID;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getVatNumber() {
+        return vatNumber;
+    }
+
+    public void setVatNumber(String vatNumber) {
+        this.vatNumber = vatNumber;
+    }
+
+    public String getTaxNumber() {
+        return taxNumber;
+    }
+
+    public void setTaxNumber(String taxNumber) {
+        this.taxNumber = taxNumber;
+    }
+
+    public List<BankDetailDTO> getBankDetailList() {
+        return bankDetailList;
+    }
+
+    public void setBankDetailList(List<BankDetailDTO> bankDetailList) {
+        this.bankDetailList = bankDetailList;
+    }
+
+    public List<CompanyStaffTypeDTO> getCompanyStaffTypeList() {
+        return companyStaffTypeList;
+    }
+
+    public void setCompanyStaffTypeList(List<CompanyStaffTypeDTO> companyStaffTypeList) {
+        this.companyStaffTypeList = companyStaffTypeList;
+    }
     
     public List<TaskDTO> getTaskList() {
         return taskList;
@@ -47,6 +128,7 @@ public class CompanyDTO implements Serializable {
         this.clientList = clientList;
     }
 
+
     public List<CheckPointDTO> getCheckPointList() {
         return checkPointList;
     }
@@ -55,13 +137,6 @@ public class CompanyDTO implements Serializable {
         this.checkPointList = checkPointList;
     }
 
-    public List<InvoiceCodeDTO> getInvoiceCodeList() {
-        return invoiceCodeList;
-    }
-
-    public void setInvoiceCodeList(List<InvoiceCodeDTO> invoiceCodeList) {
-        this.invoiceCodeList = invoiceCodeList;
-    }
 
     public List<InvoiceDTO> getInvoiceList() {
         return invoiceList;

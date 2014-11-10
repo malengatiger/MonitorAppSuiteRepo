@@ -6,6 +6,7 @@
 package com.com.boha.monitor.library.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class CityDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer cityID;
     private String cityName;
-    private List<TownshipDTO> townshipList;
+    private List<TownshipDTO> townshipList = new ArrayList<>();
     private Integer provinceID;
 
     public CityDTO() {
@@ -28,6 +29,7 @@ public class CityDTO implements Serializable {
     public CityDTO(Integer cityID) {
         this.cityID = cityID;
     }
+
 
     public Integer getCityID() {
         return cityID;

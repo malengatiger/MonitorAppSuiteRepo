@@ -31,15 +31,16 @@ public class ImageAdapter extends ArrayAdapter<PhotoUploadDTO> {
     private List<PhotoUploadDTO> mList;
     private Context ctx;
 
-   public ImageAdapter(Context context, int textViewResourceId,
-                       List<PhotoUploadDTO> list) {
+    public ImageAdapter(Context context, int textViewResourceId,
+                        List<PhotoUploadDTO> list) {
         super(context, textViewResourceId);
         this.mLayoutRes = textViewResourceId;
         mList = list;
         ctx = context;
         this.mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-       Log.e(LOG, "...constructing ImageAdapter ...list: " + list.size());
+        if (list != null)
+            Log.e(LOG, "...constructing ImageAdapter ...list: " + list.size());
     }
 
     @Override
@@ -47,6 +48,7 @@ public class ImageAdapter extends ArrayAdapter<PhotoUploadDTO> {
         //Log.e(LOG,"##### items in adapter: " + mList.size());
         return mList.size();
     }
+
     View view;
 
     static class ViewHolderItem {
@@ -72,12 +74,12 @@ public class ImageAdapter extends ArrayAdapter<PhotoUploadDTO> {
 
         PhotoUploadDTO p = mList.get(position);
 
-        item.txtNumber.setText("" +(position + 1));
+        item.txtNumber.setText("" + (position + 1));
         StringBuilder sb = new StringBuilder();
         sb.append(Statics.IMAGE_URL);
         sb.append(p.getUri());
 
-        ImageLoader.getInstance().displayImage(sb.toString(),item.img, new ImageLoadingListener() {
+        ImageLoader.getInstance().displayImage(sb.toString(), item.img, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
 
@@ -100,8 +102,8 @@ public class ImageAdapter extends ArrayAdapter<PhotoUploadDTO> {
         });
 
 
-        Statics.setRobotoFontLight(ctx,item.txtNumber);
-       // animateView(convertView);
+        Statics.setRobotoFontLight(ctx, item.txtNumber);
+        // animateView(convertView);
         return (convertView);
     }
 

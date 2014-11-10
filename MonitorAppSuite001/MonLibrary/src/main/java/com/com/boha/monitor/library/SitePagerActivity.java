@@ -27,6 +27,7 @@ import com.com.boha.monitor.library.fragments.ProjectSiteListFragment;
 import com.com.boha.monitor.library.fragments.TaskAssignmentFragment;
 import com.com.boha.monitor.library.toolbox.BaseVolley;
 import com.com.boha.monitor.library.util.ErrorUtil;
+import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.WebSocketUtil;
@@ -163,8 +164,9 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
 
     private void getData() {
         RequestDTO w = new RequestDTO();
-        w.setRequestType(RequestDTO.GET_COMPANY_DATA);
-        w.setCompanyID(1);
+        w.setRequestType(RequestDTO.GET_PROJECT_DATA);
+        w.setProjectID(project.getProjectID());
+        w.setCompanyID(SharedUtil.getCompany(ctx).getCompanyID());
 
         if (!BaseVolley.checkNetworkOnDevice(ctx)) {
             return;
@@ -370,7 +372,7 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
         Intent i = new Intent(this, TaskAssignmentActivity.class);
         i.putExtra("projectSite", projectSite);
         i.putExtra("type", type);
-        startActivity(i);
+        startActivityForResult(i,SITE_TASK_REQUEST);
     }
 
     @Override
@@ -411,11 +413,19 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
 
     @Override
     public void onActivityResult(int reqCode, int res, Intent data) {
-        if (reqCode == SITE_PICTURE_REQUEST) {
-            if (res == RESULT_OK) {
-                projectSiteListFragment.refreshPhotoList(projectSite);
-            }
+        switch (reqCode) {
+            case SITE_PICTURE_REQUEST:
+                if (res == RESULT_OK) {
+                    projectSiteListFragment.refreshPhotoList(projectSite);
+                }
+                break;
+            case SITE_TASK_REQUEST:
+                if (res == RESULT_OK) {
+                    projectSiteListFragment.refreshData(projectSite);
+                }
+                break;
         }
+
     }
 
 
@@ -488,5 +498,5 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
     LocationClient mLocationClient;
     static final String LOG = SitePagerActivity.class.getSimpleName();
     static final int SITE_PICTURE_REQUEST = 113,
-            SITE_TASK_PICTURE_REQUEST = 114;
+            SITE_TASK_REQUEST = 114;
 }

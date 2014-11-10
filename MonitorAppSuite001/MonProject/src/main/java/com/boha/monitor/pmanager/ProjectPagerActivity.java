@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.com.boha.monitor.library.ImagePagerActivity;
+import com.com.boha.monitor.library.MonitorMapActivity;
 import com.com.boha.monitor.library.PictureActivity;
 import com.com.boha.monitor.library.SitePagerActivity;
 import com.com.boha.monitor.library.adapters.DrawerAdapter;
@@ -327,6 +328,21 @@ public class ProjectPagerActivity extends FragmentActivity
         Intent i = new Intent(this, PictureActivity.class);
         i.putExtra("type", PhotoUploadDTO.PROJECT_IMAGE);
         i.putExtra("project", project);
+        startActivity(i);
+    }
+
+    @Override
+    public void onGalleryRequested(ProjectDTO project) {
+        Intent i = new Intent(this,ImagePagerActivity.class);
+        i.putExtra("project",project);
+        i.putExtra("type",ImagePagerActivity.PROJECT);
+        startActivity(i);
+    }
+
+    @Override
+    public void onMapRequested(ProjectDTO project) {
+        Intent i = new Intent(this, MonitorMapActivity.class);
+        i.putExtra("project",project);
         startActivity(i);
     }
 

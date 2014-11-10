@@ -17,7 +17,20 @@ public class ProjectStatusTypeDTO implements Serializable, Comparable<ProjectSta
     private static final long serialVersionUID = 1L;
     private Integer projectStatusTypeID, companyID;
     private String projectStatusName;
+    private List<ProjectDiaryRecordDTO> projectDiaryRecordList;
     private Short statusColor;
+
+    public ProjectStatusTypeDTO() {
+    }
+
+
+    public Integer getProjectStatusTypeID() {
+        return projectStatusTypeID;
+    }
+
+    public void setProjectStatusTypeID(Integer projectStatusTypeID) {
+        this.projectStatusTypeID = projectStatusTypeID;
+    }
 
     public Short getStatusColor() {
         return statusColor;
@@ -27,22 +40,12 @@ public class ProjectStatusTypeDTO implements Serializable, Comparable<ProjectSta
         this.statusColor = statusColor;
     }
 
-    private List<ProjectDiaryRecordDTO> projectDiaryRecordList;
-
     public Integer getCompanyID() {
         return companyID;
     }
 
     public void setCompanyID(Integer companyID) {
         this.companyID = companyID;
-    }
-
-    public Integer getProjectStatusTypeID() {
-        return projectStatusTypeID;
-    }
-
-    public void setProjectStatusTypeID(Integer projectStatusTypeID) {
-        this.projectStatusTypeID = projectStatusTypeID;
     }
 
     public String getProjectStatusName() {

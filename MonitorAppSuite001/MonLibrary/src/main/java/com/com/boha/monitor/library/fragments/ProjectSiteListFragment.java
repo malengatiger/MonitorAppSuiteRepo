@@ -92,7 +92,7 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
             if (taskStatusList.size() > 0) {
                 ProjectSiteTaskStatusDTO x = taskStatusList.get(0);
                 site.setLastTaskStatus(x);
-                Log.e(LOG, "taskStatus: " + site.getProjectSiteName() + " status: " + taskStatusList.size() + " " + x.getTaskStatus().getTaskStatusName());
+                Log.e(LOG, "task: " + site.getProjectSiteName() + " status: " + taskStatusList.size() + " " + x.getTaskStatus().getTaskStatusName());
             } else {
                 Log.w(LOG,"########## no status found, site: " + site.getProjectSiteName());
             }
@@ -156,6 +156,52 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
     }
     int index;
 
+    public void refreshData(ProjectSiteDTO site) {
+
+        Log.i(LOG,"###### refreshData");
+        if (projectSite == null) throw new UnsupportedOperationException("ProjectSiteDTO is null");
+        RequestDTO w = new RequestDTO();
+        w.setRequestType(RequestDTO.GET_PROJECT_SITE_DATA);
+        w.setProjectSiteID(site.getProjectSiteID());
+
+        WebSocketUtil.sendRequest(ctx,Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
+            @Override
+            public void onMessage(final ResponseDTO response) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!ErrorUtil.checkServerError(ctx,response)) {
+                            return;
+                        }
+                        projectSite.setPhotoUploadList(response.getPhotoUploadList());
+
+                        setList();
+                        index = 0;
+                        for (ProjectSiteDTO ps: project.getProjectSiteList()) {
+                            if (ps.getProjectSiteID() == projectSite.getProjectSiteID()) {
+                                break;
+                            }
+                            index++;
+                        }
+                        mListView.setSelection(index);
+                        mListener.onPhotoListUpdated(projectSite, index);
+                    }
+                });
+            }
+
+            @Override
+            public void onClose() {
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
+
+
+    }
     public void refreshPhotoList(ProjectSiteDTO site) {
 
         Log.i(LOG,"###### refreshPhotoList");

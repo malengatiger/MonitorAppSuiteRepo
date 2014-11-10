@@ -1,6 +1,8 @@
 package com.com.boha.monitor.library.adapters;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +15,15 @@ import android.widget.TextView;
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
+import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
+import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
+import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.util.Statics;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -26,6 +33,8 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
         public void onEditRequested(ProjectDTO project);
         public void onProjectSitesRequested(ProjectDTO project);
         public void onPictureRequested(ProjectDTO project);
+        public void onGalleryRequested(ProjectDTO project);
+        public void onMapRequested(ProjectDTO project);
     }
     private final LayoutInflater mInflater;
     private final int mLayoutRes;
@@ -49,12 +58,13 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
 
 
     static class ViewHolderItem {
-        TextView txtName, txtStaffCount;
-        TextView txtSiteCount;
+        TextView txtName, txtStatusCount;
+        TextView txtSiteCount, txtImageCount;
         TextView txtNumber, txtDesc, txtClient;
-        ImageView imgCamera;
+        ImageView imgCamera, imgMap;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolderItem item;
@@ -69,12 +79,16 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
                     .findViewById(R.id.PROJ_image);
             item.txtSiteCount = (TextView) convertView
                     .findViewById(R.id.PROJ_txtCount);
-            item.txtStaffCount = (TextView) convertView
-                   .findViewById(R.id.PROJ_txtStaffCount);
+            item.txtStatusCount = (TextView) convertView
+                   .findViewById(R.id.PROJ_txtStatusCount);
             item.txtDesc = (TextView) convertView
                     .findViewById(R.id.PROJ_txtDesc);
+            item.txtImageCount = (TextView) convertView
+                    .findViewById(R.id.PROJ_imageCount);
             item.imgCamera = (ImageView) convertView
                     .findViewById(R.id.PROJ_camera);
+            item.imgMap = (ImageView) convertView
+                    .findViewById(R.id.PROJ_map);
             convertView.setTag(item);
         } else {
             item = (ViewHolderItem) convertView.getTag();
@@ -91,10 +105,32 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
             item.txtDesc.setText(p.getDescription());
         }
         int count = 0;
+        List<ProjectSiteTaskStatusDTO> statusList = new ArrayList<>();
         for (ProjectSiteDTO ps: p.getProjectSiteList()) {
-            count += ps.getProjectSiteStaffList().size();
+            for (ProjectSiteTaskDTO task: ps.getProjectSiteTaskList()) {
+                count += task.getProjectSiteTaskStatusList().size();
+                statusList.addAll(task.getProjectSiteTaskStatusList());
+            }
         }
-        item.txtStaffCount.setText(""+count);
+        Collections.sort(statusList);
+        item.txtStatusCount.setText("" + count);
+        if (!statusList.isEmpty()) {
+            ProjectSiteTaskStatusDTO status = statusList.get(0);
+            switch (status.getTaskStatus().getStatusColor()) {
+                case TaskStatusDTO.STATUS_COLOR_RED:
+                    item.txtSiteCount.setBackground(ctx.getResources().getDrawable(R.drawable.xred_oval));
+                    item.txtStatusCount.setBackground(ctx.getResources().getDrawable(R.drawable.xred_oval));
+                    break;
+                case TaskStatusDTO.STATUS_COLOR_GREEN:
+                    item.txtSiteCount.setBackground(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
+                    item.txtStatusCount.setBackground(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
+                    break;
+                case TaskStatusDTO.STATUS_COLOR_YELLOW:
+                    item.txtSiteCount.setBackground(ctx.getResources().getDrawable(R.drawable.xorange_oval));
+                    item.txtStatusCount.setBackground(ctx.getResources().getDrawable(R.drawable.xorange_oval));
+                    break;
+            }
+        }
         item.txtNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +147,18 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
             @Override
             public void onClick(View v) {
                 listener.onPictureRequested(p);
+            }
+        });
+        item.txtImageCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onGalleryRequested(p);
+            }
+        });
+        item.imgMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onMapRequested(p);
             }
         });
         Statics.setRobotoFontLight(ctx,item.txtDesc);

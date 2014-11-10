@@ -8,15 +8,12 @@ package com.com.boha.monitor.library.util;
  * Created by aubreyM on 2014/05/11.
  */
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
@@ -99,26 +96,12 @@ public class GCMUtil {
 
 
 
+    public static final int SHOW_GOOGLE_PLAY_DIALOG = 1, GOOGLE_PLAY_ERROR = 2, OK = 3;
 
 
-    public static boolean checkPlayServices(Context ctx, Activity act) {
-        Log.e(LOG, "checkPlayServices .................");
-        int resultCode = GooglePlayServicesUtil
-                .isGooglePlayServicesAvailable(ctx);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                GooglePlayServicesUtil.getErrorDialog(resultCode, act,
-                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
-            } else {
-                Log.i(LOG, "This device is not supported.");
-                return false;
-            }
-            return false;
-        }
-        return true;
-    }
 
 
-    static final int PLAY_SERVICES_RESOLUTION_REQUEST = 11;
+
+
 
 }

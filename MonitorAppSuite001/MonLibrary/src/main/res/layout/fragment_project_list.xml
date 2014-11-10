@@ -4,34 +4,26 @@
     xmlns:ripple="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:padding="8dp"
     android:background="@color/grey"
     tools:context="com.com.boha.monitor.library.fragments.ProjectListFragment">
 
     <RelativeLayout
         android:id="@+id/PROJ_LIST_layoutx"
-        android:padding="16dp"
+        android:padding="8dp"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.andexert.library.RippleView
-            android:id="@+id/more"
-            android:layout_width="?android:actionBarSize"
-            android:layout_height="?android:actionBarSize"
+
+        <TextView
+            android:id="@+id/PROJ_LIST_projectCount"
+            android:text="00"
+            style="@style/GreenCircle"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="5dp"
-            ripple:rv_centered="true">
-
-            <TextView
-                android:id="@+id/PROJ_LIST_projectCount"
-                android:text="00"
-                style="@style/GreenCircle"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </com.andexert.library.RippleView>
+            android:layout_marginRight="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/PROJ_LIST_label"
@@ -48,17 +40,17 @@
         android:id="@+id/PROJ_LIST_layoutStatus"
         android:layout_below="@id/PROJ_LIST_layoutx"
         android:background="@color/beige_pale"
-        android:padding="10dp"
+        android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/PROJ_LIST_statusCount"
             android:text="00"
-            style="@style/Title2TextStyleBlue"
+            style="@style/Title1TextStyleBlue"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="24dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -69,7 +61,7 @@
             android:layout_marginTop="5dp"
             android:layout_toLeftOf="@id/PROJ_LIST_statusCount"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="16dp"
             android:text="@string/status_update_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -77,13 +69,14 @@
     </RelativeLayout>
 
     <ListView
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_below="@id/PROJ_LIST_layoutStatus"
         android:id="@android:id/list"
         android:background="@color/white"
         android:dividerHeight="8dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 
     <TextView
         android:id="@android:id/empty"

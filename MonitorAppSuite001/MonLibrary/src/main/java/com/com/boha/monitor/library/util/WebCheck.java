@@ -41,20 +41,25 @@ public class WebCheck {
     		result.setWifiConnected(false);
     	}
 	    //
-	    if (mobileInfo.isAvailable()) {
-	    	Log.w(TAG, "###### MOBILE_NETWORK AVAILABLE on check");
-    		result.setMobileAvailable(true);
-    	}else {
-    		Log.d(TAG, "@@@ MOBILE_NETWORK NOT AVAILABLE on check");
-    		result.setMobileAvailable(false);
-	    }
-	    if (mobileInfo.isConnected()) {	    		
-	    	Log.w(TAG, "###### MOBILE_NETWORK CONNECTED on check");
-    		result.setMobileConnected(true);
-    	}else {
-    		Log.d(TAG, "@@@ MOBILE_NETWORK NOT CONNECTED on check");
-    		result.setMobileConnected(false);
-    	}
+        if (mobileInfo != null) {
+            if (mobileInfo.isAvailable()) {
+                Log.w(TAG, "###### MOBILE_NETWORK AVAILABLE on check");
+                result.setMobileAvailable(true);
+            } else {
+                Log.d(TAG, "@@@ MOBILE_NETWORK NOT AVAILABLE on check");
+                result.setMobileAvailable(false);
+            }
+            if (mobileInfo.isConnected()) {
+                Log.w(TAG, "###### MOBILE_NETWORK CONNECTED on check");
+                result.setMobileConnected(true);
+            } else {
+                Log.d(TAG, "@@@ MOBILE_NETWORK NOT CONNECTED on check");
+                result.setMobileConnected(false);
+            }
+        } else {
+            Log.d(TAG, "@@@ MOBILE_NETWORK NOT AVAILABLE on check");
+            result.setMobileAvailable(false);
+        }
 	    if (!result.isWifiConnected() && !result.isMobileConnected()) {
 	    	result.setNetworkUnavailable(true);
 	    }

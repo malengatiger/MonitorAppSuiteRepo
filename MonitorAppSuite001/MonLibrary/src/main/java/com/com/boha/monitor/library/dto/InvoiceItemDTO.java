@@ -15,19 +15,45 @@ import java.io.Serializable;
 public class InvoiceItemDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer invoiceItemID;
-    private String description;
     private Integer quantity;
-    private Double amount;
+    private Double unitPrice, nettPrice, tax;
     private Integer invoiceID;
-    private InvoiceCodeDTO invoiceCode;
+    private ProjectSiteTaskDTO task;
     private ProjectSiteDTO projectSite;
 
-    public InvoiceItemDTO() {
+    public Double getUnitPrice() {
+        return unitPrice;
     }
 
-    public InvoiceItemDTO(Integer invoiceItemID) {
-        this.invoiceItemID = invoiceItemID;
+    public void setUnitPrice(Double unitPrice) {
+        this.unitPrice = unitPrice;
     }
+
+    public Double getNettPrice() {
+        return nettPrice;
+    }
+
+    public void setNettPrice(Double nettPrice) {
+        this.nettPrice = nettPrice;
+    }
+
+    public Double getTax() {
+        return tax;
+    }
+
+    public void setTax(Double tax) {
+        this.tax = tax;
+    }
+
+    public ProjectSiteTaskDTO getTask() {
+        return task;
+    }
+
+    public void setTask(ProjectSiteTaskDTO task) {
+        this.task = task;
+    }
+
+   
 
     public Integer getInvoiceItemID() {
         return invoiceItemID;
@@ -45,28 +71,12 @@ public class InvoiceItemDTO implements Serializable {
         this.invoiceID = invoiceID;
     }
 
-    public InvoiceCodeDTO getInvoiceCode() {
-        return invoiceCode;
-    }
-
-    public void setInvoiceCode(InvoiceCodeDTO invoiceCode) {
-        this.invoiceCode = invoiceCode;
-    }
-
     public ProjectSiteDTO getProjectSite() {
         return projectSite;
     }
 
     public void setProjectSite(ProjectSiteDTO projectSite) {
         this.projectSite = projectSite;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Integer getQuantity() {
@@ -77,14 +87,7 @@ public class InvoiceItemDTO implements Serializable {
         this.quantity = quantity;
     }
 
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
+   
 
     
 }

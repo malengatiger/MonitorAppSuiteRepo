@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.com.boha.monitor.library.dto;
+
 
 import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 
@@ -17,42 +17,24 @@ import java.util.List;
  * @author aubreyM
  */
 public class ProjectSiteDTO implements Serializable {
-    public static final int ACTION_ADD = 10, ACTION_UPDATE = 11;
+
+    public static final int ACTION_ADD = 1, ACTION_UPDATE = 2, ACTION_DELETE = 3;
     private static final long serialVersionUID = 1L;
-    private Float accuracy;
-    private Integer projectSiteID, statusCount;
+    private Integer projectSiteID;
     private String projectSiteName, standErfNumber, projectName;
     private Double latitude;
     private Double longitude;
     private Integer activeFlag;
+    private Integer statusCount;
     private ProjectSiteTaskStatusDTO lastTaskStatus;
+    private Float accuracy;
+    private BeneficiaryDTO beneficiary;
+    private HappyLetterDTO happyLetter;
     private List<ProjectSiteTaskDTO> projectSiteTaskList = new ArrayList<>();
     private Integer projectID;
-    private List<ProjectSiteStaffDTO> projectSiteStaffList = new ArrayList<>();
-    private List<PhotoUploadDTO> photoUploadList;
+    private List<PhotoUploadDTO> photoUploadList = new ArrayList<>();
 
-    public List<PhotoUploadDTO> getPhotoUploadList() {
-        return photoUploadList;
-    }
-
-    public void setPhotoUploadList(List<PhotoUploadDTO> photoUploadList) {
-        this.photoUploadList = photoUploadList;
-    }
-
-    public ProjectSiteTaskStatusDTO getLastTaskStatus() {
-        return lastTaskStatus;
-    }
-
-    public void setLastTaskStatus(ProjectSiteTaskStatusDTO lastTaskStatus) {
-        this.lastTaskStatus = lastTaskStatus;
-    }
-
-    public Float getAccuracy() {
-        return accuracy;
-    }
-
-    public void setAccuracy(Float accuracy) {
-        this.accuracy = accuracy;
+    public ProjectSiteDTO() {
     }
 
     public Integer getStatusCount() {
@@ -63,6 +45,30 @@ public class ProjectSiteDTO implements Serializable {
         this.statusCount = statusCount;
     }
 
+    public ProjectSiteTaskStatusDTO getLastTaskStatus() {
+        return lastTaskStatus;
+    }
+
+    public void setLastTaskStatus(ProjectSiteTaskStatusDTO lastTaskStatus) {
+        this.lastTaskStatus = lastTaskStatus;
+    }
+
+    public BeneficiaryDTO getBeneficiary() {
+        return beneficiary;
+    }
+
+    public void setBeneficiary(BeneficiaryDTO beneficiary) {
+        this.beneficiary = beneficiary;
+    }
+
+    public HappyLetterDTO getHappyLetter() {
+        return happyLetter;
+    }
+
+    public void setHappyLetter(HappyLetterDTO happyLetter) {
+        this.happyLetter = happyLetter;
+    }
+
     public String getProjectName() {
         return projectName;
     }
@@ -71,12 +77,29 @@ public class ProjectSiteDTO implements Serializable {
         this.projectName = projectName;
     }
 
+    public Float getAccuracy() {
+        return accuracy;
+    }
+
+    public void setAccuracy(Float accuracy) {
+        this.accuracy = accuracy;
+    }
+
+    
     public String getStandErfNumber() {
         return standErfNumber;
     }
 
     public void setStandErfNumber(String standErfNumber) {
         this.standErfNumber = standErfNumber;
+    }
+
+    public List<PhotoUploadDTO> getPhotoUploadList() {
+        return photoUploadList;
+    }
+
+    public void setPhotoUploadList(List<PhotoUploadDTO> photoUploadList) {
+        this.photoUploadList = photoUploadList;
     }
 
     public Integer getProjectSiteID() {
@@ -95,6 +118,7 @@ public class ProjectSiteDTO implements Serializable {
         this.projectSiteName = projectSiteName;
     }
 
+  
     public Double getLatitude() {
         return latitude;
     }
@@ -135,38 +159,5 @@ public class ProjectSiteDTO implements Serializable {
         this.projectID = projectID;
     }
 
-  
-    public List<ProjectSiteStaffDTO> getProjectSiteStaffList() {
-        return projectSiteStaffList;
-    }
 
-    public void setProjectSiteStaffList(List<ProjectSiteStaffDTO> projectSiteStaffList) {
-        this.projectSiteStaffList = projectSiteStaffList;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (projectSiteID != null ? projectSiteID.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProjectSiteDTO)) {
-            return false;
-        }
-        ProjectSiteDTO other = (ProjectSiteDTO) object;
-        if ((this.projectSiteID == null && other.projectSiteID != null) || (this.projectSiteID != null && !this.projectSiteID.equals(other.projectSiteID))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.boha.monitor.data.ProjectSite[ projectSiteID=" + projectSiteID + " ]";
-    }
-    
 }

@@ -6,6 +6,7 @@
 
 package com.com.boha.monitor.library.dto;
 
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -20,8 +21,13 @@ public class SiteCheckPointDTO implements Serializable {
     private Date dateRegistered;
     private InvoiceDTO invoice;
     private ProjectSiteDTO projectSite;
-    private ProjectSiteStaffDTO projectSiteStaff;
 
+    public SiteCheckPointDTO() {
+    }
+
+    public SiteCheckPointDTO(Integer siteCheckPointID) {
+        this.siteCheckPointID = siteCheckPointID;
+    }
 
     public Integer getSiteCheckPointID() {
         return siteCheckPointID;
@@ -64,14 +70,4 @@ public class SiteCheckPointDTO implements Serializable {
         this.projectSite = projectSite;
     }
 
-    public ProjectSiteStaffDTO getProjectSiteStaff() {
-        return projectSiteStaff;
-    }
-
-    public void setProjectSiteStaff(ProjectSiteStaffDTO projectSiteStaff) {
-        this.projectSiteStaff = projectSiteStaff;
-    }
-
-   
-    
 }

@@ -100,7 +100,7 @@ public class ImageGridFragment extends Fragment implements PageFragment {
         txtCount = (TextView) header.findViewById(R.id.HIG_imageCount);
         txtPeriod = (TextView) footer.findViewById(R.id.FIG_period);
         Statics.setRobotoFontLight(ctx,txtTitle);
-        Statics.setRobotoFontLight(ctx,txtSubTitle);
+        Statics.setRobotoFontBold(ctx,txtSubTitle);
 
         gridView = (GridView) view.findViewById(R.id.grid);
         gridView.setVisibility(View.GONE);
@@ -110,14 +110,6 @@ public class ImageGridFragment extends Fragment implements PageFragment {
 
 
         imageAdapter.notifyDataSetChanged();
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mListener.onImageClicked(pathList.get(position), position);
-            }
-        });
-
         if (projectSite != null) {
             txtTitle.setText(projectSite.getProjectName());
             txtSubTitle.setText(projectSite.getProjectSiteName());
@@ -148,7 +140,6 @@ public class ImageGridFragment extends Fragment implements PageFragment {
         }
         staggeredGridView.addHeaderView(header);
         staggeredGridView.addFooterView(footer);
-        //gridView.setAdapter(imageAdapter);
         staggeredGridView.setAdapter(imageAdapter);
         staggeredGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

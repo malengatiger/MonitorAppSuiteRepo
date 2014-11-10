@@ -5,6 +5,7 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +30,8 @@ import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.WebSocketUtil;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import java.util.ArrayList;
 
@@ -75,7 +78,7 @@ public class SignInActivity extends Activity {
     }
 
     private void registerGCMDevice() {
-        boolean ok = GCMUtil.checkPlayServices(getApplicationContext(), this);
+        boolean ok = checkPlayServices();
         if (ok) {
             Log.e(LOG, "############# Starting Google Cloud Messaging registration");
             GCMUtil.startGCMRegistration(getApplicationContext(), new GCMUtil.GCMUtilListener() {
@@ -191,6 +194,23 @@ public class SignInActivity extends Activity {
     }
 
 
+    public boolean checkPlayServices() {
+        Log.w(LOG, "checking GooglePlayServices .................");
+        int resultCode = GooglePlayServicesUtil
+                .isGooglePlayServicesAvailable(ctx);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                // GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                //         PLAY_SERVICES_RESOLUTION_REQUEST).show();
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.google.android.gms")));
+                return false;
+            } else {
+                Log.i(LOG, "This device is not supported.");
+                throw new UnsupportedOperationException("GooglePlayServicesUtil resultCode: " + resultCode);
+            }
+        }
+        return true;
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

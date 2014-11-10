@@ -15,6 +15,7 @@ public class ErrorStoreDTO {
     private String message, origin;
     private long dateOccured;
 
+
     public int getErrorStoreID() {
         return errorStoreID;
     }
