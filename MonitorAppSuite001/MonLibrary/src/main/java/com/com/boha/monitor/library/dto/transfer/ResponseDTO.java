@@ -17,6 +17,7 @@ import com.com.boha.monitor.library.dto.CompanyStaffTypeDTO;
 import com.com.boha.monitor.library.dto.ContractorClaimDTO;
 import com.com.boha.monitor.library.dto.ContractorClaimSiteDTO;
 import com.com.boha.monitor.library.dto.CountryDTO;
+import com.com.boha.monitor.library.dto.EngineerDTO;
 import com.com.boha.monitor.library.dto.ErrorStoreAndroidDTO;
 import com.com.boha.monitor.library.dto.ErrorStoreDTO;
 import com.com.boha.monitor.library.dto.HappyLetterDTO;
@@ -24,6 +25,7 @@ import com.com.boha.monitor.library.dto.InvoiceDTO;
 import com.com.boha.monitor.library.dto.InvoiceItemDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectDiaryRecordDTO;
+import com.com.boha.monitor.library.dto.ProjectEngineerDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
@@ -78,6 +80,8 @@ public class ResponseDTO implements Serializable {
     private List<ContractorClaimSiteDTO> contractorClaimSiteList = new ArrayList<>();
     private List<InvoiceItemDTO> invoiceItemList;
     private List<BankDetailDTO> bankDetailList;
+    private List<EngineerDTO> engineerList;
+    private List<ProjectEngineerDTO> projectEngineerList;
     //
     private CompanyDTO company;
     private CompanyStaffDTO companyStaff;
@@ -88,6 +92,22 @@ public class ResponseDTO implements Serializable {
 
     public void setPhotoUploadList(List<PhotoUploadDTO> photoUploadList) {
         this.photoUploadList = photoUploadList;
+    }
+
+    public List<EngineerDTO> getEngineerList() {
+        return engineerList;
+    }
+
+    public void setEngineerList(List<EngineerDTO> engineerList) {
+        this.engineerList = engineerList;
+    }
+
+    public List<ProjectEngineerDTO> getProjectEngineerList() {
+        return projectEngineerList;
+    }
+
+    public void setProjectEngineerList(List<ProjectEngineerDTO> projectEngineerList) {
+        this.projectEngineerList = projectEngineerList;
     }
 
     public PhotoCache getPhotoCache() {

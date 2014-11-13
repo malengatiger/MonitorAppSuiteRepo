@@ -170,7 +170,7 @@ public class ProjectListFragment extends Fragment implements AbsListView.OnItemC
             projectList = new ArrayList<>();
         }
         projectList.add(0,project);
-        //Collections.sort(clientList);
+        //Collections.sort(engineerList);
         adapter.notifyDataSetChanged();
         txtProjectCount.setText("" + projectList.size());
         try {

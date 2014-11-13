@@ -231,5 +231,7 @@
     <string name="title_activity_status_report">StatusReportActivity</string>
     <string name="task_seq_no">Task Sequence Number</string>
     <string name="tasks">Site Tasks</string>
+    <string name="engineer_list">Engineer List</string>
+    <string name="no_engineers">There are no engineers on record. Please add engineers</string>
 
 </resources>

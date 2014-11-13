@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/EI_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/EI_number"
+            style="@style/GreyCircle"
+            android:text="00"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/EI_name"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/EI_number"
+            android:layout_centerVertical="true"
+            style="@style/Title3TextStyleBlack"
+            android:text="Engineer Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/EI_bottom"
+        android:layout_below="@id/EI_top"
+        android:layout_marginLeft="64dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/EI_cellphone"
+            android:layout_marginLeft="16dp"
+            style="@style/TextStyleBlue"
+            android:text="@string/cellphone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/EI_email"
+            android:layout_alignLeft="@id/EI_cellphone"
+            android:layout_below="@id/EI_cellphone"
+            style="@style/Title3TextStyleBlack"
+            android:text="@string/email"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+</RelativeLayout>

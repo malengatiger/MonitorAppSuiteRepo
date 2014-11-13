@@ -16,17 +16,23 @@ import java.util.List;
  */
 public class ContractorClaimDTO implements Serializable {
     private static final long serialVersionUID = 1L;
-    private Integer contractorClaimID;
-    private String claimNumber;
+    private Integer contractorClaimID, projectEngineerID,
+            engineerID, projectID, taskID;
+    private String claimNumber, projectName, engineerName, taskName;
     private Date claimDate;
     private List<ContractorClaimSiteDTO> contractorClaimSiteList;
-    private EngineerDTO engineer;
-    private ProjectDTO project;
-    private TaskDTO task;
+
 
     public ContractorClaimDTO() {
     }
 
+    public Integer getProjectEngineerID() {
+        return projectEngineerID;
+    }
+
+    public void setProjectEngineerID(Integer projectEngineerID) {
+        this.projectEngineerID = projectEngineerID;
+    }
 
     public Integer getContractorClaimID() {
         return contractorClaimID;
@@ -60,30 +66,54 @@ public class ContractorClaimDTO implements Serializable {
         this.contractorClaimSiteList = contractorClaimSiteList;
     }
 
-    public EngineerDTO getEngineer() {
-        return engineer;
+    public Integer getEngineerID() {
+        return engineerID;
     }
 
-    public void setEngineer(EngineerDTO engineer) {
-        this.engineer = engineer;
+    public void setEngineerID(Integer engineerID) {
+        this.engineerID = engineerID;
     }
 
-    public ProjectDTO getProject() {
-        return project;
+    public Integer getProjectID() {
+        return projectID;
     }
 
-    public void setProject(ProjectDTO project) {
-        this.project = project;
+    public void setProjectID(Integer projectID) {
+        this.projectID = projectID;
     }
 
-    public TaskDTO getTask() {
-        return task;
+    public Integer getTaskID() {
+        return taskID;
     }
 
-    public void setTask(TaskDTO task) {
-        this.task = task;
+    public void setTaskID(Integer taskID) {
+        this.taskID = taskID;
     }
-  
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getEngineerName() {
+        return engineerName;
+    }
+
+    public void setEngineerName(String engineerName) {
+        this.engineerName = engineerName;
+    }
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

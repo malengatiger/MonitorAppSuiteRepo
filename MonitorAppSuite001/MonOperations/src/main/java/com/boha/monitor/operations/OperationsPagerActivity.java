@@ -28,6 +28,7 @@ import com.com.boha.monitor.library.dialogs.ProjectDialog;
 import com.com.boha.monitor.library.dto.ClientDTO;
 import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
+import com.com.boha.monitor.library.dto.EngineerDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectStatusTypeDTO;
 import com.com.boha.monitor.library.dto.TaskDTO;
@@ -36,6 +37,7 @@ import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.fragments.ClientListFragment;
+import com.com.boha.monitor.library.fragments.EngineerListFragment;
 import com.com.boha.monitor.library.fragments.PageFragment;
 import com.com.boha.monitor.library.fragments.ProjectListFragment;
 import com.com.boha.monitor.library.fragments.ProjectStatusTypeListFragment;
@@ -59,7 +61,7 @@ public class OperationsPagerActivity extends FragmentActivity
         StaffListFragment.CompanyStaffListListener,
         TaskStatusListFragment.TaskStatusListListener,
         ProjectStatusTypeListFragment.ProjectStatusTypeListListener,
-        ClientListFragment.ClientListListener, TaskListFragment.TaskListListener{
+        ClientListFragment.ClientListListener, TaskListFragment.TaskListListener, EngineerListFragment.EngineerListListener{
 
     private DrawerLayout mDrawerLayout;
     private DrawerAdapter mDrawerAdapter;
@@ -402,6 +404,8 @@ public class OperationsPagerActivity extends FragmentActivity
         clientListFragment.setArguments(data1);
 
         taskListFragment = new TaskListFragment();
+        engineerListFragment = new EngineerListFragment();
+        engineerListFragment.setArguments(data1);
 
 
         pageFragmentList.add(projectListFragment);
@@ -410,6 +414,7 @@ public class OperationsPagerActivity extends FragmentActivity
         pageFragmentList.add(taskStatusListFragment);
         pageFragmentList.add(projectStatusTypeListFragment);
         pageFragmentList.add(taskListFragment);
+        pageFragmentList.add(engineerListFragment);
 
         initializeAdapter();
 
@@ -441,6 +446,7 @@ public class OperationsPagerActivity extends FragmentActivity
     ProjectStatusTypeListFragment projectStatusTypeListFragment;
     ClientListFragment clientListFragment;
     TaskListFragment taskListFragment;
+    EngineerListFragment engineerListFragment;
     PagerAdapter adapter;
     ViewPager mPager;
     Context ctx;
@@ -632,6 +638,16 @@ public class OperationsPagerActivity extends FragmentActivity
         //when updated - taskListFragment.updateSequence
     }
 
+    @Override
+    public void onEngineerClicked(EngineerDTO engineer) {
+
+    }
+
+    @Override
+    public void onEngineerEditRequested(EngineerDTO engineer) {
+
+    }
+
     private class PagerAdapter extends FragmentStatePagerAdapter {
 
         public PagerAdapter(FragmentManager fm) {
@@ -653,28 +669,27 @@ public class OperationsPagerActivity extends FragmentActivity
         public CharSequence getPageTitle(int position) {
             String title = "Title";
 
-            switch (position) {
-                case 0:
-                    title = ctx.getResources().getString(R.string.company_projects);
-                    break;
-                case 1:
-                    title = ctx.getResources().getString(R.string.company_staff);
-                    break;
-                case 2:
-                    title = ctx.getResources().getString(R.string.client_list);
-                    break;
-                case 3:
-                    title = ctx.getResources().getString(R.string.task_status);
-                    break;
-                case 4:
-                    title = ctx.getResources().getString(R.string.project_status);
-                    break;
-
-                case 5:
-                    title = ctx.getString(R.string.tasks);
-                default:
-                    break;
+            PageFragment pf = pageFragmentList.get(position);
+            if (pf instanceof ProjectListFragment) {
+                title = ctx.getString(R.string.company_projects);
             }
+            if (pf instanceof StaffListFragment) {
+                title = ctx.getString(R.string.company_staff);
+            }
+            if (pf instanceof ClientListFragment) {
+                title = ctx.getString(R.string.client_list);
+            }
+            if (pf instanceof TaskStatusListFragment) {
+                title = ctx.getString(R.string.task_status);
+            }
+            if (pf instanceof ProjectStatusTypeListFragment) {
+                title = ctx.getString(R.string.project_status);
+            }
+            if (pf instanceof TaskStatusListFragment) {
+                title = ctx.getString(R.string.tasks);
+            }
+
+
             return title;
         }
     }
