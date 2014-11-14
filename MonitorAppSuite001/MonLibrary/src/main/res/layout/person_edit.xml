@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     style="@style/Title3TextStyleGrey"
                     android:layout_marginLeft="5dp"
-                    android:text="@string/staff"/>
+                    android:text="Staff or Beneficiary"/>
         </RelativeLayout>
 
         <EditText
@@ -96,11 +96,20 @@
                 android:layout_marginLeft="5dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"/>
+        <EditText
+            android:id="@+id/ED_PSN_idNumber"
+            android:layout_width="match_parent"
+            android:layout_below="@id/ED_PSN_email"
+            android:inputType="number"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/id_number"/>
 
         <CheckBox
                 android:id="@+id/ED_PSN_chkInvite"
                 android:layout_width="match_parent"
-                android:layout_below="@id/ED_PSN_email"
+                android:layout_below="@id/ED_PSN_idNumber"
                 android:layout_marginTop="10dp" android:checked="true"
                 android:text="@string/subject"
                 android:layout_height="wrap_content"/>

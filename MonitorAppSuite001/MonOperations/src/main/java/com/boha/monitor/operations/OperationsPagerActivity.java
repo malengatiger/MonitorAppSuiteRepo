@@ -25,6 +25,7 @@ import com.com.boha.monitor.library.dialogs.ClientDialog;
 import com.com.boha.monitor.library.dialogs.EditDialog;
 import com.com.boha.monitor.library.dialogs.PersonDialog;
 import com.com.boha.monitor.library.dialogs.ProjectDialog;
+import com.com.boha.monitor.library.dto.BeneficiaryDTO;
 import com.com.boha.monitor.library.dto.ClientDTO;
 import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
@@ -36,6 +37,7 @@ import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
+import com.com.boha.monitor.library.fragments.BeneficiaryListFragment;
 import com.com.boha.monitor.library.fragments.ClientListFragment;
 import com.com.boha.monitor.library.fragments.EngineerListFragment;
 import com.com.boha.monitor.library.fragments.PageFragment;
@@ -61,7 +63,8 @@ public class OperationsPagerActivity extends FragmentActivity
         StaffListFragment.CompanyStaffListListener,
         TaskStatusListFragment.TaskStatusListListener,
         ProjectStatusTypeListFragment.ProjectStatusTypeListListener,
-        ClientListFragment.ClientListListener, TaskListFragment.TaskListListener, EngineerListFragment.EngineerListListener{
+        ClientListFragment.ClientListListener, TaskListFragment.TaskListListener,
+        EngineerListFragment.EngineerListListener, BeneficiaryListFragment.BeneficiaryListListener{
 
     private DrawerLayout mDrawerLayout;
     private DrawerAdapter mDrawerAdapter;
@@ -407,6 +410,9 @@ public class OperationsPagerActivity extends FragmentActivity
         engineerListFragment = new EngineerListFragment();
         engineerListFragment.setArguments(data1);
 
+        beneficiaryListFragment = new BeneficiaryListFragment();
+        beneficiaryListFragment.setArguments(data1);
+
 
         pageFragmentList.add(projectListFragment);
         pageFragmentList.add(staffListFragment);
@@ -415,6 +421,7 @@ public class OperationsPagerActivity extends FragmentActivity
         pageFragmentList.add(projectStatusTypeListFragment);
         pageFragmentList.add(taskListFragment);
         pageFragmentList.add(engineerListFragment);
+        pageFragmentList.add(beneficiaryListFragment);
 
         initializeAdapter();
 
@@ -447,6 +454,7 @@ public class OperationsPagerActivity extends FragmentActivity
     ClientListFragment clientListFragment;
     TaskListFragment taskListFragment;
     EngineerListFragment engineerListFragment;
+    BeneficiaryListFragment beneficiaryListFragment;
     PagerAdapter adapter;
     ViewPager mPager;
     Context ctx;
@@ -648,6 +656,16 @@ public class OperationsPagerActivity extends FragmentActivity
 
     }
 
+    @Override
+    public void onBeneficiaryClicked(BeneficiaryDTO beneficiary) {
+
+    }
+
+    @Override
+    public void onBeneficiaryEditRequested(BeneficiaryDTO beneficiary) {
+
+    }
+
     private class PagerAdapter extends FragmentStatePagerAdapter {
 
         public PagerAdapter(FragmentManager fm) {
@@ -685,8 +703,14 @@ public class OperationsPagerActivity extends FragmentActivity
             if (pf instanceof ProjectStatusTypeListFragment) {
                 title = ctx.getString(R.string.project_status);
             }
-            if (pf instanceof TaskStatusListFragment) {
+            if (pf instanceof TaskListFragment) {
                 title = ctx.getString(R.string.tasks);
+            }
+            if (pf instanceof BeneficiaryListFragment) {
+                title = ctx.getString(R.string.bennie_list);
+            }
+            if (pf instanceof EngineerListFragment) {
+                title = ctx.getString(R.string.engineer_list);
             }
 
 

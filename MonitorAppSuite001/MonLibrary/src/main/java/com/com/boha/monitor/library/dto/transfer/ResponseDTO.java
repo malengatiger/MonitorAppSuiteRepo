@@ -78,10 +78,10 @@ public class ResponseDTO implements Serializable {
     private List<CountryDTO> countryList = new ArrayList<>();
     private List<ContractorClaimDTO> contractorClaimList = new ArrayList<>();
     private List<ContractorClaimSiteDTO> contractorClaimSiteList = new ArrayList<>();
-    private List<InvoiceItemDTO> invoiceItemList;
-    private List<BankDetailDTO> bankDetailList;
-    private List<EngineerDTO> engineerList;
-    private List<ProjectEngineerDTO> projectEngineerList;
+    private List<InvoiceItemDTO> invoiceItemList = new ArrayList<>();;
+    private List<BankDetailDTO> bankDetailList = new ArrayList<>();;
+    private List<EngineerDTO> engineerList = new ArrayList<>();;
+    private List<ProjectEngineerDTO> projectEngineerList = new ArrayList<>();;
     //
     private CompanyDTO company;
     private CompanyStaffDTO companyStaff;

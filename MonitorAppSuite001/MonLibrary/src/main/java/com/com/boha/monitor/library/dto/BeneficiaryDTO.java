@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author aubreyM
  */
-public class BeneficiaryDTO implements Serializable {
+public class BeneficiaryDTO implements Serializable, Comparable<BeneficiaryDTO> {
 
     private static final long serialVersionUID = 1L;
     private Integer beneficiaryID;
@@ -27,9 +27,8 @@ public class BeneficiaryDTO implements Serializable {
     private CompanyDTO company;
     private TownshipDTO township;
 
-
-    public BeneficiaryDTO(Integer beneficiaryID) {
-        this.beneficiaryID = beneficiaryID;
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
     public Integer getBeneficiaryID() {
@@ -145,4 +144,20 @@ public class BeneficiaryDTO implements Serializable {
         this.township = township;
     }
 
+    /**
+     * Compares this object to the specified object to determine their relative
+     * order.
+     *
+     * @param another the object to compare to this instance.
+     * @return a negative integer if this instance is less than {@code another};
+     * a positive integer if this instance is greater than
+     * {@code another}; 0 if this instance has the same order as
+     * {@code another}.
+     * @throws ClassCastException if {@code another} cannot be converted into something
+     *                            comparable to {@code this} instance.
+     */
+    @Override
+    public int compareTo(BeneficiaryDTO another) {
+        return this.getFullName().compareTo(another.getFullName());
+    }
 }

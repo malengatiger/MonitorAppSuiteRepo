@@ -12,14 +12,15 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
-import com.com.boha.monitor.library.adapters.EngineerAdapter;
-import com.com.boha.monitor.library.dto.EngineerDTO;
+import com.com.boha.monitor.library.adapters.BeneficiaryAdapter;
+import com.com.boha.monitor.library.dto.BeneficiaryDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,11 +32,11 @@ import java.util.List;
  * Activities containing this fragment MUST implement the ProjectSiteListListener
  * interface.
  */
-public class EngineerListFragment extends Fragment implements AbsListView.OnItemClickListener, PageFragment {
+public class BeneficiaryListFragment extends Fragment implements AbsListView.OnItemClickListener, PageFragment {
 
-    private EngineerListListener mListener;
+    private BeneficiaryListListener mListener;
     private AbsListView mListView;
-    public EngineerListFragment() {
+    public BeneficiaryListFragment() {
     }
 
     @Override
@@ -49,37 +50,26 @@ public class EngineerListFragment extends Fragment implements AbsListView.OnItem
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_engineer_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_beneficiary_list, container, false);
         ctx = getActivity();
         Bundle b = getArguments();
-        txtCount = (TextView)view.findViewById(R.id.EC_count);
         if (b != null) {
             ResponseDTO r = (ResponseDTO) b.getSerializable("response");
-            engineerList = r.getEngineerList();
-            if (engineerList == null || engineerList.isEmpty()) {
-                setEmptyText(ctx.getString(R.string.no_engineers));
-                txtCount.setText("0");
-                return view;
-            } else {
-                txtCount.setText("" + engineerList.size());
-            }
+            beneficiaryList = r.getCompany().getBeneficiaryList();
         }
 
-
-        txtName = (TextView)view.findViewById(R.id.EC_title);
+        txtCount = (TextView)view.findViewById(R.id.BC_count);
+        txtName = (TextView)view.findViewById(R.id.BC_title);
 
         Statics.setRobotoFontBold(ctx, txtName);
-        if (engineerList != null) {
-            txtCount.setText("" + engineerList.size());
-        } else {
-            txtCount.setText("0");
-        }
+        txtCount.setText("" + beneficiaryList.size());
         // Set the adapter
-        mListView = (AbsListView) view.findViewById(R.id.EC_list);
-        adapter = new EngineerAdapter(ctx,R.layout.engineer_item, engineerList, new EngineerAdapter.EngineerAdapterListener() {
+        mListView = (AbsListView) view.findViewById(R.id.BC_list);
+        adapter = new BeneficiaryAdapter(ctx, R.layout.beneficiary_item,
+                beneficiaryList, new BeneficiaryAdapter.BeneficiaryAdapterListener() {
             @Override
-            public void onEngineerEditRequested(EngineerDTO client) {
-
+            public void onBeneficiaryEditRequested(BeneficiaryDTO client) {
+                
             }
         });
         mListView.setAdapter(adapter);
@@ -98,10 +88,10 @@ public class EngineerListFragment extends Fragment implements AbsListView.OnItem
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (EngineerListListener) activity;
+            mListener = (BeneficiaryListListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException("Host " + activity.getLocalClassName()
-                    + " must implement EngineerListListener");
+                    + " must implement BeneficiaryListListener");
         }
     }
 
@@ -115,8 +105,8 @@ public class EngineerListFragment extends Fragment implements AbsListView.OnItem
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (null != mListener) {
-            engineer = engineerList.get(position);
-            mListener.onEngineerClicked(engineer);
+            beneficiary = beneficiaryList.get(position);
+            mListener.onBeneficiaryClicked(beneficiary);
         }
     }
 
@@ -126,11 +116,11 @@ public class EngineerListFragment extends Fragment implements AbsListView.OnItem
      * to supply the text it should use.
      */
     public void setEmptyText(CharSequence emptyText) {
-//        View emptyView = mListView.getEmptyView();
-//
-//        if (emptyText instanceof TextView) {
-//            ((TextView) emptyView).setText(emptyText);
-//        }
+        View emptyView = mListView.getEmptyView();
+
+        if (emptyText instanceof TextView) {
+            ((TextView) emptyView).setText(emptyText);
+        }
     }
 
     @Override
@@ -139,14 +129,14 @@ public class EngineerListFragment extends Fragment implements AbsListView.OnItem
 
     }
 
-    public void addEngineer(EngineerDTO engineer) {
-        if (engineerList == null) {
-            engineerList = new ArrayList<>();
+    public void addBeneficiary(BeneficiaryDTO beneficiary) {
+        if (beneficiaryList == null) {
+            beneficiaryList = new ArrayList<>();
         }
-        engineerList.add(engineer);
-        //Collections.sort(engineerList);
+        beneficiaryList.add(beneficiary);
+        Collections.sort(beneficiaryList);
         adapter.notifyDataSetChanged();
-        txtCount.setText("" + engineerList.size());
+        txtCount.setText("" + beneficiaryList.size());
         try {
             Thread.sleep(1000);
             Util.animateRotationY(txtCount,500);
@@ -161,12 +151,12 @@ public class EngineerListFragment extends Fragment implements AbsListView.OnItem
      * to the activity and potentially other fragments contained in that
      * activity.
      */
-    public interface EngineerListListener {
-        public void onEngineerClicked(EngineerDTO engineer);
-        public void onEngineerEditRequested(EngineerDTO engineer);
+    public interface BeneficiaryListListener {
+        public void onBeneficiaryClicked(BeneficiaryDTO beneficiary);
+        public void onBeneficiaryEditRequested(BeneficiaryDTO beneficiary);
     }
 
-    EngineerDTO engineer;
-    List<EngineerDTO> engineerList;
-    EngineerAdapter adapter;
+    BeneficiaryDTO beneficiary;
+    List<BeneficiaryDTO> beneficiaryList;
+    BeneficiaryAdapter adapter;
 }
