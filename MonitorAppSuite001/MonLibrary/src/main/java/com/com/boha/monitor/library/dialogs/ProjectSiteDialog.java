@@ -1,13 +1,16 @@
 package com.com.boha.monitor.library.dialogs;
 
+import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -35,9 +38,10 @@ public class ProjectSiteDialog extends DialogFragment {
     TextView txtProject, txtNumber;
     EditText editProjectSiteName, editErf;
     ProgressBar progressBar;
-    Button btnCancel, btnSave, btnDelete;
+    Button btnCancel, btnSave;
     ProjectSiteDTO projectSite;
     ProjectDTO project;
+    ImageView imgDelete;
     View view;
     int action;
     static final String LOG = ProjectSiteDialog.class.getSimpleName();
@@ -51,22 +55,23 @@ public class ProjectSiteDialog extends DialogFragment {
         editProjectSiteName = (EditText) view.findViewById(R.id.PSD_editName);
         editErf = (EditText) view.findViewById(R.id.PSD_editStand);
 
-        txtNumber = (TextView)view.findViewById(R.id.PSD_number);
-        if (project.getProjectSiteList() != null) {
-            txtNumber.setText("" + project.getProjectSiteList().size());
-        } else {
-            txtNumber.setText("0");
-        }
+//        txtNumber = (TextView)view.findViewById(R.id.PSD_number);
+//        if (project.getProjectSiteList() != null) {
+//            txtNumber.setText("" + project.getProjectSiteList().size());
+//        } else {
+//            txtNumber.setText("0");
+//        }
         txtProject = (TextView)view.findViewById(R.id.PSD_project);
         txtProject.setText(project.getProjectName());
 
         progressBar = (ProgressBar) view.findViewById(R.id.PSD_progress);
         progressBar.setVisibility(View.GONE);
+        imgDelete = (ImageView)view.findViewById(R.id.PSD_imgDelete);
+        imgDelete.setVisibility(View.GONE);
 
 
         btnCancel = (Button) view.findViewById(R.id.PSD_btnCancel);
         btnSave = (Button) view.findViewById(R.id.PSD_btnSave);
-        btnDelete= (Button) view.findViewById(R.id.PSD_btnDelete);
 
         getDialog().setTitle(context.getResources().getString(R.string.app_name));
 
@@ -95,8 +100,27 @@ public class ProjectSiteDialog extends DialogFragment {
         });
         if (action == ProjectSiteDTO.ACTION_UPDATE) {
             fillForm();
-        } else {
-            btnDelete.setVisibility(View.GONE);
+            imgDelete.setVisibility(View.VISIBLE);
+            imgDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder diag = new AlertDialog.Builder(getActivity());
+                    diag.setTitle(context.getString(R.string.delete_confirm))
+                            .setMessage(context.getString(R.string.delete_question))
+                            .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    deleteProjectSite();
+                                }
+                            })
+                            .setNegativeButton(context.getString(R.string.no),new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            }).show();
+                }
+            });
         }
         return view;
     }
@@ -160,6 +184,9 @@ public class ProjectSiteDialog extends DialogFragment {
     }
 
     private void updateSite() {
+
+    }
+    private void deleteProjectSite() {
 
     }
 

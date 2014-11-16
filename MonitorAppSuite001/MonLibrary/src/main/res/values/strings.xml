@@ -4,14 +4,13 @@
     <string-array name="action_items">
         <item>Projects</item>
         <item>Staff</item>
-        <item>Manage Data</item>
-        <item>Site Reports</item>
+        <item>Clients</item>
+        <item>Task Status</item>
+        <item>Project Status</item>
+        <item>Tasks</item>
+        <item>Engineers</item>
         <item>Beneficiaries</item>
-        <item>Project Maps</item>
-        <item>Invoices</item>
-        <item>Happy Letters</item>
-        <item>Company Clients</item>
-        <item>Status Notifications</item>
+
     </string-array>
 
     <string name="pay_mobile">Payment via Mobile</string>
@@ -68,6 +67,7 @@
     <string name="delete_task_text">Do you really want to delete this site task? </string>
     <string name="select_client">Select Client</string>
     <string name="select_staff_type">Please select Staff Type</string>
+    <string name="select_app_type">Please select App</string>
     <string name="select_task">Select Task</string>
     <string name="pages">Page</string>
     <string name="firstname">First Name</string>
@@ -87,7 +87,7 @@
     <string name="click_link">Click or tap the link below to navigate to Google Play</string>
     <string name="enjoy">Enjoy the game!</string>
     <string name="select_players_imp">Please select Players for import</string>
-    <string name="subject">Invitation to Project Monitor</string>
+    <string name="subject">Invitation to Project Monitor Apps</string>
     <string name="off">Normal</string>
     <string name="message_from">Message from</string>
     <string name="on">Satellite</string>
@@ -151,7 +151,7 @@
     <string name="closed">Closed</string>
     <string name="project_site">Project Site</string>
     <string name="project_site_details">Project Site Details</string>
-    <string name="status_update_week">Task Status Updates this Week</string>
+    <string name="status_update_week">Status Updates last 7 days</string>
     <string name="status_updates">Status Updates</string>
     <string name="take_pic">Take Picture</string>
     <string name="tourn_pics">Pictures</string>
@@ -204,7 +204,9 @@
     <string name="crash_dialog_ok_toast">Thank you !</string>
     <string name="enter_comp_name">Enter Company Name</string>
     <string name="enter_firstname">Enter First Name</string>
+    <string name="enter_engineer_name">Enter Engineer Name</string>
     <string name="enter_lastname">Enter Surname</string>
+    <string name="enter_id">Enter ID Number</string>
     <string name="enter_desc">Enter Description</string>
     <string name="enter_cell">Enter Cellphone Number</string>
     <string name="enter_name">Enter Name</string>
@@ -229,11 +231,20 @@
     <string name="title_activity_task_assignment">TaskAssignmentActivity</string>
     <string name="title_activity_monitor_map">MonitorMapActivity</string>
     <string name="title_activity_status_report">StatusReportActivity</string>
-    <string name="task_seq_no">Task Sequence Number</string>
-    <string name="tasks">Site Tasks</string>
+    <string name="task_seq_no">Sequence Number</string>
+    <string name="tasks">Tasks</string>
     <string name="engineer_list">Engineer List</string>
     <string name="no_engineers">There are no engineers on record. Please add engineers</string>
     <string name="id_number">ID Number</string>
     <string name="bennie_list">Beneficiary List</string>
+    <string name="delete_question">Do you really want to delete?</string>
+    <string name="delete_confirm">Delete Confirmation</string>
+    <string name="beneficiary">Beneficiary</string>
+    <string name="task">Engineer</string>
+    <string name="task_name">Task Name/Description</string>
+    <string name="engineer">Engineer</string>
+    <string name="select_seq_no">Select Task Sequence Number</string>
+    <string name="happy_letter">Happy Letter</string>
+    <string name="select_project">Select Project</string>
 
 </resources>

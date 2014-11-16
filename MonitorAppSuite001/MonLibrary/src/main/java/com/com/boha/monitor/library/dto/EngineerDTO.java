@@ -21,6 +21,10 @@ public class EngineerDTO implements Serializable {
     private String email;
     private String cellphone;
     private List<ContractorClaimDTO> contractorClaimList;
+    public static final int
+            ACTION_ADD = 411,
+            ACTION_UPDATE = 412,
+            ACTION_DELETE = 413;
 
     public EngineerDTO() {
     }

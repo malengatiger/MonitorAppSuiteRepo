@@ -29,6 +29,7 @@ public class ProjectDTO implements Serializable {
     private Integer companyID, clientID;
     private List<ProjectSiteDTO> projectSiteList = new ArrayList<>();
     private List<PhotoUploadDTO> photoUploadList = new ArrayList<>();
+    private List<BeneficiaryDTO> beneficiaryList = new ArrayList<>();
 
     public ProjectDTO() {
     }
@@ -37,6 +38,13 @@ public class ProjectDTO implements Serializable {
         this.projectID = projectID;
     }
 
+    public List<BeneficiaryDTO> getBeneficiaryList() {
+        return beneficiaryList;
+    }
+
+    public void setBeneficiaryList(List<BeneficiaryDTO> beneficiaryList) {
+        this.beneficiaryList = beneficiaryList;
+    }
 
     public String getClientName() {
         return clientName;

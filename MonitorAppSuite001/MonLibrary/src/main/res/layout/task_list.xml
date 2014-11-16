@@ -8,16 +8,17 @@
 
     <RelativeLayout
         android:id="@+id/TL_top"
-        android:background="@color/white"
-        android:padding="8dp"
+        android:background="@color/beige_pale"
+        android:padding="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/TL_title"
             style="@style/Title2TextStyleGrey"
-            android:text="@string/site_tasks"
+            android:text="@string/tasks"
+            android:layout_marginLeft="8dp"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -103,7 +104,7 @@
         android:text="33"
         android:layout_alignParentRight="true"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

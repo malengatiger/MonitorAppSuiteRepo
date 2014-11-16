@@ -1,84 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:background="@color/grey"
-                android:padding="0dp"
-                android:visibility="visible"
-                android:id="@+id/CE_layout0"
-                android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:background="@color/grey"
+    android:padding="0dp"
+    android:visibility="visible"
+    android:id="@+id/CE_layout0"
+    android:layout_height="wrap_content">
 
     <RelativeLayout
-            android:id="@+id/CE_mainLayout"
-            android:layout_width="match_parent"
-            android:background="@drawable/xwhite_rounded_corners"
-            android:layout_height="wrap_content">
+        android:id="@+id/CE_mainLayout"
+        android:layout_width="match_parent"
+        android:background="@drawable/xwhite_rounded_corners"
+        android:layout_height="wrap_content">
 
 
-
-        <ProgressBar
-                android:id="@+id/CE_progress"
-                android:layout_alignParentTop="true"
-                android:layout_width="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                style="@android:style/Widget.ProgressBar.Small"
-                android:layout_height="wrap_content"/>
-
+        <ImageView
+            android:id="@+id/CE_imgDelete"
+            android:src="@android:drawable/ic_delete"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <TextView
-                android:id="@+id/CE_groupName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                style="@style/Title3TextStyleBlack"
-                android:layout_alignParentLeft="true"
-                android:inputType="textCapWords"
-                android:text="@string/company_name"/>
-
+            android:id="@+id/CE_title"
+            android:text="Company Client"
+            style="@style/Title2TextStyleGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
 
         <EditText
-                android:id="@+id/CE_clientName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/CE_groupName"
-                android:inputType="textCapWords"
-                android:layout_marginLeft="5dp"
-                android:hint="@string/client_name"/>
+            android:id="@+id/CE_clientName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:inputType="textCapWords"
+            android:layout_below="@id/CE_title"
+            android:textStyle="bold"
+            android:layout_marginLeft="5dp"
+            android:hint="@string/client_name" />
 
         <EditText
-                android:id="@+id/CE_address"
-                android:layout_width="match_parent"
-                android:layout_below="@id/CE_clientName"
-                android:inputType="textCapWords"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/address"/>
+            android:id="@+id/CE_address"
+            android:layout_width="match_parent"
+            android:layout_below="@id/CE_clientName"
+            android:inputType="textCapWords"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/address" />
 
         <EditText
-                android:id="@+id/CE_cellphone"
-                android:layout_width="wrap_content"
-                android:layout_below="@id/CE_address"
-                android:inputType="phone"
-                android:layout_marginTop="5dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:hint="@string/cellphone"/>
+            android:id="@+id/CE_cellphone"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/CE_address"
+            android:inputType="phone"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:hint="@string/cellphone" />
 
 
         <EditText
-                android:id="@+id/CE_email"
-                android:layout_width="match_parent"
-                android:layout_below="@id/CE_cellphone"
-                android:inputType="textEmailAddress"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/email"/>
+            android:id="@+id/CE_email"
+            android:layout_width="match_parent"
+            android:layout_below="@id/CE_cellphone"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/email" />
+
         <EditText
             android:id="@+id/CE_postCode"
             android:layout_width="wrap_content"
@@ -87,43 +80,45 @@
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
             android:layout_height="wrap_content"
-            android:hint="@string/postcode"/>
+            android:hint="@string/postcode" />
 
-        <LinearLayout
+        <ProgressBar
+            android:id="@+id/CE_progress"
+            android:layout_alignParentTop="true"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="64dp"
+            android:layout_marginRight="8dp"
+            style="@android:style/Widget.ProgressBar.Small"
+            android:layout_height="wrap_content" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_below="@id/CE_postCode"
+            android:layout_marginTop="20dp"
+            android:padding="8dp"
+            android:layout_height="wrap_content">
+
+
+            <Button
+                android:id="@+id/CE_btnCancel"
+                style="@style/ButtonCancel"
+                android:text="@string/cancel"
                 android:layout_width="match_parent"
-                android:layout_below="@id/CE_postCode"
-                android:layout_marginTop="20dp"
-                android:padding="5dp"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content" />
 
             <Button
-                    android:id="@+id/CE_btnCancel"
-                    style="@style/ButtonCancel"
-                    android:text="@string/cancel"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <Button
-                    android:id="@+id/CE_btnSave"
-                    style="@style/ButtonSave"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:text="@string/save"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            <Button
-                android:id="@+id/CE_btnDelete"
+                android:id="@+id/CE_btnSave"
                 style="@style/ButtonRed"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:text="@string/delete"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:text="@string/save"
+                android:layout_below="@id/CE_btnCancel"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        </LinearLayout>
+
+        </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>

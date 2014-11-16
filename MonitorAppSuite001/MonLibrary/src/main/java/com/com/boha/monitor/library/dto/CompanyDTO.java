@@ -33,6 +33,7 @@ public class CompanyDTO implements Serializable {
     private List<GcmDeviceDTO> gcmDeviceList = new ArrayList<>();
     private List<ContractorClaimDTO> contractorClaimList = new ArrayList<>();
     private List<CompanyStaffTypeDTO> companyStaffTypeList = new ArrayList<>();
+    private List<EngineerDTO> engineerList = new ArrayList<EngineerDTO>();
     
 
     public CompanyDTO() {
@@ -62,6 +63,14 @@ public class CompanyDTO implements Serializable {
 
     public void setContractorClaimList(List<ContractorClaimDTO> contractorClaimList) {
         this.contractorClaimList = contractorClaimList;
+    }
+
+    public List<EngineerDTO> getEngineerList() {
+        return engineerList;
+    }
+
+    public void setEngineerList(List<EngineerDTO> engineerList) {
+        this.engineerList = engineerList;
     }
 
     public Integer getCountryID() {

@@ -24,6 +24,7 @@ import com.com.boha.monitor.library.dto.TaskDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.CacheUtil;
+import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 
@@ -85,6 +86,8 @@ public class TaskListFragment extends Fragment implements PageFragment {
         editTaskName = (EditText)view.findViewById(R.id.TL_editName);
         numberPicker = (NumberPicker)view.findViewById(R.id.TL_numberPicker);
         editLayout.setVisibility(View.GONE);
+        TextView title = (TextView) view.findViewById(R.id.TL_title);
+        Statics.setRobotoFontLight(ctx,title);
     }
     private void setList() {
         mListView = (AbsListView) view.findViewById(R.id.TL_list);

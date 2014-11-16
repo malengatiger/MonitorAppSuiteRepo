@@ -15,7 +15,7 @@ import java.util.Date;
 public class BeneficiaryDTO implements Serializable, Comparable<BeneficiaryDTO> {
 
     private static final long serialVersionUID = 1L;
-    private Integer beneficiaryID;
+    private Integer beneficiaryID, projectID;
     private String firstName;
     private String lastName;
     private String middleName;
@@ -26,6 +26,17 @@ public class BeneficiaryDTO implements Serializable, Comparable<BeneficiaryDTO> 
     private Date dateRegistered, phbDate;
     private CompanyDTO company;
     private TownshipDTO township;
+
+    public static final int ACTION_ADD = 313, ACTION_UPDATE = 314,
+            ACTION_DELETE = 315;
+
+    public Integer getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(Integer projectID) {
+        this.projectID = projectID;
+    }
 
     public String getFullName() {
         return firstName + " " + lastName;

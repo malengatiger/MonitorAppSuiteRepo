@@ -23,6 +23,8 @@
         android:id="@+id/PSD_bottom"
         android:layout_marginTop="16dp"
         android:layout_below="@id/PSD_top"
+        android:background="@color/beige_pale"
+        android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -30,14 +32,29 @@
             android:id="@+id/PSD_title"
             style="@style/Title2TextStyleGrey"
             android:text="@string/project_site_details"
-            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/PSD_imgDelete"
+            android:src="@android:drawable/ic_delete"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/PSD_titleLayout"
+        android:layout_below="@id/PSD_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
 
         <EditText
             android:id="@+id/PSD_editName"
             android:layout_marginTop="20dp"
-            android:layout_below="@id/PSD_title"
+
             android:hint="@string/enter_project_site"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -49,55 +66,44 @@
             android:hint="@string/enter_erf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_below="@id/PSD_editStand"
+    <RelativeLayout
+        android:layout_below="@id/PSD_titleLayout"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/PSD_btnCancel"
+            style="@style/ButtonCancel"
+            android:text="@string/cancel"
+            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" />
 
-            <Button
-                android:id="@+id/PSD_btnCancel"
-                style="@style/ButtonCancel"
-                android:text="@string/cancel"
-                android:layout_marginTop="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/PSD_btnSave"
+            android:layout_below="@id/PSD_btnCancel"
+            style="@style/ButtonRed"
+            android:layout_marginTop="16dp"
+            android:text="@string/save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-            <Button
-                android:id="@+id/PSD_btnSave"
-                android:layout_below="@id/PSD_btnCancel"
-                style="@style/ButtonRed"
-                android:layout_marginTop="16dp"
-                android:text="@string/save"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/PSD_btnDelete"
-                style="@style/ButtonNavyBlue"
-                android:layout_marginTop="16dp"
-                android:layout_below="@id/PSD_btnSave"
-                android:text="@string/delete"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
 
     </RelativeLayout>
-    <TextView
-        android:id="@+id/PSD_number"
-        style="@style/TransparentCircle"
-        android:text="00"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
     <ProgressBar
         android:id="@+id/PSD_progress"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_alignParentRight="true"
         style="@android:style/Widget.ProgressBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 </RelativeLayout>
+

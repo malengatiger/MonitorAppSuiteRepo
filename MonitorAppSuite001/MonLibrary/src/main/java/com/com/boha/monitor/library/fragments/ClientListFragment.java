@@ -46,11 +46,12 @@ public class ClientListFragment extends Fragment implements AbsListView.OnItemCl
            }
 
     Context ctx;
+    View view;
     TextView txtCount, txtName;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_client_list, container, false);
+         view = inflater.inflate(R.layout.fragment_client_list, container, false);
         ctx = getActivity();
         Bundle b = getArguments();
         if (b != null) {
@@ -61,7 +62,12 @@ public class ClientListFragment extends Fragment implements AbsListView.OnItemCl
         txtCount = (TextView)view.findViewById(R.id.FC_count);
         txtName = (TextView)view.findViewById(R.id.FC_title);
 
-        Statics.setRobotoFontBold(ctx, txtName);
+        Statics.setRobotoFontLight(ctx, txtName);
+        setList();
+        return view;
+    }
+
+    private void setList() {
         txtCount.setText("" + clientList.size());
         // Set the adapter
         mListView = (AbsListView) view.findViewById(R.id.FC_list);
@@ -78,12 +84,10 @@ public class ClientListFragment extends Fragment implements AbsListView.OnItemCl
         txtCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.toast(ctx,"Under Construction");
+                ToastUtil.toast(ctx, "Under Construction");
             }
         });
-        return view;
     }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

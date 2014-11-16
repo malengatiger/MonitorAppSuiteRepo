@@ -1,8 +1,6 @@
 package com.com.boha.monitor.library.adapters;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +44,6 @@ public class DrawerAdapter extends ArrayAdapter<String> {
         TextView txtName, txtNumber, txtCount;
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolderItem item;
@@ -72,7 +69,6 @@ public class DrawerAdapter extends ArrayAdapter<String> {
         Statics.setRobotoFontLight(ctx, item.txtName);
         switch (position) {
             case 0:
-                item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xblack_oval_small));
                 if (company.getProjectList().isEmpty()) {
                     item.txtCount.setVisibility(View.GONE);
                 } else {
@@ -81,7 +77,7 @@ public class DrawerAdapter extends ArrayAdapter<String> {
                 }
                 break;
             case 1:
-                item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xblue_oval_small));
+                //item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xblue_oval_small));
                 if (company.getCompanyStaffList().isEmpty()) {
                     item.txtCount.setVisibility(View.GONE);
                 } else {
@@ -90,41 +86,6 @@ public class DrawerAdapter extends ArrayAdapter<String> {
                 }
                 break;
             case 2:
-                item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xred_oval_small));
-                item.txtCount.setVisibility(View.GONE);
-                break;
-            case 3:
-                item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xgreen_oval_small));
-                item.txtCount.setVisibility(View.GONE);
-                break;
-            case 4:
-                item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xblack_oval_small));
-                if (company.getBeneficiaryList().isEmpty()) {
-                    item.txtCount.setVisibility(View.GONE);
-                } else {
-                    item.txtCount.setVisibility(View.VISIBLE);
-                    item.txtCount.setText("" + company.getBeneficiaryList().size());
-                }
-                break;
-            case 5:
-                item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xblue_oval_small));
-                item.txtCount.setVisibility(View.GONE);
-                break;
-            case 6:
-                item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xred_oval_small));
-                if (company.getInvoiceList().isEmpty()) {
-                    item.txtCount.setVisibility(View.GONE);
-                } else {
-                    item.txtCount.setVisibility(View.VISIBLE);
-                    item.txtCount.setText("" + company.getInvoiceList().size());
-                }
-                break;
-            case 7:
-                item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xgreen_oval_small));
-                item.txtCount.setVisibility(View.GONE);
-                break;
-            case 8:
-                item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xgrey_oval_small));
                 if (company.getClientList().isEmpty()) {
                     item.txtCount.setVisibility(View.GONE);
                 } else {
@@ -132,10 +93,47 @@ public class DrawerAdapter extends ArrayAdapter<String> {
                     item.txtCount.setText("" + company.getClientList().size());
                 }
                 break;
-            case 9:
-                item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xblack_oval_small));
-                item.txtCount.setVisibility(View.GONE);
+            case 3:
+                if (company.getTaskStatusList().isEmpty()) {
+                    item.txtCount.setVisibility(View.GONE);
+                } else {
+                    item.txtCount.setVisibility(View.VISIBLE);
+                    item.txtCount.setText("" + company.getTaskStatusList().size());
+                }
                 break;
+            case 4:
+                if (company.getProjectStatusTypeList().isEmpty()) {
+                    item.txtCount.setVisibility(View.GONE);
+                } else {
+                    item.txtCount.setVisibility(View.VISIBLE);
+                    item.txtCount.setText("" + company.getProjectStatusTypeList().size());
+                }
+                break;
+            case 5:
+                if (company.getTaskList().isEmpty()) {
+                    item.txtCount.setVisibility(View.GONE);
+                } else {
+                    item.txtCount.setVisibility(View.VISIBLE);
+                    item.txtCount.setText("" + company.getTaskList().size());
+                }
+                break;
+            case 6:
+                if (company.getEngineerList().isEmpty()) {
+                    item.txtCount.setVisibility(View.GONE);
+                } else {
+                    item.txtCount.setVisibility(View.VISIBLE);
+                    item.txtCount.setText("" + company.getEngineerList().size());
+                }
+                break;
+            case 7:
+                if (company.getBeneficiaryList().isEmpty()) {
+                    item.txtCount.setVisibility(View.GONE);
+                } else {
+                    item.txtCount.setVisibility(View.VISIBLE);
+                    item.txtCount.setText("" + company.getBeneficiaryList().size());
+                }
+                break;
+
         }
 
         animateView(convertView);

@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,43 +16,40 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
-import com.com.boha.monitor.library.dto.CompanyStaffDTO;
-import com.com.boha.monitor.library.dto.CompanyStaffTypeDTO;
+import com.com.boha.monitor.library.dto.CompanyDTO;
+import com.com.boha.monitor.library.dto.EngineerDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
-import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by aubreyM on 2014/10/18.
  */
-public class PersonDialog extends DialogFragment {
-    public interface PersonDialogListener {
-        public void onStaffAdded(CompanyStaffDTO companyStaff);
-        public void onStaffUpdated(CompanyStaffDTO companyStaff);
+public class EngineerDialog extends DialogFragment {
+    public interface EngineerDialogListener {
+        public void onEngineerAdded(EngineerDTO engineer);
+        public void onEngineerUpdated(EngineerDTO engineer);
+        public void onEngineerDeleted(EngineerDTO engineer);
         public void onError(String message);
     }
-    PersonDialogListener listener;
+    EngineerDialogListener listener;
     Context context;
     TextView txtCompany;
-    EditText editFirstName, editLastName, editEmail, editCellphone;
-    ProgressBar progressBar;
+    EditText editFirstName, editLastName, editEmail,
+            editIDNumber, editCellphone;
     ImageView imgDelete;
+    Spinner spinner;
+    ProgressBar progressBar;
     Button btnCancel, btnSave;
-    CompanyStaffDTO companyStaff;
+    EngineerDTO engineer;
+    String title;
     View view;
-    Spinner staffTypeSpinner;
     int action;
-    static final String LOG = PersonDialog.class.getSimpleName();
-
-
+    static final String LOG = EngineerDialog.class.getSimpleName();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,23 +59,25 @@ public class PersonDialog extends DialogFragment {
         editLastName = (EditText) view.findViewById(R.id.ED_PSN_lastName);
         editEmail = (EditText) view.findViewById(R.id.ED_PSN_email);
         editCellphone = (EditText) view.findViewById(R.id.ED_PSN_cellphone);
+        editIDNumber = (EditText)view.findViewById(R.id.ED_PSN_idNumber);
+
+        spinner = (Spinner)view.findViewById(R.id.ED_PSN_spinner);
+        spinner.setVisibility(View.GONE);
+        editLastName.setVisibility(View.GONE);
+        editIDNumber.setVisibility(View.GONE);
+        imgDelete = (ImageView)view.findViewById(R.id.ED_PSN_imgDelete);
+        imgDelete.setVisibility(View.GONE);
+
+        TextView mTitle = (TextView)view.findViewById(R.id.ED_PSN_personType);
+        mTitle.setText(title);
 
         progressBar = (ProgressBar) view.findViewById(R.id.ED_PSN_progress);
         progressBar.setVisibility(View.GONE);
-        imgDelete = (ImageView)view.findViewById(R.id.ED_PSN_imgDelete);
-        imgDelete.setVisibility(View.GONE);
-        TextView mtitle = (TextView)view.findViewById(R.id.ED_PSN_personType);
-        mtitle.setText(title);
-        View id = view.findViewById(R.id.ED_PSN_idNumber);
-        id.setVisibility(View.GONE);
+
 
         btnCancel = (Button) view.findViewById(R.id.ED_PSN_btnCancel);
         btnSave = (Button) view.findViewById(R.id.ED_PSN_btnSave);
-        staffTypeSpinner = (Spinner)view.findViewById(R.id.ED_PSN_spinner);
-
-        setSpinner();
-
-
+        getDialog().setTitle(context.getResources().getString(R.string.app_name));
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
 
@@ -95,22 +92,24 @@ public class PersonDialog extends DialogFragment {
             @Override
             public void onClick(View arg0) {
                 switch (action) {
-                    case CompanyStaffDTO.ACTION_ADD:
+                    case EngineerDTO.ACTION_ADD:
                         registerActor();
                         break;
-                    case CompanyStaffDTO.ACTION_UPDATE:
+                    case EngineerDTO.ACTION_UPDATE:
                         updateActor();
                         break;
+
                 }
             }
         });
         switch (action) {
-            case CompanyStaffDTO.ACTION_UPDATE:
+            case EngineerDTO.ACTION_UPDATE:
+                fillForm();
                 imgDelete.setVisibility(View.VISIBLE);
                 imgDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        AlertDialog.Builder diag = new AlertDialog.Builder(context);
+                        AlertDialog.Builder diag = new AlertDialog.Builder(getActivity());
                         diag.setTitle(context.getString(R.string.delete_confirm))
                                 .setMessage(context.getString(R.string.delete_question))
                                 .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
@@ -128,88 +127,26 @@ public class PersonDialog extends DialogFragment {
                     }
                 });
                 break;
+
+
         }
         return view;
     }
 
-    private List<CompanyStaffTypeDTO> companyStaffTypeList;
-    private CompanyStaffTypeDTO companyStaffType;
-    private String title;
-    private void setSpinner() {
-
-        CacheUtil.getCachedData(context,CacheUtil.CACHE_DATA,new CacheUtil.CacheUtilListener() {
-            @Override
-            public void onFileDataDeserialized(ResponseDTO response) {
-                if (response != null) {
-                    companyStaffTypeList = response.getCompanyStaffTypeList();
-                    List<String> names = new ArrayList<String>();
-                    names.add(context.getResources().getString(R.string.select_app_type));
-                    for (CompanyStaffTypeDTO t: companyStaffTypeList) {
-                        names.add(t.getCompanyStaffTypeName());
-                    }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.xxsimple_spinner_item,names);
-                    staffTypeSpinner.setAdapter(adapter);
-                    staffTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position == 0) {
-                                companyStaffType = null;
-                            } else {
-                                companyStaffType = companyStaffTypeList.get(position - 1);
-                            }
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });
-                    if (action == CompanyStaffDTO.ACTION_UPDATE) {
-                        fillForm();
-                    }
-
-                }
-            }
-
-            @Override
-            public void onDataCached() {
-
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        });
-    }
     private void fillForm() {
-        editFirstName.setText(companyStaff.getFirstName());
-        editLastName.setText(companyStaff.getLastName());
-        editEmail.setText(companyStaff.getEmail());
-        editCellphone.setText(companyStaff.getCellphone());
+        editFirstName.setText(engineer.getEngineerName());
+        editEmail.setText(engineer.getEmail());
+        editCellphone.setText(engineer.getCellphone());
 
-        int index = 0;
-        for (CompanyStaffTypeDTO cs: companyStaffTypeList) {
-            if (companyStaff.getCompanyStaffType().getCompanyStaffTypeID() == cs.getCompanyStaffTypeID()) {
-                break;
-            }
-            index++;
-        }
-        if (index < companyStaffTypeList.size()) {
-            staffTypeSpinner.setSelection(index + 1);
-        }
 
     }
     private void registerActor() {
-        companyStaff = new CompanyStaffDTO();
-        companyStaff.setCompanyID(SharedUtil.getCompany(context).getCompanyID());
+        engineer = new EngineerDTO();
+        CompanyDTO c = new CompanyDTO();
+        c.setCompanyID(SharedUtil.getCompany(context).getCompanyID());
+        engineer.setCompanyID(c.getCompanyID());
         if (editFirstName.getText().toString().isEmpty()) {
-            ToastUtil.toast(context,context.getResources().getString(R.string.enter_firstname));
-            return;
-        }
-
-        if (editLastName.getText().toString().isEmpty()) {
-            ToastUtil.toast(context,context.getResources().getString(R.string.enter_lastname));
+            ToastUtil.toast(context,context.getResources().getString(R.string.enter_engineer_name));
             return;
         }
 
@@ -222,20 +159,15 @@ public class PersonDialog extends DialogFragment {
             ToastUtil.toast(context,context.getResources().getString(R.string.enter_cell));
             return;
         }
-        if (companyStaffType == null) {
-            ToastUtil.toast(context,context.getResources().getString(R.string.select_staff_type));
-            return;
-        }
 
-        companyStaff.setFirstName(editFirstName.getText().toString());
-        companyStaff.setLastName(editLastName.getText().toString());
-        companyStaff.setCellphone(editCellphone.getText().toString());
-        companyStaff.setEmail(editEmail.getText().toString());
-        companyStaff.setCompanyStaffType(companyStaffType);
+
+        engineer.setEngineerName(editFirstName.getText().toString());
+        engineer.setCellphone(editCellphone.getText().toString());
+        engineer.setEmail(editEmail.getText().toString());
 
         RequestDTO w = new RequestDTO();
-        w.setRequestType(RequestDTO.REGISTER_COMPANY_STAFF);
-        w.setCompanyStaff(companyStaff);
+        w.setRequestType(RequestDTO.REGISTER_ENGINEER);
+        w.setEngineer(engineer);
 
         progressBar.setVisibility(View.VISIBLE);
         WebSocketUtil.sendRequest(context, Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
@@ -244,12 +176,12 @@ public class PersonDialog extends DialogFragment {
                 if (!ErrorUtil.checkServerError(context,response)) {
                     return;
                 }
-                companyStaff = response.getCompanyStaff();
+                engineer = response.getEngineerList().get(0);
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         progressBar.setVisibility(View.GONE);
-                        listener.onStaffAdded(companyStaff);
+                        listener.onEngineerAdded(engineer);
                         dismiss();
                     }
                 });
@@ -283,7 +215,7 @@ public class PersonDialog extends DialogFragment {
     }
 
     public void setTitle(String title) {
-       this.title = title;
+        this.title = title;
     }
     public void setContext(Context context) {
         this.context = context;
@@ -293,11 +225,11 @@ public class PersonDialog extends DialogFragment {
         this.action = action;
     }
 
-    public void setCompanyStaff(CompanyStaffDTO companyStaff) {
-        this.companyStaff = companyStaff;
+    public void setEngineer(EngineerDTO engineer) {
+        this.engineer = engineer;
     }
 
-    public void setListener(PersonDialogListener listener) {
+    public void setListener(EngineerDialogListener listener) {
         this.listener = listener;
     }
 }

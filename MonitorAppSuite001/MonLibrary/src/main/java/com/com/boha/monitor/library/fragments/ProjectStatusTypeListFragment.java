@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
@@ -35,37 +34,12 @@ import java.util.List;
  */
 public class ProjectStatusTypeListFragment extends Fragment implements AbsListView.OnItemClickListener, PageFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private ProjectStatusTypeListListener mListener;
 
     /**
      * The fragment's ListView/GridView.
      */
     private AbsListView mListView;
-
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
-    private ListAdapter mAdapter;
-
-    // TODO: Rename and change types of parameters
-    public static ProjectStatusTypeListFragment newInstance(String param1, String param2) {
-        ProjectStatusTypeListFragment fragment = new ProjectStatusTypeListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -96,7 +70,7 @@ public class ProjectStatusTypeListFragment extends Fragment implements AbsListVi
         txtCount = (TextView)view.findViewById(R.id.FTST_count);
         txtName = (TextView)view.findViewById(R.id.FTST_title);
 
-        Statics.setRobotoFontBold(ctx, txtName);
+        Statics.setRobotoFontLight(ctx, txtName);
         txtCount.setText("" + projectStatusTypeList.size());
         // Set the adapter
         mListView = (AbsListView) view.findViewById(R.id.FTST_list);

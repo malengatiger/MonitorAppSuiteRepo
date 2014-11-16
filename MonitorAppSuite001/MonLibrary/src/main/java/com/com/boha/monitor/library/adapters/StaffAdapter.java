@@ -104,6 +104,12 @@ public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
             item.txtCellphone.setText(p.getCellphone());
         }
         item.txtNumber.setText("" + (position + 1));
+        item.txtCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onStatusUpdatesRequested(p);
+            }
+        });
         item.photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +133,7 @@ public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
 
             @Override
             public void onLoadingFailed(String s, View view, FailReason failReason) {
-                item.photo.setImageDrawable(ctx.getResources().getDrawable(R.drawable.boy));
+                item.photo.setImageDrawable(ctx.getResources().getDrawable(R.drawable.house));
             }
 
             @Override

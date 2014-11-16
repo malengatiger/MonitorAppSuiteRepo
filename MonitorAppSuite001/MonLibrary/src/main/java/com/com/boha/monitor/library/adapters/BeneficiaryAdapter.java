@@ -51,6 +51,7 @@ public class BeneficiaryAdapter extends ArrayAdapter<BeneficiaryDTO> {
         TextView txtName, txtCell, txtEmail;
         TextView txtNumber, txtHappy;
         ImageView image;
+        View nameLayout;
     }
 
     @Override
@@ -71,6 +72,7 @@ public class BeneficiaryAdapter extends ArrayAdapter<BeneficiaryDTO> {
                     .findViewById(R.id.BEN_txtHappy);
             item.image = (ImageView)convertView.findViewById(R.id.BEN_imagex);
 
+
             convertView.setTag(item);
         } else {
             item = (ViewHolderItem) convertView.getTag();
@@ -79,8 +81,21 @@ public class BeneficiaryAdapter extends ArrayAdapter<BeneficiaryDTO> {
         final BeneficiaryDTO p = mList.get(position);
         item.txtName.setText(p.getFullName());
         item.txtNumber.setText("" + (position + 1));
-        item.txtCell.setText(p.getCellphone());
-        item.txtEmail.setText(p.getEmail());
+//        item.txtCell.setText(p.getCellphone());
+//        item.txtEmail.setText(p.getEmail());
+//        int count = 0;
+//        if (p.getCellphone() == null) {
+//            item.txtCell.setVisibility(View.GONE);
+//            count++;
+//        } else {
+//            item.txtCell.setVisibility(View.VISIBLE);
+//        }
+//        if (p.getEmail() == null) {
+//            item.txtEmail.setVisibility(View.GONE);
+//            count++;
+//        } else {
+//            item.txtEmail.setVisibility(View.VISIBLE);
+//        }
 
         item.txtNumber.setOnClickListener(new View.OnClickListener() {
             @Override

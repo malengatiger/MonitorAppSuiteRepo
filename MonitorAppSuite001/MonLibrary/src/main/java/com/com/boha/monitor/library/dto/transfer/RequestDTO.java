@@ -17,6 +17,7 @@ import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.com.boha.monitor.library.dto.ContractorClaimDTO;
 import com.com.boha.monitor.library.dto.ContractorClaimSiteDTO;
+import com.com.boha.monitor.library.dto.EngineerDTO;
 import com.com.boha.monitor.library.dto.GcmDeviceDTO;
 import com.com.boha.monitor.library.dto.InvoiceDTO;
 import com.com.boha.monitor.library.dto.InvoiceItemDTO;
@@ -52,6 +53,7 @@ public class RequestDTO implements Serializable {
     private CompanyDTO company;
     private CompanyStaffDTO companyStaff;
     private ProjectDTO project;
+    private EngineerDTO engineer;
     private CityDTO city;
     private TownshipDTO township;
     private ProjectSiteDTO projectSite;
@@ -161,6 +163,14 @@ public class RequestDTO implements Serializable {
 
     //
 
+
+    public EngineerDTO getEngineer() {
+        return engineer;
+    }
+
+    public void setEngineer(EngineerDTO engineer) {
+        this.engineer = engineer;
+    }
 
     public Integer getBeneficiaryID() {
         return beneficiaryID;

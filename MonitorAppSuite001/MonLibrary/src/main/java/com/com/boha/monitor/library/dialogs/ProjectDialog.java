@@ -1,7 +1,9 @@
 package com.com.boha.monitor.library.dialogs;
 
+import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -30,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Dialog to add, update and delete Monitor projects
  * Created by aubreyM on 2014/10/18.
  */
 public class ProjectDialog extends DialogFragment {
@@ -42,8 +46,9 @@ public class ProjectDialog extends DialogFragment {
     Context context;
     TextView txtCompany;
     EditText editProjectName, editDesc;
+    ImageView imgDelete;
     ProgressBar progressBar;
-    Button btnCancel, btnSave, btnDelete;
+    Button btnCancel, btnSave;
     ProjectDTO project;
     View view;
     Spinner clientSpinner;
@@ -56,27 +61,24 @@ public class ProjectDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.view = inflater.inflate(R.layout.project_edit, container);
-        editProjectName = (EditText) view.findViewById(R.id.PE__projectName);
-        editDesc = (EditText) view.findViewById(R.id.PE__desc);
+        editProjectName = (EditText) view.findViewById(R.id.PE_projectName);
+        editDesc = (EditText) view.findViewById(R.id.PE_desc);
 
-        txtCompany = (TextView)view.findViewById(R.id.PE__groupName);
+        txtCompany = (TextView)view.findViewById(R.id.PE_groupName);
         txtCompany.setText(SharedUtil.getCompany(context).getCompanyName());
 
-        progressBar = (ProgressBar) view.findViewById(R.id.PE__progress);
+        progressBar = (ProgressBar) view.findViewById(R.id.PE_progress);
         progressBar.setVisibility(View.GONE);
+        imgDelete = (ImageView)view.findViewById(R.id.PE_imgDelete);
+        imgDelete.setVisibility(View.GONE);
 
-
-        btnCancel = (Button) view.findViewById(R.id.PE__btnCancel);
-        btnSave = (Button) view.findViewById(R.id.PE__btnSave);
-        btnDelete= (Button) view.findViewById(R.id.PE__btnDelete);
-        clientSpinner = (Spinner)view.findViewById(R.id.PE__spinner);
+        btnCancel = (Button) view.findViewById(R.id.PE_btnCancel);
+        btnSave = (Button) view.findViewById(R.id.PE_btnSave);
+        clientSpinner = (Spinner)view.findViewById(R.id.PE_spinner);
         getDialog().setTitle(context.getResources().getString(R.string.app_name));
         setSpinner();
 
-
-
         btnCancel.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View arg0) {
                 dismiss();
@@ -84,19 +86,45 @@ public class ProjectDialog extends DialogFragment {
             }
         });
         btnSave.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View arg0) {
                 switch (action) {
                     case ProjectDTO.ACTION_ADD:
-                        registerActor();
+                        registerProject();
                         break;
                     case ProjectDTO.ACTION_UPDATE:
-                        updateActor();
+                        updateProject();
                         break;
                 }
             }
         });
+        //if action is update, light up the delete (x) icon.
+        // prepare dialog to confirm delete before message sent to server
+        switch (action) {
+            case ProjectDTO.ACTION_UPDATE:
+                imgDelete.setVisibility(View.VISIBLE);
+                imgDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder diag = new AlertDialog.Builder(getActivity());
+                        diag.setTitle(context.getString(R.string.delete_confirm))
+                                .setMessage(context.getString(R.string.delete_question))
+                                .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        deleteProject();
+                                    }
+                                })
+                                .setNegativeButton(context.getString(R.string.no),new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                }).show();
+                    }
+                });
+                break;
+        }
         return view;
     }
 
@@ -166,7 +194,10 @@ public class ProjectDialog extends DialogFragment {
         }
 
     }
-    private void registerActor() {
+    private void deleteProject() {
+
+    }
+    private void registerProject() {
         project = new ProjectDTO();
         project.setCompanyID(SharedUtil.getCompany(context).getCompanyID());
         if (editProjectName.getText().toString().isEmpty()) {
@@ -232,7 +263,7 @@ public class ProjectDialog extends DialogFragment {
 
     }
 
-    private void updateActor() {
+    private void updateProject() {
 
     }
 

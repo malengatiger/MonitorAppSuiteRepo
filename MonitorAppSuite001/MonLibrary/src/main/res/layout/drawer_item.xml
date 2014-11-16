@@ -7,13 +7,13 @@
 
     <TextView
         android:id="@+id/DI_txtNumber"
-        style="@style/BlackCircle"
+        style="@style/GreyCircleSmall"
         android:text="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/DI_txtTitle"
-        style="@style/TextStyle"
+        style="@style/TextStyleSmall"
         android:layout_toRightOf="@id/DI_txtNumber"
         android:text="Name of Action"
         android:layout_marginLeft="10dp"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/DI_txtCount"
-        style="@style/Title3TextStyleGrey"
+        style="@style/Title3TextStyleBlue"
         android:text="0"
         android:layout_alignParentRight="true"
         android:layout_marginRight="8dp"

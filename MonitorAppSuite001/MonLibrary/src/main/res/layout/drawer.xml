@@ -27,13 +27,14 @@
         </android.support.v4.view.ViewPager>
         </FrameLayout>
 
+
     <!-- The navigation drawer -->
     <ListView android:id="@+id/left_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
+        android:divider="@color/grey"
         android:dividerHeight="1dp"
         />
 </android.support.v4.widget.DrawerLayout>

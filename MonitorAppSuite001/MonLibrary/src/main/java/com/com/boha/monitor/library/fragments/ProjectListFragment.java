@@ -7,8 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
@@ -32,11 +32,11 @@ import java.util.List;
  * Activities containing this fragment MUST implement the ProjectListListener
  * interface.
  */
-public class ProjectListFragment extends Fragment implements AbsListView.OnItemClickListener, PageFragment {
+public class ProjectListFragment extends Fragment implements  PageFragment {
 
 
     private ProjectListListener mListener;
-    private AbsListView mListView;
+    private ListView mListView;
     private TextView txtProjectCount, txtStatusCount, txtLabel;
 
     public static ProjectListFragment newInstance(ResponseDTO r) {
@@ -51,6 +51,8 @@ public class ProjectListFragment extends Fragment implements AbsListView.OnItemC
 
     Context ctx;
     View topView;
+    LayoutInflater inflater;
+    View view;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +62,8 @@ public class ProjectListFragment extends Fragment implements AbsListView.OnItemC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_project, container, false);
+         view = inflater.inflate(R.layout.fragment_project, container, false);
+        this.inflater = inflater;
         ctx = getActivity();
         topView = view.findViewById(R.id.PROJ_LIST_layoutx);
         Bundle b = getArguments();
@@ -69,7 +72,20 @@ public class ProjectListFragment extends Fragment implements AbsListView.OnItemC
             projectList = r.getCompany().getProjectList();
         }
 
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
+
+        txtProjectCount = (TextView)view.findViewById(R.id.PROJ_LIST_projectCount);
+        txtLabel = (TextView)view.findViewById(R.id.PROJ_LIST_label);
+        Statics.setRobotoFontLight(ctx, txtLabel);
+
+
+        setTotals();
+        setList();
+        return view;
+    }
+
+    private void setList() {
+
+        mListView = (ListView) view.findViewById(android.R.id.list);
         adapter = new ProjectAdapter(ctx, R.layout.project_item, projectList, new ProjectAdapter.ProjectAdapterListener() {
             @Override
             public void onEditRequested(ProjectDTO project) {
@@ -96,41 +112,39 @@ public class ProjectListFragment extends Fragment implements AbsListView.OnItemC
             }
         });
         mListView.setAdapter(adapter);
-        txtProjectCount = (TextView)view.findViewById(R.id.PROJ_LIST_projectCount);
-        txtStatusCount = (TextView)view.findViewById(R.id.PROJ_LIST_statusCount);
-        txtLabel = (TextView)view.findViewById(R.id.PROJ_LIST_label);
-        Statics.setRobotoFontLight(ctx, txtLabel);
-
-        // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
-        setTotals();
-
-        return view;
+        View v = inflater.inflate(R.layout.hero_image_project, null);
+        TextView stCount = (TextView)v.findViewById(R.id.HERO_statusCount);
+        stCount.setText("" + statusCount);
+        mListView.addHeaderView(v);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (projectList.get(position).getProjectSiteList() == null || projectList.get(position).getProjectSiteList().isEmpty()) {
+                    return;
+                }
+                mListener.onProjectClicked(projectList.get(position));
+            }
+        });
     }
-
+    int statusCount;
     private void setTotals() {
         txtProjectCount.setText("" + projectList.size());
-        int count = 0;
+        statusCount = 0;
         for (ProjectDTO p: projectList) {
             for (ProjectSiteDTO ps: p.getProjectSiteList()) {
                 for (ProjectSiteTaskDTO pst: ps.getProjectSiteTaskList()) {
-                    count += pst.getProjectSiteTaskStatusList().size();
+                    statusCount += pst.getProjectSiteTaskStatusList().size();
                 }
             }
         }
-        txtStatusCount.setText("" + count);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         animateCounts();
 
 
     }
     @Override
     public void animateCounts() {
-        Util.animateScaleY(txtStatusCount, 500);
+
         Util.animateRotationY(txtProjectCount, 500);
         //Util.animateScaleX(topView, 500);
     }
@@ -151,18 +165,6 @@ public class ProjectListFragment extends Fragment implements AbsListView.OnItemC
         mListener = null;
     }
 
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            if (projectList.get(position).getProjectSiteList() == null || projectList.get(position).getProjectSiteList().isEmpty()) {
-                return;
-            }
-            mListener.onProjectClicked(projectList.get(position));
-        }
-    }
 
 
     public void addProject(ProjectDTO project) {

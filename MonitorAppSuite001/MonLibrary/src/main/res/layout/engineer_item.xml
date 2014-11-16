@@ -12,7 +12,7 @@
 
         <TextView
             android:id="@+id/EI_number"
-            style="@style/GreyCircle"
+            style="@style/GreyCircleSmall"
             android:text="00"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -39,7 +39,7 @@
         <TextView
             android:id="@+id/EI_cellphone"
             android:layout_marginLeft="16dp"
-            style="@style/TextStyleBlue"
+            style="@style/TextStyleRed"
             android:text="@string/cellphone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

@@ -2,76 +2,88 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:padding="8dp"
-    android:layout_height="wrap_content">
+    android:background="@color/blue_pale"
+    android:padding="0dp"
+    android:layout_height="match_parent">
 
 
     <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
         android:id="@+id/BEN_imagex"
-        android:padding="5dp"
         android:scaleType="centerCrop"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:src="@drawable/boy" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/zero"
-        android:id="@+id/BEN_txtNum"
-        android:layout_marginTop="10dp"
-        style="@style/GreyCircleSmall"
-        android:layout_marginLeft="50dp"
-        android:layout_below="@+id/BEN_imagex" />
+    <RelativeLayout
+        android:id="@+id/BEN_top"
+        android:layout_below="@id/BEN_imagex"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zero"
+            android:id="@+id/BEN_txtNum"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="12dp"
+            style="@style/GreyCircleSmall" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="beneficary name"
-        android:id="@+id/BEN_txtName"
-        style="@style/Title2TextStyleBlack"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/BEN_imagex" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="beneficary name"
+            android:id="@+id/BEN_txtName"
+            style="@style/Title2TextStyleBlack"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="email@address"
-        android:layout_marginTop="5dp"
-        android:id="@+id/BEN_txtEmail"
-        android:layout_below="@+id/BEN_txtName"
-        android:layout_alignLeft="@id/BEN_txtName"
-        style="@style/TextStyle"
-        android:textStyle="normal"
-        android:layout_marginLeft="5dp" />
+            android:layout_toRightOf="@+id/BEN_txtNum" />
+    </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="099 999 9999"
-        android:id="@+id/BEN_txtCell"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="2dp"
-        android:layout_alignLeft="@id/BEN_txtName"
-        android:layout_below="@+id/BEN_txtEmail"
-        style="@style/TextStyleBlue"
-        android:layout_centerHorizontal="true" />
+    <RelativeLayout
+        android:id="@+id/BEN_bottom"
+        android:layout_below="@id/BEN_top"
+        android:layout_marginLeft="56dp"
+        android:visibility="gone"
+        android:layout_marginBottom="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="email@address"
+            android:layout_marginTop="12dp"
+            android:id="@+id/BEN_txtEmail"
+
+            style="@style/TextStyle"
+            android:textStyle="normal"
+            android:layout_marginLeft="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="099 999 9999"
+            android:id="@+id/BEN_txtCell"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/BEN_txtEmail"
+            style="@style/TextStyleBlue" />
+    </RelativeLayout>
 
 
     <RelativeLayout
         android:id="@+id/BEN_layoutCount"
-        android:layout_below="@+id/BEN_txtCell"
-        android:layout_alignLeft="@id/BEN_txtName"
         android:layout_width="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginRight="8dp"
         android:layout_height="wrap_content">
-
 
 
         <TextView
@@ -86,23 +98,17 @@
             android:gravity="center"
             android:textColor="@color/white"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/BEN_txtHappyLabel"
             android:text="Happy Letter"
             style="@style/TextStyleGrey"
+            android:textColor="@color/white"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_toLeftOf="@id/BEN_txtHappy"
             android:layout_height="wrap_content" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/BEN_playerActions"
-        android:layout_below="@id/BEN_layoutCount"
-        android:layout_marginTop="35dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <!--<include layout="@layout/player_actions" /> -->
-    </RelativeLayout>
 </RelativeLayout>

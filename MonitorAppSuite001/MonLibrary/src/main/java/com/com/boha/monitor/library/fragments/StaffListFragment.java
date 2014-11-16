@@ -16,6 +16,7 @@ import com.com.boha.monitor.library.adapters.StaffAdapter;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
+import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.Util;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -68,9 +69,9 @@ public class StaffListFragment extends Fragment
         }
 
         txtCount = (TextView) view.findViewById(R.id.STAFF_LIST_staffCount);
-        //txtName = (TextView)view.findViewById(R.id.sta);
-        //txtName.setText(SharedUtil.getCompany(ctx).getCompanyName());
-        //Statics.setRobotoFontLight(ctx,txtName);
+        TextView label = (TextView)view.findViewById(R.id.STAFF_LIST_label);
+
+        Statics.setRobotoFontLight(ctx, label);
         txtCount.setText("" + companyStaffList.size());
         setList();
         return view;
@@ -96,7 +97,7 @@ public class StaffListFragment extends Fragment
     private void setList() {
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
-        staffAdapter = new StaffAdapter(ctx, R.layout.person_item,
+        staffAdapter = new StaffAdapter(ctx, R.layout.staff_card,
                 companyStaffList, new StaffAdapter.StaffAdapterListener() {
             @Override
             public void onPictureRequested(CompanyStaffDTO staff) {

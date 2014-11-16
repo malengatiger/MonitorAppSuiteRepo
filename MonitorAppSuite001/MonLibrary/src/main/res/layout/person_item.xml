@@ -23,7 +23,7 @@
         android:text="@string/zero"
         android:id="@+id/PSN_txtNum"
         android:layout_marginTop="10dp"
-        style="@style/Title2TextStyleGrey"
+        style="@style/GreyCircleSmall"
         android:layout_marginLeft="50dp"
         android:layout_below="@+id/PSN_imagex" />
 

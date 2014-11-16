@@ -65,7 +65,7 @@ public class TaskStatusListFragment extends Fragment implements AbsListView.OnIt
         txtCount = (TextView)view.findViewById(R.id.FTST_count);
         txtName = (TextView)view.findViewById(R.id.FTST_title);
 
-        Statics.setRobotoFontBold(ctx, txtName);
+        Statics.setRobotoFontLight(ctx, txtName);
         txtCount.setText("" + taskStatusList.size());
         // Set the adapter
         mListView = (AbsListView) view.findViewById(R.id.FTST_list);

@@ -52,34 +52,38 @@ public class EngineerListFragment extends Fragment implements AbsListView.OnItem
         View view = inflater.inflate(R.layout.fragment_engineer_list, container, false);
         ctx = getActivity();
         Bundle b = getArguments();
+        mListView = (AbsListView) view.findViewById(R.id.EC_list);
         txtCount = (TextView)view.findViewById(R.id.EC_count);
+        txtName = (TextView)view.findViewById(R.id.EC_title);
+        Statics.setRobotoFontLight(ctx, txtName);
         if (b != null) {
             ResponseDTO r = (ResponseDTO) b.getSerializable("response");
-            engineerList = r.getEngineerList();
+            engineerList = r.getCompany().getEngineerList();
             if (engineerList == null || engineerList.isEmpty()) {
                 setEmptyText(ctx.getString(R.string.no_engineers));
                 txtCount.setText("0");
                 return view;
             } else {
                 txtCount.setText("" + engineerList.size());
+                setList();
             }
         }
 
 
-        txtName = (TextView)view.findViewById(R.id.EC_title);
+        return view;
+    }
 
-        Statics.setRobotoFontBold(ctx, txtName);
+    private void setList() {
         if (engineerList != null) {
             txtCount.setText("" + engineerList.size());
         } else {
             txtCount.setText("0");
         }
         // Set the adapter
-        mListView = (AbsListView) view.findViewById(R.id.EC_list);
         adapter = new EngineerAdapter(ctx,R.layout.engineer_item, engineerList, new EngineerAdapter.EngineerAdapterListener() {
             @Override
-            public void onEngineerEditRequested(EngineerDTO client) {
-
+            public void onEngineerEditRequested(EngineerDTO e) {
+                mListener.onEngineerEditRequested(e);
             }
         });
         mListView.setAdapter(adapter);
@@ -91,9 +95,7 @@ public class EngineerListFragment extends Fragment implements AbsListView.OnItem
                 ToastUtil.toast(ctx,"Under Construction");
             }
         });
-        return view;
     }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -145,14 +147,14 @@ public class EngineerListFragment extends Fragment implements AbsListView.OnItem
         }
         engineerList.add(engineer);
         //Collections.sort(engineerList);
-        adapter.notifyDataSetChanged();
-        txtCount.setText("" + engineerList.size());
-        try {
-            Thread.sleep(1000);
-            Util.animateRotationY(txtCount,500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+            txtCount.setText("" + engineerList.size());
+        } else {
+           setList();
         }
+
+        Util.animateRotationY(txtCount,500);
 
     }
     /**

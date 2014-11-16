@@ -7,24 +7,30 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.com.boha.monitor.library.ImagePagerActivity;
 import com.com.boha.monitor.library.MonitorMapActivity;
 import com.com.boha.monitor.library.PictureActivity;
 import com.com.boha.monitor.library.SitePagerActivity;
 import com.com.boha.monitor.library.adapters.DrawerAdapter;
+import com.com.boha.monitor.library.dialogs.BeneficiaryDialog;
 import com.com.boha.monitor.library.dialogs.ClientDialog;
 import com.com.boha.monitor.library.dialogs.EditDialog;
+import com.com.boha.monitor.library.dialogs.EngineerDialog;
 import com.com.boha.monitor.library.dialogs.PersonDialog;
 import com.com.boha.monitor.library.dialogs.ProjectDialog;
+import com.com.boha.monitor.library.dialogs.TaskDialog;
 import com.com.boha.monitor.library.dto.BeneficiaryDTO;
 import com.com.boha.monitor.library.dto.ClientDTO;
 import com.com.boha.monitor.library.dto.CompanyDTO;
@@ -76,12 +82,14 @@ public class OperationsPagerActivity extends FragmentActivity
         ctx = getApplicationContext();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mPager = (ViewPager) findViewById(R.id.pager);
+        PagerTitleStrip s = (PagerTitleStrip)findViewById(R.id.pager_title_strip);
+        s.setVisibility(View.GONE);
         drawerListView = (ListView) findViewById(R.id.left_drawer);
         titles = getResources().getStringArray(R.array.action_items);
         setDrawerList();
         setTitle(SharedUtil.getCompany(ctx).getCompanyName());
         CompanyStaffDTO staff = SharedUtil.getCompanyStaff(ctx);
-        getActionBar().setSubtitle(staff.getFullName() + " - " + staff.getCompanyStaffType().getCompanyStaffTypeName());
+        getActionBar().setSubtitle(staff.getFullName());
         //
         // PhotoUploadService.uploadPendingPhotos(ctx);
     }
@@ -101,34 +109,17 @@ public class OperationsPagerActivity extends FragmentActivity
                 }
                 mDrawerAdapter = new DrawerAdapter(getApplicationContext(), R.layout.drawer_item, sTitles, company);
                 drawerListView.setAdapter(mDrawerAdapter);
+                LayoutInflater in = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View v = in.inflate(R.layout.hero_image, null);
+                drawerListView.addHeaderView(v);
                 drawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        TextView tv = (TextView)view.findViewById(R.id.DI_txtTitle);
+                        Log.w(LOG,"##### onItemClick, index: " + i + " title: " + tv.getText().toString());
+                        mPager.setCurrentItem(i - 1, true);
 
-                        switch (i) {
-                            case PROJECTS:
-                                mPager.setCurrentItem(0, true);
-                                mDrawerLayout.closeDrawers();
-                                break;
-                            case STAFF:
-                                mPager.setCurrentItem(1, true);
-                                mDrawerLayout.closeDrawers();
-                                break;
-                            case MANAGE_DATA:
-                                break;
-                            case SITE_REPORTS:
-                                break;
-                            case BENEFICIARIES:
-                                break;
-                            case PROJECT_MAPS:
-                                break;
-                            case INVOICES:
-                                break;
-                            case HAPPY_LETTERS:
-                                break;
-                            case STATUS_NOTIFICATIONS:
-                                break;
-                        }
+                        mDrawerLayout.closeDrawers();
                     }
                 });
                 getCompanyData();
@@ -145,6 +136,7 @@ public class OperationsPagerActivity extends FragmentActivity
             }
         });
     }
+
 
     private void getCompanyData() {
         RequestDTO w = new RequestDTO();
@@ -201,8 +193,8 @@ public class OperationsPagerActivity extends FragmentActivity
     }
 
     public static final int PROJECTS = 0,
-            STAFF = 1, MANAGE_DATA = 2, SITE_REPORTS = 3, BENEFICIARIES = 4, PROJECT_MAPS = 5,
-            INVOICES = 6, HAPPY_LETTERS = 7, STATUS_NOTIFICATIONS = 8;
+            STAFF = 1, CLIENTS = 2, TASK_STATUS = 3, BENEFICIARIES = 4, PROJECT_STATUS= 5,
+            TASKS = 6, ENGINEERS = 7;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -218,123 +210,232 @@ public class OperationsPagerActivity extends FragmentActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_add) {
+            PageFragment pf = pageFragmentList.get(currentPageIndex);
+            if (pf instanceof ProjectListFragment) {
+                ProjectDialog pd = new ProjectDialog();
+                pd.setContext(ctx);
+                pd.setAction(ProjectDTO.ACTION_ADD);
+                pd.setProject(new ProjectDTO());
+                pd.setListener(new ProjectDialog.ProjectDialogListener() {
+                    @Override
+                    public void onProjectAdded(final ProjectDTO project) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                projectListFragment.addProject(project);
+                            }
+                        });
+                    }
 
-            switch (currentPageIndex) {
-                case 0:
-                    ProjectDialog pd = new ProjectDialog();
-                    pd.setContext(ctx);
-                    pd.setAction(ProjectDTO.ACTION_ADD);
-                    pd.setProject(new ProjectDTO());
-                    pd.setListener(new ProjectDialog.ProjectDialogListener() {
-                        @Override
-                        public void onProjectAdded(final ProjectDTO project) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    projectListFragment.addProject(project);
-                                }
-                            });
-                        }
+                    @Override
+                    public void onProjectUpdated(ProjectDTO project) {
 
-                        @Override
-                        public void onProjectUpdated(ProjectDTO project) {
+                    }
 
-                        }
+                    @Override
+                    public void onError(String message) {
 
-                        @Override
-                        public void onError(String message) {
-
-                        }
-                    });
-                    pd.show(getFragmentManager(), "PROJ_DIAG");
-                    break;
-                case 1:
-                    startDialog(CompanyStaffDTO.ACTION_ADD, null);
-                    break;
-                case 2:
-                    ClientDialog cd = new ClientDialog();
-                    cd.setContext(ctx);
-                    cd.setClient(new ClientDTO());
-                    cd.setAction(ClientDTO.ACTION_ADD);
-                    cd.setListener(new ClientDialog.ClientDialogListener() {
-                        @Override
-                        public void onClientAdded(final ClientDTO client) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    clientListFragment.addClient(client);
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onClientUpdated(ClientDTO client) {
-
-                        }
-
-                        @Override
-                        public void onError(final String message) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    ToastUtil.errorToast(ctx,message);
-                                }
-                            });
-                        }
-                    });
-                    cd.show(getFragmentManager(),"CLIENT_DIAG");
-                    break;
-                case 3:
-                    EditDialog d = new EditDialog();
-                    d.setContext(ctx);
-                    d.setAction(EditDialog.ACTION_ADD);
-                    d.setTaskStatus(new TaskStatusDTO());
-                    d.setListener(new EditDialog.EditDialogListener() {
-                        @Override
-                        public void onComplete() {
-
-                        }
-
-                        @Override
-                        public void onError(final String message) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    ToastUtil.errorToast(ctx,message);
-                                }
-                            });
-                        }
-                    });
-                    d.show(getFragmentManager(),"EDIT_DIALOG");
-                    break;
-                case 4:
-                    EditDialog d2 = new EditDialog();
-                    d2.setContext(ctx);
-                    d2.setAction(EditDialog.ACTION_ADD);
-                    d2.setProjectStatusType(new ProjectStatusTypeDTO());
-                    d2.setListener(new EditDialog.EditDialogListener() {
-                        @Override
-                        public void onComplete() {
-
-                        }
-
-                        @Override
-                        public void onError(final String message) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    ToastUtil.errorToast(ctx,message);
-                                }
-                            });
-                        }
-                    });
-                    d2.show(getFragmentManager(), "EDIT_DIALOG");
-                    break;
-                case 5:
-                    taskListFragment.openEditPanel();
-                    break;
+                    }
+                });
+                pd.show(getFragmentManager(), "PROJ_DIAG");
             }
+            if (pf instanceof StaffListFragment) {
+                PersonDialog diag = new PersonDialog();
+                diag.setAction(CompanyStaffDTO.ACTION_ADD);
+                diag.setContext(ctx);
+                diag.setTitle(getString(R.string.staff));
+                diag.setListener(new PersonDialog.PersonDialogListener() {
+                    @Override
+                    public void onStaffAdded(final CompanyStaffDTO companyStaff) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //ToastUtil.toast(ctx, ctx.getResources().getString(R.string.company_staff_saved));
+                                staffListFragment.addCompanyStaff(companyStaff);
+                            }
+                        });
 
+                    }
+
+                    @Override
+                    public void onStaffUpdated(CompanyStaffDTO companyStaff) {
+
+                    }
+
+                    @Override
+                    public void onError(final String message) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.errorToast(ctx, message);
+                            }
+                        });
+
+                    }
+                });
+                diag.show(getFragmentManager(), "STAFF_DIALOG");
+            }
+            if (pf instanceof ClientListFragment) {
+                ClientDialog cd = new ClientDialog();
+                cd.setContext(ctx);
+                cd.setClient(new ClientDTO());
+                cd.setAction(ClientDTO.ACTION_ADD);
+                cd.setListener(new ClientDialog.ClientDialogListener() {
+                    @Override
+                    public void onClientAdded(final ClientDTO client) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                clientListFragment.addClient(client);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onClientUpdated(ClientDTO client) {
+
+                    }
+
+                    @Override
+                    public void onError(final String message) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.errorToast(ctx,message);
+                            }
+                        });
+                    }
+                });
+                cd.show(getFragmentManager(),"CLIENT_DIAG");
+            }
+            if (pf instanceof TaskListFragment) {
+                TaskDialog td = new TaskDialog();
+                td.setContext(ctx);
+                td.setAction(TaskDTO.ACTION_ADD);
+                td.setListener(new TaskDialog.TaskDialogListener() {
+                    @Override
+                    public void onTaskAdded(TaskDTO task) {
+                        taskListFragment.addTask(task);
+                    }
+
+                    @Override
+                    public void onTaskUpdated(TaskDTO task) {
+
+                    }
+
+                    @Override
+                    public void onTaskDeleted(TaskDTO task) {
+
+                    }
+
+                    @Override
+                    public void onError(String message) {
+
+                    }
+                });
+                td.show(getFragmentManager(),"TD_DIAG");
+            }
+            if (pf instanceof ProjectStatusTypeListFragment) {
+                EditDialog d2 = new EditDialog();
+                d2.setContext(ctx);
+                d2.setAction(EditDialog.ACTION_ADD);
+                d2.setProjectStatusType(new ProjectStatusTypeDTO());
+                d2.setListener(new EditDialog.EditDialogListener() {
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                    @Override
+                    public void onError(final String message) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.errorToast(ctx,message);
+                            }
+                        });
+                    }
+                });
+                d2.show(getFragmentManager(), "EDIT_DIALOG");
+            }
+            if (pf instanceof EngineerListFragment) {
+                EngineerDialog ed = new EngineerDialog();
+                ed.setContext(ctx);
+                ed.setTitle(getString(R.string.engineer));
+                ed.setAction(EngineerDTO.ACTION_ADD);
+                ed.setListener(new EngineerDialog.EngineerDialogListener() {
+                    @Override
+                    public void onEngineerAdded(EngineerDTO engineer) {
+                        engineerListFragment.addEngineer(engineer);
+                    }
+
+                    @Override
+                    public void onEngineerUpdated(EngineerDTO engineer) {
+
+                    }
+
+                    @Override
+                    public void onEngineerDeleted(EngineerDTO engineer) {
+
+                    }
+
+                    @Override
+                    public void onError(String message) {
+
+                    }
+                });
+                ed.show(getFragmentManager(),"ENG_DIAG");
+            }
+            if (pf instanceof BeneficiaryListFragment) {
+                BeneficiaryDialog bd = new BeneficiaryDialog();
+                bd.setContext(ctx);
+                bd.setAction(BeneficiaryDTO.ACTION_ADD);
+                bd.setTitle(getString(R.string.beneficiary));
+                bd.setListener(new BeneficiaryDialog.BeneficiaryDialogListener() {
+                    @Override
+                    public void onBeneficiaryAdded(BeneficiaryDTO beneficiary) {
+                        beneficiaryListFragment.addBeneficiary(beneficiary);
+                    }
+
+                    @Override
+                    public void onBeneficiaryUpdated(BeneficiaryDTO beneficiary) {
+
+                    }
+
+                    @Override
+                    public void onBeneficiaryDeleted(BeneficiaryDTO beneficiary) {
+
+                    }
+
+                    @Override
+                    public void onError(String message) {
+
+                    }
+                });
+                bd.show(getFragmentManager(),"BEN_DIAG");
+            }
+            if (pf instanceof TaskStatusListFragment) {
+                EditDialog d = new EditDialog();
+                d.setContext(ctx);
+                d.setAction(EditDialog.ACTION_ADD);
+                d.setListener(new EditDialog.EditDialogListener() {
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                    @Override
+                    public void onError(final String message) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.errorToast(ctx,message);
+                            }
+                        });
+                    }
+                });
+                d.show(getFragmentManager(),"TS_DIALOG");
+            }
             return true;
         }
         if (id == R.id.action_refresh) {
@@ -349,42 +450,6 @@ public class OperationsPagerActivity extends FragmentActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private void startDialog(int action, CompanyStaffDTO staff) {
-        PersonDialog diag = new PersonDialog();
-        diag.setAction(action);
-        diag.setCompanyStaff(staff);
-        diag.setContext(ctx);
-        diag.setListener(new PersonDialog.PersonDialogListener() {
-            @Override
-            public void onStaffAdded(final CompanyStaffDTO companyStaff) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //ToastUtil.toast(ctx, ctx.getResources().getString(R.string.company_staff_saved));
-                        staffListFragment.addCompanyStaff(companyStaff);
-                    }
-                });
-
-            }
-
-            @Override
-            public void onStaffUpdated(CompanyStaffDTO companyStaff) {
-
-            }
-
-            @Override
-            public void onError(final String message) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastUtil.errorToast(ctx, message);
-                    }
-                });
-
-            }
-        });
-        diag.show(getFragmentManager(), "STAFF_DIALOG");
-    }
 
     private void buildPages() {
 
@@ -637,9 +702,34 @@ public class OperationsPagerActivity extends FragmentActivity
 
     @Override
     public void onTaskClicked(TaskDTO task) {
+        TaskDialog td = new TaskDialog();
+        td.setAction(TaskDTO.ACTION_UPDATE);
+        td.setContext(ctx);
+        td.setTask(task);
+        td.setListener(new TaskDialog.TaskDialogListener() {
+            @Override
+            public void onTaskAdded(TaskDTO task) {
+                taskListFragment.addTask(task);
+            }
 
+            @Override
+            public void onTaskUpdated(TaskDTO task) {
+                Log.i(LOG,"####### task updated");
+            }
+
+            @Override
+            public void onTaskDeleted(TaskDTO task) {
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
+        td.show(getFragmentManager(),"TD_DIAG");
     }
-
+    static final String LOG = OperationsPagerActivity.class.getSimpleName();
     @Override
     public void onSequenceClicked(TaskDTO task) {
         //TODO - show up/down dialog
@@ -653,7 +743,31 @@ public class OperationsPagerActivity extends FragmentActivity
 
     @Override
     public void onEngineerEditRequested(EngineerDTO engineer) {
+        EngineerDialog ed = new EngineerDialog();
+        ed.setContext(ctx);
+        ed.setAction(EngineerDTO.ACTION_UPDATE);
+        ed.setListener(new EngineerDialog.EngineerDialogListener() {
+            @Override
+            public void onEngineerAdded(EngineerDTO engineer) {
+                engineerListFragment.addEngineer(engineer);
+            }
 
+            @Override
+            public void onEngineerUpdated(EngineerDTO engineer) {
+
+            }
+
+            @Override
+            public void onEngineerDeleted(EngineerDTO engineer) {
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
+        ed.show(getFragmentManager(),"ENG_DIAG");
     }
 
     @Override
@@ -663,7 +777,32 @@ public class OperationsPagerActivity extends FragmentActivity
 
     @Override
     public void onBeneficiaryEditRequested(BeneficiaryDTO beneficiary) {
+        BeneficiaryDialog bd = new BeneficiaryDialog();
+        bd.setContext(ctx);
+        bd.setAction(BeneficiaryDTO.ACTION_UPDATE);
+        bd.setBeneficiary(beneficiary);
+        bd.setListener(new BeneficiaryDialog.BeneficiaryDialogListener() {
+            @Override
+            public void onBeneficiaryAdded(BeneficiaryDTO beneficiary) {
+                beneficiaryListFragment.addBeneficiary(beneficiary);
+            }
 
+            @Override
+            public void onBeneficiaryUpdated(BeneficiaryDTO beneficiary) {
+
+            }
+
+            @Override
+            public void onBeneficiaryDeleted(BeneficiaryDTO beneficiary) {
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
+        bd.show(getFragmentManager(),"BEN_DIAG");
     }
 
     private class PagerAdapter extends FragmentStatePagerAdapter {
