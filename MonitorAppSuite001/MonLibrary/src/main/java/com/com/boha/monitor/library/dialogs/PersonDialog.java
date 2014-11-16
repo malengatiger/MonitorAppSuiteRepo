@@ -69,8 +69,8 @@ public class PersonDialog extends DialogFragment {
         progressBar.setVisibility(View.GONE);
         imgDelete = (ImageView)view.findViewById(R.id.ED_PSN_imgDelete);
         imgDelete.setVisibility(View.GONE);
-        TextView mtitle = (TextView)view.findViewById(R.id.ED_PSN_personType);
-        mtitle.setText(title);
+
+        getDialog().setTitle(context.getResources().getString(R.string.staff));
         View id = view.findViewById(R.id.ED_PSN_idNumber);
         id.setVisibility(View.GONE);
 
@@ -96,10 +96,10 @@ public class PersonDialog extends DialogFragment {
             public void onClick(View arg0) {
                 switch (action) {
                     case CompanyStaffDTO.ACTION_ADD:
-                        registerActor();
+                        registerStaff();
                         break;
                     case CompanyStaffDTO.ACTION_UPDATE:
-                        updateActor();
+                        updateStaff();
                         break;
                 }
             }
@@ -116,7 +116,7 @@ public class PersonDialog extends DialogFragment {
                                 .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        deleteActor();
+                                        deleteStaff();
                                     }
                                 })
                                 .setNegativeButton(context.getString(R.string.no),new DialogInterface.OnClickListener() {
@@ -134,7 +134,6 @@ public class PersonDialog extends DialogFragment {
 
     private List<CompanyStaffTypeDTO> companyStaffTypeList;
     private CompanyStaffTypeDTO companyStaffType;
-    private String title;
     private void setSpinner() {
 
         CacheUtil.getCachedData(context,CacheUtil.CACHE_DATA,new CacheUtil.CacheUtilListener() {
@@ -200,7 +199,7 @@ public class PersonDialog extends DialogFragment {
         }
 
     }
-    private void registerActor() {
+    private void registerStaff() {
         companyStaff = new CompanyStaffDTO();
         companyStaff.setCompanyID(SharedUtil.getCompany(context).getCompanyID());
         if (editFirstName.getText().toString().isEmpty()) {
@@ -275,16 +274,13 @@ public class PersonDialog extends DialogFragment {
 
     }
 
-    private void updateActor() {
+    private void updateStaff() {
 
     }
-    private void deleteActor() {
+    private void deleteStaff() {
 
     }
 
-    public void setTitle(String title) {
-       this.title = title;
-    }
     public void setContext(Context context) {
         this.context = context;
     }

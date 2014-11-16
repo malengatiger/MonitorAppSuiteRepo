@@ -4,6 +4,7 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -20,6 +21,9 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.dto.ProjectDTO;
+import com.com.boha.monitor.library.dto.transfer.RequestDTO;
+import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -107,7 +111,60 @@ public class Util {
     public static final long WEEK = 7 * DAY;
     public static final long WEEKS = 2 * WEEK;
     public static final long MONTH = 30 * DAY;
+    public interface ProjectDataRefreshListener {
+        public void onDataRefreshed(ProjectDTO project);
+        public void onError();
+    }
 
+    public static void refreshProjectData(final Activity activity,
+                                          final Context ctx, final Integer projectID,
+                                          final ProjectDataRefreshListener listener) {
+        Log.i(LOG,"######## refreshProjectData started ....");
+        RequestDTO w = new RequestDTO();
+        w.setRequestType(RequestDTO.GET_PROJECT_DATA);
+        w.setProjectID(projectID);
+
+        WebSocketUtil.sendRequest(ctx,Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
+            @Override
+            public void onMessage(final ResponseDTO response) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (response.getStatusCode() > 0) {
+                            ToastUtil.errorToast(ctx, response.getMessage());
+                            return;
+                        }
+                        CacheUtil.cacheProjectData(ctx, response, CacheUtil.CACHE_PROJECT, projectID, new CacheUtil.CacheUtilListener() {
+                            @Override
+                            public void onFileDataDeserialized(ResponseDTO response) {
+
+                            }
+
+                            @Override
+                            public void onDataCached() {
+                                listener.onDataRefreshed(response.getProjectList().get(0));
+                            }
+
+                            @Override
+                            public void onError() {
+                                listener.onError();
+                            }
+                        });
+                    }
+                });
+            }
+
+            @Override
+            public void onClose() {
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
+    }
     public static String getTruncated(double num) {
         String x = "" + num;
         int idx = x.indexOf(".");
@@ -165,24 +222,8 @@ public class Util {
     }
 
 
-    private void animateText(View txt) {
-        final ObjectAnimator an = ObjectAnimator.ofFloat(txt, View.SCALE_X, 0);
-        an.setRepeatCount(1);
-        an.setDuration(200);
-        an.setRepeatMode(ValueAnimator.REVERSE);
-        an.start();
-    }
-
-    public static void animateScaleX(View txt, long duration) {
-        final ObjectAnimator an = ObjectAnimator.ofFloat(txt, View.SCALE_X, 0);
-        an.setRepeatCount(1);
-        an.setDuration(duration);
-        an.setRepeatMode(ValueAnimator.REVERSE);
-        an.start();
-    }
-
     public static void animateScaleY(View txt, long duration) {
-        final ObjectAnimator an = ObjectAnimator.ofFloat(txt, View.SCALE_Y, 0);
+        final ObjectAnimator an = ObjectAnimator.ofFloat(txt, "scaleY", 0);
         an.setRepeatCount(1);
         an.setDuration(duration);
         an.setRepeatMode(ValueAnimator.REVERSE);
@@ -198,7 +239,7 @@ public class Util {
     }
 
     public static void animateRollup(View view, long duration) {
-        final ObjectAnimator an = ObjectAnimator.ofFloat(view, View.SCALE_Y, 0.0f);
+        final ObjectAnimator an = ObjectAnimator.ofFloat(view, "scaleY", 0.0f);
         //an.setRepeatCount(ObjectAnimator.REVERSE);
         an.setDuration(duration);
         an.setInterpolator(new AccelerateDecelerateInterpolator());

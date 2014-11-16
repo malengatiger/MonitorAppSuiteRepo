@@ -240,11 +240,12 @@
     <string name="delete_question">Do you really want to delete?</string>
     <string name="delete_confirm">Delete Confirmation</string>
     <string name="beneficiary">Beneficiary</string>
-    <string name="task">Engineer</string>
+    <string name="task">Task</string>
     <string name="task_name">Task Name/Description</string>
     <string name="engineer">Engineer</string>
     <string name="select_seq_no">Select Task Sequence Number</string>
     <string name="happy_letter">Happy Letter</string>
     <string name="select_project">Select Project</string>
+    <string name="tap_to_enter">Tap to enter name</string>
 
 </resources>

@@ -32,12 +32,13 @@ public class CacheUtil {
     }
 
     static CacheUtilListener listener;
-    public static final int CACHE_DATA = 1, CACHE_COUNTRIES = 3, CACHE_PHOTOS = 4;
-    static int dataType, siteID;
+    public static final int CACHE_DATA = 1, CACHE_COUNTRIES = 3, CACHE_PHOTOS = 4, CACHE_PROJECT = 5;
+    static int dataType;
+    static Integer projectID;
     static ResponseDTO response;
     static Context ctx;
     static final String JSON_DATA = "data.json", JSON_COUNTRIES = "countries.json",
-            JSON_SITE_DATA = "site.json", JSON_PHOTO = "photos.json";
+            JSON_PROJECT_DATA = "project_data", JSON_PHOTO = "photos.json";
 
 
     public static void cacheData(Context context, ResponseDTO r, int type, CacheUtilListener cacheUtilListener) {
@@ -48,11 +49,11 @@ public class CacheUtil {
         new CacheTask().execute();
     }
 
-    public static void cacheData(Context context, ResponseDTO r, int type, int id, CacheUtilListener cacheUtilListener) {
+    public static void cacheProjectData(Context context, ResponseDTO r, int type, Integer pID, CacheUtilListener cacheUtilListener) {
         dataType = type;
         response = r;
         listener = cacheUtilListener;
-        siteID = id;
+        projectID = pID;
         ctx = context;
         new CacheTask().execute();
     }
@@ -64,12 +65,12 @@ public class CacheUtil {
         new CacheRetrieveTask().execute();
     }
 
-    public static void getCachedData(Context context, int type, int id, CacheUtilListener cacheUtilListener) {
-        Log.d(LOG, "################ getting cached data ..................");
+    public static void getCachedProjectData(Context context, int type, Integer id, CacheUtilListener cacheUtilListener) {
+        Log.d(LOG, "################ getting cached project data ..................");
         dataType = type;
         listener = cacheUtilListener;
         ctx = context;
-        siteID = id;
+        projectID = id;
         new CacheRetrieveTask().execute();
     }
 
@@ -84,6 +85,16 @@ public class CacheUtil {
             try {
                 switch (dataType) {
 
+                    case CACHE_PROJECT:
+                        json = gson.toJson(response);
+                        outputStream = ctx.openFileOutput(JSON_PROJECT_DATA + projectID + ".json", Context.MODE_PRIVATE);
+                        write(outputStream, json);
+                        file = ctx.getFileStreamPath(JSON_PROJECT_DATA + projectID + ".json");
+                        if (file != null) {
+                            Log.e(LOG, "......Project cache json written to disk,  - path: " + file.getAbsolutePath() +
+                                    " - length: " + file.length());
+                        }
+                        break;
                     case CACHE_PHOTOS:
                         json = gson.toJson(response);
                         outputStream = ctx.openFileOutput(JSON_PHOTO, Context.MODE_PRIVATE);
@@ -156,6 +167,10 @@ public class CacheUtil {
             FileInputStream stream;
             try {
                 switch (dataType) {
+                    case CACHE_PROJECT:
+                        stream = ctx.openFileInput(JSON_PROJECT_DATA + projectID + ".json");
+                        response = getData(stream);
+                        break;
                     case CACHE_PHOTOS:
                         stream = ctx.openFileInput(JSON_PHOTO);
                         response = getData(stream);

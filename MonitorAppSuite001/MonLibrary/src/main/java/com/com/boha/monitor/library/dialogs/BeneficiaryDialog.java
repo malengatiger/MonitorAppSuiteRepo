@@ -59,7 +59,6 @@ public class BeneficiaryDialog extends DialogFragment {
     BeneficiaryDTO beneficiary;
     View view;
     int action;
-    String title;
     static final String LOG = BeneficiaryDialog.class.getSimpleName();
 
 
@@ -81,12 +80,11 @@ public class BeneficiaryDialog extends DialogFragment {
         progressBar.setVisibility(View.GONE);
         imgDelete = (ImageView) view.findViewById(R.id.ED_PSN_imgDelete);
         imgDelete.setVisibility(View.GONE);
-        TextView mTitle = (TextView)view.findViewById(R.id.ED_PSN_personType);
-        mTitle.setText(title);
+
 
         btnCancel = (Button) view.findViewById(R.id.ED_PSN_btnCancel);
         btnSave = (Button) view.findViewById(R.id.ED_PSN_btnSave);
-        getDialog().setTitle(context.getResources().getString(R.string.app_name));
+        getDialog().setTitle(context.getResources().getString(R.string.beneficiary));
         setSpinner();
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -146,8 +144,6 @@ public class BeneficiaryDialog extends DialogFragment {
     private void fillForm() {
         editFirstName.setText(beneficiary.getFirstName());
         editLastName.setText(beneficiary.getLastName());
-        editEmail.setText(beneficiary.getEmail());
-        editCellphone.setText(beneficiary.getCellphone());
         editIDNumber.setText(beneficiary.getiDNumber());
 
 
@@ -171,11 +167,14 @@ public class BeneficiaryDialog extends DialogFragment {
             ToastUtil.toast(context, context.getResources().getString(R.string.enter_id));
             return;
         }
+        if (project == null) {
+            ToastUtil.toast(context, context.getString(R.string.select_project));
+            return;
+        }
 
         beneficiary.setFirstName(editFirstName.getText().toString());
         beneficiary.setLastName(editLastName.getText().toString());
-       // beneficiary.setCellphone(editCellphone.getText().toString());
-       // beneficiary.setEmail(editEmail.getText().toString());
+        beneficiary.setProjectID(project.getProjectID());
         beneficiary.setiDNumber(editIDNumber.getText().toString());
 
         RequestDTO w = new RequestDTO();
@@ -228,10 +227,6 @@ public class BeneficiaryDialog extends DialogFragment {
 
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public void setContext(Context context) {
         this.context = context;
     }
@@ -265,7 +260,7 @@ public class BeneficiaryDialog extends DialogFragment {
                     ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(context, R.layout.xxsimple_spinner_item, list);
                     adapter1.setDropDownViewResource(R.layout.xxsimple_spinner_dropdown_item);
                     if (spinner == null) {
-                        spinner = (Spinner) view.findViewById(R.id.BC_projectSpinner);
+                        spinner = (Spinner) view.findViewById(R.id.ED_PSN_spinner);
                     }
                     spinner.setAdapter(adapter1);
                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

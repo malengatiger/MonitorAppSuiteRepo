@@ -67,7 +67,7 @@ public class TaskDialog extends DialogFragment {
 
         btnCancel = (Button) view.findViewById(R.id.TE_btnCancel);
         btnSave = (Button) view.findViewById(R.id.TE_btnSave);
-        getDialog().setTitle(context.getResources().getString(R.string.app_name));
+        getDialog().setTitle(context.getString(R.string.task));
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
 

@@ -1,20 +1,20 @@
 package com.com.boha.monitor.library.dialogs;
 
+import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
 import com.boha.monitor.library.R;
-import com.com.boha.monitor.library.dto.CheckPointDTO;
-import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectStatusTypeDTO;
 import com.com.boha.monitor.library.dto.TaskStatusDTO;
@@ -29,22 +29,21 @@ import com.com.boha.monitor.library.util.WebSocketUtil;
 /**
  * Created by aubreyM on 2014/10/18.
  */
-public class EditDialog extends DialogFragment {
+public class TaskAndProjectStatusDialog extends DialogFragment {
 
     Context context;
-    TextView txtTitle;
     EditText editName, editDesc;
     ProgressBar progressBar;
-    Button btnCancel, btnSave, btnDelete;
+    Button btnCancel, btnSave;
     RadioButton radioRed, radioGreen, radioYellow;
-    CompanyStaffDTO companyStaff;
     View view;
-    int action;
+    ImageView imgDelete;
+    int action, type;
     public static final int
             ACTION_ADD = 1,
             ACTION_UPDATE = 2,
-            ACTION_DELETE = 3;
-    static final String LOG = EditDialog.class.getSimpleName();
+            TASK_STATUS = 4, PROJECT_STATUS = 5;
+    static final String LOG = TaskAndProjectStatusDialog.class.getSimpleName();
 
 
     @Override
@@ -53,37 +52,58 @@ public class EditDialog extends DialogFragment {
         this.view = inflater.inflate(R.layout.edit_dialog, container);
         editName = (EditText) view.findViewById(R.id.EDD_edit);
         editDesc = (EditText) view.findViewById(R.id.EDD_desc);
-        txtTitle = (TextView) view.findViewById(R.id.EDD_title);
         radioGreen = (RadioButton) view.findViewById(R.id.EDD_radioGreen);
         radioRed = (RadioButton) view.findViewById(R.id.EDD_radioRed);
         radioYellow = (RadioButton) view.findViewById(R.id.EDD_radioYellow);
+        imgDelete = (ImageView) view.findViewById(R.id.EDD_imgDelete);
+        imgDelete.setVisibility(View.GONE);
 
-        if (taskStatus != null)
-            txtTitle.setText(context.getResources().getString(R.string.task_status));
-        if (projectStatusType != null)
-            txtTitle.setText(context.getResources().getString(R.string.project_status));
         editDesc.setVisibility(View.GONE);
         progressBar = (ProgressBar) view.findViewById(R.id.EDD_progress);
         progressBar.setVisibility(View.GONE);
 
         btnCancel = (Button) view.findViewById(R.id.EDD_btnCancel);
         btnSave = (Button) view.findViewById(R.id.EDD_btnChange);
-        btnDelete = (Button) view.findViewById(R.id.EDD_btnDelete);
-        getDialog().setTitle(context.getResources().getString(R.string.app_name));
+        switch (type) {
+            case TASK_STATUS:
+                getDialog().setTitle(context.getString(R.string.task_status));
+                break;
+            case PROJECT_STATUS:
+                getDialog().setTitle(context.getString(R.string.project_status));
+                break;
+        }
+
         switch (action) {
             case ACTION_ADD:
-                btnDelete.setVisibility(View.GONE);
                 btnSave.setText(context.getString(R.string.save));
                 break;
             case ACTION_UPDATE:
                 btnSave.setText(context.getString(R.string.change_item));
                 fillForm();
+                imgDelete.setVisibility(View.VISIBLE);
+                imgDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder diag = new AlertDialog.Builder(getActivity());
+                        diag.setTitle(context.getString(R.string.delete_confirm));
+                        diag.setMessage(context.getString(R.string.delete_question))
+                                .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                })
+                                .setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                })
+                                .show();
+                    }
+                });
                 break;
-            case ACTION_DELETE:
-                btnDelete.setVisibility(View.VISIBLE);
-                btnSave.setVisibility(View.GONE);
-                fillForm();
-                break;
+
         }
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -101,13 +121,7 @@ public class EditDialog extends DialogFragment {
                 update();
             }
         });
-        btnDelete.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View arg0) {
-                ToastUtil.toast(context, context.getResources().getString(R.string.under_cons));
-            }
-        });
 
 
         return view;
@@ -116,12 +130,10 @@ public class EditDialog extends DialogFragment {
     private TaskStatusDTO taskStatus;
     private ProjectStatusTypeDTO projectStatusType;
     private ProjectDTO project;
-    private CheckPointDTO checkPoint;
 
     private void fillForm() {
         if (taskStatus != null) {
             editName.setText(taskStatus.getTaskStatusName());
-            txtTitle.setText(context.getResources().getString(R.string.task_status));
             if (taskStatus.getStatusColor() != null) {
                 switch (taskStatus.getStatusColor()) {
                     case TaskStatusDTO.STATUS_COLOR_YELLOW:
@@ -138,7 +150,6 @@ public class EditDialog extends DialogFragment {
         }
         if (projectStatusType != null) {
             editName.setText(projectStatusType.getProjectStatusName());
-            txtTitle.setText(context.getResources().getString(R.string.project_status));
             switch (projectStatusType.getStatusColor()) {
                 case TaskStatusDTO.STATUS_COLOR_YELLOW:
                     radioYellow.setChecked(true);
@@ -155,7 +166,6 @@ public class EditDialog extends DialogFragment {
             editName.setText(project.getProjectName());
             editDesc.setText(project.getDescription());
             editDesc.setVisibility(View.VISIBLE);
-            txtTitle.setText(context.getResources().getString(R.string.company_projects));
             radioRed.setVisibility(View.GONE);
             radioYellow.setVisibility(View.GONE);
             radioGreen.setVisibility(View.GONE);
@@ -254,6 +264,10 @@ public class EditDialog extends DialogFragment {
 
     }
 
+    public void setType(int type) {
+        this.type = type;
+    }
+
     public void setContext(Context context) {
         this.context = context;
     }
@@ -280,10 +294,6 @@ public class EditDialog extends DialogFragment {
 
     public void setProject(ProjectDTO project) {
         this.project = project;
-    }
-
-    public void setCheckPoint(CheckPointDTO checkPoint) {
-        this.checkPoint = checkPoint;
     }
 
     public void setAction(int action) {

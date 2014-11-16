@@ -11,7 +11,7 @@
     <RelativeLayout
         android:id="@+id/PROJ_LIST_layoutx"
         android:padding="4dp"
-        android:background="@color/white"
+        android:background="@color/beige_pale"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="16dp"
+    android:padding="8dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/TE_imgDelete"
@@ -45,7 +45,7 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_below="@id/TE_numLayout"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button

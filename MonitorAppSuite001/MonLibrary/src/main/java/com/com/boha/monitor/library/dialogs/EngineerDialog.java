@@ -46,7 +46,6 @@ public class EngineerDialog extends DialogFragment {
     ProgressBar progressBar;
     Button btnCancel, btnSave;
     EngineerDTO engineer;
-    String title;
     View view;
     int action;
     static final String LOG = EngineerDialog.class.getSimpleName();
@@ -68,16 +67,13 @@ public class EngineerDialog extends DialogFragment {
         imgDelete = (ImageView)view.findViewById(R.id.ED_PSN_imgDelete);
         imgDelete.setVisibility(View.GONE);
 
-        TextView mTitle = (TextView)view.findViewById(R.id.ED_PSN_personType);
-        mTitle.setText(title);
-
         progressBar = (ProgressBar) view.findViewById(R.id.ED_PSN_progress);
         progressBar.setVisibility(View.GONE);
 
 
         btnCancel = (Button) view.findViewById(R.id.ED_PSN_btnCancel);
         btnSave = (Button) view.findViewById(R.id.ED_PSN_btnSave);
-        getDialog().setTitle(context.getResources().getString(R.string.app_name));
+        getDialog().setTitle(context.getResources().getString(R.string.engineer));
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
 
@@ -93,10 +89,10 @@ public class EngineerDialog extends DialogFragment {
             public void onClick(View arg0) {
                 switch (action) {
                     case EngineerDTO.ACTION_ADD:
-                        registerActor();
+                        registerEngineer();
                         break;
                     case EngineerDTO.ACTION_UPDATE:
-                        updateActor();
+                        updateEngineer();
                         break;
 
                 }
@@ -115,7 +111,7 @@ public class EngineerDialog extends DialogFragment {
                                 .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        deleteActor();
+                                        deleteEngineer();
                                     }
                                 })
                                 .setNegativeButton(context.getString(R.string.no),new DialogInterface.OnClickListener() {
@@ -140,7 +136,7 @@ public class EngineerDialog extends DialogFragment {
 
 
     }
-    private void registerActor() {
+    private void registerEngineer() {
         engineer = new EngineerDTO();
         CompanyDTO c = new CompanyDTO();
         c.setCompanyID(SharedUtil.getCompany(context).getCompanyID());
@@ -207,16 +203,13 @@ public class EngineerDialog extends DialogFragment {
 
     }
 
-    private void updateActor() {
+    private void updateEngineer() {
 
     }
-    private void deleteActor() {
+    private void deleteEngineer() {
 
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
     public void setContext(Context context) {
         this.context = context;
     }

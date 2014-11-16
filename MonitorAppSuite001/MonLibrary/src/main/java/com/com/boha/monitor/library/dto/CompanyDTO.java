@@ -28,41 +28,14 @@ public class CompanyDTO implements Serializable {
     private List<ClientDTO> clientList = new ArrayList<>();
     private List<CheckPointDTO> checkPointList = new ArrayList<>();
     private List<InvoiceDTO> invoiceList = new ArrayList<>();
-    private List<BeneficiaryDTO> beneficiaryList = new ArrayList<>();
     private List<BankDetailDTO> bankDetailList = new ArrayList<>();
     private List<GcmDeviceDTO> gcmDeviceList = new ArrayList<>();
-    private List<ContractorClaimDTO> contractorClaimList = new ArrayList<>();
+
     private List<CompanyStaffTypeDTO> companyStaffTypeList = new ArrayList<>();
     private List<EngineerDTO> engineerList = new ArrayList<EngineerDTO>();
     
 
     public CompanyDTO() {
-    }
-
-
-    private void log() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("###### Company Data #############").append("\n");
-        sb.append("Clients: ").append(clientList.size()).append("\n");
-        sb.append("Projects: ").append(projectList.size()).append("\n");
-        sb.append("Staff: ").append(companyStaffList.size()).append("\n");
-        sb.append("Invoices: ").append(invoiceList.size()).append("\n");
-        sb.append("Tasks: ").append(taskList.size()).append("\n");
-        sb.append("TaskStatus: ").append(taskStatusList.size()).append("\n");
-        sb.append("ProjectStatusTypes: ").append(projectStatusTypeList.size()).append("\n");
-        sb.append("Beneficiaries: ").append(beneficiaryList.size()).append("\n");
-        sb.append("Devices: ").append(gcmDeviceList.size()).append("\n");
-        sb.append("CheckPoints: ").append(checkPointList.size()).append("\n");
-        sb.append("#######################");
-        System.out.println(sb.toString());
-    }
-
-    public List<ContractorClaimDTO> getContractorClaimList() {
-        return contractorClaimList;
-    }
-
-    public void setContractorClaimList(List<ContractorClaimDTO> contractorClaimList) {
-        this.contractorClaimList = contractorClaimList;
     }
 
     public List<EngineerDTO> getEngineerList() {
@@ -155,13 +128,6 @@ public class CompanyDTO implements Serializable {
         this.invoiceList = invoiceList;
     }
 
-    public List<BeneficiaryDTO> getBeneficiaryList() {
-        return beneficiaryList;
-    }
-
-    public void setBeneficiaryList(List<BeneficiaryDTO> beneficiaryList) {
-        this.beneficiaryList = beneficiaryList;
-    }
 
     public List<GcmDeviceDTO> getGcmDeviceList() {
         return gcmDeviceList;

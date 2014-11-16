@@ -39,8 +39,8 @@
         android:id="@+id/STAFF_LIST_staffCount"
         android:text="00"
         style="@style/BlackCircle"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="8dp"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

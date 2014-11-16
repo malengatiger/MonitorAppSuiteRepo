@@ -1,8 +1,6 @@
 package com.com.boha.monitor.library.adapters;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +62,6 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
         ImageView imgCamera, imgMap;
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolderItem item;
@@ -118,16 +115,16 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
             ProjectSiteTaskStatusDTO status = statusList.get(0);
             switch (status.getTaskStatus().getStatusColor()) {
                 case TaskStatusDTO.STATUS_COLOR_RED:
-                    item.txtSiteCount.setBackground(ctx.getResources().getDrawable(R.drawable.xred_oval));
-                    item.txtStatusCount.setBackground(ctx.getResources().getDrawable(R.drawable.xred_oval));
+                    item.txtSiteCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval));
+                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval));
                     break;
                 case TaskStatusDTO.STATUS_COLOR_GREEN:
-                    item.txtSiteCount.setBackground(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
-                    item.txtStatusCount.setBackground(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
+                    item.txtSiteCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
+                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
                     break;
                 case TaskStatusDTO.STATUS_COLOR_YELLOW:
-                    item.txtSiteCount.setBackground(ctx.getResources().getDrawable(R.drawable.xorange_oval));
-                    item.txtStatusCount.setBackground(ctx.getResources().getDrawable(R.drawable.xorange_oval));
+                    item.txtSiteCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_oval));
+                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_oval));
                     break;
             }
         }
@@ -161,8 +158,8 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
                 listener.onMapRequested(p);
             }
         });
-        Statics.setRobotoFontLight(ctx,item.txtDesc);
-        Statics.setRobotoFontBold(ctx,item.txtName);
+        Statics.setRobotoFontLight(ctx,item.txtClient);
+        Statics.setRobotoFontLight(ctx,item.txtName);
 
 
         animateView(convertView);

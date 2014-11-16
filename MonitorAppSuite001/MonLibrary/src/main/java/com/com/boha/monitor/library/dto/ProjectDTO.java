@@ -19,9 +19,11 @@ public class ProjectDTO implements Serializable {
 
 
     public static final int ACTION_ADD = 1,
-            ACTION_UPDATE = 2, ACTION_DELETE = 3;
+            ACTION_UPDATE = 2;
     private static final long serialVersionUID = 1L;
-    private Integer projectID;
+    private Integer projectID,siteCount, statusCount, invoiceCount,
+            contractorClaimCount, beneficiaryCount,
+            photoCount;
     private String projectName, clientName;
     private String description;
     private long dateRegistered;
@@ -30,12 +32,77 @@ public class ProjectDTO implements Serializable {
     private List<ProjectSiteDTO> projectSiteList = new ArrayList<>();
     private List<PhotoUploadDTO> photoUploadList = new ArrayList<>();
     private List<BeneficiaryDTO> beneficiaryList = new ArrayList<>();
-
+    private List<InvoiceDTO> invoiceList;
+    private List<ContractorClaimDTO> contractorClaimList = new ArrayList<>();
     public ProjectDTO() {
     }
 
     public ProjectDTO(Integer projectID) {
         this.projectID = projectID;
+    }
+
+    public List<ContractorClaimDTO> getContractorClaimList() {
+        return contractorClaimList;
+    }
+
+    public Integer getInvoiceCount() {
+        return invoiceCount;
+    }
+
+    public void setInvoiceCount(Integer invoiceCount) {
+        this.invoiceCount = invoiceCount;
+    }
+
+    public Integer getContractorClaimCount() {
+        return contractorClaimCount;
+    }
+
+    public void setContractorClaimCount(Integer contractorClaimCount) {
+        this.contractorClaimCount = contractorClaimCount;
+    }
+
+    public Integer getBeneficiaryCount() {
+        return beneficiaryCount;
+    }
+
+    public void setBeneficiaryCount(Integer beneficiaryCount) {
+        this.beneficiaryCount = beneficiaryCount;
+    }
+
+    public Integer getPhotoCount() {
+        return photoCount;
+    }
+
+    public void setPhotoCount(Integer photoCount) {
+        this.photoCount = photoCount;
+    }
+
+    public Integer getSiteCount() {
+        return siteCount;
+    }
+
+    public void setSiteCount(Integer siteCount) {
+        this.siteCount = siteCount;
+    }
+
+    public Integer getStatusCount() {
+        return statusCount;
+    }
+
+    public void setStatusCount(Integer statusCount) {
+        this.statusCount = statusCount;
+    }
+
+    public void setContractorClaimList(List<ContractorClaimDTO> contractorClaimList) {
+        this.contractorClaimList = contractorClaimList;
+    }
+
+    public List<InvoiceDTO> getInvoiceList() {
+        return invoiceList;
+    }
+
+    public void setInvoiceList(List<InvoiceDTO> invoiceList) {
+        this.invoiceList = invoiceList;
     }
 
     public List<BeneficiaryDTO> getBeneficiaryList() {

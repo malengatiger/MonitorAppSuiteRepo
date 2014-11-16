@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.ClientDTO;
@@ -35,7 +34,6 @@ public class ClientDialog extends DialogFragment {
     }
     ClientDialogListener listener;
     Context context;
-    TextView txtCompany;
     EditText editClientName, editAddress, editEmail, editCellphone, editPostal;
     ProgressBar progressBar;
     Button btnCancel, btnSave;
@@ -65,7 +63,7 @@ public class ClientDialog extends DialogFragment {
         btnSave = (Button) view.findViewById(R.id.CE_btnSave);
         imgDelete = (ImageView) view.findViewById(R.id.CE_imgDelete);
         imgDelete.setVisibility(View.GONE);
-        getDialog().setTitle(context.getResources().getString(R.string.app_name));
+        getDialog().setTitle(context.getResources().getString(R.string.client));
 
 
         btnCancel.setOnClickListener(new View.OnClickListener() {

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.CompanyDTO;
+import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.util.Statics;
 
 import java.text.DecimalFormat;
@@ -126,11 +127,17 @@ public class DrawerAdapter extends ArrayAdapter<String> {
                 }
                 break;
             case 7:
-                if (company.getBeneficiaryList().isEmpty()) {
+                if (company.getProjectList().isEmpty()) {
                     item.txtCount.setVisibility(View.GONE);
                 } else {
                     item.txtCount.setVisibility(View.VISIBLE);
-                    item.txtCount.setText("" + company.getBeneficiaryList().size());
+                    int count = 0;
+                    for (ProjectDTO px: company.getProjectList()) {
+                        if (px.getBeneficiaryCount() != null) {
+                            count += px.getBeneficiaryCount().intValue();
+                        }
+                    }
+                    item.txtCount.setText("" + count);
                 }
                 break;
 

@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:text="00"
             android:id="@+id/PROJ_txtCount"
-            style="@style/BlackCircle"
+            style="@style/GreyCircle"
             android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true" />
@@ -99,7 +99,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/PROJ_statusLayout"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="24dp"
         android:visibility="visible"
         android:layout_alignLeft="@id/PROJ_layout"
@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:text="00"
             android:id="@+id/PROJ_txtStatusCount"
-            style="@style/BlackCircle"
+            style="@style/GreyCircle"
             android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true" />
@@ -160,6 +160,13 @@
             android:layout_toRightOf="@id/PROJ_imageCount"
             android:layout_marginLeft="48dp"
             android:src="@drawable/ic_action_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/PROJ_docs"
+            android:layout_toRightOf="@id/PROJ_map"
+            android:layout_marginLeft="48dp"
+            android:src="@drawable/ic_action_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

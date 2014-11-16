@@ -105,6 +105,10 @@ public class ImageGridFragment extends Fragment implements PageFragment {
         gridView = (GridView) view.findViewById(R.id.grid);
         gridView.setVisibility(View.GONE);
         //
+        if (pathList == null) {
+            Log.e(LOG,"------- pathList is null, no photos");
+            return;
+        }
         staggeredGridView = (StaggeredGridView) view.findViewById(R.id.staggeredGrid);
         imageAdapter = new ImageAdapter(ctx, R.layout.image_item, pathList);
 

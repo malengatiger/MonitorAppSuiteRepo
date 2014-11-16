@@ -4,17 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.adapters.BeneficiaryAdapter;
+import com.com.boha.monitor.library.dialogs.ProjectPopupDialog;
 import com.com.boha.monitor.library.dto.BeneficiaryDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
@@ -27,16 +27,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <project/>
- * Large screen devices (such as tablets) are supported by replacing the ListView
- * with a GridView.
- * <project/>
- * Activities containing this fragment MUST implement the ProjectSiteListListener
- * interface.
- */
-public class BeneficiaryListFragment extends Fragment implements  PageFragment {
+public class BeneficiaryListFragment extends Fragment implements PageFragment {
 
     private BeneficiaryListListener mListener;
     private AbsListView mListView;
@@ -52,32 +43,71 @@ public class BeneficiaryListFragment extends Fragment implements  PageFragment {
 
     Context ctx;
     View view;
-    TextView txtCount, txtName;
+    TextView txtCount, txtTitle, txtProjectName;
+    static final String LOG = BeneficiaryListFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(LOG, "######### onCreateView");
         view = inflater.inflate(R.layout.fragment_beneficiary_list, container, false);
         ctx = getActivity();
         mListView = (AbsListView) view.findViewById(R.id.BC_list);
         txtCount = (TextView) view.findViewById(R.id.BC_count);
-        txtName = (TextView) view.findViewById(R.id.BC_title);
-        Statics.setRobotoFontLight(ctx, txtName);
-
-        Bundle b = getArguments();
-        if (b != null) {
-            ResponseDTO r = (ResponseDTO) b.getSerializable("response");
-            beneficiaryList = r.getCompany().getBeneficiaryList();
-            if (beneficiaryList == null) {
-                beneficiaryList = new ArrayList<>();
+        txtTitle = (TextView) view.findViewById(R.id.BC_title);
+        txtProjectName= (TextView) view.findViewById(R.id.BC_projectName);
+        Statics.setRobotoFontLight(ctx, txtTitle);
+        txtProjectName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               showProjectDialog();
             }
+        });
+        if (savedInstanceState != null) {
+            Log.e(LOG,"##### onCreateView, savedInstanceState not null");
+            ResponseDTO r = (ResponseDTO)savedInstanceState.getSerializable("projectList");
+            projectList = r.getProjectList();
+            txtProjectName.setText(projectList.get(0).getProjectName());
+            getBeneficiaryList(projectList.get(0).getProjectID());
+            return view;
         }
-        setList();
-        setSpinner();
+        Bundle args = getArguments();
+        if (args != null) {
+            ResponseDTO r = (ResponseDTO) args.getSerializable("projectList");
+            projectList = r.getProjectList();
+            txtProjectName.setText(projectList.get(0).getProjectName());
+            getBeneficiaryList(projectList.get(0).getProjectID());
+        }
+
         return view;
     }
 
+    private void showProjectDialog() {
+        ProjectPopupDialog diag = new ProjectPopupDialog();
+        diag.setContext(ctx);
+        diag.setProjectList(projectList);
+        diag.setListener(new ProjectPopupDialog.ProjectPopupDialogListener() {
+            @Override
+            public void onProjectClicked(ProjectDTO p) {
+                project = p;
+                txtProjectName.setText(p.getProjectName());
+                getBeneficiaryList(project.getProjectID());
+            }
+        });
+        diag.show(getActivity().getFragmentManager(), "PROJ_DIAG");
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle state) {
+        Log.e(LOG,"####### onSaveInstanceState");
+        ResponseDTO r = new ResponseDTO();
+        r.setProjectList(projectList);
+        state.putSerializable("projectList", r);
+        super.onSaveInstanceState(state);
+    }
+
     private void setList() {
+        if (beneficiaryList == null) beneficiaryList = new ArrayList<>();
         txtCount.setText("" + beneficiaryList.size());
         adapter = new BeneficiaryAdapter(ctx, R.layout.beneficiary_card,
                 beneficiaryList, new BeneficiaryAdapter.BeneficiaryAdapterListener() {
@@ -173,41 +203,32 @@ public class BeneficiaryListFragment extends Fragment implements  PageFragment {
     BeneficiaryAdapter adapter;
     List<ProjectDTO> projectList;
     ProjectDTO project;
-    Spinner spinner;
-    private void setSpinner() {
 
-        CacheUtil.getCachedData(ctx,CacheUtil.CACHE_DATA,new CacheUtil.CacheUtilListener() {
+
+    private void getBeneficiaryList(final Integer projectID) {
+        CacheUtil.getCachedProjectData(ctx, CacheUtil.CACHE_PROJECT, projectID, new CacheUtil.CacheUtilListener() {
             @Override
             public void onFileDataDeserialized(ResponseDTO response) {
+                Log.w("BeneficiaryListFragment", "onFileDataDeserialized!");
                 if (response != null) {
-                    projectList = response.getCompany().getProjectList();
-                    List<String> list = new ArrayList<>();
-                    list.add(ctx.getString(R.string.select_project));
-                    for (ProjectDTO p: projectList) {
-                        list.add(p.getProjectName());
+                    if (!response.getProjectList().isEmpty()) {
+                        beneficiaryList = response.getProjectList().get(0).getBeneficiaryList();
+                        setList();
                     }
-                    ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(ctx, R.layout.xxsimple_spinner_item,list);
-                    adapter1.setDropDownViewResource(R.layout.xxsimple_spinner_dropdown_item);
-                    if (spinner == null) {
-                        spinner = (Spinner)view.findViewById(R.id.BC_projectSpinner);
-                    }
-                    spinner.setAdapter(adapter1);
-                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position == 0) {
-                                project = null;
-                            } else {
-                                project = projectList.get(position - 1);
-                            }
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });
                 }
+                Util.refreshProjectData(getActivity(), ctx, projectID, new Util.ProjectDataRefreshListener() {
+                    @Override
+                    public void onDataRefreshed(ProjectDTO project) {
+                        beneficiaryList = project.getBeneficiaryList();
+                        setList();
+                    }
+
+                    @Override
+                    public void onError() {
+                        Log.e("BeneficiaryListFragment", "Error doing shit!");
+                    }
+                });
+
             }
 
             @Override
@@ -217,8 +238,23 @@ public class BeneficiaryListFragment extends Fragment implements  PageFragment {
 
             @Override
             public void onError() {
+                Log.e("BeneficiaryListFragment", "Error with cache...refreshing from server");
+                Util.refreshProjectData(getActivity(), ctx, projectID, new Util.ProjectDataRefreshListener() {
+                    @Override
+                    public void onDataRefreshed(ProjectDTO project) {
+                        beneficiaryList = project.getBeneficiaryList();
+                        setList();
+                    }
+
+                    @Override
+                    public void onError() {
+                        Log.e("BeneficiaryListFragment", "Error refreshing project data!");
+                    }
+                });
 
             }
         });
     }
+
+
 }

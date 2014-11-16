@@ -26,7 +26,7 @@ import com.com.boha.monitor.library.SitePagerActivity;
 import com.com.boha.monitor.library.adapters.DrawerAdapter;
 import com.com.boha.monitor.library.dialogs.BeneficiaryDialog;
 import com.com.boha.monitor.library.dialogs.ClientDialog;
-import com.com.boha.monitor.library.dialogs.EditDialog;
+import com.com.boha.monitor.library.dialogs.TaskAndProjectStatusDialog;
 import com.com.boha.monitor.library.dialogs.EngineerDialog;
 import com.com.boha.monitor.library.dialogs.PersonDialog;
 import com.com.boha.monitor.library.dialogs.ProjectDialog;
@@ -74,6 +74,7 @@ public class OperationsPagerActivity extends FragmentActivity
 
     private DrawerLayout mDrawerLayout;
     private DrawerAdapter mDrawerAdapter;
+    private List<ProjectDTO> projectList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,7 @@ public class OperationsPagerActivity extends FragmentActivity
                 if (r != null) {
                     response = r;
                     company = r.getCompany();
+                    projectList = company.getProjectList();
                     buildPages();
                 }
                 for (String s : titles) {
@@ -153,6 +155,7 @@ public class OperationsPagerActivity extends FragmentActivity
                             return;
                         }
                         response = r;
+                        projectList = r.getCompany().getProjectList();
                         buildPages();
                     }
                 });
@@ -243,7 +246,6 @@ public class OperationsPagerActivity extends FragmentActivity
                 PersonDialog diag = new PersonDialog();
                 diag.setAction(CompanyStaffDTO.ACTION_ADD);
                 diag.setContext(ctx);
-                diag.setTitle(getString(R.string.staff));
                 diag.setListener(new PersonDialog.PersonDialogListener() {
                     @Override
                     public void onStaffAdded(final CompanyStaffDTO companyStaff) {
@@ -336,11 +338,12 @@ public class OperationsPagerActivity extends FragmentActivity
                 td.show(getFragmentManager(),"TD_DIAG");
             }
             if (pf instanceof ProjectStatusTypeListFragment) {
-                EditDialog d2 = new EditDialog();
+                TaskAndProjectStatusDialog d2 = new TaskAndProjectStatusDialog();
                 d2.setContext(ctx);
-                d2.setAction(EditDialog.ACTION_ADD);
+                d2.setAction(TaskAndProjectStatusDialog.ACTION_ADD);
+                d2.setType(TaskAndProjectStatusDialog.PROJECT_STATUS);
                 d2.setProjectStatusType(new ProjectStatusTypeDTO());
-                d2.setListener(new EditDialog.EditDialogListener() {
+                d2.setListener(new TaskAndProjectStatusDialog.EditDialogListener() {
                     @Override
                     public void onComplete() {
 
@@ -361,7 +364,6 @@ public class OperationsPagerActivity extends FragmentActivity
             if (pf instanceof EngineerListFragment) {
                 EngineerDialog ed = new EngineerDialog();
                 ed.setContext(ctx);
-                ed.setTitle(getString(R.string.engineer));
                 ed.setAction(EngineerDTO.ACTION_ADD);
                 ed.setListener(new EngineerDialog.EngineerDialogListener() {
                     @Override
@@ -390,7 +392,6 @@ public class OperationsPagerActivity extends FragmentActivity
                 BeneficiaryDialog bd = new BeneficiaryDialog();
                 bd.setContext(ctx);
                 bd.setAction(BeneficiaryDTO.ACTION_ADD);
-                bd.setTitle(getString(R.string.beneficiary));
                 bd.setListener(new BeneficiaryDialog.BeneficiaryDialogListener() {
                     @Override
                     public void onBeneficiaryAdded(BeneficiaryDTO beneficiary) {
@@ -415,10 +416,11 @@ public class OperationsPagerActivity extends FragmentActivity
                 bd.show(getFragmentManager(),"BEN_DIAG");
             }
             if (pf instanceof TaskStatusListFragment) {
-                EditDialog d = new EditDialog();
+                TaskAndProjectStatusDialog d = new TaskAndProjectStatusDialog();
                 d.setContext(ctx);
-                d.setAction(EditDialog.ACTION_ADD);
-                d.setListener(new EditDialog.EditDialogListener() {
+                d.setAction(TaskAndProjectStatusDialog.ACTION_ADD);
+                d.setType(TaskAndProjectStatusDialog.TASK_STATUS);
+                d.setListener(new TaskAndProjectStatusDialog.EditDialogListener() {
                     @Override
                     public void onComplete() {
 
@@ -476,6 +478,10 @@ public class OperationsPagerActivity extends FragmentActivity
         engineerListFragment.setArguments(data1);
 
         beneficiaryListFragment = new BeneficiaryListFragment();
+        ResponseDTO xx = new ResponseDTO();
+        data1 = new Bundle();
+        xx.setProjectList(projectList);
+        data1.putSerializable("projectList", xx);
         beneficiaryListFragment.setArguments(data1);
 
 
@@ -621,11 +627,12 @@ public class OperationsPagerActivity extends FragmentActivity
     }
     @Override
     public void onTaskStatusClicked(TaskStatusDTO taskStatus) {
-        EditDialog d = new EditDialog();
+        TaskAndProjectStatusDialog d = new TaskAndProjectStatusDialog();
         d.setContext(ctx);
-        d.setAction(EditDialog.ACTION_UPDATE);
+        d.setAction(TaskAndProjectStatusDialog.ACTION_UPDATE);
+        d.setType(TaskAndProjectStatusDialog.TASK_STATUS);
         d.setTaskStatus(taskStatus);
-        d.setListener(new EditDialog.EditDialogListener() {
+        d.setListener(new TaskAndProjectStatusDialog.EditDialogListener() {
             @Override
             public void onComplete() {
 
@@ -647,10 +654,12 @@ public class OperationsPagerActivity extends FragmentActivity
     @Override
     public void onProjectStatusTypeClicked(ProjectStatusTypeDTO statusType) {
 
-        EditDialog d = new EditDialog();
+        TaskAndProjectStatusDialog d = new TaskAndProjectStatusDialog();
         d.setContext(ctx);
         d.setProjectStatusType(statusType);
-        d.setListener(new EditDialog.EditDialogListener() {
+        d.setAction(TaskAndProjectStatusDialog.ACTION_UPDATE);
+        d.setType(TaskAndProjectStatusDialog.PROJECT_STATUS);
+        d.setListener(new TaskAndProjectStatusDialog.EditDialogListener() {
             @Override
             public void onComplete() {
 

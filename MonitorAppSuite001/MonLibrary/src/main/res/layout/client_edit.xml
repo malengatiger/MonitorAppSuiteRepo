@@ -15,20 +15,6 @@
         android:layout_height="wrap_content">
 
 
-        <ImageView
-            android:id="@+id/CE_imgDelete"
-            android:src="@android:drawable/ic_delete"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/CE_title"
-            android:text="Company Client"
-            style="@style/Title2TextStyleGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
 
         <EditText
             android:id="@+id/CE_clientName"
@@ -36,8 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:inputType="textCapWords"
-            android:layout_below="@id/CE_title"
             android:textStyle="bold"
+            style="@style/TextStyleSmall"
             android:layout_marginLeft="5dp"
             android:hint="@string/client_name" />
 
@@ -48,6 +34,7 @@
             android:inputType="textCapWords"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
+            style="@style/TextStyleSmall"
             android:layout_height="wrap_content"
             android:hint="@string/address" />
 
@@ -57,6 +44,7 @@
             android:layout_below="@id/CE_address"
             android:inputType="phone"
             android:layout_marginTop="5dp"
+            style="@style/TextStyleSmall"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:hint="@string/cellphone" />
@@ -69,6 +57,7 @@
             android:inputType="textEmailAddress"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
+            style="@style/TextStyleSmall"
             android:layout_height="wrap_content"
             android:hint="@string/email" />
 
@@ -77,6 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_below="@id/CE_email"
             android:inputType="number"
+            style="@style/TextStyleSmall"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
             android:layout_height="wrap_content"
@@ -113,12 +103,19 @@
                 style="@style/ButtonRed"
                 android:text="@string/save"
                 android:layout_below="@id/CE_btnCancel"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
 
         </RelativeLayout>
     </RelativeLayout>
+    <ImageView
+        android:id="@+id/CE_imgDelete"
+        android:src="@android:drawable/ic_delete"
+        android:layout_alignParentRight="true"
+        android:layout_margin="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
