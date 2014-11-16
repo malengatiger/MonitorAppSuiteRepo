@@ -1,8 +1,6 @@
 package com.com.boha.monitor.library.adapters;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +68,6 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
         ImageView imgCamera, imgDelete, imgHero;
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         random = new Random(System.currentTimeMillis());
@@ -123,7 +120,7 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
                 }
             });
         } else {
-            item.imgHero.setVisibility(View.GONE);
+            item.imgHero.setImageDrawable(ctx.getResources().getDrawable(R.drawable.house));
         }
         if (p.getLastTaskStatus() != null) {
             item.txtLastStatus.setText(p.getLastTaskStatus().getTaskStatus().getTaskStatusName());
@@ -134,19 +131,19 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
             item.txtTaskName.setVisibility(View.VISIBLE);
             switch (p.getLastTaskStatus().getTaskStatus().getStatusColor()) {
                 case TaskStatusDTO.STATUS_COLOR_GREEN:
-                    item.txtStatusColor.setBackground(ctx.getResources().getDrawable(R.drawable.xgreen_box));
-                    item.txtStatusCount.setBackground(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
-                    item.txtTaskCount.setBackground(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
+                    item.txtStatusColor.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_box));
+                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
+                    item.txtTaskCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
                     break;
                 case TaskStatusDTO.STATUS_COLOR_YELLOW:
-                    item.txtStatusColor.setBackground(ctx.getResources().getDrawable(R.drawable.xorange_box));
-                    item.txtStatusCount.setBackground(ctx.getResources().getDrawable(R.drawable.xorange_oval));
-                    item.txtTaskCount.setBackground(ctx.getResources().getDrawable(R.drawable.xorange_oval));
+                    item.txtStatusColor.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_box));
+                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_oval));
+                    item.txtTaskCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_oval));
                     break;
                 case TaskStatusDTO.STATUS_COLOR_RED:
-                    item.txtStatusColor.setBackground(ctx.getResources().getDrawable(R.drawable.xred_box));
-                    item.txtStatusCount.setBackground(ctx.getResources().getDrawable(R.drawable.xred_oval));
-                    item.txtTaskCount.setBackground(ctx.getResources().getDrawable(R.drawable.xred_oval));
+                    item.txtStatusColor.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_box));
+                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval));
+                    item.txtTaskCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval));
                     break;
             }
 

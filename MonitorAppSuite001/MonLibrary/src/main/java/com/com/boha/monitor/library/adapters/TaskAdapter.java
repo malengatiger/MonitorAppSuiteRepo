@@ -69,7 +69,7 @@ public class TaskAdapter extends ArrayAdapter<TaskDTO>  {
         item.txtSequence.setText(""+p.getTaskNumber());
 
         Statics.setRobotoFontLight(ctx,item.txtNumber);
-        Statics.setRobotoFontRegular(ctx, item.txtName);
+        Statics.setRobotoFontLight(ctx, item.txtName);
 
 
         animateView(convertView);

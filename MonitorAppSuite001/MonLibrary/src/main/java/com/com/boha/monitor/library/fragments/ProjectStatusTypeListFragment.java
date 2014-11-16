@@ -23,28 +23,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <project/>
- * Large screen devices (such as tablets) are supported by replacing the ListView
- * with a GridView.
- * <project/>
- * Activities containing this fragment MUST implement the ProjectSiteListListener
- * interface.
- */
 public class ProjectStatusTypeListFragment extends Fragment implements AbsListView.OnItemClickListener, PageFragment {
 
     private ProjectStatusTypeListListener mListener;
-
-    /**
-     * The fragment's ListView/GridView.
-     */
     private AbsListView mListView;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public ProjectStatusTypeListFragment() {
     }
 

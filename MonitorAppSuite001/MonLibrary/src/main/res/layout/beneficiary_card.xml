@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:text="Beneficiary Name"
                     android:id="@+id/BEN_txtName"
-                    style="@style/Title2TextStyleBlue"
+                    style="@style/Title3TextStyleBlack"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="10dp"
                     android:layout_alignBaseline="@id/BEN_txtNum"

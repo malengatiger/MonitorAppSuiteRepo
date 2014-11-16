@@ -118,7 +118,10 @@ public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
         });
         Statics.setRobotoFontLight(ctx, item.txtNumber);
         Statics.setRobotoFontLight(ctx, item.txtEmail);
-        Statics.setRobotoFontBold(ctx, item.txtName);
+        Statics.setRobotoFontLight(ctx, item.txtCellphone);
+        Statics.setRobotoFontLight(ctx, item.txtName);
+        Statics.setRobotoFontLight(ctx,item.txtStaffType);
+
         StringBuilder sb = new StringBuilder();
         sb.append(Statics.IMAGE_URL);
         sb.append("company").append(SharedUtil.getCompany(ctx).getCompanyID());

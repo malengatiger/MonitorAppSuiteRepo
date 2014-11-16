@@ -85,7 +85,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_alignLeft="@id/PSN_txtName"
                 android:layout_below="@+id/PSN_txtCell"
-                style="@style/TextStyleBoldSmall"
+                style="@style/TextStyleRed"
                 android:layout_centerHorizontal="true" />
 
             <RelativeLayout

@@ -32,7 +32,7 @@
         android:layout_height="match_parent"/>
     <TextView
         android:id="@+id/FTST_count"
-        style="@style/BlueCircle"
+        style="@style/BlackCircle"
         android:text="99"
         android:layout_marginTop="24dp"
         android:layout_marginRight="8dp"

@@ -44,8 +44,9 @@
         <TextView
             android:id="@+id/CI_address"
             android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
             android:layout_toRightOf="@id/CI_number2"
-            style="@style/TextStyleBlue"
+            style="@style/TextStyleBoldBlueSmall"
             android:text="@string/address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -53,7 +54,8 @@
             android:id="@+id/CI_email"
             android:layout_alignLeft="@id/CI_address"
             android:layout_below="@id/CI_address"
-            style="@style/Title3TextStyleBlack"
+            style="@style/TextStyleSmall"
+            android:layout_marginTop="4dp"
             android:text="@string/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
