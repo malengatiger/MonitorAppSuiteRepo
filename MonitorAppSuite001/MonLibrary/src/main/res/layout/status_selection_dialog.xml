@@ -3,8 +3,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/SSD_banner"
+        android:src="@drawable/banner_blue2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <RelativeLayout
         android:id="@+id/SSD_top"
+        android:layout_below="@id/SSD_banner"
         android:layout_width="match_parent"
         android:padding="16dp"
         android:layout_height="wrap_content">

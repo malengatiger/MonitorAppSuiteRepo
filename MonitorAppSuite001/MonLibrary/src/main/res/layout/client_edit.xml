@@ -2,7 +2,6 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/grey"
     android:padding="0dp"
     android:visibility="visible"
     android:id="@+id/CE_layout0"
@@ -11,16 +10,20 @@
     <RelativeLayout
         android:id="@+id/CE_mainLayout"
         android:layout_width="match_parent"
-        android:background="@drawable/xwhite_rounded_corners"
         android:layout_height="wrap_content">
 
-
+        <ImageView
+            android:id="@+id/CE_banner"
+            android:src="@drawable/banner_blue2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <EditText
             android:id="@+id/CE_clientName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:layout_below="@id/CE_banner"
             android:inputType="textCapWords"
             android:textStyle="bold"
             style="@style/TextStyleSmall"
@@ -110,11 +113,13 @@
 
         </RelativeLayout>
     </RelativeLayout>
+
     <ImageView
         android:id="@+id/CE_imgDelete"
         android:src="@android:drawable/ic_delete"
         android:layout_alignParentRight="true"
-        android:layout_margin="8dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

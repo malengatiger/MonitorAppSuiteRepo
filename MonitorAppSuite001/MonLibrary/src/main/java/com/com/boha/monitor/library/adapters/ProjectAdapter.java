@@ -33,6 +33,7 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
         public void onPictureRequested(ProjectDTO project);
         public void onGalleryRequested(ProjectDTO project);
         public void onMapRequested(ProjectDTO project);
+        public void onClaimsAndInvoicesRequested(ProjectDTO project);
     }
     private final LayoutInflater mInflater;
     private final int mLayoutRes;
@@ -59,7 +60,7 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
         TextView txtName, txtStatusCount;
         TextView txtSiteCount, txtImageCount;
         TextView txtNumber, txtDesc, txtClient;
-        ImageView imgCamera, imgMap;
+        ImageView imgCamera, imgMap, imgDocs;
     }
 
     @Override
@@ -86,6 +87,8 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
                     .findViewById(R.id.PROJ_camera);
             item.imgMap = (ImageView) convertView
                     .findViewById(R.id.PROJ_map);
+            item.imgDocs = (ImageView) convertView
+                    .findViewById(R.id.PROJ_docs);
             convertView.setTag(item);
         } else {
             item = (ViewHolderItem) convertView.getTag();
@@ -95,7 +98,7 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
         item.txtName.setText(p.getProjectName());
         item.txtClient.setText(p.getClientName());
         item.txtNumber.setText(""+(position+ 1));
-        item.txtSiteCount.setText("" + p.getProjectSiteList().size());
+        item.txtSiteCount.setText("" + p.getSiteCount());
         if (p.getDescription() == null) {
             item.txtDesc.setText("");
         } else {
@@ -156,6 +159,12 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
             @Override
             public void onClick(View v) {
                 listener.onMapRequested(p);
+            }
+        });
+        item.imgDocs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClaimsAndInvoicesRequested(p);
             }
         });
         Statics.setRobotoFontLight(ctx,item.txtClient);

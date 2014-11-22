@@ -43,12 +43,14 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
         GooglePlayServicesClient.OnConnectionFailedListener,
         ProjectSiteListFragment.ProjectSiteListListener {
 
+    static final int NUM_ITEMS = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_site_pager);
         ctx = getApplicationContext();
         mPager = (ViewPager) findViewById(R.id.SITE_pager);
+        mPager.setOffscreenPageLimit(NUM_ITEMS-1);
         PagerTitleStrip strip = (PagerTitleStrip)findViewById(R.id.pager_title_strip);
         strip.setVisibility(View.GONE);
 

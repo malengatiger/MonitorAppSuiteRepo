@@ -108,7 +108,8 @@ public class RequestDTO implements Serializable {
             GET_PROJECT_IMAGES = 110,
             GET_ALL_PROJECT_IMAGES = 113,
             GET_SITE_IMAGES = 111,
-            GET_TASK_IMAGES = 112;
+            GET_TASK_IMAGES = 112,
+            GET_CONTRACTOR_CLAIMS_BY_PROJECT = 114;
     //login's
     public static final int
             LOGIN = 200,

@@ -82,7 +82,7 @@ public class BeneficiaryAdapter extends ArrayAdapter<BeneficiaryDTO> {
         item.txtName.setText(p.getFullName());
         item.txtNumber.setText("" + (position + 1));
 //        item.txtCell.setText(p.getCellphone());
-//        item.txtEmail.setText(p.getEmail());
+//        item.txtDate.setText(p.getEmail());
 //        int count = 0;
 //        if (p.getCellphone() == null) {
 //            item.txtCell.setVisibility(View.GONE);
@@ -91,10 +91,10 @@ public class BeneficiaryAdapter extends ArrayAdapter<BeneficiaryDTO> {
 //            item.txtCell.setVisibility(View.VISIBLE);
 //        }
 //        if (p.getEmail() == null) {
-//            item.txtEmail.setVisibility(View.GONE);
+//            item.txtDate.setVisibility(View.GONE);
 //            count++;
 //        } else {
-//            item.txtEmail.setVisibility(View.VISIBLE);
+//            item.txtDate.setVisibility(View.VISIBLE);
 //        }
 
         item.txtNumber.setOnClickListener(new View.OnClickListener() {

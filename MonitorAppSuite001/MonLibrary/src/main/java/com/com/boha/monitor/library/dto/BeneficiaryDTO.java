@@ -26,9 +26,17 @@ public class BeneficiaryDTO implements Serializable, Comparable<BeneficiaryDTO> 
     private Date dateRegistered, phbDate;
     private CompanyDTO company;
     private TownshipDTO township;
+    private ProjectSiteDTO projectSite;
 
-    public static final int ACTION_ADD = 313, ACTION_UPDATE = 314,
-            ACTION_DELETE = 315;
+    public static final int ACTION_ADD = 313, ACTION_UPDATE = 314;
+
+    public ProjectSiteDTO getProjectSite() {
+        return projectSite;
+    }
+
+    public void setProjectSite(ProjectSiteDTO projectSite) {
+        this.projectSite = projectSite;
+    }
 
     public Integer getProjectID() {
         return projectID;

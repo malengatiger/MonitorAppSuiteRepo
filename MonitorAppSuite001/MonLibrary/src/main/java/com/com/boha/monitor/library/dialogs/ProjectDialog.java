@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.dto.ClientDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
@@ -75,7 +75,7 @@ public class ProjectDialog extends DialogFragment {
         btnCancel = (Button) view.findViewById(R.id.PE_btnCancel);
         btnSave = (Button) view.findViewById(R.id.PE_btnSave);
         clientSpinner = (Spinner)view.findViewById(R.id.PE_spinner);
-        getDialog().setTitle(context.getResources().getString(R.string.app_name));
+        getDialog().setTitle(context.getString(R.string.projects));
         setSpinner();
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +142,7 @@ public class ProjectDialog extends DialogFragment {
                     for (ClientDTO t: clientList) {
                         names.add(t.getClientName());
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.xxsimple_spinner_item,names);
+                    SpinnerListAdapter adapter = new SpinnerListAdapter(context, R.layout.xxsimple_spinner_item,names);
                     clientSpinner.setAdapter(adapter);
                     clientSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override

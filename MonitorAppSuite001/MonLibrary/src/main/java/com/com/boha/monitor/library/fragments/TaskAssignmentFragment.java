@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -25,6 +24,7 @@ import android.widget.TextView;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.adapters.ProjectSiteTaskAdapter;
+import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
@@ -119,7 +119,7 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
         imgClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ObjectAnimator an = ObjectAnimator.ofFloat(addView, View.SCALE_Y, 1f, 0.0f);
+                final ObjectAnimator an = ObjectAnimator.ofFloat(addView, "scaleY", 1f, 0.0f);
                 //an.setRepeatCount(ObjectAnimator.REVERSE);
                 an.setDuration(500);
                 an.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -327,7 +327,7 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
                     for (TaskDTO t : taskList) {
                         names.add(t.getTaskName());
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(ctx,
+                    SpinnerListAdapter adapter = new SpinnerListAdapter(ctx,
                             R.layout.xxsimple_spinner_item, names);
                     spinner.setAdapter(adapter);
                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -406,7 +406,7 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
 
     public void openTaskPane() {
         addView.setVisibility(View.VISIBLE);
-        final ObjectAnimator an = ObjectAnimator.ofFloat(addView, View.SCALE_Y, 0f, 1f);
+        final ObjectAnimator an = ObjectAnimator.ofFloat(addView, "scaleY", 0f, 1f);
         //an.setRepeatCount(ObjectAnimator.REVERSE);
         an.setDuration(500);
         an.setInterpolator(new AccelerateDecelerateInterpolator());

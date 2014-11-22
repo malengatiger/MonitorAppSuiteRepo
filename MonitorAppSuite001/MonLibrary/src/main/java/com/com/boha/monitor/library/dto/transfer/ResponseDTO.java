@@ -49,7 +49,7 @@ public class ResponseDTO implements Serializable {
 
     private PhotoCache photoCache;
     private Integer statusCode;
-    private String message, sessionID, GCMRegistrationID;
+    private String message, sessionID, GCMRegistrationID,fileString;
     private List<String> taskImageFileNameList;
     private List<BankDTO> bankList;
     private List<String> siteImageFileNameList;
@@ -261,6 +261,14 @@ public class ResponseDTO implements Serializable {
 
     public void setSiteImageFileNameList(List<String> siteImageFileNameList) {
         this.siteImageFileNameList = siteImageFileNameList;
+    }
+
+    public String getFileString() {
+        return fileString;
+    }
+
+    public void setFileString(String fileString) {
+        this.fileString = fileString;
     }
 
     public List<ErrorStoreDTO> getErrorStoreList() {

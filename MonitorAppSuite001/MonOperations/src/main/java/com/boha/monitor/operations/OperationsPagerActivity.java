@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.com.boha.monitor.library.ClaimAndInvoicePagerActivity;
 import com.com.boha.monitor.library.ImagePagerActivity;
 import com.com.boha.monitor.library.MonitorMapActivity;
 import com.com.boha.monitor.library.PictureActivity;
@@ -26,9 +27,9 @@ import com.com.boha.monitor.library.SitePagerActivity;
 import com.com.boha.monitor.library.adapters.DrawerAdapter;
 import com.com.boha.monitor.library.dialogs.BeneficiaryDialog;
 import com.com.boha.monitor.library.dialogs.ClientDialog;
+import com.com.boha.monitor.library.dialogs.StaffDialog;
 import com.com.boha.monitor.library.dialogs.TaskAndProjectStatusDialog;
 import com.com.boha.monitor.library.dialogs.EngineerDialog;
-import com.com.boha.monitor.library.dialogs.PersonDialog;
 import com.com.boha.monitor.library.dialogs.ProjectDialog;
 import com.com.boha.monitor.library.dialogs.TaskDialog;
 import com.com.boha.monitor.library.dto.BeneficiaryDTO;
@@ -243,10 +244,10 @@ public class OperationsPagerActivity extends FragmentActivity
                 pd.show(getFragmentManager(), "PROJ_DIAG");
             }
             if (pf instanceof StaffListFragment) {
-                PersonDialog diag = new PersonDialog();
+                StaffDialog diag = new StaffDialog();
                 diag.setAction(CompanyStaffDTO.ACTION_ADD);
                 diag.setContext(ctx);
-                diag.setListener(new PersonDialog.PersonDialogListener() {
+                diag.setListener(new StaffDialog.StaffDialogListener() {
                     @Override
                     public void onStaffAdded(final CompanyStaffDTO companyStaff) {
                         runOnUiThread(new Runnable() {
@@ -596,6 +597,13 @@ public class OperationsPagerActivity extends FragmentActivity
     @Override
     public void onMapRequested(ProjectDTO project) {
         Intent i = new Intent(this, MonitorMapActivity.class);
+        i.putExtra("project",project);
+        startActivity(i);
+    }
+
+    @Override
+    public void onClaimsAndInvoicesRequested(ProjectDTO project) {
+        Intent i = new Intent(this,ClaimAndInvoicePagerActivity.class);
         i.putExtra("project",project);
         startActivity(i);
     }

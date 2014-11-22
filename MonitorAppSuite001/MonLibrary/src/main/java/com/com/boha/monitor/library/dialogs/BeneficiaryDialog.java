@@ -5,11 +5,11 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,9 +18,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.dto.BeneficiaryDTO;
 import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
+import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.CacheUtil;
@@ -53,7 +55,7 @@ public class BeneficiaryDialog extends DialogFragment {
     EditText editFirstName, editLastName, editEmail,
             editIDNumber, editCellphone;
     ImageView imgDelete;
-    Spinner spinner;
+    Spinner spinner, spinner2;
     ProgressBar progressBar;
     Button btnCancel, btnSave;
     BeneficiaryDTO beneficiary;
@@ -76,6 +78,7 @@ public class BeneficiaryDialog extends DialogFragment {
         editCellphone.setVisibility(View.GONE);
 
         spinner = (Spinner) view.findViewById(R.id.ED_PSN_spinner);
+        spinner2 = (Spinner) view.findViewById(R.id.ED_PSN_spinner2);
         progressBar = (ProgressBar) view.findViewById(R.id.ED_PSN_progress);
         progressBar.setVisibility(View.GONE);
         imgDelete = (ImageView) view.findViewById(R.id.ED_PSN_imgDelete);
@@ -145,6 +148,28 @@ public class BeneficiaryDialog extends DialogFragment {
         editFirstName.setText(beneficiary.getFirstName());
         editLastName.setText(beneficiary.getLastName());
         editIDNumber.setText(beneficiary.getiDNumber());
+        if (beneficiary.getProjectID() != null) {
+            int index = 0;
+            for (ProjectDTO p: projectList) {
+                if (beneficiary.getProjectID().intValue() == p.getProjectID().intValue()) {
+                    break;
+                }
+                index++;
+            }
+            spinner.setSelection(index + 1);
+        }
+        if (beneficiary.getProjectSite() != null) {
+            if (project.getProjectSiteList() != null && !project.getProjectSiteList().isEmpty()) {
+                int index = 0;
+                for (ProjectSiteDTO s: project.getProjectSiteList()) {
+                    if (beneficiary.getProjectSite().getProjectSiteID().intValue() == s.getProjectSiteID().intValue()) {
+                        break;
+                    }
+                    index++;
+                }
+                spinner2.setSelection(index + 1);
+            }
+        }
 
 
     }
@@ -171,6 +196,10 @@ public class BeneficiaryDialog extends DialogFragment {
             ToastUtil.toast(context, context.getString(R.string.select_project));
             return;
         }
+        if (site == null) {
+            ToastUtil.toast(context, context.getString(R.string.select_site));
+            return;
+        }
 
         beneficiary.setFirstName(editFirstName.getText().toString());
         beneficiary.setLastName(editLastName.getText().toString());
@@ -193,6 +222,7 @@ public class BeneficiaryDialog extends DialogFragment {
                     @Override
                     public void run() {
                         progressBar.setVisibility(View.GONE);
+                        connectBeneficiaryToSite();
                         listener.onBeneficiaryAdded(beneficiary);
                         dismiss();
                     }
@@ -219,6 +249,38 @@ public class BeneficiaryDialog extends DialogFragment {
 
     }
 
+    private void connectBeneficiaryToSite() {
+        RequestDTO m = new RequestDTO(RequestDTO.CONNECT_BENEFICIARY_TO_SITE);
+        m.setProjectSiteID(site.getProjectSiteID());
+        m.setBeneficiaryID(beneficiary.getBeneficiaryID());
+        beneficiary.setProjectSite(site);
+        WebSocketUtil.sendRequest(context, Statics.COMPANY_ENDPOINT,m,new WebSocketUtil.WebSocketListener() {
+            @Override
+            public void onMessage(final ResponseDTO response) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!ErrorUtil.checkServerError(context,response)) {
+                            return;
+                        }
+                        //TODO - have to update the cache!!!
+                        Log.e(LOG, "####### beneficiary connected to site: " + response.getMessage());
+                    }
+                });
+
+            }
+
+            @Override
+            public void onClose() {
+
+            }
+
+            @Override
+            public void onError(final String message) {
+
+            }
+        });
+    }
     private void updateBeneficiary() {
 
     }
@@ -257,8 +319,7 @@ public class BeneficiaryDialog extends DialogFragment {
                     for (ProjectDTO p : projectList) {
                         list.add(p.getProjectName());
                     }
-                    ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(context, R.layout.xxsimple_spinner_item, list);
-                    adapter1.setDropDownViewResource(R.layout.xxsimple_spinner_dropdown_item);
+                    SpinnerListAdapter adapter1 = new SpinnerListAdapter(context, R.layout.xxsimple_spinner_item, list);
                     if (spinner == null) {
                         spinner = (Spinner) view.findViewById(R.id.ED_PSN_spinner);
                     }
@@ -270,6 +331,7 @@ public class BeneficiaryDialog extends DialogFragment {
                                 project = null;
                             } else {
                                 project = projectList.get(position - 1);
+                                setSiteSpinner();
                             }
                         }
 
@@ -292,4 +354,30 @@ public class BeneficiaryDialog extends DialogFragment {
             }
         });
     }
+
+    private void setSiteSpinner() {
+        List<String> list = new ArrayList<>();
+        list.add(context.getString(R.string.select_site));
+        for (ProjectSiteDTO s: project.getProjectSiteList()) {
+            list.add(s.getProjectSiteName());
+        }
+        SpinnerListAdapter adapter = new SpinnerListAdapter(context, R.layout.xxsimple_spinner_item,list);
+        spinner2.setAdapter(adapter);
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                   site = null;
+                } else {
+                    site = project.getProjectSiteList().get(position - 1);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+    ProjectSiteDTO site;
 }

@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.com.boha.monitor.library.dto.CompanyStaffTypeDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
@@ -35,13 +35,13 @@ import java.util.List;
 /**
  * Created by aubreyM on 2014/10/18.
  */
-public class PersonDialog extends DialogFragment {
-    public interface PersonDialogListener {
+public class StaffDialog extends DialogFragment {
+    public interface StaffDialogListener {
         public void onStaffAdded(CompanyStaffDTO companyStaff);
         public void onStaffUpdated(CompanyStaffDTO companyStaff);
         public void onError(String message);
     }
-    PersonDialogListener listener;
+    StaffDialogListener listener;
     Context context;
     TextView txtCompany;
     EditText editFirstName, editLastName, editEmail, editCellphone;
@@ -52,7 +52,7 @@ public class PersonDialog extends DialogFragment {
     View view;
     Spinner staffTypeSpinner;
     int action;
-    static final String LOG = PersonDialog.class.getSimpleName();
+    static final String LOG = StaffDialog.class.getSimpleName();
 
 
 
@@ -146,7 +146,7 @@ public class PersonDialog extends DialogFragment {
                     for (CompanyStaffTypeDTO t: companyStaffTypeList) {
                         names.add(t.getCompanyStaffTypeName());
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.xxsimple_spinner_item,names);
+                    SpinnerListAdapter adapter = new SpinnerListAdapter(context, R.layout.xxsimple_spinner_item,names);
                     staffTypeSpinner.setAdapter(adapter);
                     staffTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -293,7 +293,7 @@ public class PersonDialog extends DialogFragment {
         this.companyStaff = companyStaff;
     }
 
-    public void setListener(PersonDialogListener listener) {
+    public void setListener(StaffDialogListener listener) {
         this.listener = listener;
     }
 }

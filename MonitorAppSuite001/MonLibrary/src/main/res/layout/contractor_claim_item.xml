@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="@dimen/mon_margin"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/CCI_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/CCI_number"
+            android:text="1"
+            style="@style/GreyCircleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/CCI_engineer"
+            android:text="Engineer Name"
+            style="@style/Title3TextStyleBlue"
+            android:layout_toRightOf="@id/CCI_number"
+            android:layout_marginLeft="@dimen/mon_padding"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/CCI_dateLayout"
+        android:layout_below="@id/CCI_top"
+        android:layout_marginLeft="48dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/CCI_date"
+            android:text="Tuesday, 30 December 2014"
+            style="@style/TextStyleSmall"
+            android:layout_marginTop="@dimen/mon_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_below="@id/CCI_date"
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/CCI_claimLabel"
+                android:text="@string/claim_number"
+                style="@style/SmallTextGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/CCI_claimNumber"
+                android:text="123456789"
+                style="@style/TextStyleBoldBlueSmall"
+                android:layout_toRightOf="@id/CCI_claimLabel"
+                android:layout_marginLeft="@dimen/mon_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/CCI_bottom"
+        android:layout_below="@id/CCI_dateLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/CCI_siteCount"
+            android:text="99"
+            android:layout_alignParentRight="true"
+            style="@style/BlackCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/CCI_label2"
+            android:text="@string/project_sites"
+            style="@style/TextStyleGreySmall"
+            android:layout_marginTop="@dimen/mon_padding"
+            android:layout_toLeftOf="@id/CCI_siteCount"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/mon_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/CCI_statusLayout"
+        android:layout_marginTop="@dimen/mon_padding"
+        android:layout_below="@id/CCI_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/CCI_imgYes"
+            android:src="@drawable/tick_32"
+            android:layout_marginRight="@dimen/mon_padding"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/CCI_label3"
+            android:text="Sent to Client?"
+            style="@style/TextStyleGreySmall"
+            android:layout_marginTop="@dimen/mon_padding"
+            android:layout_toLeftOf="@id/CCI_imgYes"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/mon_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -4,16 +4,16 @@
 
     <gradient
         android:angle="45"
-        android:centerColor="@color/opaque_red"
-        android:endColor="@color/opaque_red"
-        android:startColor="@color/opaque_red" />
+        android:centerColor="@color/absa_red"
+        android:endColor="@color/absa_red"
+        android:startColor="@color/absa_red" />
 
     <padding
-        android:bottom="6dip"
-        android:left="7dip"
-        android:right="7dip"
-        android:top="6dip" />
+        android:bottom="2dip"
+        android:left="3dip"
+        android:right="3dip"
+        android:top="3dip" />
 
-    <corners android:radius="8dip" />
+    <corners android:radius="4dip" />
 
 </shape>

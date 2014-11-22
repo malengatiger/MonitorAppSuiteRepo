@@ -28,11 +28,20 @@ public class ProjectSiteDTO implements Serializable {
     private Integer statusCount;
     private ProjectSiteTaskStatusDTO lastTaskStatus;
     private Float accuracy;
+    private boolean selected;
     private BeneficiaryDTO beneficiary;
     private HappyLetterDTO happyLetter;
     private List<ProjectSiteTaskDTO> projectSiteTaskList = new ArrayList<>();
     private Integer projectID;
     private List<PhotoUploadDTO> photoUploadList = new ArrayList<>();
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 
     public ProjectSiteDTO() {
     }

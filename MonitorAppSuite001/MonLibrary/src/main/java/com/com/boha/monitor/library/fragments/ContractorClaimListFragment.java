@@ -12,15 +12,14 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
-import com.com.boha.monitor.library.adapters.ClientAdapter;
-import com.com.boha.monitor.library.dto.ClientDTO;
-import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
+import com.com.boha.monitor.library.adapters.ContractorClaimAdapter;
+import com.com.boha.monitor.library.dto.ContractorClaimDTO;
+import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,11 +31,11 @@ import java.util.List;
  * Activities containing this fragment MUST implement the ProjectSiteListListener
  * interface.
  */
-public class ClientListFragment extends Fragment implements AbsListView.OnItemClickListener, PageFragment {
+public class ContractorClaimListFragment extends Fragment implements PageFragment {
 
-    private ClientListListener mListener;
+    private ContractorClaimListListener mListener;
     private AbsListView mListView;
-    public ClientListFragment() {
+    public ContractorClaimListFragment() {
     }
 
     @Override
@@ -48,19 +47,20 @@ public class ClientListFragment extends Fragment implements AbsListView.OnItemCl
     Context ctx;
     View view;
     TextView txtCount, txtName;
+    ProjectDTO project;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         view = inflater.inflate(R.layout.fragment_client_list, container, false);
+         view = inflater.inflate(R.layout.fragment_contractor_claim_list, container, false);
         ctx = getActivity();
         Bundle b = getArguments();
         if (b != null) {
-            ResponseDTO r = (ResponseDTO) b.getSerializable("response");
-            clientList = r.getCompany().getClientList();
+            project = (ProjectDTO) b.getSerializable("project");
+            contractorClaimList = project.getContractorClaimList();
         }
 
-        txtCount = (TextView)view.findViewById(R.id.FC_count);
-        txtName = (TextView)view.findViewById(R.id.FC_title);
+        txtCount = (TextView)view.findViewById(R.id.FCC_count);
+        txtName = (TextView)view.findViewById(R.id.FCC_title);
 
         Statics.setRobotoFontLight(ctx, txtName);
         setList();
@@ -68,19 +68,25 @@ public class ClientListFragment extends Fragment implements AbsListView.OnItemCl
     }
 
     private void setList() {
-        txtCount.setText("" + clientList.size());
-        // Set the adapter
-        mListView = (AbsListView) view.findViewById(R.id.FC_list);
-        adapter = new ClientAdapter(ctx, R.layout.client_item,
-                clientList, new ClientAdapter.ClientAdapterListener() {
+        if (contractorClaimList == null) return;
+        txtCount.setText("" + contractorClaimList.size());
+        mListView = (AbsListView) view.findViewById(R.id.FCC_list);
+        adapter = new ContractorClaimAdapter(ctx, R.layout.contractor_claim_item,
+                contractorClaimList, new ContractorClaimAdapter.ContractorClaimAdapterListener() {
             @Override
-            public void onClientEditRequested(ClientDTO client) {
-                mListener.onClientEditRequested(client);
+            public void onProjectSiteListRequested(ContractorClaimDTO client) {
+                    //TODO - start activity or dialog to add or remove project sites from claim
             }
         });
         mListView.setAdapter(adapter);
 
-        mListView.setOnItemClickListener(this);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                contractorClaim = contractorClaimList.get(position);
+                mListener.onContractorClaimClicked(contractorClaim);
+            }
+        });
         txtCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,10 +98,10 @@ public class ClientListFragment extends Fragment implements AbsListView.OnItemCl
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (ClientListListener) activity;
+            mListener = (ContractorClaimListListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException("Host " + activity.getLocalClassName()
-                    + " must implement ClientListListener");
+                    + " must implement ContractorClaimListListener");
         }
     }
 
@@ -105,14 +111,6 @@ public class ClientListFragment extends Fragment implements AbsListView.OnItemCl
         mListener = null;
     }
 
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            client = clientList.get(position);
-            mListener.onClientClicked(client);
-        }
-    }
 
     /**
      * The default content for this Fragment has a TextView that is shown when
@@ -133,14 +131,13 @@ public class ClientListFragment extends Fragment implements AbsListView.OnItemCl
 
     }
 
-    public void addClient(ClientDTO client) {
-        if (clientList == null) {
-            clientList = new ArrayList<>();
+    public void addContractorClaim(ContractorClaimDTO contractorClaim) {
+        if (contractorClaimList == null) {
+            contractorClaimList = new ArrayList<>();
         }
-        clientList.add(client);
-        Collections.sort(clientList);
+        contractorClaimList.add(0,contractorClaim);
         adapter.notifyDataSetChanged();
-        txtCount.setText("" + clientList.size());
+        txtCount.setText("" + contractorClaimList.size());
         try {
             Thread.sleep(1000);
             Util.animateRotationY(txtCount,500);
@@ -155,12 +152,11 @@ public class ClientListFragment extends Fragment implements AbsListView.OnItemCl
      * to the activity and potentially other fragments contained in that
      * activity.
      */
-    public interface ClientListListener {
-        public void onClientClicked(ClientDTO client);
-        public void onClientEditRequested(ClientDTO client);
+    public interface ContractorClaimListListener {
+        public void onContractorClaimClicked(ContractorClaimDTO contractorClaimDTO);
     }
 
-    ClientDTO client;
-    List<ClientDTO> clientList;
-    ClientAdapter adapter;
+    ContractorClaimDTO contractorClaim;
+    List<ContractorClaimDTO> contractorClaimList;
+    ContractorClaimAdapter adapter;
 }

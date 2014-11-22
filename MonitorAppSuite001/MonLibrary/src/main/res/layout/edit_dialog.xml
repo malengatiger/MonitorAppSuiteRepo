@@ -2,11 +2,18 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:padding="10dp"
+    android:padding="0dp"
     android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/EDD_banner"
+        android:src="@drawable/banner_gold2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
         android:id="@+id/EDD_top"
+        android:layout_below="@id/EDD_banner"
         android:layout_width="match_parent"
         android:padding="10dp"
         android:layout_height="wrap_content">
@@ -14,17 +21,18 @@
         <ProgressBar
             android:id="@+id/EDD_progress"
             style="@android:style/Widget.ProgressBar.Small"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
 
         <EditText
             android:id="@+id/EDD_edit"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="16dp"
             android:hint="@string/tap_to_enter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <EditText
             android:id="@+id/EDD_desc"
             android:layout_below="@id/EDD_edit"
@@ -33,10 +41,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </RelativeLayout>
+
     <RadioGroup
         android:id="@+id/EDD_radios"
         android:layout_below="@id/EDD_top"
-        android:padding="10dp" android:orientation="horizontal"
+        android:padding="12dp"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -48,6 +58,7 @@
             android:textColor="@color/green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <RadioButton
             android:id="@+id/EDD_radioYellow"
             android:text="Yellow"
@@ -56,6 +67,7 @@
             android:textColor="@color/orange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <RadioButton
             android:id="@+id/EDD_radioRed"
             android:text="Red"
@@ -65,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        </RadioGroup>
+    </RadioGroup>
 
     <RelativeLayout
         android:layout_below="@id/EDD_radios"
@@ -75,7 +87,6 @@
         android:layout_height="wrap_content">
 
 
-
         <Button
             android:id="@+id/EDD_btnCancel"
             android:layout_marginTop="16dp"
@@ -83,6 +94,7 @@
             style="@style/ButtonCancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <Button
             android:id="@+id/EDD_btnChange"
             android:text="@string/change_item"
@@ -94,10 +106,11 @@
 
 
     </RelativeLayout>
+
     <ImageView
         android:id="@+id/EDD_imgDelete"
         android:src="@android:drawable/ic_delete"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="36dp"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

@@ -109,7 +109,7 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
         item.txtNumber.setText("" + (position + 1));
         item.txtStatusCount.setText("" + p.getStatusCount());
         if (p.getPhotoUploadList() != null && !p.getPhotoUploadList().isEmpty()) {
-            int index = random.nextInt(p.getPhotoUploadList().size() - 1);
+
             String uri = Statics.IMAGE_URL + p.getPhotoUploadList().get(0).getUri();
             item.imgHero.setVisibility(View.VISIBLE);
             ImageLoader.getInstance().displayImage(uri,item.imgHero);

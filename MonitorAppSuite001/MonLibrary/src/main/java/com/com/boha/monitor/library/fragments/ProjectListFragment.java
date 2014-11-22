@@ -110,6 +110,11 @@ public class ProjectListFragment extends Fragment implements  PageFragment {
             public void onMapRequested(ProjectDTO project) {
                 mListener.onMapRequested(project);
             }
+
+            @Override
+            public void onClaimsAndInvoicesRequested(ProjectDTO project) {
+                mListener.onClaimsAndInvoicesRequested(project);
+            }
         });
         mListView.setAdapter(adapter);
         View v = inflater.inflate(R.layout.hero_image_project, null);
@@ -119,10 +124,11 @@ public class ProjectListFragment extends Fragment implements  PageFragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (projectList.get(position).getProjectSiteList() == null || projectList.get(position).getProjectSiteList().isEmpty()) {
-                    return;
-                }
-                mListener.onProjectClicked(projectList.get(position));
+//                if (projectList.get(position).getProjectSiteList() == null
+//                        || projectList.get(position).getProjectSiteList().isEmpty()) {
+//                    return;
+//                }
+//                mListener.onProjectClicked(projectList.get(position));
             }
         });
     }
@@ -213,6 +219,7 @@ public class ProjectListFragment extends Fragment implements  PageFragment {
         public void onProjectPictureRequested(ProjectDTO project);
         public void onGalleryRequested(ProjectDTO project);
         public void onMapRequested(ProjectDTO project);
+        public void onClaimsAndInvoicesRequested(ProjectDTO project);
     }
 
     private List<ProjectDTO> projectList;

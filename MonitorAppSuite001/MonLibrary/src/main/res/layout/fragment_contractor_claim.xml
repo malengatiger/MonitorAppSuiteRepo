@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/grey"
+    android:padding="@dimen/mon_padding"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/CCX_top"
+        android:padding="@dimen/mon_padding"
+        android:background="@color/beige_pale"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/CCX_title"
+            style="@style/Title2TextStyleGrey"
+            android:text="@string/contractor_claim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/CCX_middle"
+        android:layout_below="@id/CCX_top"
+        android:background="@color/white"
+        android:padding="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/Title3TextStyleBlue"
+            android:text="@string/projectname"
+            android:id="@+id/CCX_projectName"
+            android:layout_marginLeft="@dimen/mon_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:id="@+id/CCX_engineerSpinner"
+            android:layout_below="@id/CCX_projectName"
+            android:layout_marginTop="@dimen/mon_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/CCX_bottom"
+        android:layout_below="@id/CCX_middle"
+        android:background="@color/white"
+        android:padding="@dimen/mon_padding"
+        android:layout_marginTop="@dimen/mon_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:id="@+id/CCX_taskSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/CCX_btnDate"
+            style="@style/RobotoButtonStyle"
+            android:layout_below="@id/CCX_taskSpinner"
+            android:textSize="13sp"
+            android:text="@string/enter_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/CCX_actions"
+        android:layout_below="@id/CCX_bottom"
+        android:background="@color/white"
+        android:padding="@dimen/mon_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/CCX_chkAll"
+            android:text="@string/add_all_sites"
+            android:textColor="@color/blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/CCX_imgMore"
+            android:src="@android:drawable/ic_menu_more"
+            android:tint="@color/blue"
+            android:layout_toRightOf="@id/CCX_chkAll"
+            android:layout_marginLeft="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/CCX_siteCount"
+            android:text="99"
+            style="@style/GreenCircleSmall"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/mon_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/CCX_list"
+        android:layout_below="@id/CCX_actions"
+        android:background="@color/white"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/CCX_btnSave"
+        style="@style/ButtonRed"
+        android:text="@string/save"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="@dimen/mon_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

@@ -20,6 +20,7 @@ import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
+import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.Util;
@@ -76,10 +77,82 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
         txtCount = (TextView) view.findViewById(R.id.SITE_LIST_siteCount);
 
         Statics.setRobotoFontLight(ctx, txtCount);
-        setList();
+        getProjectSites();
         return view;
     }
 
+    private void getProjectSites() {
+        CacheUtil.getCachedProjectData(ctx,CacheUtil.CACHE_PROJECT,project.getProjectID(), new CacheUtil.CacheUtilListener() {
+            @Override
+            public void onFileDataDeserialized(ResponseDTO response) {
+                if (response != null) {
+                    project.setProjectSiteList(response.getProjectSiteList());
+                    setList();
+                }
+                getServerData();
+            }
+
+            @Override
+            public void onDataCached() {
+
+            }
+
+            @Override
+            public void onError() {
+                getServerData();
+            }
+        });
+
+    }
+    private void getServerData() {
+        RequestDTO w = new RequestDTO(RequestDTO.GET_PROJECT_SITE_DATA);
+        w.setProjectID(project.getProjectID());
+
+        WebSocketUtil.sendRequest(ctx,Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
+            @Override
+            public void onMessage(final ResponseDTO response) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!ErrorUtil.checkServerError(ctx,response)) {
+                            return;
+                        }
+                        project.setProjectSiteList(response.getProjectSiteList());
+                        setList();
+                        ResponseDTO w = new ResponseDTO();
+                        w.setProjectList(new ArrayList<ProjectDTO>());
+                        w.getProjectList().add(project);
+                        CacheUtil.cacheProjectData(ctx,w,CacheUtil.CACHE_PROJECT,project.getProjectID(),new CacheUtil.CacheUtilListener() {
+                            @Override
+                            public void onFileDataDeserialized(ResponseDTO response) {
+
+                            }
+
+                            @Override
+                            public void onDataCached() {
+
+                            }
+
+                            @Override
+                            public void onError() {
+
+                            }
+                        });
+                    }
+                });
+            }
+
+            @Override
+            public void onClose() {
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
+    }
     private void setList() {
         txtCount.setText("" + project.getProjectSiteList().size());
         for (ProjectSiteDTO site: project.getProjectSiteList()) {
@@ -94,7 +167,7 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
                 site.setLastTaskStatus(x);
                 Log.e(LOG, "task: " + site.getProjectSiteName() + " status: " + taskStatusList.size() + " " + x.getTaskStatus().getTaskStatusName());
             } else {
-                Log.w(LOG,"########## no status found, site: " + site.getProjectSiteName());
+                //Log.w(LOG,"########## no status found, site: " + site.getProjectSiteName());
             }
 
         }
