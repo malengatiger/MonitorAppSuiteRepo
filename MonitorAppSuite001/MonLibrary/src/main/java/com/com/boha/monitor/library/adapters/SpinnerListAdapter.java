@@ -21,7 +21,7 @@ public class SpinnerListAdapter extends ArrayAdapter<String> {
     private final int mLayoutRes;
     private List<String> mList;
     private Context ctx;
-    boolean popup;
+    boolean popup, altImage;
 
     static final String LOG = SpinnerListAdapter.class.getSimpleName();
     public SpinnerListAdapter(Context context, int textViewResourceId,
@@ -35,7 +35,7 @@ public class SpinnerListAdapter extends ArrayAdapter<String> {
         //Log.w(LOG,"constructor completed");
     }
     public SpinnerListAdapter(Context context, int textViewResourceId,
-                              List<String> list, boolean isPopup) {
+                              List<String> list, boolean isPopup, boolean alternateImage) {
         super(context, textViewResourceId, list);
         this.mLayoutRes = textViewResourceId;
         mList = list;
@@ -43,6 +43,7 @@ public class SpinnerListAdapter extends ArrayAdapter<String> {
         this.mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         popup = isPopup;
+        altImage = alternateImage;
     }
 
 
@@ -87,6 +88,10 @@ public class SpinnerListAdapter extends ArrayAdapter<String> {
                 Drawable d = ctx.getResources().getDrawable(android.R.drawable.ic_dialog_alert);
                 item.image.setImageDrawable(d);
             }
+        }
+        if (altImage) {
+            Drawable d = ctx.getResources().getDrawable(android.R.drawable.ic_dialog_alert);
+            item.image.setImageDrawable(d);
         }
         final String p = mList.get(position);
         item.txtString.setText(p);

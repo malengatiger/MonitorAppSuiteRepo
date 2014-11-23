@@ -258,5 +258,6 @@
     <string name="select_site">Select Site</string>
     <string name="claims_invoices">Claims and Invoices</string>
     <string name="invoices">Invoices</string>
+    <string name="site_no">Site No.</string>
 
 </resources>

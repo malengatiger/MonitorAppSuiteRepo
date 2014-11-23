@@ -20,6 +20,7 @@ import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.adapters.ContractorClaimAdapter;
 import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.dto.ContractorClaimDTO;
+import com.com.boha.monitor.library.dto.ContractorClaimSiteDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.util.FileDownloader;
 import com.com.boha.monitor.library.util.SharedUtil;
@@ -49,13 +50,14 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
     TextView txtCount, txtName;
     ProjectDTO project;
     ListView mListView;
+    LayoutInflater inflater;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_contractor_claim_list, container, false);
         ctx = getActivity();
-
+        this.inflater = inflater;
 
         txtCount = (TextView) view.findViewById(R.id.FCC_count);
         txtName = (TextView) view.findViewById(R.id.FCC_title);
@@ -76,13 +78,32 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
     List<String> list;
     static final String LOG = ContractorClaimListFragment.class.getSimpleName();
     private void setList() {
+        Log.e(LOG,"###### setList .........");
         if (contractorClaimList == null) return;
         txtCount.setText("" + contractorClaimList.size());
         adapter = new ContractorClaimAdapter(ctx, R.layout.contractor_claim_item,
                 contractorClaimList, new ContractorClaimAdapter.ContractorClaimAdapterListener() {
             @Override
-            public void onProjectSiteListRequested(ContractorClaimDTO client) {
+            public void onProjectSiteListRequested(ContractorClaimDTO cc) {
                 //TODO - start activity or dialog to add or remove project sites from claim
+                Log.w(LOG, "#### onInvoiceActionsRequested");
+                list = new ArrayList<>();
+                for (ContractorClaimSiteDTO ccs: cc.getContractorClaimSiteList()) {
+                    list.add(ctx.getString(R.string.site_no) + " : " + ccs.getProjectSite().getProjectSiteName());
+                }
+
+                invoicePopupWindow = new ListPopupWindow(getActivity());
+                invoicePopupWindow.setAdapter(new SpinnerListAdapter(ctx,R.layout.xxsimple_spinner_item,list, true, true));
+                invoicePopupWindow.setAnchorView(txtName);
+                invoicePopupWindow.setWidth(600);
+                invoicePopupWindow.setModal(true);
+                invoicePopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        invoicePopupWindow.dismiss();
+                    }
+                });
+                invoicePopupWindow.show();
             }
 
             @Override
@@ -99,7 +120,7 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
                 list.add("Download Invoice");
 
                 invoicePopupWindow = new ListPopupWindow(getActivity());
-                invoicePopupWindow.setAdapter(new SpinnerListAdapter(ctx,R.layout.xxsimple_spinner_item,list, true));
+                invoicePopupWindow.setAdapter(new SpinnerListAdapter(ctx,R.layout.xxsimple_spinner_item,list, true, false));
                 invoicePopupWindow.setAnchorView(txtName);
                 invoicePopupWindow.setModal(true);
                 invoicePopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -122,12 +143,16 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
                 invoicePopupWindow.show();
             }
         });
+        View v = inflater.inflate(R.layout.banner_image, null);
+        if (mListView.getHeaderViewsCount() == 0) {
+            mListView.addHeaderView(v);
+        }
         mListView.setAdapter(adapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                contractorClaim = contractorClaimList.get(position);
+                contractorClaim = contractorClaimList.get(position - 1);
                 mListener.onContractorClaimClicked(contractorClaim);
             }
         });

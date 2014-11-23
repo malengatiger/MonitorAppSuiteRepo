@@ -70,7 +70,7 @@
     <RelativeLayout
         android:id="@+id/CCI_bottom"
         android:layout_below="@id/CCI_dateLayout"
-        android:layout_marginTop="@dimen/mon_margin"
+        android:layout_marginTop="48dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -104,7 +104,7 @@
 
     <RelativeLayout
         android:id="@+id/CCI_statusLayout"
-        android:layout_marginTop="@dimen/mon_margin"
+        android:layout_marginTop="24dp"
         android:layout_below="@id/CCI_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

@@ -17,11 +17,18 @@ import java.util.List;
 public class ContractorClaimDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer contractorClaimID, projectEngineerID,
-            engineerID, projectID, taskID;
+            engineerID, projectID, taskID, siteCount;
     private String claimNumber, projectName, engineerName, taskName;
     private Date claimDate;
     private List<ContractorClaimSiteDTO> contractorClaimSiteList;
 
+    public Integer getSiteCount() {
+        return siteCount;
+    }
+
+    public void setSiteCount(Integer siteCount) {
+        this.siteCount = siteCount;
+    }
 
     public ContractorClaimDTO() {
     }

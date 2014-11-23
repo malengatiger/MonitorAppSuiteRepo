@@ -85,7 +85,7 @@ public class ContractorClaimAdapter extends ArrayAdapter<ContractorClaimDTO> {
         item.txtClaimNumber.setText(p.getClaimNumber());
         item.txtNumber.setText("" + (position + 1));
         if (p.getContractorClaimSiteList() != null)
-            item.txtSiteCount.setText("" + p.getContractorClaimSiteList().size());
+            item.txtSiteCount.setText("" + p.getSiteCount());
         else
             item.txtSiteCount.setText("0");
         item.txtDate.setText(sdf.format(p.getClaimDate()));
