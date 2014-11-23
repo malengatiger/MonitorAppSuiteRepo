@@ -15,7 +15,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.nio.ByteBuffer;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipEntry;
@@ -93,7 +95,7 @@ public class ZipUtil {
     }
 
     public static String uncompressGZip(ByteBuffer bytes) throws Exception {
-        Log.w("ZipUtil", "############# packed length: " + bytes.capacity());
+        Log.w("ZipUtil", "############# packed length: " + getKilobytes(bytes.capacity()));
         GZIPInputStream gzipInputStream = new GZIPInputStream(new ByteArrayInputStream(bytes.array()));
         OutputStream out = new ByteArrayOutputStream();
         byte[] buf = new byte[1024];
@@ -105,12 +107,16 @@ public class ZipUtil {
         out.close();
 
         String res = out.toString();
-        Log.i("ZipUtil", "############# unpacked length: " + res.length());
+        Log.i("ZipUtil", "############# unpacked length, in KB: " + getKilobytes(res.length()));
         return res;
 
 
     }
-
+    public static String getKilobytes(int bytes) {
+        BigDecimal m = new BigDecimal(bytes).divide(new BigDecimal(1024));
+        return df.format(m.doubleValue()) + " KB";
+    }
+    static final DecimalFormat df = new DecimalFormat("###,###,###,###,###,###,###,##0.00");
     public static void unpack(ByteBuffer bb, WebSocketUtil.WebSocketListener listener) throws ZipException {
         //notify listener
         ResponseDTO response = unpackBytes(bb);

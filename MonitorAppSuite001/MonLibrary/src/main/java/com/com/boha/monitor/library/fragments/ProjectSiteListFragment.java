@@ -86,8 +86,10 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
             @Override
             public void onFileDataDeserialized(ResponseDTO response) {
                 if (response != null) {
-                    project.setProjectSiteList(response.getProjectSiteList());
-                    setList();
+                    if (response.getProjectList() != null && !response.getProjectList().isEmpty()) {
+                        project = response.getProjectList().get(0);
+                        setList();
+                    }
                 }
                 getServerData();
             }
@@ -105,7 +107,7 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
 
     }
     private void getServerData() {
-        RequestDTO w = new RequestDTO(RequestDTO.GET_PROJECT_SITE_DATA);
+        RequestDTO w = new RequestDTO(RequestDTO.GET_PROJECT_DATA);
         w.setProjectID(project.getProjectID());
 
         WebSocketUtil.sendRequest(ctx,Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
@@ -117,12 +119,10 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
                         if (!ErrorUtil.checkServerError(ctx,response)) {
                             return;
                         }
-                        project.setProjectSiteList(response.getProjectSiteList());
+                        project = response.getProjectList().get(0);
                         setList();
-                        ResponseDTO w = new ResponseDTO();
-                        w.setProjectList(new ArrayList<ProjectDTO>());
-                        w.getProjectList().add(project);
-                        CacheUtil.cacheProjectData(ctx,w,CacheUtil.CACHE_PROJECT,project.getProjectID(),new CacheUtil.CacheUtilListener() {
+
+                        CacheUtil.cacheProjectData(ctx,response,CacheUtil.CACHE_PROJECT,project.getProjectID(),new CacheUtil.CacheUtilListener() {
                             @Override
                             public void onFileDataDeserialized(ResponseDTO response) {
 

@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -27,9 +29,7 @@ import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.TaskDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
-import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
-import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
@@ -82,29 +82,41 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.w(LOG,"###### onCreateView");
         view = inflater.inflate(R.layout.fragment_contractor_claim, container, false);
         ctx = getActivity();
         setFields();
-
-        Bundle b = getArguments();
-        if (b != null) {
-            project = (ProjectDTO) b.getSerializable("project");
-        }
-        getData();
         return view;
     }
 
+    @Override
+    public void onResume() {
+        Log.w(LOG, "############ onResume");
+        super.onResume();
+    }
+    @Override
+    public void onSaveInstanceState(Bundle b) {
+        Log.e(LOG, "############ onSaveInstanceState");
+        ResponseDTO r = new ResponseDTO();
+        r.setEngineerList(engineerList);
+        r.setTaskList(taskList);
+        r.setProjectSiteList(siteList);
+        b.putSerializable("response",r);
+        super.onSaveInstanceState(b);
+    }
+
     private void sendData() {
+
         if (project == null) {
-            ToastUtil.toast(ctx,ctx.getString(R.string.select_project));
+            ToastUtil.toast(ctx, ctx.getString(R.string.select_project));
             return;
         }
         if (engineer == null) {
-            ToastUtil.toast(ctx,ctx.getString(R.string.select_engineer));
+            ToastUtil.toast(ctx, ctx.getString(R.string.select_engineer));
             return;
         }
         if (task == null) {
-            ToastUtil.toast(ctx,ctx.getString(R.string.select_task));
+            ToastUtil.toast(ctx, ctx.getString(R.string.select_task));
             return;
         }
         if (claimDate == null) {
@@ -118,7 +130,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
         contractorClaim.setClaimDate(claimDate);
         contractorClaim.setContractorClaimSiteList(new ArrayList<ContractorClaimSiteDTO>());
 
-        for (ProjectSiteDTO s: siteList) {
+        for (ProjectSiteDTO s : siteList) {
             if (s.isSelected()) {
                 ContractorClaimSiteDTO cc = new ContractorClaimSiteDTO();
                 ProjectSiteDTO ps = new ProjectSiteDTO();
@@ -132,17 +144,18 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
 
         RequestDTO w = new RequestDTO(RequestDTO.ADD_CONTRACTOR_CLAIM);
         w.setContractorClaim(contractorClaim);
-        
-        WebSocketUtil.sendRequest(ctx,Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
+
+        WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (!ErrorUtil.checkServerError(ctx,response)) {
+                        if (!ErrorUtil.checkServerError(ctx, response)) {
                             return;
                         }
-                        ToastUtil.toast(ctx, ctx.getString(R.string.claim_saved));
+                        contractorClaim = response.getContractorClaimList().get(0);
+                        mListener.onContractorClaimAdded(contractorClaim);
                     }
                 });
             }
@@ -159,8 +172,11 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
         });
     }
 
+    static final String FILENAME = "temp.pdf";
+
     DatePickerDialog dpStart;
     int mYear, mMonth, mDay;
+    static final String LOG = ContractorClaimFragment.class.getSimpleName();
 
     private void showClaimDateDialog() {
         final Calendar calendar = Calendar.getInstance();
@@ -213,163 +229,41 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
 
     }
 
-    private void getData() {
+    List<String> engineers;
+    List<String> tasks;
 
-        CacheUtil.getCachedData(ctx, CacheUtil.CACHE_DATA, new CacheUtil.CacheUtilListener() {
-            @Override
-            public void onFileDataDeserialized(ResponseDTO response) {
-                if (response != null) {
-                    taskList = response.getCompany().getTaskList();
-                    engineerList = response.getCompany().getEngineerList();
-                    setSpinners();
-                }
-                CacheUtil.getCachedProjectData(ctx,CacheUtil.CACHE_PROJECT,project.getProjectID(),new CacheUtil.CacheUtilListener() {
-                    @Override
-                    public void onFileDataDeserialized(ResponseDTO response) {
-                        if (response != null) {
-                            siteList = response.getProjectSiteList();
-                            setList();
-                        }
-                        refreshProjectData();
-                    }
-
-                    @Override
-                    public void onDataCached() {
-
-                    }
-
-                    @Override
-                    public void onError() {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onDataCached() {
-
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        });
+    public void setProject(ProjectDTO p) {
+        project = p;
+        if (project != null) {
+            txtProject.setText(project.getProjectName());
+            siteList = project.getProjectSiteList();
+            chkSelectAll.setChecked(false);
+            txtCount.setText("0");
+            setList();
+        }
     }
-
-    private void refreshProjectData() {
-        RequestDTO w = new RequestDTO(RequestDTO.GET_PROJECT_SITE_DATA);
-        w.setProjectID(project.getProjectID());
-
-        WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
-            @Override
-            public void onMessage(final ResponseDTO response) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!ErrorUtil.checkServerError(ctx, response)) {
-                            return;
-                        }
-                        siteList = response.getProjectSiteList();
-                        setList();
-                        CacheUtil.cacheProjectData(ctx, response, CacheUtil.CACHE_PROJECT, project.getProjectID(), new CacheUtil.CacheUtilListener() {
-                            @Override
-                            public void onFileDataDeserialized(ResponseDTO response) {
-
-                            }
-
-                            @Override
-                            public void onDataCached() {
-
-
-                            }
-
-                            @Override
-                            public void onError() {
-
-                            }
-                        });
-                    }
-                });
-            }
-
-            @Override
-            public void onClose() {
-
-            }
-
-            @Override
-            public void onError(String message) {
-
-            }
-        });
+    public void setData(List<EngineerDTO> engineers,
+                        List<TaskDTO> tasks) {
+        engineerList = engineers;
+        taskList = tasks;
+        if (engineers != null) {
+            setSpinners();
+        }
     }
-    private void refreshCompanyData() {
-        RequestDTO w = new RequestDTO(RequestDTO.GET_COMPANY_DATA);
-        w.setCompanyID(SharedUtil.getCompany(ctx).getCompanyID());
-
-        WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
-            @Override
-            public void onMessage(final ResponseDTO response) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!ErrorUtil.checkServerError(ctx, response)) {
-                            return;
-                        }
-                        CacheUtil.cacheData(ctx, response, CacheUtil.CACHE_DATA, new CacheUtil.CacheUtilListener() {
-                            @Override
-                            public void onFileDataDeserialized(ResponseDTO response) {
-
-                            }
-
-                            @Override
-                            public void onDataCached() {
-                                projectList = response.getCompany().getProjectList();
-
-                                taskList = response.getCompany().getTaskList();
-                                engineerList = response.getCompany().getEngineerList();
-                                setSpinners();
-                            }
-
-                            @Override
-                            public void onError() {
-
-                            }
-                        });
-                    }
-                });
-            }
-
-            @Override
-            public void onClose() {
-
-            }
-
-            @Override
-            public void onError(String message) {
-
-            }
-        });
-    }
-
     private void setSpinners() {
-        siteList = project.getProjectSiteList();
-        setList();
-        chkSelectAll.setChecked(false);
-        txtCount.setText("0");
-
-        txtProject.setText(project.getProjectName());
-        List<String> engineers = new ArrayList<>();
+        engineers = new ArrayList<>();
         engineers.add(ctx.getString(R.string.select_engineer));
         for (EngineerDTO p : engineerList) {
             engineers.add(p.getEngineerName());
         }
+        Log.w(LOG,"##### setting engineer dropdown");
+        ArrayAdapter<String> sad = new ArrayAdapter<String>(ctx,android.R.layout.simple_spinner_item, engineers);
         SpinnerListAdapter a2 = new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item_blue, engineers);
         engineerSpinner.setAdapter(a2);
         engineerSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.w(LOG,"##### engineer item selected: " + position);
                 if (position == 0) {
                     engineer = null;
                 } else {
@@ -382,16 +276,20 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
 
             }
         });
-        List<String> tasks = new ArrayList<>();
+        //
+        tasks = new ArrayList<>();
         tasks.add(ctx.getString(R.string.select_task));
         for (TaskDTO p : taskList) {
             tasks.add(p.getTaskName());
         }
+        Log.w(LOG,"##### setting task dropdown");
+        ArrayAdapter<String> sad2 = new ArrayAdapter<String>(ctx,android.R.layout.simple_spinner_item, tasks);
         SpinnerListAdapter a3 = new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item, tasks);
         taskSpinner.setAdapter(a3);
         taskSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.w(LOG,"##### task item selected: " + position);
                 if (position == 0) {
                     task = null;
                 } else {
@@ -404,10 +302,11 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
 
             }
         });
+
     }
 
     private void setFields() {
-        imgMore = (ImageView)view.findViewById(R.id.CCX_imgMore);
+        imgMore = (ImageView) view.findViewById(R.id.CCX_imgMore);
         txtCount = (TextView) view.findViewById(R.id.CCX_siteCount);
         txtProject = (TextView) view.findViewById(R.id.CCX_projectName);
         engineerSpinner = (Spinner) view.findViewById(R.id.CCX_engineerSpinner);
@@ -417,8 +316,8 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
         siteListView = (ListView) view.findViewById(R.id.CCX_list);
         chkSelectAll = (CheckBox) view.findViewById(R.id.CCX_chkAll);
         txtCount.setText("0");
-        TextView title = (TextView)view.findViewById(R.id.CCX_title);
-        Statics.setRobotoFontLight(ctx,title);
+        TextView title = (TextView) view.findViewById(R.id.CCX_title);
+        Statics.setRobotoFontLight(ctx, title);
         btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -436,11 +335,11 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 int count = 0;
                 if (isChecked) {
-                    for (ProjectSiteDTO s: siteList) {
+                    for (ProjectSiteDTO s : siteList) {
                         s.setSelected(true);
                     }
                 } else {
-                    for (ProjectSiteDTO s: siteList) {
+                    for (ProjectSiteDTO s : siteList) {
                         s.setSelected(false);
                     }
                 }
@@ -466,7 +365,9 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
             isListOpen = false;
         }
     }
+
     View top, bottom;
+
     private void animateOn() {
         if (top == null) {
             top = view.findViewById(R.id.CCX_middle);
@@ -487,6 +388,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
 //
 //        set.start();
     }
+
     private void animateOff() {
         if (top == null) {
             top = view.findViewById(R.id.CCX_middle);
@@ -511,9 +413,10 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
 //        set.start();
 
     }
-    boolean isListOpen;
-    private void setList() {
 
+    boolean isListOpen;
+
+    private void setList() {
         adapter = new ProjectSiteSelectionAdapter(ctx, R.layout.project_site_item_select,
                 siteList, new ProjectSiteSelectionAdapter.ProjectSiteSelectionAdapterListener() {
             @Override

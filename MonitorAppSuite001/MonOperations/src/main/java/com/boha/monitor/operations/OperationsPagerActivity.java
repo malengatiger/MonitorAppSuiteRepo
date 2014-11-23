@@ -103,6 +103,10 @@ public class OperationsPagerActivity extends FragmentActivity
                 CompanyDTO company = new CompanyDTO();
                 if (r != null) {
                     response = r;
+                    if (response.getCompany() == null) {
+                        getCompanyData();
+                        return;
+                    }
                     company = r.getCompany();
                     projectList = company.getProjectList();
                     buildPages();
@@ -135,7 +139,7 @@ public class OperationsPagerActivity extends FragmentActivity
 
             @Override
             public void onError() {
-
+                getCompanyData();
             }
         });
     }

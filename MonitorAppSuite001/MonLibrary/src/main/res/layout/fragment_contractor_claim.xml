@@ -44,6 +44,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <Spinner
+            android:id="@+id/CCX_taskSpinner"
+            android:layout_below="@id/CCX_engineerSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
 
     </RelativeLayout>
 
@@ -56,15 +62,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Spinner
-            android:id="@+id/CCX_taskSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/CCX_btnDate"
             style="@style/RobotoButtonStyle"
-            android:layout_below="@id/CCX_taskSpinner"
             android:textSize="13sp"
             android:text="@string/enter_date"
             android:layout_width="match_parent"
@@ -100,7 +101,7 @@
         <TextView
             android:id="@+id/CCX_siteCount"
             android:text="99"
-            style="@style/GreenCircleSmall"
+            style="@style/GreenCircle"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/mon_padding"
             android:layout_width="wrap_content"
@@ -112,7 +113,6 @@
         android:id="@+id/CCX_list"
         android:layout_below="@id/CCX_actions"
         android:background="@color/white"
-
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

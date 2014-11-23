@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/mon_margin">
+    android:padding="8dp">
 
     <ImageView
         android:id="@+id/image1"
-        android:src="@android:drawable/ic_dialog_info"
-        android:tint="@color/absa_red"
+        android:src="@drawable/xblue_oval_small"
+        android:tint="@color/blue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView

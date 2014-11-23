@@ -211,7 +211,7 @@ public class WebSocketUtil {
     }
 
     private static void parseData(ByteBuffer bb) {
-        Log.i(LOG, "########## parseData ByteBuffer capacity: " + bb.capacity());
+        Log.i(LOG, "########## parseData ByteBuffer capacity: " + ZipUtil.getKilobytes(bb.capacity())) ;
         String content = null;
         try {
             //check if dd is not compressed

@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.com.boha.monitor.library.ClaimAndInvoicePagerActivity;
 import com.com.boha.monitor.library.ImagePagerActivity;
 import com.com.boha.monitor.library.MonitorMapActivity;
 import com.com.boha.monitor.library.PictureActivity;
@@ -342,6 +343,13 @@ public class ProjectPagerActivity extends FragmentActivity
     @Override
     public void onMapRequested(ProjectDTO project) {
         Intent i = new Intent(this, MonitorMapActivity.class);
+        i.putExtra("project",project);
+        startActivity(i);
+    }
+
+    @Override
+    public void onClaimsAndInvoicesRequested(ProjectDTO project) {
+        Intent i = new Intent(this, ClaimAndInvoicePagerActivity.class);
         i.putExtra("project",project);
         startActivity(i);
     }

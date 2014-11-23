@@ -248,7 +248,7 @@
     <string name="select_project">Select Project</string>
     <string name="tap_to_enter">Tap to enter name</string>
     <string name="projects">Projects</string>
-    <string name="claim_number">Claim Number</string>
+    <string name="claim_number">Claim No.</string>
     <string name="contractor_claims">Contractor Claims</string>
     <string name="contractor_claim">Contractor Claim</string>
     <string name="enter_date">Enter Date</string>
@@ -256,5 +256,7 @@
     <string name="claim_saved">ContractorClaim has been saved</string>
     <string name="add_all_sites">Add All Sites</string>
     <string name="select_site">Select Site</string>
+    <string name="claims_invoices">Claims and Invoices</string>
+    <string name="invoices">Invoices</string>
 
 </resources>

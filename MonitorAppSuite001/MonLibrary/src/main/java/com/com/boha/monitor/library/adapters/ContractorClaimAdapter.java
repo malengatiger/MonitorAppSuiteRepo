@@ -22,7 +22,9 @@ import java.util.Locale;
 public class ContractorClaimAdapter extends ArrayAdapter<ContractorClaimDTO> {
 
     public interface ContractorClaimAdapterListener {
-        public void onProjectSiteListRequested(ContractorClaimDTO client);
+        public void onProjectSiteListRequested(ContractorClaimDTO claim);
+        public void onPDFDownloadRequested(ContractorClaimDTO claim);
+        public void onInvoiceActionsRequested(ContractorClaimDTO claim);
     }
 
     private final LayoutInflater mInflater;
@@ -43,12 +45,10 @@ public class ContractorClaimAdapter extends ArrayAdapter<ContractorClaimDTO> {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-
     View view;
-
-
     static class ViewHolderItem {
-        TextView txtEngineerName, txtSiteCount, txtDate, txtNumber, txtClaimNumber;
+        TextView txtEngineerName, txtSiteCount, txtDate,
+                txtDoc, txtNumber, txtClaimNumber, txtInvoice;
         ImageView imgYes;
     }
 
@@ -68,6 +68,10 @@ public class ContractorClaimAdapter extends ArrayAdapter<ContractorClaimDTO> {
                     .findViewById(R.id.CCI_date);
             item.txtNumber = (TextView) convertView
                     .findViewById(R.id.CCI_number);
+            item.txtDoc = (TextView) convertView
+                    .findViewById(R.id.CCI_doc);
+            item.txtInvoice = (TextView) convertView
+                    .findViewById(R.id.CCI_invoice);
             item.txtClaimNumber = (TextView) convertView
                     .findViewById(R.id.CCI_claimNumber);
 
@@ -81,7 +85,7 @@ public class ContractorClaimAdapter extends ArrayAdapter<ContractorClaimDTO> {
         item.txtClaimNumber.setText(p.getClaimNumber());
         item.txtNumber.setText("" + (position + 1));
         if (p.getContractorClaimSiteList() != null)
-            item.txtSiteCount.setText(p.getContractorClaimSiteList().size());
+            item.txtSiteCount.setText("" + p.getContractorClaimSiteList().size());
         else
             item.txtSiteCount.setText("0");
         item.txtDate.setText(sdf.format(p.getClaimDate()));
@@ -90,6 +94,18 @@ public class ContractorClaimAdapter extends ArrayAdapter<ContractorClaimDTO> {
             @Override
             public void onClick(View v) {
                 listener.onProjectSiteListRequested(p);
+            }
+        });
+        item.txtInvoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onInvoiceActionsRequested(p);
+            }
+        });
+        item.txtDoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onPDFDownloadRequested(p);
             }
         });
 

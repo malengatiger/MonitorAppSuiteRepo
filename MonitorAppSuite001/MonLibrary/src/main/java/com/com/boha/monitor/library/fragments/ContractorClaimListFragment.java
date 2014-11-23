@@ -1,40 +1,40 @@
 package com.com.boha.monitor.library.fragments;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ListPopupWindow;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.adapters.ContractorClaimAdapter;
+import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.dto.ContractorClaimDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
+import com.com.boha.monitor.library.util.FileDownloader;
+import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <project/>
- * Large screen devices (such as tablets) are supported by replacing the ListView
- * with a GridView.
- * <project/>
- * Activities containing this fragment MUST implement the ProjectSiteListListener
- * interface.
- */
 public class ContractorClaimListFragment extends Fragment implements PageFragment {
 
     private ContractorClaimListListener mListener;
-    private AbsListView mListView;
+
     public ContractorClaimListFragment() {
     }
 
@@ -42,40 +42,84 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-           }
+    }
 
     Context ctx;
     View view;
     TextView txtCount, txtName;
     ProjectDTO project;
+    ListView mListView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         view = inflater.inflate(R.layout.fragment_contractor_claim_list, container, false);
+        view = inflater.inflate(R.layout.fragment_contractor_claim_list, container, false);
         ctx = getActivity();
-        Bundle b = getArguments();
-        if (b != null) {
-            project = (ProjectDTO) b.getSerializable("project");
-            contractorClaimList = project.getContractorClaimList();
-        }
 
-        txtCount = (TextView)view.findViewById(R.id.FCC_count);
-        txtName = (TextView)view.findViewById(R.id.FCC_title);
+
+        txtCount = (TextView) view.findViewById(R.id.FCC_count);
+        txtName = (TextView) view.findViewById(R.id.FCC_title);
+        mListView = (ListView) view.findViewById(R.id.FCC_list);
 
         Statics.setRobotoFontLight(ctx, txtName);
-        setList();
         return view;
     }
 
+    public void setProject(ProjectDTO p) {
+        project = p;
+        contractorClaimList = project.getContractorClaimList();
+        setList();
+
+    }
+
+    ListPopupWindow invoicePopupWindow;
+    List<String> list;
+    static final String LOG = ContractorClaimListFragment.class.getSimpleName();
     private void setList() {
         if (contractorClaimList == null) return;
         txtCount.setText("" + contractorClaimList.size());
-        mListView = (AbsListView) view.findViewById(R.id.FCC_list);
         adapter = new ContractorClaimAdapter(ctx, R.layout.contractor_claim_item,
                 contractorClaimList, new ContractorClaimAdapter.ContractorClaimAdapterListener() {
             @Override
             public void onProjectSiteListRequested(ContractorClaimDTO client) {
-                    //TODO - start activity or dialog to add or remove project sites from claim
+                //TODO - start activity or dialog to add or remove project sites from claim
+            }
+
+            @Override
+            public void onPDFDownloadRequested(ContractorClaimDTO cc) {
+                contractorClaim = cc;
+                viewPDF();
+            }
+
+            @Override
+            public void onInvoiceActionsRequested(ContractorClaimDTO claim) {
+                Log.w(LOG, "#### onInvoiceActionsRequested");
+                list = new ArrayList<>();
+                list.add("Create Invoice");
+                list.add("Download Invoice");
+
+                invoicePopupWindow = new ListPopupWindow(getActivity());
+                invoicePopupWindow.setAdapter(new SpinnerListAdapter(ctx,R.layout.xxsimple_spinner_item,list, true));
+                invoicePopupWindow.setAnchorView(txtName);
+                invoicePopupWindow.setModal(true);
+                invoicePopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        switch (position) {
+                            case 0:
+                                //TODO - start invoice fragment
+                                Log.i(LOG,"#### start invoice fragment to create new");
+                                invoicePopupWindow.dismiss();
+                                break;
+                            case 1:
+                                //TODO - downlaod invoice pdf
+                                Log.i(LOG,"#### downlaod pdf");
+                                invoicePopupWindow.dismiss();
+                                break;
+                        }
+                    }
+                });
+                invoicePopupWindow.show();
             }
         });
         mListView.setAdapter(adapter);
@@ -94,6 +138,39 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
             }
         });
     }
+
+    private void viewPDF() {
+        FileDownloader.downloadContractorClaimPDF(ctx,
+                contractorClaim.getContractorClaimID(),
+                SharedUtil.getCompany(ctx).getCompanyID(),
+                contractorClaim.getProjectID(),
+                new FileDownloader.FileDownloaderListener() {
+                    @Override
+                    public void onFileDownloaded(final File file) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Uri uri = Uri.fromFile(file);
+                                try {
+                                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                                    intent.setDataAndType(uri, "application/pdf");
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                } catch (ActivityNotFoundException e) {
+                                    ToastUtil.errorToast(ctx,
+                                            "PDF Reader application is not installed in your device");
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -127,7 +204,7 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
 
     @Override
     public void animateCounts() {
-        Util.animateRotationY(txtCount,500);
+        Util.animateRotationY(txtCount, 500);
 
     }
 
@@ -135,17 +212,14 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
         if (contractorClaimList == null) {
             contractorClaimList = new ArrayList<>();
         }
-        contractorClaimList.add(0,contractorClaim);
+        contractorClaimList.add(0, contractorClaim);
         adapter.notifyDataSetChanged();
+        mListView.setSelection(0);
         txtCount.setText("" + contractorClaimList.size());
-        try {
-            Thread.sleep(1000);
-            Util.animateRotationY(txtCount,500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
+        Util.animateRotationY(txtCount, 500);
     }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -154,6 +228,7 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
      */
     public interface ContractorClaimListListener {
         public void onContractorClaimClicked(ContractorClaimDTO contractorClaimDTO);
+        public void onInvoiceActionsRequested(ContractorClaimDTO contractorClaimDTO);
     }
 
     ContractorClaimDTO contractorClaim;

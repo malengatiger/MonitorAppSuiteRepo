@@ -27,6 +27,7 @@ public class Statics {
     public static final String WEBSOCKET_URL = "ws://192.168.1.111:8080/mwp/";
     public static final String URL = "http://192.168.1.111:8080/mwp/";
     public static final String IMAGE_URL = "http://192.168.1.111:8080/";
+    public static final String PDF_URL = "http://192.168.1.111:8080/monitor_documents/";
 
     public static final String INVITE_DESTINATION = "https://play.google.com/store/apps/details?id=";
     public static final String INVITE_ADMIN = INVITE_DESTINATION + "com.boha.malengagolf.admin";
