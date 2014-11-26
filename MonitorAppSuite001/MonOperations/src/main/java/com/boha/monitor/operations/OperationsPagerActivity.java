@@ -4,12 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,10 +28,10 @@ import com.com.boha.monitor.library.SitePagerActivity;
 import com.com.boha.monitor.library.adapters.DrawerAdapter;
 import com.com.boha.monitor.library.dialogs.BeneficiaryDialog;
 import com.com.boha.monitor.library.dialogs.ClientDialog;
-import com.com.boha.monitor.library.dialogs.StaffDialog;
-import com.com.boha.monitor.library.dialogs.TaskAndProjectStatusDialog;
 import com.com.boha.monitor.library.dialogs.EngineerDialog;
 import com.com.boha.monitor.library.dialogs.ProjectDialog;
+import com.com.boha.monitor.library.dialogs.StaffDialog;
+import com.com.boha.monitor.library.dialogs.TaskAndProjectStatusDialog;
 import com.com.boha.monitor.library.dialogs.TaskDialog;
 import com.com.boha.monitor.library.dto.BeneficiaryDTO;
 import com.com.boha.monitor.library.dto.ClientDTO;
@@ -65,7 +66,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class OperationsPagerActivity extends FragmentActivity
+public class OperationsPagerActivity extends ActionBarActivity
         implements ProjectListFragment.ProjectListListener,
         StaffListFragment.CompanyStaffListListener,
         TaskStatusListFragment.TaskStatusListListener,
@@ -84,6 +85,10 @@ public class OperationsPagerActivity extends FragmentActivity
         ctx = getApplicationContext();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mPager = (ViewPager) findViewById(R.id.pager);
+        Toolbar tb = (Toolbar)findViewById(R.id.toolbar);
+        if (tb != null) {
+            //setSupportActionBar(tb);
+        }
         PagerTitleStrip s = (PagerTitleStrip)findViewById(R.id.pager_title_strip);
         s.setVisibility(View.GONE);
         drawerListView = (ListView) findViewById(R.id.left_drawer);
@@ -91,9 +96,8 @@ public class OperationsPagerActivity extends FragmentActivity
         setDrawerList();
         setTitle(SharedUtil.getCompany(ctx).getCompanyName());
         CompanyStaffDTO staff = SharedUtil.getCompanyStaff(ctx);
-        getActionBar().setSubtitle(staff.getFullName());
-        //
-        // PhotoUploadService.uploadPendingPhotos(ctx);
+        getSupportActionBar().setSubtitle(staff.getFullName());
+
     }
 
     private void setDrawerList() {
@@ -500,6 +504,20 @@ public class OperationsPagerActivity extends FragmentActivity
         pageFragmentList.add(beneficiaryListFragment);
 
         initializeAdapter();
+
+//        FloatingActionButton fabButton = new FloatingActionButton.Builder(this)
+//                .withDrawable(ctx.getResources().getDrawable(R.drawable.ic_action_edit))
+//                .withButtonColor(Color.GREEN)
+//                .withGravity(Gravity.BOTTOM | Gravity.RIGHT)
+//                .withMargins(0, 0, 48, 16)
+//                .create();
+//
+//        fabButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.e(LOG,"## The FAB is clicked");
+//            }
+//        });
 
     }
 

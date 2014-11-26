@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,7 +38,7 @@ import com.google.android.gms.location.LocationClient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SitePagerActivity extends FragmentActivity implements com.google.android.gms.location.LocationListener,
+public class SitePagerActivity extends ActionBarActivity implements com.google.android.gms.location.LocationListener,
         GooglePlayServicesClient.ConnectionCallbacks,
         GooglePlayServicesClient.OnConnectionFailedListener,
         ProjectSiteListFragment.ProjectSiteListListener {
@@ -58,7 +58,7 @@ public class SitePagerActivity extends FragmentActivity implements com.google.an
         type = getIntent().getIntExtra("type", TaskAssignmentFragment.OPERATIONS);
         buildPages();
         setTitle(ctx.getString(R.string.project_sites));
-        getActionBar().setSubtitle(project.getProjectName());
+        getSupportActionBar().setSubtitle(project.getProjectName());
     }
 
     private void getProjectPhotos() {

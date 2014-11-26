@@ -28,7 +28,6 @@ public class InvoiceDTO implements Serializable {
     private CompanyDTO company;
     private ProjectDTO project;
     private List<InvoiceItemDTO> invoiceItemList;
-    private List<SiteCheckPointDTO> siteCheckPointList;
 
     public InvoiceDTO() {
     }
@@ -133,14 +132,5 @@ public class InvoiceDTO implements Serializable {
         this.invoiceItemList = invoiceItemList;
     }
 
-    public List<SiteCheckPointDTO> getSiteCheckPointList() {
-        return siteCheckPointList;
-    }
-
-    public void setSiteCheckPointList(List<SiteCheckPointDTO> siteCheckPointList) {
-        this.siteCheckPointList = siteCheckPointList;
-    }
-
-   
     
 }

@@ -1,12 +1,13 @@
 package com.com.boha.monitor.library;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.boha.monitor.library.R;
 
-public class TaskStatusNotificationActivity extends Activity {
+public class TaskStatusNotificationActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

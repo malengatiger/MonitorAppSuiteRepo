@@ -3,39 +3,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
         android:id="@+id/card_view"
         android:layout_gravity="center"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        card_view:cardCornerRadius="8dp">
+        tools:cardCornerRadius="8dp">
 
         <RelativeLayout
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="120dp"
                 android:id="@+id/PSN_imagex"
                 android:scaleType="centerCrop"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:src="@drawable/house" />
+                android:alpha="0.4"
+                android:src="@drawable/black_woman" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
                 android:id="@+id/PSN_txtNum"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/mon_padding"
                 android:layout_marginLeft="16dp"
                 style="@style/GreyCircleSmall"
                 android:layout_below="@+id/PSN_imagex" />
@@ -47,8 +45,8 @@
                 android:text="@string/txt"
                 android:id="@+id/PSN_txtName"
                 style="@style/Title2TextStyleBlue"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="@dimen/mon_padding"
+                android:layout_marginTop="@dimen/mon_padding"
                 android:layout_alignBaseline="@id/PSN_txtNum"
                 android:layout_toRightOf="@+id/PSN_txtNum" />
 
@@ -56,11 +54,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="email@address"
-                android:layout_marginTop="5dp"
                 android:id="@+id/PSN_txtEmail"
                 android:layout_below="@+id/PSN_txtNum"
                 android:layout_alignLeft="@id/PSN_txtName"
                 style="@style/TextStyle"
+                android:visibility="gone"
                 android:textStyle="normal"
                 android:layout_marginLeft="5dp" />
 
@@ -74,6 +72,7 @@
                 android:layout_alignLeft="@id/PSN_txtName"
                 android:layout_below="@+id/PSN_txtEmail"
                 style="@style/TextStyleBold"
+                android:visibility="gone"
                 android:layout_centerHorizontal="true" />
 
             <TextView
@@ -82,7 +81,6 @@
                 android:text="Staff Type"
                 android:id="@+id/PSN_txtStaffType"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="8dp"
                 android:layout_alignLeft="@id/PSN_txtName"
                 android:layout_below="@+id/PSN_txtCell"
                 style="@style/TextStyleRed"
@@ -93,9 +91,8 @@
                 android:layout_below="@+id/PSN_txtStaffType"
                 android:layout_alignLeft="@id/PSN_txtName"
                 android:layout_width="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="4dp"
                 android:layout_height="wrap_content">
 
 

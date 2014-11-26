@@ -12,15 +12,27 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListPopupWindow;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
+import com.com.boha.monitor.library.dto.transfer.RequestDTO;
+import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
+import com.com.boha.monitor.library.util.CacheUtil;
+import com.com.boha.monitor.library.util.ErrorUtil;
+import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
+import com.com.boha.monitor.library.util.WebSocketUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.ErrorDialogFragment;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -66,6 +78,8 @@ public class MonitorMapActivity extends FragmentActivity
     ProjectSiteDTO projectSite;
     ProjectDTO project;
     int index;
+    TextView text;
+    View topLayout;
     static final Locale loc = Locale.getDefault();
     static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
@@ -74,7 +88,11 @@ public class MonitorMapActivity extends FragmentActivity
         Log.w(LOG, "#### onCreate");
         super.onCreate(savedInstanceState);
         ctx = getApplicationContext();
-        setContentView(R.layout.activity_monitor_map);
+        try {
+            setContentView(R.layout.activity_monitor_map);
+        } catch (Exception e) {
+            Log.e(LOG,"######## cannot setContentView", e);
+        }
         projectSite = (ProjectSiteDTO) getIntent().getSerializableExtra("projectSite");
         project = (ProjectDTO) getIntent().getSerializableExtra("project");
         index = getIntent().getIntExtra("index", 0);
@@ -83,6 +101,15 @@ public class MonitorMapActivity extends FragmentActivity
                 this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        text = (TextView) findViewById(R.id.text);
+        Statics.setRobotoFontLight(ctx,text);
+
+        topLayout = findViewById(R.id.top);
+        if (project != null) {
+            text.setText(project.getProjectName());
+        } else {
+            text.setText("");
+        }
         googleMap = mapFragment.getMap();
         if (googleMap == null) {
             ToastUtil.toast(ctx, "Map not available. Please try again!");
@@ -116,30 +143,100 @@ public class MonitorMapActivity extends FragmentActivity
                 float mf = location.distanceTo(loc);
                 Log.w(LOG, "######### distance, again: " + mf);
 
-                if (mf > 100) {
-                    showDirectionsDialog(latLng.latitude, latLng.longitude);
-                } else {
-                    ToastUtil.toast(ctx, "You are currently " + df.format(mf) + " metres from where the picture was taken");
-                }
-                return false;
+                showPopup(latLng.latitude,latLng.longitude, marker.getTitle() + "\n" + marker.getSnippet());
+
+//                if (mf > 100) {
+//                    showDirectionsDialog(latLng.latitude, latLng.longitude);
+//                } else {
+//                    ToastUtil.toast(ctx, "You are currently " + df.format(mf) + " metres from where the picture was taken");
+//                }
+                return true;
             }
         });
         if (projectSite != null) {
             setOneMarker(projectSite.getPhotoUploadList().get(index));
         }
         if (project != null) {
-            setProjectMarkers();
+            getCachedData();
         }
 
     }
 
     static final DecimalFormat df = new DecimalFormat("###,##0.00");
 
+    private void getCachedData() {
+        CacheUtil.getCachedProjectData(ctx,CacheUtil.CACHE_PROJECT,project.getProjectID(),new CacheUtil.CacheUtilListener() {
+            @Override
+            public void onFileDataDeserialized(ResponseDTO response) {
+                if (response != null) {
+                    if (response.getProjectList() != null && !response.getProjectList().isEmpty()) {
+                        project = response.getProjectList().get(0);
+                        setProjectMarkers();
+                        text.setText(project.getProjectName()  + " - Sites (" +  project.getProjectSiteList().size() + ")");
+                    }
+                }
+                refreshProjectData();
+            }
+
+            @Override
+            public void onDataCached() {
+
+            }
+
+            @Override
+            public void onError() {
+                refreshProjectData();
+            }
+        });
+    }
+
+    private void refreshProjectData() {
+        RequestDTO w = new RequestDTO(RequestDTO.GET_PROJECT_DATA);
+        w.setProjectID(project.getProjectID());
+        WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
+            @Override
+            public void onMessage(final ResponseDTO response) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!ErrorUtil.checkServerError(ctx,response)) {
+                            return;
+                        }
+                        project = response.getProjectList().get(0);
+                        setProjectMarkers();
+                        text.setText(project.getProjectName() + " - Sites (" +   project.getProjectSiteList().size() + ")");
+                    }
+                });
+            }
+
+            @Override
+            public void onClose() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshProjectData();
+                    }
+                });
+            }
+
+            @Override
+            public void onError(final String message) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.errorToast(ctx,message);
+                    }
+                });
+            }
+        });
+    }
     private void setProjectMarkers() {
 
+        googleMap.clear();
         LatLng point = null;
         int index = 0;
         for (ProjectSiteDTO site : project.getProjectSiteList()) {
+            if (site.getLatitude() == null) continue;;
             LatLng pnt = new LatLng(site.getLatitude(), site.getLongitude());
             if (index == 0) {
                 point = pnt;
@@ -147,7 +244,7 @@ public class MonitorMapActivity extends FragmentActivity
             BitmapDescriptor desc = null;
             Short color = getLastStatus(site);
             if (color == null) {
-                desc = BitmapDescriptorFactory.fromResource(R.drawable.bullet_black_32);
+                desc = BitmapDescriptorFactory.fromResource(R.drawable.bullet_pink_32);
             } else {
                 switch (color) {
                     case TaskStatusDTO.STATUS_COLOR_RED:
@@ -224,6 +321,45 @@ public class MonitorMapActivity extends FragmentActivity
                 .show();
     }
 
+    ListPopupWindow actionsWindow;
+    List<String> list;
+    private void showPopup(final double lat, final double lng, String title) {
+        list = new ArrayList<>();
+        list.add("Directions");
+        list.add("Status Report");
+
+        actionsWindow = new ListPopupWindow(this);
+        actionsWindow.setAdapter(new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item, list,
+                SpinnerListAdapter.INVOICE_ACTIONS, title));
+        actionsWindow.setAnchorView(topLayout);
+        actionsWindow.setHorizontalOffset(72);
+        actionsWindow.setWidth(600);
+        actionsWindow.setModal(true);
+        actionsWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+
+            }
+        });
+        actionsWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        startDirectionsMap(lat, lng);
+                        break;
+                    case 1:
+
+                        break;
+
+                }
+                actionsWindow.dismiss();
+            }
+        });
+
+        actionsWindow.show();
+
+    }
     private void startDirectionsMap(double lat, double lng) {
         Log.i(LOG, "startDirectionsMap ..........");
         String url = "http://maps.google.com/maps?saddr="

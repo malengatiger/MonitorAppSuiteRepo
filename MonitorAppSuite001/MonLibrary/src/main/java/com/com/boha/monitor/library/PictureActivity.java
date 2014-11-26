@@ -21,6 +21,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -60,7 +61,7 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Created by aubreyM on 2014/04/21.
  */
-public class PictureActivity extends Activity implements GLSurfaceView.Renderer, LocationListener, GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
+public class PictureActivity extends ActionBarActivity implements GLSurfaceView.Renderer, LocationListener, GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
     LocationRequest mLocationRequest;
     LocationClient mLocationClient;
 
@@ -96,8 +97,7 @@ public class PictureActivity extends Activity implements GLSurfaceView.Renderer,
             companyStaff = (CompanyStaffDTO) getIntent().getSerializableExtra("companyStaff");
         }
         Log.e(LOG, "###### type: " + type);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+
         if (savedInstanceState != null) {
             String path = savedInstanceState.getString("filePath");
             if (path != null) {

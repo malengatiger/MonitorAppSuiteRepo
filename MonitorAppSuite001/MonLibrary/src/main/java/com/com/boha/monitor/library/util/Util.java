@@ -19,6 +19,8 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.ProjectDTO;
@@ -221,6 +223,30 @@ public class Util {
         return sb.toString();
     }
 
+    public static void hide (View view, long duration) {
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", 1, 0);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", 1, 0);
+        AnimatorSet animSetXY = new AnimatorSet();
+        animSetXY.playTogether(scaleX, scaleY);
+        animSetXY.setInterpolator(new AccelerateInterpolator());
+        animSetXY.setDuration(duration);
+        if (duration == 0) {
+            animSetXY.setDuration(200);
+        }
+        animSetXY.start();
+    }
+    public static void show (View view, long duration) {
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", 0, 1);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", 0, 1);
+        AnimatorSet animSetXY = new AnimatorSet();
+        animSetXY.playTogether(scaleX, scaleY);
+        animSetXY.setInterpolator(new OvershootInterpolator());
+        animSetXY.setDuration(duration);
+        if (duration == 0) {
+            animSetXY.setDuration(300);
+        }
+        animSetXY.start();
+    }
 
     public static void animateScaleY(View txt, long duration) {
         final ObjectAnimator an = ObjectAnimator.ofFloat(txt, "scaleY", 0);

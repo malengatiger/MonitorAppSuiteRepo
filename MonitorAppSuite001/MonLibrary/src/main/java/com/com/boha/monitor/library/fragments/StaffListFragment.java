@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ListPopupWindow;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.adapters.StaffAdapter;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
@@ -69,9 +71,9 @@ public class StaffListFragment extends Fragment
         }
 
         txtCount = (TextView) view.findViewById(R.id.STAFF_LIST_staffCount);
-        TextView label = (TextView)view.findViewById(R.id.STAFF_LIST_label);
+        txtName = (TextView) view.findViewById(R.id.STAFF_LIST_label);
 
-        Statics.setRobotoFontLight(ctx, label);
+        Statics.setRobotoFontLight(ctx, txtName);
         txtCount.setText("" + companyStaffList.size());
         setList();
         return view;
@@ -94,6 +96,8 @@ public class StaffListFragment extends Fragment
         mListener = null;
     }
 
+    ListPopupWindow staffActionsWindow;
+    List<String> list;
     private void setList() {
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
@@ -118,6 +122,26 @@ public class StaffListFragment extends Fragment
                 if (null != mListener) {
                     companyStaffDTO = companyStaffList.get(position);
                     mListener.onCompanyStaffClicked(companyStaffDTO);
+                    list = new ArrayList<>();
+                    list.add(ctx.getString(R.string.get_status));
+                    list.add(ctx.getString(R.string.take_picture));
+                    list.add(ctx.getString(R.string.send_app_link));
+                    list.add(ctx.getString(R.string.edit_staff));
+
+
+                    staffActionsWindow = new ListPopupWindow(getActivity());
+                    staffActionsWindow.setAdapter(new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item,
+                            list, SpinnerListAdapter.STAFF_ACTIONS));
+                    staffActionsWindow.setAnchorView(txtName);
+                    staffActionsWindow.setWidth(600);
+                    staffActionsWindow.setModal(true);
+                    staffActionsWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            staffActionsWindow.dismiss();
+                        }
+                    });
+                    staffActionsWindow.show();
                 }
             }
         });

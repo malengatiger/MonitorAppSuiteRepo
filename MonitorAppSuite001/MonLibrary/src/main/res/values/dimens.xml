@@ -5,6 +5,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="mon_padding">8dp</dimen>
     <dimen name="mon_margin">16dp</dimen>
+    <dimen name="mon_middle">12dp</dimen>
     <dimen name="done_label_size">14sp</dimen>
     <dimen name="date_picker_component_width">270dip</dimen>
     <dimen name="date_picker_header_height">30dip</dimen>

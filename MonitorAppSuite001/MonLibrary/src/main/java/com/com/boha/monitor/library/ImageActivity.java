@@ -1,12 +1,12 @@
 package com.com.boha.monitor.library;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,7 +30,7 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class ImageActivity extends Activity {
+public class ImageActivity extends ActionBarActivity {
 
     TextView txtNumber, txtTitle, txtSubTitle, txtNext, txtPrev, txtDate;
     ImageView imageView;

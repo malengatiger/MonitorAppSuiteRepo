@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -21,11 +22,12 @@ import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.adapters.ProjectSiteSelectionAdapter;
 import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.dto.ContractorClaimDTO;
-import com.com.boha.monitor.library.dto.ContractorClaimSiteDTO;
-import com.com.boha.monitor.library.dto.EngineerDTO;
+import com.com.boha.monitor.library.dto.InvoiceDTO;
+import com.com.boha.monitor.library.dto.InvoiceItemDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.TaskDTO;
+import com.com.boha.monitor.library.dto.TaskPriceDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.ErrorUtil;
@@ -42,11 +44,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class ContractorClaimFragment extends Fragment implements PageFragment {
+public class InvoiceFragment extends Fragment implements PageFragment {
 
-    private ContractorClaimFragmentListener mListener;
+    private InvoiceFragmentListener mListener;
 
-    public ContractorClaimFragment() {
+    public InvoiceFragment() {
     }
 
     @Override
@@ -64,8 +66,9 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
     List<TaskDTO> taskList;
     ProjectSiteDTO site;
     List<ProjectSiteDTO> siteList;
-    EngineerDTO engineer;
-    List<EngineerDTO> engineerList;
+    TaskPriceDTO taskPrice;
+    List<TaskPriceDTO> taskPriceList;
+    ContractorClaimDTO claim;
     Date claimDate;
     Button btnDate, btnSave;
     CheckBox chkSelectAll;
@@ -73,7 +76,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
     ListView siteListView;
     Spinner taskSpinner, engineerSpinner;
     TextView txtProject;
-    ContractorClaimDTO contractorClaim;
+    InvoiceDTO invoice;
     ProjectSiteSelectionAdapter adapter;
     static final Locale locale = Locale.getDefault();
     static final SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd MMMM yyyy", locale);
@@ -82,7 +85,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.w(LOG,"###### onCreateView");
-        view = inflater.inflate(R.layout.fragment_contractor_claim, container, false);
+        view = inflater.inflate(R.layout.fragment_invoice, container, false);
         ctx = getActivity();
         setFields();
         return view;
@@ -96,24 +99,10 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
     @Override
     public void onSaveInstanceState(Bundle b) {
         Log.e(LOG, "############ onSaveInstanceState");
-        ResponseDTO r = new ResponseDTO();
-        r.setEngineerList(engineerList);
-        r.setTaskList(taskList);
-        r.setProjectSiteList(siteList);
-        b.putSerializable("response",r);
         super.onSaveInstanceState(b);
     }
 
     private void sendData() {
-
-        if (project == null) {
-            ToastUtil.toast(ctx, ctx.getString(R.string.select_project));
-            return;
-        }
-        if (engineer == null) {
-            ToastUtil.toast(ctx, ctx.getString(R.string.select_engineer));
-            return;
-        }
         if (task == null) {
             ToastUtil.toast(ctx, ctx.getString(R.string.select_task));
             return;
@@ -122,27 +111,21 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
             showClaimDateDialog();
             return;
         }
-        contractorClaim = new ContractorClaimDTO();
-        contractorClaim.setProjectID(project.getProjectID());
-        contractorClaim.setEngineerID(engineer.getEngineerID());
-        contractorClaim.setTaskID(task.getTaskID());
-        contractorClaim.setClaimDate(claimDate);
-        contractorClaim.setContractorClaimSiteList(new ArrayList<ContractorClaimSiteDTO>());
 
         for (ProjectSiteDTO s : siteList) {
             if (s.isSelected()) {
-                ContractorClaimSiteDTO cc = new ContractorClaimSiteDTO();
+                InvoiceItemDTO cc = new InvoiceItemDTO();
                 ProjectSiteDTO ps = new ProjectSiteDTO();
                 ps.setProjectSiteID(s.getProjectSiteID());
                 ps.setProjectID(s.getProjectID());
                 cc.setProjectSite(ps);
-                contractorClaim.getContractorClaimSiteList().add(cc);
+                invoice.getInvoiceItemList().add(cc);
             }
         }
 
 
-        RequestDTO w = new RequestDTO(RequestDTO.ADD_CONTRACTOR_CLAIM);
-        w.setContractorClaim(contractorClaim);
+        RequestDTO w = new RequestDTO(RequestDTO.ADD_INVOICE);
+        w.setInvoice(invoice);
 
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
@@ -153,8 +136,8 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
                         if (!ErrorUtil.checkServerError(ctx, response)) {
                             return;
                         }
-                        contractorClaim = response.getContractorClaimList().get(0);
-                        mListener.onContractorClaimAdded(contractorClaim);
+                        invoice = response.getInvoiceList().get(0);
+                        mListener.onInvoicemAdded(invoice);
                     }
                 });
             }
@@ -175,7 +158,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
 
     DatePickerDialog dpStart;
     int mYear, mMonth, mDay;
-    static final String LOG = ContractorClaimFragment.class.getSimpleName();
+    static final String LOG = InvoiceFragment.class.getSimpleName();
 
     private void showClaimDateDialog() {
         final Calendar calendar = Calendar.getInstance();
@@ -241,52 +224,26 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
             setList();
         }
     }
-    public void setData(List<EngineerDTO> engineers,
-                        List<TaskDTO> tasks) {
-        engineerList = engineers;
+    public void setTaskList(List<TaskDTO> tasks) {
         taskList = tasks;
-        if (engineers != null) {
-            setSpinners();
+        if (tasks != null) {
+            setSpinner();
         }
     }
-    private void setSpinners() {
-        engineers = new ArrayList<>();
-        engineers.add(ctx.getString(R.string.select_engineer));
-        for (EngineerDTO p : engineerList) {
-            engineers.add(p.getEngineerName());
-        }
-        Log.w(LOG,"##### setting engineer dropdown");
-        SpinnerListAdapter a2 = new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item_blue, engineers, SpinnerListAdapter.ENGINEER_LIST);
-        engineerSpinner.setAdapter(a2);
-        engineerSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.w(LOG,"##### engineer item selected: " + position);
-                if (position == 0) {
-                    engineer = null;
-                } else {
-                    engineer = engineerList.get(position - 1);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        //
+    private void setSpinner() {
         tasks = new ArrayList<>();
         tasks.add(ctx.getString(R.string.select_task));
         for (TaskDTO p : taskList) {
             tasks.add(p.getTaskName());
         }
         Log.w(LOG,"##### setting task dropdown");
+        ArrayAdapter<String> sad2 = new ArrayAdapter<String>(ctx,android.R.layout.simple_spinner_item, tasks);
         SpinnerListAdapter a3 = new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item, tasks, SpinnerListAdapter.TASK_LIST);
         taskSpinner.setAdapter(a3);
         taskSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.w(LOG,"##### task item selected: " + position);
+                Log.w(LOG, "##### task item selected: " + position);
                 if (position == 0) {
                     task = null;
                 } else {
@@ -303,17 +260,16 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
     }
 
     private void setFields() {
-        imgMore = (ImageView) view.findViewById(R.id.CCX_imgMore);
-        txtCount = (TextView) view.findViewById(R.id.CCX_siteCount);
-        txtProject = (TextView) view.findViewById(R.id.CCX_projectName);
-        engineerSpinner = (Spinner) view.findViewById(R.id.CCX_engineerSpinner);
-        taskSpinner = (Spinner) view.findViewById(R.id.CCX_taskSpinner);
-        btnDate = (Button) view.findViewById(R.id.CCX_btnDate);
-        btnSave = (Button) view.findViewById(R.id.CCX_btnSave);
-        siteListView = (ListView) view.findViewById(R.id.CCX_list);
-        chkSelectAll = (CheckBox) view.findViewById(R.id.CCX_chkAll);
+        imgMore = (ImageView) view.findViewById(R.id.INV_imgMore);
+        txtCount = (TextView) view.findViewById(R.id.INV_siteCount);
+        txtProject = (TextView) view.findViewById(R.id.INV_projectName);
+        taskSpinner = (Spinner) view.findViewById(R.id.INV_taskSpinner);
+        btnDate = (Button) view.findViewById(R.id.INV_btnDate);
+        btnSave = (Button) view.findViewById(R.id.INV_btnSave);
+        siteListView = (ListView) view.findViewById(R.id.INV_list);
+        chkSelectAll = (CheckBox) view.findViewById(R.id.INV_chkAll);
         txtCount.setText("0");
-        TextView title = (TextView) view.findViewById(R.id.CCX_title);
+        TextView title = (TextView) view.findViewById(R.id.INV_title);
         Statics.setRobotoFontLight(ctx, title);
         btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -367,8 +323,8 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
 
     private void animateOn() {
         if (top == null) {
-            top = view.findViewById(R.id.CCX_middle);
-            bottom = view.findViewById(R.id.CCX_bottom);
+            top = view.findViewById(R.id.INV_middle);
+            bottom = view.findViewById(R.id.INV_bottom);
         }
         top.setVisibility(View.VISIBLE);
         bottom.setVisibility(View.VISIBLE);
@@ -388,15 +344,15 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
 
     private void animateOff() {
         if (top == null) {
-            top = view.findViewById(R.id.CCX_middle);
-            bottom = view.findViewById(R.id.CCX_bottom);
+            top = view.findViewById(R.id.INV_middle);
+            bottom = view.findViewById(R.id.INV_bottom);
         }
         top.setVisibility(View.GONE);
         bottom.setVisibility(View.GONE);
 
 //        if (top == null) {
-//            top = view.findViewById(R.id.CCX_top);
-//            bottom = view.findViewById(R.id.CCX_bottom);
+//            top = view.findViewById(R.id.INV_top);
+//            bottom = view.findViewById(R.id.INV_bottom);
 //        }
 //        final ObjectAnimator aTop = ObjectAnimator.ofFloat(top, "scaleY", 1, 0);
 //        final ObjectAnimator aBottom = ObjectAnimator.ofFloat(bottom, "scaleY", 1, 0);
@@ -447,10 +403,10 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (ContractorClaimFragmentListener) activity;
+            mListener = (InvoiceFragmentListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException("Host " + activity.getLocalClassName()
-                    + " must implement ContractorClaimFragmentListener");
+                    + " must implement InvoiceFragmentListener");
         }
     }
 
@@ -486,12 +442,12 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
      * to the activity and potentially other fragments contained in that
      * activity.
      */
-    public interface ContractorClaimFragmentListener {
-        public void onContractorClaimAdded(ContractorClaimDTO contractorClaimDTO);
+    public interface InvoiceFragmentListener {
+        public void onInvoicemAdded(InvoiceDTO invoice);
 
-        public void onContractorClaimUpdated(ContractorClaimDTO contractorClaimDTO);
+        public void onInvoiceUpdated(InvoiceDTO invoice);
 
-        public void onContractorClaimDeleted(ContractorClaimDTO contractorClaimDTO);
+        public void onInvoiceDeleted(InvoiceDTO invoice);
     }
 
 

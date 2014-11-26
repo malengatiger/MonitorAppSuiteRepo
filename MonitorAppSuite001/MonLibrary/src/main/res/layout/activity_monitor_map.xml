@@ -5,19 +5,29 @@
     android:padding="0dp"
     tools:context="com.com.boha.monitor.library.MonitorMapActivity">
 
-
     <RelativeLayout
-        android:id="@+id/mapLayout"
+        android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        <TextView
+            android:id="@+id/text"
+            android:text="Title"
+            android:padding="@dimen/mon_padding"
+            style="@style/TextStyleRedSmall"
+            android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_below="@id/top"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
 
 </RelativeLayout>

@@ -3,7 +3,7 @@ package com.com.boha.monitor.library;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,7 +16,7 @@ import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 import com.com.boha.monitor.library.fragments.TaskAssignmentFragment;
 import com.com.boha.monitor.library.util.ToastUtil;
 
-public class TaskAssignmentActivity extends FragmentActivity implements
+public class TaskAssignmentActivity extends ActionBarActivity implements
         TaskAssignmentFragment.ProjectSiteTaskListener{
 
     Context ctx;

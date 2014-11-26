@@ -10,7 +10,6 @@ package com.com.boha.monitor.library.dto.transfer;
 import com.com.boha.monitor.library.dto.BankDTO;
 import com.com.boha.monitor.library.dto.BankDetailDTO;
 import com.com.boha.monitor.library.dto.BeneficiaryDTO;
-import com.com.boha.monitor.library.dto.CheckPointDTO;
 import com.com.boha.monitor.library.dto.CityDTO;
 import com.com.boha.monitor.library.dto.ClientDTO;
 import com.com.boha.monitor.library.dto.CompanyDTO;
@@ -66,7 +65,6 @@ public class RequestDTO implements Serializable {
     private InvoiceItemDTO invoiceItem;
 
     private TaskDTO task;
-    private CheckPointDTO checkPoint;
     private TaskStatusDTO taskStatus;
     private ClientDTO client;
 
@@ -419,14 +417,6 @@ public class RequestDTO implements Serializable {
 
     public void setTask(TaskDTO task) {
         this.task = task;
-    }
-
-    public CheckPointDTO getCheckPoint() {
-        return checkPoint;
-    }
-
-    public void setCheckPoint(CheckPointDTO checkPoint) {
-        this.checkPoint = checkPoint;
     }
 
     public TaskStatusDTO getTaskStatus() {

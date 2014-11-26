@@ -93,7 +93,7 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
                 }
 
                 invoicePopupWindow = new ListPopupWindow(getActivity());
-                invoicePopupWindow.setAdapter(new SpinnerListAdapter(ctx,R.layout.xxsimple_spinner_item,list, true, true));
+                invoicePopupWindow.setAdapter(new SpinnerListAdapter(ctx,R.layout.xxsimple_spinner_item,list, SpinnerListAdapter.SITE_LIST));
                 invoicePopupWindow.setAnchorView(txtName);
                 invoicePopupWindow.setWidth(600);
                 invoicePopupWindow.setModal(true);
@@ -116,12 +116,14 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
             public void onInvoiceActionsRequested(ContractorClaimDTO claim) {
                 Log.w(LOG, "#### onInvoiceActionsRequested");
                 list = new ArrayList<>();
-                list.add("Create Invoice");
-                list.add("Download Invoice");
+                list.add(ctx.getString(R.string.create_invoice));
+                list.add(ctx.getString(R.string.download_invoice));
+                list.add(ctx.getString(R.string.edit_prices));
 
                 invoicePopupWindow = new ListPopupWindow(getActivity());
-                invoicePopupWindow.setAdapter(new SpinnerListAdapter(ctx,R.layout.xxsimple_spinner_item,list, true, false));
+                invoicePopupWindow.setAdapter(new SpinnerListAdapter(ctx,R.layout.xxsimple_spinner_item,list, SpinnerListAdapter.INVOICE_ACTIONS));
                 invoicePopupWindow.setAnchorView(txtName);
+                invoicePopupWindow.setWidth(600);
                 invoicePopupWindow.setModal(true);
                 invoicePopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -130,14 +132,18 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
                             case 0:
                                 //TODO - start invoice fragment
                                 Log.i(LOG,"#### start invoice fragment to create new");
-                                invoicePopupWindow.dismiss();
                                 break;
                             case 1:
                                 //TODO - downlaod invoice pdf
-                                Log.i(LOG,"#### downlaod pdf");
-                                invoicePopupWindow.dismiss();
+                                Log.i(LOG,"#### download pdf");
+                                break;
+                            case 2:
+                                //TODO - edit task price
+                                Log.i(LOG,"#### edit task price ");
+
                                 break;
                         }
+                        invoicePopupWindow.dismiss();
                     }
                 });
                 invoicePopupWindow.show();

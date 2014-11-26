@@ -1,7 +1,7 @@
 package com.com.boha.monitor.library;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -9,7 +9,7 @@ import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.fragments.StatusReportFragment;
 
-public class StatusReportActivity extends FragmentActivity implements StatusReportFragment.StatusReportListener{
+public class StatusReportActivity extends ActionBarActivity implements StatusReportFragment.StatusReportListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

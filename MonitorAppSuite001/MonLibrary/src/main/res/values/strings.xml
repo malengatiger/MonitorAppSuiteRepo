@@ -259,5 +259,13 @@
     <string name="claims_invoices">Claims and Invoices</string>
     <string name="invoices">Invoices</string>
     <string name="site_no">Site No.</string>
+    <string name="invoice">Invoice</string>
+    <string name="create_invoice">Create Invoice</string>
+    <string name="download_invoice">Download Invoice</string>
+    <string name="edit_prices">Edit Price List</string>
+    <string name="get_status">Get Status Details</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="send_app_link">Send App Link</string>
+    <string name="edit_staff">Edit Staff Details</string>
 
 </resources>

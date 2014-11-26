@@ -3,20 +3,18 @@ package com.com.boha.monitor.library;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListPopupWindow;
 
 import com.boha.monitor.library.R;
-import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.dto.ContractorClaimDTO;
 import com.com.boha.monitor.library.dto.EngineerDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
@@ -37,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ClaimAndInvoicePagerActivity extends FragmentActivity
+public class ClaimAndInvoicePagerActivity extends ActionBarActivity
 implements ContractorClaimFragment.ContractorClaimFragmentListener, ContractorClaimListFragment.ContractorClaimListListener{
 
     ViewPager mPager;
@@ -59,7 +57,7 @@ implements ContractorClaimFragment.ContractorClaimFragmentListener, ContractorCl
 
         buildPages();
         setTitle(getString(R.string.claims_invoices));
-        getActionBar().setSubtitle(project.getProjectName());
+        getSupportActionBar().setSubtitle(project.getProjectName());
     }
 
     private void getCachedProjectData() {

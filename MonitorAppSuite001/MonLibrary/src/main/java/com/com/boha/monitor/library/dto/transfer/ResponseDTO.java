@@ -8,7 +8,6 @@ package com.com.boha.monitor.library.dto.transfer;
 import com.com.boha.monitor.library.dto.BankDTO;
 import com.com.boha.monitor.library.dto.BankDetailDTO;
 import com.com.boha.monitor.library.dto.BeneficiaryDTO;
-import com.com.boha.monitor.library.dto.CheckPointDTO;
 import com.com.boha.monitor.library.dto.CityDTO;
 import com.com.boha.monitor.library.dto.ClientDTO;
 import com.com.boha.monitor.library.dto.CompanyDTO;
@@ -31,7 +30,6 @@ import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.ProjectStatusTypeDTO;
 import com.com.boha.monitor.library.dto.ProvinceDTO;
-import com.com.boha.monitor.library.dto.SiteCheckPointDTO;
 import com.com.boha.monitor.library.dto.TaskDTO;
 import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.dto.TownshipDTO;
@@ -65,12 +63,10 @@ public class ResponseDTO implements Serializable {
     private List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList = new ArrayList<>();
     private List<ErrorStoreDTO> errorStoreList = new ArrayList<>();
     private List<ErrorStoreAndroidDTO> errorStoreAndroidList = new ArrayList<>();
-    private List<CheckPointDTO> checkPointList = new ArrayList<>();
     private List<InvoiceDTO> invoiceList = new ArrayList<>();
     private List<BeneficiaryDTO> beneficiaryList = new ArrayList<>();
     private List<ProvinceDTO> provinceList = new ArrayList<>();
     private List<HappyLetterDTO> happyLetterList = new ArrayList<>();
-    private List<SiteCheckPointDTO> siteCheckPointList = new ArrayList<>();
     private List<ClientDTO> clientList = new ArrayList<>();
     private List<TaskDTO> taskList = new ArrayList<>();
     private List<CityDTO> cityList = new ArrayList<>();
@@ -150,13 +146,6 @@ public class ResponseDTO implements Serializable {
         this.taskList = taskList;
     }
 
-    public List<CheckPointDTO> getCheckPointList() {
-        return checkPointList;
-    }
-
-    public void setCheckPointList(List<CheckPointDTO> checkPointList) {
-        this.checkPointList = checkPointList;
-    }
 
     public List<ClientDTO> getClientList() {
         return clientList;
@@ -198,13 +187,6 @@ public class ResponseDTO implements Serializable {
         this.happyLetterList = happyLetterList;
     }
 
-    public List<SiteCheckPointDTO> getSiteCheckPointList() {
-        return siteCheckPointList;
-    }
-
-    public void setSiteCheckPointList(List<SiteCheckPointDTO> siteCheckPointList) {
-        this.siteCheckPointList = siteCheckPointList;
-    }
 
 
     public CompanyStaffDTO getCompanyStaff() {

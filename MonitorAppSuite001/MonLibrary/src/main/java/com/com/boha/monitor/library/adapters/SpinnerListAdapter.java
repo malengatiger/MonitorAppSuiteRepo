@@ -1,7 +1,6 @@
 package com.com.boha.monitor.library.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,29 +20,34 @@ public class SpinnerListAdapter extends ArrayAdapter<String> {
     private final int mLayoutRes;
     private List<String> mList;
     private Context ctx;
-    boolean popup, altImage;
+    private String title;
+    private int type;
+    public static final int ENGINEER_LIST = 1, TASK_LIST = 2,
+            STAFF_ACTIONS = 3, INVOICE_ACTIONS = 4, SITE_LIST = 5, PROJECT_LIST = 6;
 
     static final String LOG = SpinnerListAdapter.class.getSimpleName();
     public SpinnerListAdapter(Context context, int textViewResourceId,
-                              List<String> list) {
+                              List<String> list, int action) {
         super(context, textViewResourceId, list);
         this.mLayoutRes = textViewResourceId;
         mList = list;
+        type = action;
         ctx = context;
         this.mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //Log.w(LOG,"constructor completed");
     }
     public SpinnerListAdapter(Context context, int textViewResourceId,
-                              List<String> list, boolean isPopup, boolean alternateImage) {
+                              List<String> list, int action, String title) {
         super(context, textViewResourceId, list);
         this.mLayoutRes = textViewResourceId;
         mList = list;
+        this.title = title;
+        type = action;
         ctx = context;
         this.mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        popup = isPopup;
-        altImage = alternateImage;
+        //Log.w(LOG,"constructor completed");
     }
 
 
@@ -51,8 +55,8 @@ public class SpinnerListAdapter extends ArrayAdapter<String> {
 
 
     static class ViewHolderItem {
-        TextView txtString;
-        ImageView image;
+        TextView txtString, txtTitle;
+        ImageView image, banner;
     }
 
     @Override
@@ -70,33 +74,68 @@ public class SpinnerListAdapter extends ArrayAdapter<String> {
             item = new ViewHolderItem();
             item.txtString = (TextView) convertView
                     .findViewById(R.id.text1);
+            item.txtTitle = (TextView) convertView
+                    .findViewById(R.id.title);
             item.image = (ImageView) convertView
                     .findViewById(R.id.image1);
+            item.banner = (ImageView) convertView
+                    .findViewById(R.id.banner);
 
             convertView.setTag(item);
         } else {
             item = (ViewHolderItem) convertView.getTag();
         }
 
-        if (popup) {
-            Drawable d = ctx.getResources().getDrawable(android.R.drawable.ic_input_add);
-            item.image.setImageDrawable(d);
-        } else {
+        if (title != null) {
             if (position == 0) {
-                item.image.setImageDrawable(ctx.getResources().getDrawable(android.R.drawable.ic_menu_help));
+                item.txtTitle.setVisibility(View.VISIBLE);
+                item.banner.setVisibility(View.VISIBLE);
+                item.txtTitle.setText(title);
             } else {
-                Drawable d = ctx.getResources().getDrawable(android.R.drawable.ic_dialog_alert);
-                item.image.setImageDrawable(d);
+                item.txtTitle.setVisibility(View.GONE);
+                item.banner.setVisibility(View.GONE);
+            }
+        } else {
+            item.txtTitle.setVisibility(View.GONE);
+            if (position == 0) {
+                item.banner.setVisibility(View.VISIBLE);
+            } else {
+                item.banner.setVisibility(View.GONE);
             }
         }
-        if (altImage) {
-            Drawable d = ctx.getResources().getDrawable(android.R.drawable.ic_dialog_alert);
-            item.image.setImageDrawable(d);
+        switch (type) {
+            case INVOICE_ACTIONS:
+                item.image.setImageDrawable(ctx.getResources().getDrawable(android.R.drawable.ic_input_add));
+                break;
+            case ENGINEER_LIST:
+                if (position == 0) {
+                    item.image.setImageDrawable(ctx.getResources().getDrawable(android.R.drawable.ic_menu_help));
+                } else {
+                    item.image.setImageDrawable(ctx.getResources().getDrawable(android.R.drawable.ic_dialog_alert));
+                }
+                break;
+            case TASK_LIST:
+                if (position == 0) {
+                    item.image.setImageDrawable(ctx.getResources().getDrawable(android.R.drawable.ic_menu_help));
+                } else {
+                    item.image.setImageDrawable(ctx.getResources().getDrawable(android.R.drawable.ic_dialog_alert));
+                }
+                break;
+            case STAFF_ACTIONS:
+                item.image.setImageDrawable(ctx.getResources().getDrawable(android.R.drawable.ic_menu_edit));
+                break;
+            case SITE_LIST:
+                item.image.setImageDrawable(ctx.getResources().getDrawable(android.R.drawable.ic_menu_edit));
+                break;
+            case PROJECT_LIST:
+                item.image.setImageDrawable(ctx.getResources().getDrawable(android.R.drawable.ic_menu_edit));
+                break;
         }
+
         final String p = mList.get(position);
         item.txtString.setText(p);
         Statics.setRobotoFontLight(ctx, item.txtString);
-        //Log.w(LOG, "returning the convertView ...........work done: " + p);
+        Statics.setRobotoFontLight(ctx, item.txtTitle);
         return (convertView);
     }
 

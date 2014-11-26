@@ -136,7 +136,8 @@ public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
 
             @Override
             public void onLoadingFailed(String s, View view, FailReason failReason) {
-                item.photo.setImageDrawable(ctx.getResources().getDrawable(R.drawable.house));
+                item.photo.setImageDrawable(ctx.getResources().getDrawable(R.drawable.black_woman));
+                item.photo.setAlpha(0.25f);
             }
 
             @Override

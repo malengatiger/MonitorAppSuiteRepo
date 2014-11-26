@@ -142,7 +142,7 @@ public class ProjectDialog extends DialogFragment {
                     for (ClientDTO t: clientList) {
                         names.add(t.getClientName());
                     }
-                    SpinnerListAdapter adapter = new SpinnerListAdapter(context, R.layout.xxsimple_spinner_item,names);
+                    SpinnerListAdapter adapter = new SpinnerListAdapter(context, R.layout.xxsimple_spinner_item,names, SpinnerListAdapter.TASK_LIST);
                     clientSpinner.setAdapter(adapter);
                     clientSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override

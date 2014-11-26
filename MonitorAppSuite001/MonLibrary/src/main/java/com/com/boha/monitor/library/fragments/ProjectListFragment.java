@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListPopupWindow;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.adapters.ProjectAdapter;
+import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
@@ -32,7 +34,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the ProjectListListener
  * interface.
  */
-public class ProjectListFragment extends Fragment implements  PageFragment {
+public class ProjectListFragment extends Fragment implements PageFragment {
 
 
     private ProjectListListener mListener;
@@ -46,6 +48,7 @@ public class ProjectListFragment extends Fragment implements  PageFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     public ProjectListFragment() {
     }
 
@@ -53,6 +56,7 @@ public class ProjectListFragment extends Fragment implements  PageFragment {
     View topView;
     LayoutInflater inflater;
     View view;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,19 +66,20 @@ public class ProjectListFragment extends Fragment implements  PageFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         view = inflater.inflate(R.layout.fragment_project, container, false);
+        view = inflater.inflate(R.layout.fragment_project, container, false);
         this.inflater = inflater;
         ctx = getActivity();
         topView = view.findViewById(R.id.PROJ_LIST_layoutx);
         Bundle b = getArguments();
         if (b != null) {
-            ResponseDTO r = (ResponseDTO)b.getSerializable("response");
+            ResponseDTO r = (ResponseDTO) b.getSerializable("response");
             projectList = r.getCompany().getProjectList();
         }
 
 
-        txtProjectCount = (TextView)view.findViewById(R.id.PROJ_LIST_projectCount);
-        txtLabel = (TextView)view.findViewById(R.id.PROJ_LIST_label);
+        txtProjectCount = (TextView) view.findViewById(R.id.PROJ_LIST_projectCount);
+        mListView = (ListView) view.findViewById(android.R.id.list);
+        txtLabel = (TextView) view.findViewById(R.id.PROJ_LIST_label);
         Statics.setRobotoFontLight(ctx, txtLabel);
 
 
@@ -85,60 +90,80 @@ public class ProjectListFragment extends Fragment implements  PageFragment {
 
     private void setList() {
 
-        mListView = (ListView) view.findViewById(android.R.id.list);
-        adapter = new ProjectAdapter(ctx, R.layout.project_item, projectList, new ProjectAdapter.ProjectAdapterListener() {
-            @Override
-            public void onEditRequested(ProjectDTO project) {
-                mListener.onProjectEditDialogRequested(project);
-            }
 
-            @Override
-            public void onProjectSitesRequested(ProjectDTO project) {
-                mListener.onProjectSitesRequested(project);
-            }
-            @Override
-            public void onPictureRequested(ProjectDTO project) {
-                mListener.onProjectPictureRequested(project);
-            }
-
-            @Override
-            public void onGalleryRequested(ProjectDTO project) {
-                mListener.onGalleryRequested(project);
-            }
-
-            @Override
-            public void onMapRequested(ProjectDTO project) {
-                mListener.onMapRequested(project);
-            }
-
-            @Override
-            public void onClaimsAndInvoicesRequested(ProjectDTO project) {
-                mListener.onClaimsAndInvoicesRequested(project);
-            }
-        });
+        adapter = new ProjectAdapter(ctx, R.layout.project_item, projectList);
         mListView.setAdapter(adapter);
         View v = inflater.inflate(R.layout.hero_image_project, null);
-        TextView stCount = (TextView)v.findViewById(R.id.HERO_statusCount);
+        TextView stCount = (TextView) v.findViewById(R.id.HERO_statusCount);
         stCount.setText("" + statusCount);
         mListView.addHeaderView(v);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                if (projectList.get(position).getProjectSiteList() == null
-//                        || projectList.get(position).getProjectSiteList().isEmpty()) {
-//                    return;
-//                }
-//                mListener.onProjectClicked(projectList.get(position));
+                if (position == 0) return;
+                project = projectList.get(position - 1);
+                list = new ArrayList<>();
+                list.add("Site List");
+                list.add("Claims & Invoices");
+                list.add("Status Report");
+                list.add("Project Map");
+                list.add("Take a Picture");
+                list.add("Project Gallery");
+                list.add("Edit Project");
+
+                actionsWindow = new ListPopupWindow(getActivity());
+                actionsWindow.setAdapter(new SpinnerListAdapter(ctx,
+                        R.layout.xxsimple_spinner_item, list, SpinnerListAdapter.INVOICE_ACTIONS, project.getProjectName()));
+                actionsWindow.setAnchorView(txtLabel);
+                actionsWindow.setWidth(600);
+                actionsWindow.setModal(true);
+                actionsWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        switch (position) {
+                            case 0:
+                                mListener.onProjectSitesRequested(project);
+                                break;
+                            case 1:
+                                mListener.onClaimsAndInvoicesRequested(project);
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                mListener.onMapRequested(project);
+                                break;
+                            case 4:
+                                mListener.onProjectPictureRequested(project);
+                                break;
+                            case 5:
+                                mListener.onGalleryRequested(project);
+                                break;
+                            case 6:
+
+                                mListener.onProjectEditDialogRequested(project);
+                                break;
+                        }
+                        actionsWindow.dismiss();
+                    }
+                });
+                actionsWindow.show();
             }
         });
     }
+
+    ListPopupWindow actionsWindow;
+    List<String> list;
+    static final String LOG = ProjectListFragment.class.getSimpleName();
+    ProjectDTO project;
     int statusCount;
+    TextView txtName;
+
     private void setTotals() {
         txtProjectCount.setText("" + projectList.size());
         statusCount = 0;
-        for (ProjectDTO p: projectList) {
-            for (ProjectSiteDTO ps: p.getProjectSiteList()) {
-                for (ProjectSiteTaskDTO pst: ps.getProjectSiteTaskList()) {
+        for (ProjectDTO p : projectList) {
+            for (ProjectSiteDTO ps : p.getProjectSiteList()) {
+                for (ProjectSiteTaskDTO pst : ps.getProjectSiteTaskList()) {
                     statusCount += pst.getProjectSiteTaskStatusList().size();
                 }
             }
@@ -148,12 +173,14 @@ public class ProjectListFragment extends Fragment implements  PageFragment {
 
 
     }
+
     @Override
     public void animateCounts() {
 
         Util.animateRotationY(txtProjectCount, 500);
         //Util.animateScaleX(topView, 500);
     }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -161,7 +188,7 @@ public class ProjectListFragment extends Fragment implements  PageFragment {
             mListener = (ProjectListListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                + " must implement ProjectListListener");
+                    + " must implement ProjectListListener");
         }
     }
 
@@ -172,23 +199,23 @@ public class ProjectListFragment extends Fragment implements  PageFragment {
     }
 
 
-
     public void addProject(ProjectDTO project) {
         if (projectList == null) {
             projectList = new ArrayList<>();
         }
-        projectList.add(0,project);
+        projectList.add(0, project);
         //Collections.sort(engineerList);
         adapter.notifyDataSetChanged();
         txtProjectCount.setText("" + projectList.size());
         try {
             Thread.sleep(1000);
-            Util.animateRotationY(txtProjectCount,500);
+            Util.animateRotationY(txtProjectCount, 500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
     }
+
     /**
      * The default content for this Fragment has a TextView that is shown when
      * the list is empty. If you would like to change the text, call this method
@@ -203,22 +230,28 @@ public class ProjectListFragment extends Fragment implements  PageFragment {
     }
 
     /**
-    * This interface must be implemented by activities that contain this
-    * fragment to allow an interaction in this fragment to be communicated
-    * to the activity and potentially other fragments contained in that
-    * activity.
-    * <project>
-    * See the Android Training lesson <a href=
-    * "http://developer.android.com/training/basics/fragments/communicating.html"
-    * >Communicating with Other Fragments</a> for more information.
-    */
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <project>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
     public interface ProjectListListener {
         public void onProjectClicked(ProjectDTO project);
+
         public void onProjectEditDialogRequested(ProjectDTO project);
+
         public void onProjectSitesRequested(ProjectDTO project);
+
         public void onProjectPictureRequested(ProjectDTO project);
+
         public void onGalleryRequested(ProjectDTO project);
+
         public void onMapRequested(ProjectDTO project);
+
         public void onClaimsAndInvoicesRequested(ProjectDTO project);
     }
 

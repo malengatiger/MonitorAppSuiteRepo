@@ -27,27 +27,18 @@ import java.util.Locale;
 
 public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
 
-    public interface ProjectAdapterListener {
-        public void onEditRequested(ProjectDTO project);
-        public void onProjectSitesRequested(ProjectDTO project);
-        public void onPictureRequested(ProjectDTO project);
-        public void onGalleryRequested(ProjectDTO project);
-        public void onMapRequested(ProjectDTO project);
-        public void onClaimsAndInvoicesRequested(ProjectDTO project);
-    }
+
     private final LayoutInflater mInflater;
     private final int mLayoutRes;
     private List<ProjectDTO> mList;
     private Context ctx;
-    private ProjectAdapterListener listener;
 
    public ProjectAdapter(Context context, int textViewResourceId,
-                         List<ProjectDTO> list,
-                         ProjectAdapterListener listener) {
+                         List<ProjectDTO> list
+                         ) {
         super(context, textViewResourceId, list);
         this.mLayoutRes = textViewResourceId;
         mList = list;
-        this.listener = listener;
         ctx = context;
         this.mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -131,42 +122,7 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
                     break;
             }
         }
-        item.txtNumber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onEditRequested(p);
-            }
-        });
-        item.txtSiteCount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onProjectSitesRequested(p);
-            }
-        });
-        item.imgCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onPictureRequested(p);
-            }
-        });
-        item.txtImageCount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onGalleryRequested(p);
-            }
-        });
-        item.imgMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onMapRequested(p);
-            }
-        });
-        item.imgDocs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onClaimsAndInvoicesRequested(p);
-            }
-        });
+        
         Statics.setRobotoFontLight(ctx,item.txtClient);
         Statics.setRobotoFontLight(ctx,item.txtName);
 

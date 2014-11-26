@@ -33,8 +33,17 @@ public class ProjectDTO implements Serializable {
     private List<PhotoUploadDTO> photoUploadList = new ArrayList<>();
     private List<BeneficiaryDTO> beneficiaryList = new ArrayList<>();
     private List<InvoiceDTO> invoiceList;
+    private List<TaskPriceDTO> taskPriceList;
     private List<ContractorClaimDTO> contractorClaimList = new ArrayList<>();
     public ProjectDTO() {
+    }
+
+    public List<TaskPriceDTO> getTaskPriceList() {
+        return taskPriceList;
+    }
+
+    public void setTaskPriceList(List<TaskPriceDTO> taskPriceList) {
+        this.taskPriceList = taskPriceList;
     }
 
     public ProjectDTO(Integer projectID) {

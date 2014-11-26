@@ -2,7 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:padding="@dimen/mon_margin"
+    android:padding="16dp"
     android:layout_height="match_parent">
 
     <RelativeLayout
@@ -47,8 +47,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/PROJ_descLayout"
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
+        android:layout_marginTop="4dp"
+        android:padding="2dp"
         android:layout_alignLeft="@id/PROJ_top"
         android:layout_below="@id/PROJ_top">
 
@@ -64,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/PROJ_layout"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/mon_padding"
         android:layout_marginRight="24dp"
         android:layout_alignLeft="@id/PROJ_descLayout"
         android:layout_below="@id/PROJ_descLayout">
@@ -75,6 +75,7 @@
             android:text="00"
             android:id="@+id/PROJ_txtCount"
             style="@style/BlackCircle"
+            android:elevation="6dp"
             android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true" />

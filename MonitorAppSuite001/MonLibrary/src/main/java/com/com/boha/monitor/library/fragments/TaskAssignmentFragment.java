@@ -328,7 +328,7 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
                         names.add(t.getTaskName());
                     }
                     SpinnerListAdapter adapter = new SpinnerListAdapter(ctx,
-                            R.layout.xxsimple_spinner_item, names);
+                            R.layout.xxsimple_spinner_item, names, SpinnerListAdapter.TASK_LIST);
                     spinner.setAdapter(adapter);
                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override

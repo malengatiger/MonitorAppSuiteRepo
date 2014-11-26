@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,7 +40,7 @@ import org.acra.ACRA;
 import java.util.ArrayList;
 
 
-public class RegistrationActivity extends FragmentActivity implements
+public class RegistrationActivity extends ActionBarActivity implements
 
         GooglePlayServicesClient.ConnectionCallbacks,
         GooglePlayServicesClient.OnConnectionFailedListener {
