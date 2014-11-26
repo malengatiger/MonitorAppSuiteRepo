@@ -93,7 +93,7 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
                 }
 
                 invoicePopupWindow = new ListPopupWindow(getActivity());
-                invoicePopupWindow.setAdapter(new SpinnerListAdapter(ctx,R.layout.xxsimple_spinner_item,list, SpinnerListAdapter.SITE_LIST));
+                invoicePopupWindow.setAdapter(new SpinnerListAdapter(ctx,R.layout.xxsimple_spinner_item,list, SpinnerListAdapter.SITE_LIST,true));
                 invoicePopupWindow.setAnchorView(txtName);
                 invoicePopupWindow.setWidth(600);
                 invoicePopupWindow.setModal(true);
@@ -121,7 +121,7 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
                 list.add(ctx.getString(R.string.edit_prices));
 
                 invoicePopupWindow = new ListPopupWindow(getActivity());
-                invoicePopupWindow.setAdapter(new SpinnerListAdapter(ctx,R.layout.xxsimple_spinner_item,list, SpinnerListAdapter.INVOICE_ACTIONS));
+                invoicePopupWindow.setAdapter(new SpinnerListAdapter(ctx,R.layout.xxsimple_spinner_item,list, SpinnerListAdapter.INVOICE_ACTIONS, true));
                 invoicePopupWindow.setAnchorView(txtName);
                 invoicePopupWindow.setWidth(600);
                 invoicePopupWindow.setModal(true);
@@ -253,7 +253,7 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
 
     /**
      * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
+     * fragment to allow objectAnimator interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
      */

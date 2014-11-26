@@ -120,7 +120,7 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
             @Override
             public void onClick(View v) {
                 final ObjectAnimator an = ObjectAnimator.ofFloat(addView, "scaleY", 1f, 0.0f);
-                //an.setRepeatCount(ObjectAnimator.REVERSE);
+                //objectAnimator.setRepeatCount(ObjectAnimator.REVERSE);
                 an.setDuration(500);
                 an.setInterpolator(new AccelerateDecelerateInterpolator());
                 an.addListener(new Animator.AnimatorListener() {
@@ -147,6 +147,12 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
                 an.start();
 
                 //
+            }
+        });
+        txtCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
@@ -328,7 +334,7 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
                         names.add(t.getTaskName());
                     }
                     SpinnerListAdapter adapter = new SpinnerListAdapter(ctx,
-                            R.layout.xxsimple_spinner_item, names, SpinnerListAdapter.TASK_LIST);
+                            R.layout.xxsimple_spinner_item, names, SpinnerListAdapter.TASK_LIST, false);
                     spinner.setAdapter(adapter);
                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -407,7 +413,7 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
     public void openTaskPane() {
         addView.setVisibility(View.VISIBLE);
         final ObjectAnimator an = ObjectAnimator.ofFloat(addView, "scaleY", 0f, 1f);
-        //an.setRepeatCount(ObjectAnimator.REVERSE);
+        //objectAnimator.setRepeatCount(ObjectAnimator.REVERSE);
         an.setDuration(500);
         an.setInterpolator(new AccelerateDecelerateInterpolator());
         an.start();

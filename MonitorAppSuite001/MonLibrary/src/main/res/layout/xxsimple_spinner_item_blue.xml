@@ -2,25 +2,51 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
-
-    <ImageView
-        android:id="@+id/image1"
-        android:src="@android:drawable/ic_dialog_alert"
-        android:tint="@color/blue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/text1"
-        style="@style/TextStyleSmall"
+    android:padding="0dp">
+    <RelativeLayout
+        android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="start"
-        android:layout_centerVertical="true"
-        android:text="Spinner item text here"
-        android:layout_toRightOf="@id/image1"
-        android:layout_marginLeft="@dimen/mon_padding"
-        android:textStyle="normal"
-        android:singleLine="true"
-        android:textColor="@color/black" />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/banner"
+            android:src="@drawable/banner_gold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/title"
+            style="@style/TextStyleBlueSmall"
+            android:layout_below="@id/banner"
+            android:padding="@dimen/mon_padding"
+            android:text="Title for Popup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/top"
+        android:padding="@dimen/mon_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image1"
+            android:src="@android:drawable/ic_dialog_info"
+            android:tint="@color/blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/text1"
+            style="@style/TextStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="start"
+            android:layout_centerVertical="true"
+            android:text="Spinner item text here"
+            android:layout_toRightOf="@id/image1"
+            android:layout_marginLeft="@dimen/mon_padding"
+            android:textStyle="normal"
+            android:singleLine="true"
+            android:textColor="@color/black" />
+    </RelativeLayout>
 </RelativeLayout>

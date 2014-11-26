@@ -22,15 +22,17 @@ public class SpinnerListAdapter extends ArrayAdapter<String> {
     private Context ctx;
     private String title;
     private int type;
+    private boolean hideBanner;
     public static final int ENGINEER_LIST = 1, TASK_LIST = 2,
             STAFF_ACTIONS = 3, INVOICE_ACTIONS = 4, SITE_LIST = 5, PROJECT_LIST = 6;
 
     static final String LOG = SpinnerListAdapter.class.getSimpleName();
     public SpinnerListAdapter(Context context, int textViewResourceId,
-                              List<String> list, int action) {
+                              List<String> list, int action, boolean hideBanner) {
         super(context, textViewResourceId, list);
         this.mLayoutRes = textViewResourceId;
         mList = list;
+        this.hideBanner = hideBanner;
         type = action;
         ctx = context;
         this.mInflater = (LayoutInflater) context
@@ -38,12 +40,13 @@ public class SpinnerListAdapter extends ArrayAdapter<String> {
         //Log.w(LOG,"constructor completed");
     }
     public SpinnerListAdapter(Context context, int textViewResourceId,
-                              List<String> list, int action, String title) {
+                              List<String> list, int action, String title, boolean hideBanner) {
         super(context, textViewResourceId, list);
         this.mLayoutRes = textViewResourceId;
         mList = list;
         this.title = title;
         type = action;
+        this.hideBanner = hideBanner;
         ctx = context;
         this.mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -102,6 +105,9 @@ public class SpinnerListAdapter extends ArrayAdapter<String> {
             } else {
                 item.banner.setVisibility(View.GONE);
             }
+        }
+        if (hideBanner) {
+            item.banner.setVisibility(View.GONE);
         }
         switch (type) {
             case INVOICE_ACTIONS:

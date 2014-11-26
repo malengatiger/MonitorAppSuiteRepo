@@ -105,7 +105,7 @@ public class StatusDialog extends DialogFragment {
                     for (TaskStatusDTO t: taskStatusList) {
                         names.add(t.getTaskStatusName());
                     }
-                    SpinnerListAdapter adapter = new SpinnerListAdapter(context, R.layout.xxsimple_spinner_item,names,SpinnerListAdapter.TASK_LIST);
+                    SpinnerListAdapter adapter = new SpinnerListAdapter(context, R.layout.xxsimple_spinner_item,names,SpinnerListAdapter.TASK_LIST, false);
                     spinner.setAdapter(adapter);
                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override

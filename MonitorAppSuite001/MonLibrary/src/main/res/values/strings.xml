@@ -267,5 +267,7 @@
     <string name="take_picture">Take Picture</string>
     <string name="send_app_link">Send App Link</string>
     <string name="edit_staff">Edit Staff Details</string>
+    <string name="date">Date</string>
+    <string name="status_name">Status Name</string>
 
 </resources>

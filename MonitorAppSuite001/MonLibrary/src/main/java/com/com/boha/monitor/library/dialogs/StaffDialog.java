@@ -146,7 +146,7 @@ public class StaffDialog extends DialogFragment {
                     for (CompanyStaffTypeDTO t: companyStaffTypeList) {
                         names.add(t.getCompanyStaffTypeName());
                     }
-                    SpinnerListAdapter adapter = new SpinnerListAdapter(context, R.layout.xxsimple_spinner_item,names, SpinnerListAdapter.TASK_LIST);
+                    SpinnerListAdapter adapter = new SpinnerListAdapter(context, R.layout.xxsimple_spinner_item,names, SpinnerListAdapter.TASK_LIST,false);
                     staffTypeSpinner.setAdapter(adapter);
                     staffTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override

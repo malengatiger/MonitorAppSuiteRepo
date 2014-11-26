@@ -34,7 +34,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the ProjectSiteListListener
  * interface.
  */
-public class TaskStatusListFragment extends Fragment implements AbsListView.OnItemClickListener, PageFragment {
+public class TaskStatusListFragment extends Fragment implements PageFragment {
 
     private TaskStatusListListener mListener;
     private AbsListView mListView;
@@ -47,7 +47,7 @@ public class TaskStatusListFragment extends Fragment implements AbsListView.OnIt
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-           }
+    }
 
     Context ctx;
     TextView txtCount, txtName;
@@ -62,18 +62,24 @@ public class TaskStatusListFragment extends Fragment implements AbsListView.OnIt
             taskStatusList = r.getCompany().getTaskStatusList();
         }
 
-        txtCount = (TextView)view.findViewById(R.id.FTST_count);
-        txtName = (TextView)view.findViewById(R.id.FTST_title);
+        txtCount = (TextView)view.findViewById(R.id.TASK_STAT_count);
+        txtName = (TextView)view.findViewById(R.id.TASK_STAT_title);
 
         Statics.setRobotoFontLight(ctx, txtName);
         txtCount.setText("" + taskStatusList.size());
         // Set the adapter
-        mListView = (AbsListView) view.findViewById(R.id.FTST_list);
+        mListView = (AbsListView) view.findViewById(R.id.TASK_STAT_list);
         adapter = new TaskStatusAdapter(ctx, R.layout.task_status_item, taskStatusList);
         mListView.setAdapter(adapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                taskStatus = taskStatusList.get(position);
+                mListener.onTaskStatusClicked(taskStatus);
+            }
+        });
         txtCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,14 +106,6 @@ public class TaskStatusListFragment extends Fragment implements AbsListView.OnIt
         mListener = null;
     }
 
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            taskStatus = taskStatusList.get(position);
-            mListener.onTaskStatusClicked(taskStatus);
-        }
-    }
     TaskStatusDTO taskStatus;
 
     /**

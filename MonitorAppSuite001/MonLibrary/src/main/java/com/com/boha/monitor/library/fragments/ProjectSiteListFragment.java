@@ -1,5 +1,7 @@
 package com.com.boha.monitor.library.fragments;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -8,21 +10,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.ListPopupWindow;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.adapters.ProjectSiteAdapter;
+import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
-import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.Statics;
+import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
@@ -39,10 +45,11 @@ import java.util.List;
  * Activities containing this fragment MUST implement the ProjectSiteListListener
  * interface.
  */
-public class ProjectSiteListFragment extends Fragment implements  PageFragment {
+public class ProjectSiteListFragment extends Fragment implements PageFragment {
 
     private ProjectSiteListListener mListener;
     private AbsListView mListView;
+
     public ProjectSiteListFragment() {
     }
 
@@ -56,108 +63,81 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
     Context ctx;
     TextView txtCount, txtName;
     int lastIndex;
-    View view;
+    View view, topView;
+    ImageView imgLogo;
+    ObjectAnimator objectAnimator;
+
     static final String LOG = ProjectSiteListFragment.class.getSimpleName();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         view = inflater.inflate(R.layout.fragment_projectsite, container, false);
-        Log.i(LOG,"------------- onCreateView");
+        view = inflater.inflate(R.layout.fragment_projectsite, container, false);
+        Log.i(LOG, "------------- onCreateView");
         ctx = getActivity();
         Bundle b = getArguments();
         if (b != null) {
-            Log.e(LOG,"++++ getting project object from getArguments");
+            Log.e(LOG, "++++ getting project object from getArguments");
             project = (ProjectDTO) b.getSerializable("project");
-            lastIndex = b.getInt("index",0);
+            lastIndex = b.getInt("index", 0);
         }
         if (savedInstanceState != null) {
-            lastIndex = savedInstanceState.getInt("lastIndex",0);
-            Log.e(LOG,"++++ lastIndex in savedInstanceState: " + lastIndex);
+            lastIndex = savedInstanceState.getInt("lastIndex", 0);
+            Log.e(LOG, "++++ lastIndex in savedInstanceState: " + lastIndex);
         }
         txtCount = (TextView) view.findViewById(R.id.SITE_LIST_siteCount);
-
+        imgLogo = (ImageView) view.findViewById(R.id.SITE_LIST_imgLogo);
+        topView = view.findViewById(R.id.SITE_LIST_TOP);
+        imgLogo.setVisibility(View.GONE);
+        mListView = (AbsListView) view.findViewById(android.R.id.list);
         Statics.setRobotoFontLight(ctx, txtCount);
-        getProjectSites();
+        if (project.getProjectSiteList() != null && !project.getProjectSiteList().isEmpty()) {
+            setList();
+        }
         return view;
     }
 
-    private void getProjectSites() {
-        CacheUtil.getCachedProjectData(ctx,CacheUtil.CACHE_PROJECT,project.getProjectID(), new CacheUtil.CacheUtilListener() {
+    public void rotateLogo() {
+        imgLogo.setVisibility(View.VISIBLE);
+        objectAnimator = ObjectAnimator.ofFloat(imgLogo, "rotation", 0.0f, 360f);
+        objectAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+        objectAnimator.setDuration(200);
+        objectAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        objectAnimator.addListener(new Animator.AnimatorListener() {
             @Override
-            public void onFileDataDeserialized(ResponseDTO response) {
-                if (response != null) {
-                    if (response.getProjectList() != null && !response.getProjectList().isEmpty()) {
-                        project = response.getProjectList().get(0);
-                        setList();
-                    }
-                }
-                getServerData();
-            }
-
-            @Override
-            public void onDataCached() {
+            public void onAnimationStart(Animator animation) {
 
             }
 
             @Override
-            public void onError() {
-                getServerData();
-            }
-        });
-
-    }
-    private void getServerData() {
-        RequestDTO w = new RequestDTO(RequestDTO.GET_PROJECT_DATA);
-        w.setProjectID(project.getProjectID());
-
-        WebSocketUtil.sendRequest(ctx,Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
-            @Override
-            public void onMessage(final ResponseDTO response) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!ErrorUtil.checkServerError(ctx,response)) {
-                            return;
-                        }
-                        project = response.getProjectList().get(0);
-                        setList();
-
-                        CacheUtil.cacheProjectData(ctx,response,CacheUtil.CACHE_PROJECT,project.getProjectID(),new CacheUtil.CacheUtilListener() {
-                            @Override
-                            public void onFileDataDeserialized(ResponseDTO response) {
-
-                            }
-
-                            @Override
-                            public void onDataCached() {
-
-                            }
-
-                            @Override
-                            public void onError() {
-
-                            }
-                        });
-                    }
-                });
-            }
-
-            @Override
-            public void onClose() {
+            public void onAnimationEnd(Animator animation) {
 
             }
 
             @Override
-            public void onError(String message) {
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
 
             }
         });
+        objectAnimator.start();
     }
+
+    public void stopRotatingLogo() {
+        imgLogo.setVisibility(View.GONE);
+        objectAnimator.cancel();
+    }
+
+
     private void setList() {
         txtCount.setText("" + project.getProjectSiteList().size());
-        for (ProjectSiteDTO site: project.getProjectSiteList()) {
+        for (ProjectSiteDTO site : project.getProjectSiteList()) {
             List<ProjectSiteTaskStatusDTO> taskStatusList = new ArrayList<>();
-            for (ProjectSiteTaskDTO task: site.getProjectSiteTaskList()) {
+            for (ProjectSiteTaskDTO task : site.getProjectSiteTaskList()) {
                 taskStatusList.addAll(task.getProjectSiteTaskStatusList());
             }
             Collections.sort(taskStatusList);
@@ -171,51 +151,11 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
             }
 
         }
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
+
         projectSiteAdapter = new ProjectSiteAdapter(ctx, R.layout.site_item,
-                project.getProjectSiteList(), new ProjectSiteAdapter.ProjectSiteAdapterListener() {
-            @Override
-            public void onEditRequested(ProjectSiteDTO site, int index) {
-                projectSite = project.getProjectSiteList().get(index);
-                lastIndex = index;
-                mListener.onProjectSiteEditRequested(site, index);
-            }
-
-            @Override
-            public void onGalleryRequested(ProjectSiteDTO site, int index) {
-                projectSite = project.getProjectSiteList().get(index);
-                lastIndex = index;
-                mListener.onGalleryRequested(site,index);
-
-            }
-
-            @Override
-            public void onCameraRequested(ProjectSiteDTO site, int index) {
-                projectSite = project.getProjectSiteList().get(index);
-                lastIndex = index;
-                mListener.onCameraRequested(site,index);
-            }
-
-            @Override
-            public void onTasksRequested(ProjectSiteDTO site, int index) {
-                projectSite = project.getProjectSiteList().get(index);
-                lastIndex = index;
-                mListener.onProjectSiteTasksRequested(site,index);
-            }
-
-            @Override
-            public void onDeleteRequested(ProjectSiteDTO site, int index) {
-
-            }
-
-            @Override
-            public void onStatusListRequested(ProjectSiteDTO site, int index) {
-                mListener.onStatusListRequested(site,index);
-            }
-        });
+                project.getProjectSiteList());
         mListView.setAdapter(projectSiteAdapter);
         mListView.setSelection(lastIndex);
-        // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -223,34 +163,80 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
                     lastIndex = position;
                     projectSite = project.getProjectSiteList().get(position);
                     mListener.onProjectSiteClicked(projectSite, position);
+                    list = new ArrayList<>();
+                    list.add("Task List");
+                    list.add("Take Picture");
+                    list.add("Status Report");
+                    list.add("Site on Map");
+                    list.add("Site Gallery");
+                    list.add("Edit Site Details");
+
+                    actionsWindow = new ListPopupWindow(getActivity());
+                    actionsWindow.setAdapter(new SpinnerListAdapter(ctx,
+                            R.layout.xxsimple_spinner_item, list, SpinnerListAdapter.INVOICE_ACTIONS, project.getProjectName(), false));
+                    actionsWindow.setAnchorView(topView);
+                    actionsWindow.setWidth(600);
+                    actionsWindow.setHorizontalOffset(72);
+                    actionsWindow.setModal(true);
+                    actionsWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            switch (position) {
+                                case 0:
+                                    mListener.onProjectSiteTasksRequested(projectSite, lastIndex);
+                                    break;
+                                case 1:
+                                    mListener.onCameraRequested(projectSite, lastIndex);
+                                    break;
+                                case 2:
+                                    mListener.onStatusListRequested(projectSite,lastIndex);
+                                    break;
+                                case 3:
+                                    ToastUtil.toast(ctx,ctx.getString(R.string.under_cons));
+                                    break;
+                                case 4:
+                                    mListener.onGalleryRequested(projectSite,lastIndex);
+                                    break;
+                                case 5:
+                                    mListener.onProjectSiteEditRequested(projectSite,lastIndex);
+                                    break;
+
+                            }
+                            actionsWindow.dismiss();
+                        }
+                    });
+                    actionsWindow.show();
                 }
             }
         });
     }
+
     int index;
+    List<String> list;
+    ListPopupWindow actionsWindow;
 
     public void refreshData(ProjectSiteDTO site) {
 
-        Log.i(LOG,"###### refreshData");
+        Log.i(LOG, "###### refreshData");
         if (projectSite == null) throw new UnsupportedOperationException("ProjectSiteDTO is null");
         RequestDTO w = new RequestDTO();
         w.setRequestType(RequestDTO.GET_PROJECT_SITE_DATA);
         w.setProjectSiteID(site.getProjectSiteID());
 
-        WebSocketUtil.sendRequest(ctx,Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
+        WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (!ErrorUtil.checkServerError(ctx,response)) {
+                        if (!ErrorUtil.checkServerError(ctx, response)) {
                             return;
                         }
                         projectSite.setPhotoUploadList(response.getPhotoUploadList());
 
                         setList();
                         index = 0;
-                        for (ProjectSiteDTO ps: project.getProjectSiteList()) {
+                        for (ProjectSiteDTO ps : project.getProjectSiteList()) {
                             if (ps.getProjectSiteID() == projectSite.getProjectSiteID()) {
                                 break;
                             }
@@ -275,28 +261,29 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
 
 
     }
+
     public void refreshPhotoList(ProjectSiteDTO site) {
 
-        Log.i(LOG,"###### refreshPhotoList");
+        Log.i(LOG, "###### refreshPhotoList");
         if (projectSite == null) throw new UnsupportedOperationException("ProjectSiteDTO is null");
         RequestDTO w = new RequestDTO();
         w.setRequestType(RequestDTO.GET_SITE_IMAGES);
         w.setProjectSiteID(site.getProjectSiteID());
 
-        WebSocketUtil.sendRequest(ctx,Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
+        WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (!ErrorUtil.checkServerError(ctx,response)) {
+                        if (!ErrorUtil.checkServerError(ctx, response)) {
                             return;
                         }
                         projectSite.setPhotoUploadList(response.getPhotoUploadList());
 
                         setList();
                         index = 0;
-                        for (ProjectSiteDTO ps: project.getProjectSiteList()) {
+                        for (ProjectSiteDTO ps : project.getProjectSiteList()) {
                             if (ps.getProjectSiteID() == projectSite.getProjectSiteID()) {
                                 break;
                             }
@@ -321,9 +308,11 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
 
 
     }
+
     public void setListPosition(int index) {
         lastIndex = index;
     }
+
     public void addProjectSite(ProjectSiteDTO site) {
         if (project.getProjectSiteList() == null) {
             project.setProjectSiteList(new ArrayList<ProjectSiteDTO>());
@@ -333,12 +322,13 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
         txtCount.setText("" + project.getProjectSiteList().size());
         try {
             Thread.sleep(1000);
-            Util.animateRotationY(txtCount,500);
+            Util.animateRotationY(txtCount, 500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
     }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -355,7 +345,6 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
         super.onDetach();
         mListener = null;
     }
-
 
 
     ProjectSiteDTO projectSite;
@@ -385,7 +374,7 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
 
     /**
      * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
+     * fragment to allow objectAnimator interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
      * <project/>
@@ -395,11 +384,17 @@ public class ProjectSiteListFragment extends Fragment implements  PageFragment {
      */
     public interface ProjectSiteListListener {
         public void onProjectSiteClicked(ProjectSiteDTO projectSite, int index);
+
         public void onProjectSiteEditRequested(ProjectSiteDTO projectSite, int index);
+
         public void onProjectSiteTasksRequested(ProjectSiteDTO projectSite, int index);
+
         public void onCameraRequested(ProjectSiteDTO projectSite, int index);
+
         public void onGalleryRequested(ProjectSiteDTO projectSite, int index);
+
         public void onPhotoListUpdated(ProjectSiteDTO projectSite, int index);
+
         public void onStatusListRequested(ProjectSiteDTO projectSite, int index);
     }
 

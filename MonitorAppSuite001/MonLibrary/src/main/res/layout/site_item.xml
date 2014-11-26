@@ -3,8 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:padding="0dp"
-    android:background="@color/white"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/SITE_heroImage"
@@ -64,7 +63,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/SITE_layout"
-        android:layout_marginTop="4dp"
         android:layout_marginRight="48dp"
         android:layout_alignLeft="@id/SITE_top"
         android:layout_below="@id/SITE_top">
@@ -97,7 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/SITE_staffLayout"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/mon_divider"
         android:layout_marginRight="48dp"
         android:layout_alignLeft="@id/SITE_layout"
         android:layout_below="@id/SITE_layout">
@@ -107,7 +105,7 @@
             android:layout_height="wrap_content"
             android:text="00"
             android:id="@+id/SITE_txtStatusCount"
-            style="@style/BlackCircle"
+            style="@style/GreyCircle"
             android:layout_marginRight="4dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true" />
@@ -148,10 +146,10 @@
         <TextView
             android:id="@+id/SITE_lastStatusDate"
             style="@style/TextStyleBoldBlueSmall"
-            android:text="30 December 2059 13:30"
+            android:text="@string/date"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-
+            android:layout_marginRight="@dimen/mon_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -173,22 +171,23 @@
         android:layout_below="@id/SITE_bottom"
         android:layout_width="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="@dimen/mon_margin"
+        android:layout_marginBottom="@dimen/mon_margin"
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/SITE_statusColor"
-            android:background="@drawable/xgreen_box"
+            android:background="@drawable/xgrey_box"
             android:paddingLeft="44dp"
             android:text="                       "
-            android:textSize="4dp"
+            android:textSize="4sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/SITE_lastStatus"
             style="@style/TextStyleBoldSmall"
-            android:text="Delayed - Weather"
+            android:text="@string/status_name"
             android:layout_marginLeft="16dp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/SITE_statusColor"
@@ -209,40 +208,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/SITE_actionLayout"
-        android:layout_marginTop="16dp"
-        android:padding="8dp"
-        android:background="@color/beige_pale"
-        android:layout_below="@id/SITE_task">
 
-        <ImageView
-            android:id="@+id/SITE_camera"
-            android:src="@drawable/camera_a32"
-            android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/SITE_imageCount"
-            android:layout_toRightOf="@id/SITE_camera"
-            android:text="0"
-            android:layout_marginLeft="20dp"
-            android:layout_centerVertical="true"
-            style="@style/Title1TextStyleBlue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/SITE_delete"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentRight="true"
-            android:src="@android:drawable/ic_delete"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </RelativeLayout>
 </RelativeLayout>

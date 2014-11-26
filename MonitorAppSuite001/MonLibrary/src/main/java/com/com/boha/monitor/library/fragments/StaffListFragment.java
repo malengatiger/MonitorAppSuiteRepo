@@ -131,7 +131,7 @@ public class StaffListFragment extends Fragment
 
                     staffActionsWindow = new ListPopupWindow(getActivity());
                     staffActionsWindow.setAdapter(new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item,
-                            list, SpinnerListAdapter.STAFF_ACTIONS));
+                            list, SpinnerListAdapter.STAFF_ACTIONS, false));
                     staffActionsWindow.setAnchorView(txtName);
                     staffActionsWindow.setWidth(600);
                     staffActionsWindow.setModal(true);
@@ -208,7 +208,7 @@ public class StaffListFragment extends Fragment
 
     /**
      * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
+     * fragment to allow objectAnimator interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
      * <project/>

@@ -78,7 +78,7 @@ public class MonitorMapActivity extends FragmentActivity
     ProjectSiteDTO projectSite;
     ProjectDTO project;
     int index;
-    TextView text;
+    TextView text, txtCount;
     View topLayout;
     static final Locale loc = Locale.getDefault();
     static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -102,7 +102,9 @@ public class MonitorMapActivity extends FragmentActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         text = (TextView) findViewById(R.id.text);
-        Statics.setRobotoFontLight(ctx,text);
+        txtCount = (TextView) findViewById(R.id.count);
+        txtCount.setText("0");
+        Statics.setRobotoFontBold(ctx,text);
 
         topLayout = findViewById(R.id.top);
         if (project != null) {
@@ -234,7 +236,7 @@ public class MonitorMapActivity extends FragmentActivity
 
         googleMap.clear();
         LatLng point = null;
-        int index = 0;
+        int index = 0, count = 0;
         for (ProjectSiteDTO site : project.getProjectSiteList()) {
             if (site.getLatitude() == null) continue;;
             LatLng pnt = new LatLng(site.getLatitude(), site.getLongitude());
@@ -266,9 +268,11 @@ public class MonitorMapActivity extends FragmentActivity
                             .position(pnt));
             markers.add(m);
             index++;
+            count++;
         }
+        txtCount.setText(""+count);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 1.0f));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(12.0f));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(13.0f));
         setTitle(project.getProjectName());
     }
 
@@ -330,7 +334,7 @@ public class MonitorMapActivity extends FragmentActivity
 
         actionsWindow = new ListPopupWindow(this);
         actionsWindow.setAdapter(new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item, list,
-                SpinnerListAdapter.INVOICE_ACTIONS, title));
+                SpinnerListAdapter.INVOICE_ACTIONS, title, false));
         actionsWindow.setAnchorView(topLayout);
         actionsWindow.setHorizontalOffset(72);
         actionsWindow.setWidth(600);

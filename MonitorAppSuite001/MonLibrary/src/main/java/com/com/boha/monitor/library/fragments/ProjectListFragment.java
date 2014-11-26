@@ -1,5 +1,7 @@
 package com.com.boha.monitor.library.fragments;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -7,7 +9,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListPopupWindow;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -56,6 +60,7 @@ public class ProjectListFragment extends Fragment implements PageFragment {
     View topView;
     LayoutInflater inflater;
     View view;
+    ImageView imgLogo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,7 @@ public class ProjectListFragment extends Fragment implements PageFragment {
         this.inflater = inflater;
         ctx = getActivity();
         topView = view.findViewById(R.id.PROJ_LIST_layoutx);
+        imgLogo = (ImageView) view.findViewById(R.id.PROJ_LIST_img);
         Bundle b = getArguments();
         if (b != null) {
             ResponseDTO r = (ResponseDTO) b.getSerializable("response");
@@ -86,6 +92,42 @@ public class ProjectListFragment extends Fragment implements PageFragment {
         setTotals();
         setList();
         return view;
+    }
+
+    ObjectAnimator objectAnimator;
+
+    public void stopRotatingLogo() {
+        if (objectAnimator != null)
+            objectAnimator.cancel();
+    }
+
+    public void rotateLogo() {
+        objectAnimator = ObjectAnimator.ofFloat(imgLogo, "rotation", 0.0f, 360f);
+        objectAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+        objectAnimator.setDuration(200);
+        objectAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        objectAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        objectAnimator.start();
     }
 
     private void setList() {
@@ -113,7 +155,7 @@ public class ProjectListFragment extends Fragment implements PageFragment {
 
                 actionsWindow = new ListPopupWindow(getActivity());
                 actionsWindow.setAdapter(new SpinnerListAdapter(ctx,
-                        R.layout.xxsimple_spinner_item, list, SpinnerListAdapter.INVOICE_ACTIONS, project.getProjectName()));
+                        R.layout.xxsimple_spinner_item, list, SpinnerListAdapter.INVOICE_ACTIONS, project.getProjectName(), false));
                 actionsWindow.setAnchorView(txtLabel);
                 actionsWindow.setWidth(600);
                 actionsWindow.setModal(true);
@@ -231,7 +273,7 @@ public class ProjectListFragment extends Fragment implements PageFragment {
 
     /**
      * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
+     * fragment to allow objectAnimator interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
      * <project>

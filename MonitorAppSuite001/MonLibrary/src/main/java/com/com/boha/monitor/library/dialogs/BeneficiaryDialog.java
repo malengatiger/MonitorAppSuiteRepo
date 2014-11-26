@@ -319,7 +319,7 @@ public class BeneficiaryDialog extends DialogFragment {
                     for (ProjectDTO p : projectList) {
                         list.add(p.getProjectName());
                     }
-                    SpinnerListAdapter adapter1 = new SpinnerListAdapter(context, R.layout.xxsimple_spinner_item, list, SpinnerListAdapter.TASK_LIST);
+                    SpinnerListAdapter adapter1 = new SpinnerListAdapter(context, R.layout.xxsimple_spinner_item, list, SpinnerListAdapter.TASK_LIST, false);
                     if (spinner == null) {
                         spinner = (Spinner) view.findViewById(R.id.ED_PSN_spinner);
                     }
@@ -361,7 +361,7 @@ public class BeneficiaryDialog extends DialogFragment {
         for (ProjectSiteDTO s: project.getProjectSiteList()) {
             list.add(s.getProjectSiteName());
         }
-        SpinnerListAdapter adapter = new SpinnerListAdapter(context, R.layout.xxsimple_spinner_item,list,SpinnerListAdapter.SITE_LIST);
+        SpinnerListAdapter adapter = new SpinnerListAdapter(context, R.layout.xxsimple_spinner_item,list,SpinnerListAdapter.SITE_LIST,false);
         spinner2.setAdapter(adapter);
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

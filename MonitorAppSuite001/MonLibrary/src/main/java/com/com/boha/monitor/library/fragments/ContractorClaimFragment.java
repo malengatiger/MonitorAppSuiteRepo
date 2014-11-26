@@ -256,7 +256,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
             engineers.add(p.getEngineerName());
         }
         Log.w(LOG,"##### setting engineer dropdown");
-        SpinnerListAdapter a2 = new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item_blue, engineers, SpinnerListAdapter.ENGINEER_LIST);
+        SpinnerListAdapter a2 = new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item_blue, engineers, SpinnerListAdapter.ENGINEER_LIST, true);
         engineerSpinner.setAdapter(a2);
         engineerSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -281,7 +281,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
             tasks.add(p.getTaskName());
         }
         Log.w(LOG,"##### setting task dropdown");
-        SpinnerListAdapter a3 = new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item, tasks, SpinnerListAdapter.TASK_LIST);
+        SpinnerListAdapter a3 = new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item, tasks, SpinnerListAdapter.TASK_LIST, true);
         taskSpinner.setAdapter(a3);
         taskSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -482,7 +482,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
 
     /**
      * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
+     * fragment to allow objectAnimator interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
      */

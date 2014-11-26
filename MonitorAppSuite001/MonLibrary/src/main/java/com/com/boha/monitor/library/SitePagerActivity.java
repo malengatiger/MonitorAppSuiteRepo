@@ -26,6 +26,7 @@ import com.com.boha.monitor.library.fragments.PageFragment;
 import com.com.boha.monitor.library.fragments.ProjectSiteListFragment;
 import com.com.boha.monitor.library.fragments.TaskAssignmentFragment;
 import com.com.boha.monitor.library.toolbox.BaseVolley;
+import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
@@ -56,16 +57,42 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
 
         project = (ProjectDTO) getIntent().getSerializableExtra("project");
         type = getIntent().getIntExtra("type", TaskAssignmentFragment.OPERATIONS);
-        buildPages();
+
         setTitle(ctx.getString(R.string.project_sites));
         getSupportActionBar().setSubtitle(project.getProjectName());
     }
 
-    private void getProjectPhotos() {
-        RequestDTO w = new RequestDTO(RequestDTO.GET_ALL_PROJECT_IMAGES);
+    private void getCachedProjectData() {
+
+        CacheUtil.getCachedProjectData(ctx,CacheUtil.CACHE_PROJECT,project.getProjectID(),new CacheUtil.CacheUtilListener() {
+            @Override
+            public void onFileDataDeserialized(ResponseDTO response) {
+                if (response != null) {
+                    if (response.getProjectList() != null && !response.getProjectList().isEmpty()) {
+                        project = response.getProjectList().get(0);
+                        buildPages();
+                    }
+                }
+                getProjectData();
+            }
+
+            @Override
+            public void onDataCached() {
+
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
+    }
+    private void getProjectData() {
+        RequestDTO w = new RequestDTO(RequestDTO.GET_PROJECT_DATA);
         w.setProjectID(project.getProjectID());
 
         setRefreshActionButtonState(true);
+        projectSiteListFragment.rotateLogo();
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
@@ -73,6 +100,11 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
                     @Override
                     public void run() {
                         setRefreshActionButtonState(false);
+                        projectSiteListFragment.stopRotatingLogo();
+                        if (!ErrorUtil.checkServerError(ctx,response)) {
+                            return;
+                        }
+                        project = response.getProjectList().get(0);
                         for (ProjectSiteDTO ps : project.getProjectSiteList()) {
                             ps.setPhotoUploadList(new ArrayList<PhotoUploadDTO>());
                             for (PhotoUploadDTO ph : response.getPhotoUploadList()) {
@@ -84,7 +116,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
                             }
 
                         }
-                        Log.i(LOG, "----- returned photos: " + response.getPhotoUploadList().size());
+                        Log.i(LOG, "----- returned project data, photos: " + response.getPhotoUploadList().size());
                         buildPages();
                     }
                 });
@@ -96,7 +128,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
                     @Override
                     public void run() {
                         Log.e(LOG, "--------------- websocket closed");
-                        //ToastUtil.errorToast(ctx, "Websocket closed. Please retry request");
+                        getProjectData();
                     }
                 });
             }
@@ -118,7 +150,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.site_pager, menu);
         mMenu = menu;
-        getProjectPhotos();
+        getCachedProjectData();
         return true;
     }
 
@@ -289,7 +321,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
     @Override
     public void onResume() {
         Log.e(LOG, "######### onResume .........getProjectPhotos");
-        getProjectPhotos();
+        //getProjectPhotos();
 
         super.onResume();
     }

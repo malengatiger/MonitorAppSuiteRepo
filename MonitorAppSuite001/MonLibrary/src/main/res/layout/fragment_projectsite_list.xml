@@ -7,11 +7,17 @@
     android:background="@color/grey"
     tools:context="com.com.boha.monitor.library.fragments.ProjectSiteListFragment">
 
+    <RelativeLayout
+        android:id="@+id/SITE_LIST_TOP"
+        android:layout_width="match_parent"
+        android:layout_height="1dp">
 
+    </RelativeLayout>
 
     <ListView
         android:background="@color/white"
         android:id="@android:id/list"
+        android:layout_below="@id/SITE_LIST_TOP"
         android:layout_marginTop="8dp"
         android:dividerHeight="8dp"
         android:layout_width="match_parent"
@@ -25,6 +31,13 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="0dp"
         android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/SITE_LIST_imgLogo"
+        android:src="@drawable/maono"
+        android:layout_margin="@dimen/mon_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

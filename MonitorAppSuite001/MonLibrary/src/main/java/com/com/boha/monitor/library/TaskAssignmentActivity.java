@@ -34,7 +34,7 @@ public class TaskAssignmentActivity extends ActionBarActivity implements
                 getSupportFragmentManager().findFragmentById(R.id.fragment);
         taf.setProjectSite(site, type);
         setTitle(site.getProjectSiteName());
-        getActionBar().setSubtitle(site.getProjectName());
+        getSupportActionBar().setSubtitle(site.getProjectName());
     }
 
     TaskAssignmentFragment taf;

@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,7 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProjectPagerActivity extends FragmentActivity
+public class ProjectPagerActivity extends ActionBarActivity
         implements ProjectListFragment.ProjectListListener {
 
     private DrawerLayout mDrawerLayout;
@@ -63,7 +63,7 @@ public class ProjectPagerActivity extends FragmentActivity
         setDrawerList();
         setTitle(SharedUtil.getCompany(ctx).getCompanyName());
         CompanyStaffDTO staff = SharedUtil.getCompanyStaff(ctx);
-        getActionBar().setSubtitle(staff.getFirstName() + " - " + staff.getCompanyStaffType().getCompanyStaffTypeName());
+        getSupportActionBar().setSubtitle(staff.getFirstName() + " - " + staff.getCompanyStaffType().getCompanyStaffTypeName());
         //
         // PhotoUploadService.uploadPendingPhotos(ctx);
     }
@@ -78,12 +78,9 @@ public class ProjectPagerActivity extends FragmentActivity
                         response = r;
                         company = r.getCompany();
                         buildPages();
-                    } else {
-                        getCompanyData();
                     }
-                } else {
-                    getCompanyData();
                 }
+                getCompanyData();
                 for (String s : titles) {
                     sTitles.add(s);
                 }
@@ -140,6 +137,7 @@ public class ProjectPagerActivity extends FragmentActivity
         w.setCompanyID(SharedUtil.getCompany(ctx).getCompanyID());
 
         setRefreshActionButtonState(true);
+        projectListFragment.rotateLogo();
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO r) {
@@ -147,6 +145,7 @@ public class ProjectPagerActivity extends FragmentActivity
                     @Override
                     public void run() {
                         setRefreshActionButtonState(false);
+                        projectListFragment.stopRotatingLogo();
                         if (!ErrorUtil.checkServerError(ctx, r)) {
                             return;
                         }

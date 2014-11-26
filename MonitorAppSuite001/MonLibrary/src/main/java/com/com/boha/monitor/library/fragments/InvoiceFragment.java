@@ -238,7 +238,7 @@ public class InvoiceFragment extends Fragment implements PageFragment {
         }
         Log.w(LOG,"##### setting task dropdown");
         ArrayAdapter<String> sad2 = new ArrayAdapter<String>(ctx,android.R.layout.simple_spinner_item, tasks);
-        SpinnerListAdapter a3 = new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item, tasks, SpinnerListAdapter.TASK_LIST);
+        SpinnerListAdapter a3 = new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item, tasks, SpinnerListAdapter.TASK_LIST, false);
         taskSpinner.setAdapter(a3);
         taskSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -438,7 +438,7 @@ public class InvoiceFragment extends Fragment implements PageFragment {
 
     /**
      * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
+     * fragment to allow objectAnimator interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
      */
