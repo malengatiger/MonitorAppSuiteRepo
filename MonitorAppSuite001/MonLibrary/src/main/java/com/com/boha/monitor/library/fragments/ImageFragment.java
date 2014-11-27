@@ -18,7 +18,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.io.File;
 
 /**
- * A fragment representing a list of Items.
+ * A fragment representing a taskStatusList of Items.
  * <project/>
  * Large screen devices (such as tablets) are supported by replacing the ListView
  * with a GridView.

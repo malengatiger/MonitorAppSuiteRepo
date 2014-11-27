@@ -1,5 +1,6 @@
 package com.com.boha.monitor.library;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListPopupWindow;
 
 import com.boha.monitor.library.R;
@@ -43,6 +45,8 @@ implements ContractorClaimFragment.ContractorClaimFragmentListener, ContractorCl
     ProjectDTO project;
     static final int NUM_ITEMS = 2;
     PagerAdapter adapter;
+    ImageView imgLogo;
+    ObjectAnimator objectAnimator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +66,11 @@ implements ContractorClaimFragment.ContractorClaimFragmentListener, ContractorCl
 
     private void getCachedProjectData() {
         setRefreshActionButtonState(true);
+        contractorClaimFragment.rotateLogo();
         CacheUtil.getCachedProjectData(ctx,CacheUtil.CACHE_PROJECT,project.getProjectID(),new CacheUtil.CacheUtilListener() {
             @Override
             public void onFileDataDeserialized(ResponseDTO response) {
+                contractorClaimFragment.stopRotatingLogo();
                 if (response != null) {
                     if (response.getProjectList() != null && !response.getProjectList().isEmpty()) {
                         project = response.getProjectList().get(0);
@@ -91,6 +97,7 @@ implements ContractorClaimFragment.ContractorClaimFragmentListener, ContractorCl
         w.setProjectID(project.getProjectID());
 
         setRefreshActionButtonState(true);
+        contractorClaimFragment.rotateLogo();
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
@@ -98,6 +105,7 @@ implements ContractorClaimFragment.ContractorClaimFragmentListener, ContractorCl
                     @Override
                     public void run() {
                         setRefreshActionButtonState(false);
+                        contractorClaimFragment.stopRotatingLogo();
                         if (!ErrorUtil.checkServerError(ctx,response)) {
                             return;
                         }
@@ -171,6 +179,8 @@ implements ContractorClaimFragment.ContractorClaimFragmentListener, ContractorCl
             }
         });
     }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.i(LOG,"##### onCreateOptionsMenu getCachedCompanyData ...");
@@ -286,10 +296,11 @@ implements ContractorClaimFragment.ContractorClaimFragmentListener, ContractorCl
     List<TaskDTO> taskList;
     static final String LOG = ClaimAndInvoicePagerActivity.class.getSimpleName();
     private void getCachedCompanyData() {
-
+        contractorClaimFragment.rotateLogo();
         CacheUtil.getCachedData(ctx, CacheUtil.CACHE_DATA, new CacheUtil.CacheUtilListener() {
             @Override
             public void onFileDataDeserialized(ResponseDTO response) {
+                contractorClaimFragment.stopRotatingLogo();
                 if (response != null) {
                     Log.d(LOG, "CacheUtil.CACHE_DATA cached response ok...............");
                     if (response.getCompany() == null || response.getCompany().getTaskList() == null) {
@@ -322,6 +333,7 @@ implements ContractorClaimFragment.ContractorClaimFragmentListener, ContractorCl
         RequestDTO w = new RequestDTO(RequestDTO.GET_COMPANY_DATA);
         w.setCompanyID(SharedUtil.getCompany(ctx).getCompanyID());
         setRefreshActionButtonState(true);
+        contractorClaimFragment.rotateLogo();
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
@@ -329,6 +341,7 @@ implements ContractorClaimFragment.ContractorClaimFragmentListener, ContractorCl
                     @Override
                     public void run() {
                         setRefreshActionButtonState(false);
+                        contractorClaimFragment.stopRotatingLogo();
                         if (!ErrorUtil.checkServerError(ctx, response)) {
                             return;
                         }

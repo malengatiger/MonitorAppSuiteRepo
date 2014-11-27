@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.ListPopupWindow;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,16 +26,19 @@ import android.widget.TextView;
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.adapters.ProjectSiteTaskAdapter;
 import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
+import com.com.boha.monitor.library.adapters.TaskStatusAdapter;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.TaskDTO;
+import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
+import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
@@ -44,7 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A fragment representing a list of Items.
+ * A fragment representing a taskStatusList of Items.
  * <project/>
  * Large screen devices (such as tablets) are supported by replacing the ListView
  * with a GridView.
@@ -87,6 +91,7 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
     View addView;
     ProgressBar progressBar;
     ImageView imgClose;
+    View handle;
 
     public void setProjectSite(ProjectSiteDTO projectSite, int type) {
         Log.d(LOG, "########## setProjectSite");
@@ -107,6 +112,7 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
             projectSiteTaskList = projectSite.getProjectSiteTaskList();
         }
         addView = view.findViewById(R.id.AST_top);
+        handle = view.findViewById(R.id.AST_handle);
         addView.setVisibility(View.GONE);
         imgClose = (ImageView)view.findViewById(R.id.AST_close);
         txtCount = (TextView) view.findViewById(R.id.AST_number);
@@ -180,6 +186,45 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
     boolean isHidden = false;
 
 
+    private void sendTaskStatus() {
+        RequestDTO w = new RequestDTO(RequestDTO.ADD_PROJECT_SITE_TASK_STATUS);
+        ProjectSiteTaskStatusDTO s = new ProjectSiteTaskStatusDTO();
+        s.setProjectSiteTaskID(projectSiteTask.getProjectSiteTaskID());
+        s.setCompanyStaffID(SharedUtil.getCompanyStaff(ctx).getCompanyStaffID());
+        s.setTaskStatus(taskStatus);
+        w.setProjectSiteTaskStatus(s);
+
+        WebSocketUtil.sendRequest(ctx,Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
+            @Override
+            public void onMessage(final ResponseDTO response) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!ErrorUtil.checkServerError(ctx,response)) {
+                            return;
+                        }
+                        projectSiteTaskStatus = response.getProjectSiteTaskStatusList().get(0);
+                        for (ProjectSiteTaskDTO s: projectSiteTaskList) {
+                            if (s.getProjectSiteTaskID().intValue() == projectSiteTaskStatus.getProjectSiteTaskID().intValue()) {
+                                s.getProjectSiteTaskStatusList().add(projectSiteTaskStatus);
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onClose() {
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
+    }
     private void sendTask() {
         if (task == null) {
             ToastUtil.toast(ctx,ctx.getString(R.string.select_task));
@@ -267,7 +312,9 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
 
                     @Override
                     public void onStatusRequested(ProjectSiteTaskDTO siteTask) {
-                        mListener.onStatusDialogRequested(projectSite, siteTask);
+                        //mListener.onStatusDialogRequested(projectSite, siteTask);
+                        projectSiteTask = siteTask;
+                        showPopup();
                     }
 
                     @Override
@@ -304,10 +351,37 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ProjectSiteTaskDTO t = projectSiteTaskList.get(position);
                 mListener.onTaskClicked(t);
+
+                
             }
         });
         Util.animateRotationY(txtCount,1000);
     }
+    ProjectSiteTaskDTO projectSiteTask;
+    private void showPopup() {
+
+
+        actionsWindow = new ListPopupWindow(getActivity());
+        actionsWindow.setAdapter(new TaskStatusAdapter(ctx,R.layout.task_status_item_small, taskStatusList, projectSiteTask.getTask().getTaskName()));
+        actionsWindow.setAnchorView(handle);
+        actionsWindow.setHorizontalOffset(72);
+        actionsWindow.setWidth(700);
+        actionsWindow.setModal(true);
+        actionsWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                taskStatus = taskStatusList.get(position);
+                sendTaskStatus();
+                actionsWindow.dismiss();
+            }
+        });
+        actionsWindow.show();
+    }
+    ListPopupWindow actionsWindow;
+    List<TaskStatusDTO> taskStatusList;
+    TaskStatusDTO taskStatus;
+    ProjectSiteTaskStatusDTO projectSiteTaskStatus;
+    
     public void updateList(ProjectSiteTaskStatusDTO taskStatus) {
         for (ProjectSiteTaskDTO task: projectSiteTaskList) {
             if (task.getProjectSiteTaskID().intValue() == taskStatus.getProjectSiteTaskID().intValue()) {
@@ -328,6 +402,7 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
             public void onFileDataDeserialized(ResponseDTO response) {
                 if (response != null) {
                     taskList = response.getCompany().getTaskList();
+                    taskStatusList = response.getCompany().getTaskStatusList();
                     List<String> names = new ArrayList<String>();
                     names.add(ctx.getResources().getString(R.string.select_task));
                     for (TaskDTO t : taskList) {
@@ -393,7 +468,7 @@ public class TaskAssignmentFragment extends Fragment implements PageFragment {
 
     /**
      * The default content for this Fragment has a TextView that is shown when
-     * the list is empty. If you would like to change the text, call this method
+     * the taskStatusList is empty. If you would like to change the text, call this method
      * to supply the text it should use.
      */
     public void setEmptyText(CharSequence emptyText) {

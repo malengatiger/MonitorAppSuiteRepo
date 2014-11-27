@@ -126,5 +126,12 @@
         android:layout_marginRight="@dimen/mon_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <ImageView
+        android:src="@drawable/maono"
+        android:id="@+id/CCX_logo"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="@dimen/mon_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

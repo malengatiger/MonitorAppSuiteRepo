@@ -222,7 +222,7 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
 
     /**
      * The default content for this Fragment has a TextView that is shown when
-     * the list is empty. If you would like to change the text, call this method
+     * the taskStatusList is empty. If you would like to change the text, call this method
      * to supply the text it should use.
      */
     public void setEmptyText(CharSequence emptyText) {

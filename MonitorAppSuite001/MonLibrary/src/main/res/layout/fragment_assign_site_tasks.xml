@@ -63,7 +63,13 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/AST_handle"
         android:layout_below="@id/AST_top"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/AST_handle"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

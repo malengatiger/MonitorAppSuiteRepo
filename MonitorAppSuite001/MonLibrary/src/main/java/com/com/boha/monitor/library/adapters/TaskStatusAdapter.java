@@ -1,8 +1,6 @@
 package com.com.boha.monitor.library.adapters;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +23,7 @@ public class TaskStatusAdapter extends ArrayAdapter<TaskStatusDTO> {
     private final LayoutInflater mInflater;
     private final int mLayoutRes;
     private List<TaskStatusDTO> mList;
+    private String title;
     private Context ctx;
 
    public TaskStatusAdapter(Context context, int textViewResourceId,
@@ -36,6 +35,16 @@ public class TaskStatusAdapter extends ArrayAdapter<TaskStatusDTO> {
         this.mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+    public TaskStatusAdapter(Context context, int textViewResourceId,
+                             List<TaskStatusDTO> list, String title) {
+        super(context, textViewResourceId, list);
+        this.mLayoutRes = textViewResourceId;
+        mList = list;
+        this.title = title;
+        ctx = context;
+        this.mInflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
 
 
     View view;
@@ -43,10 +52,10 @@ public class TaskStatusAdapter extends ArrayAdapter<TaskStatusDTO> {
 
     static class ViewHolderItem {
         TextView txtName;
-        TextView txtNumber;
+        TextView txtNumber, txtTitle;
+        View top;
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolderItem item;
@@ -57,6 +66,10 @@ public class TaskStatusAdapter extends ArrayAdapter<TaskStatusDTO> {
                     .findViewById(R.id.TST_txtName);
             item.txtNumber = (TextView) convertView
                     .findViewById(R.id.TST_txtNumber);
+            item.txtTitle = (TextView) convertView
+                    .findViewById(R.id.TST_title);
+            item.top =  convertView
+                    .findViewById(R.id.TST_top);
 
             convertView.setTag(item);
         } else {
@@ -68,19 +81,39 @@ public class TaskStatusAdapter extends ArrayAdapter<TaskStatusDTO> {
         item.txtNumber.setText(""+(position+ 1));
 
         final int color = p.getStatusColor();
-        switch (p.getStatusColor()) {
-            case TaskStatusDTO.STATUS_COLOR_GREEN:
-                item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
-                break;
-            case TaskStatusDTO.STATUS_COLOR_RED:
-                item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xred_oval));
-                break;
-            case TaskStatusDTO.STATUS_COLOR_YELLOW:
-                item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xorange_oval));
-                break;
+
+        if (title != null) {
+            if (position == 0) {
+                item.top.setVisibility(View.VISIBLE);
+                item.txtTitle.setText(title);
+            } else {
+                item.top.setVisibility(View.GONE);
+            }
+            switch (p.getStatusColor()) {
+                case TaskStatusDTO.STATUS_COLOR_GREEN:
+                    item.txtNumber.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_oval_small));
+                    break;
+                case TaskStatusDTO.STATUS_COLOR_RED:
+                    item.txtNumber.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval_small));
+                    break;
+                case TaskStatusDTO.STATUS_COLOR_YELLOW:
+                    item.txtNumber.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_oval_small));
+                    break;
+            }
+        } else {
+            item.top.setVisibility(View.GONE);
+            switch (p.getStatusColor()) {
+                case TaskStatusDTO.STATUS_COLOR_GREEN:
+                    item.txtNumber.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
+                    break;
+                case TaskStatusDTO.STATUS_COLOR_RED:
+                    item.txtNumber.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval));
+                    break;
+                case TaskStatusDTO.STATUS_COLOR_YELLOW:
+                    item.txtNumber.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_oval));
+                    break;
+            }
         }
-
-
         Statics.setRobotoFontLight(ctx,item.txtNumber);
         Statics.setRobotoFontLight(ctx, item.txtName);
 

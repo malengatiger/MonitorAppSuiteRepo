@@ -28,7 +28,7 @@
     <RelativeLayout
         android:id="@+id/TST_bottom"
         android:layout_below="@id/TST_top"
-        android:padding="@dimen/mon_padding"
+        android:padding="@dimen/mon_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -36,7 +36,7 @@
         <TextView
             android:id="@+id/TST_txtNumber"
             android:text="00"
-            android:background="@drawable/xgreen_oval"
+            android:background="@drawable/xgreen_oval_small"
             android:textColor="@color/white"
             android:gravity="center"
             android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
 
         <TextView
             android:id="@+id/TST_txtName"
-            style="@style/TextStyle"
+            style="@style/TextStyleSmall"
             android:layout_toRightOf="@id/TST_txtNumber"
             android:layout_marginLeft="@dimen/mon_padding"
             android:layout_centerVertical="true"

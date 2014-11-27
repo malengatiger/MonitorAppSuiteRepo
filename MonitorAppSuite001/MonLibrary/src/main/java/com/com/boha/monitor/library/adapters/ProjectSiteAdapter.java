@@ -48,6 +48,7 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
         TextView txtTaskCount, txtStatusCount;
         TextView txtNumber, txtDate, txtStatusColor;
         ImageView imgHero;
+        View statLayout1, statLayout2;
     }
 
     @Override
@@ -67,8 +68,8 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
                     .findViewById(R.id.SITE_statusColor);
             item.txtTaskName = (TextView) convertView
                     .findViewById(R.id.SITE_task);
-
-
+            item.statLayout1 = convertView.findViewById(R.id.SITE_bottom);
+            item.statLayout2 = convertView.findViewById(R.id.SITE_layoutStatus);
             item.txtStatusCount = (TextView) convertView
                     .findViewById(R.id.SITE_txtStatusCount);
             item.txtDate = (TextView) convertView
@@ -87,6 +88,7 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
         item.txtName.setText(p.getProjectSiteName());
         item.txtNumber.setText("" + (position + 1));
         item.txtStatusCount.setText("" + p.getStatusCount());
+        Statics.setRobotoFontLight(ctx,item.txtName);
         if (p.getPhotoUploadList() != null && !p.getPhotoUploadList().isEmpty()) {
 
             String uri = Statics.IMAGE_URL + p.getPhotoUploadList().get(0).getUri();
@@ -100,9 +102,8 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
             item.txtLastStatus.setText(p.getLastTaskStatus().getTaskStatus().getTaskStatusName());
             item.txtTaskName.setText(p.getLastTaskStatus().getTask().getTaskName());
             item.txtDate.setText(sdf.format(p.getLastTaskStatus().getStatusDate()));
-            item.txtDate.setVisibility(View.VISIBLE);
-            item.txtLastStatus.setVisibility(View.VISIBLE);
-            item.txtTaskName.setVisibility(View.VISIBLE);
+            item.statLayout1.setVisibility(View.VISIBLE);
+            item.statLayout2.setVisibility(View.VISIBLE);
             switch (p.getLastTaskStatus().getTaskStatus().getStatusColor()) {
                 case TaskStatusDTO.STATUS_COLOR_GREEN:
                     item.txtStatusColor.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_box));
@@ -122,9 +123,8 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
             }
 
         } else {
-            item.txtDate.setText(ctx.getString(R.string.date));
-            item.txtLastStatus.setText(ctx.getString(R.string.status_name));
-            item.txtTaskName.setVisibility(View.GONE);
+            item.statLayout1.setVisibility(View.GONE);
+            item.statLayout2.setVisibility(View.GONE);
         }
 //        if (p.getPhotoUploadList() != null) {
 //            int count = 0;
@@ -150,7 +150,7 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
 
         Statics.setRobotoFontLight(ctx, item.txtNumber);
         Statics.setRobotoFontBold(ctx, item.txtDate);
-        Statics.setRobotoFontBold(ctx, item.txtName);
+        Statics.setRobotoFontLight(ctx, item.txtName);
 
         animateView(convertView);
         return (convertView);

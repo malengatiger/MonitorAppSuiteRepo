@@ -9,34 +9,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/card_view"
+        android:padding="@dimen/mon_padding"
         android:layout_gravity="center"
         tools:cardCornerRadius="8dp">
 
         <RelativeLayout
             android:layout_marginBottom="4dp"
+            android:padding="@dimen/mon_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
                 android:id="@+id/PSN_imagex"
                 android:scaleType="centerCrop"
+
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:alpha="0.4"
-                android:src="@drawable/black_woman" />
-
+                android:src="@drawable/boy" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
+                android:layout_below="@id/PSN_imagex"
                 android:id="@+id/PSN_txtNum"
                 android:layout_marginTop="@dimen/mon_padding"
                 android:layout_marginLeft="16dp"
-                style="@style/GreyCircleSmall"
-                android:layout_below="@+id/PSN_imagex" />
+                style="@style/GreyCircleSmall" />
+
+            <RelativeLayout
+                android:id="@+id/PSN_top"
+                android:layout_toRightOf="@id/PSN_imagex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
 
 
             <TextView
@@ -44,52 +53,28 @@
                 android:layout_height="wrap_content"
                 android:text="@string/txt"
                 android:id="@+id/PSN_txtName"
-                style="@style/Title2TextStyleBlue"
+                style="@style/TextStyleBlue"
                 android:layout_marginLeft="@dimen/mon_padding"
                 android:layout_marginTop="@dimen/mon_padding"
-                android:layout_alignBaseline="@id/PSN_txtNum"
-                android:layout_toRightOf="@+id/PSN_txtNum" />
+                 />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="email@address"
-                android:id="@+id/PSN_txtEmail"
-                android:layout_below="@+id/PSN_txtNum"
-                android:layout_alignLeft="@id/PSN_txtName"
-                style="@style/TextStyle"
-                android:visibility="gone"
-                android:textStyle="normal"
-                android:layout_marginLeft="5dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="099 999 9999"
-                android:id="@+id/PSN_txtCell"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="8dp"
-                android:layout_alignLeft="@id/PSN_txtName"
-                android:layout_below="@+id/PSN_txtEmail"
-                style="@style/TextStyleBold"
-                android:visibility="gone"
-                android:layout_centerHorizontal="true" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Staff Type"
                 android:id="@+id/PSN_txtStaffType"
-                android:layout_marginLeft="5dp"
-                android:layout_alignLeft="@id/PSN_txtName"
-                android:layout_below="@+id/PSN_txtCell"
-                style="@style/TextStyleRed"
-                android:layout_centerHorizontal="true" />
+                android:layout_marginLeft="@dimen/mon_padding"
+                android:layout_marginTop="@dimen/mon_divider"
+                android:layout_below="@+id/PSN_txtName"
+                style="@style/TextStyleRedSmall"
+                 />
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/PSN_layoutCount"
-                android:layout_below="@+id/PSN_txtStaffType"
-                android:layout_alignLeft="@id/PSN_txtName"
+                android:layout_below="@+id/PSN_imagex"
+                android:layout_alignLeft="@id/PSN_imagex"
                 android:layout_width="wrap_content"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="4dp"

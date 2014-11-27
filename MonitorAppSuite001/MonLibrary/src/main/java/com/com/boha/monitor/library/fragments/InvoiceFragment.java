@@ -332,12 +332,12 @@ public class InvoiceFragment extends Fragment implements PageFragment {
 //        final ObjectAnimator aTop = ObjectAnimator.ofFloat(top, "scaleY", 0, 1);
 //        final ObjectAnimator aBottom = ObjectAnimator.ofFloat(bottom, "scaleY", 0, 1);
 //
-//        List<Animator> list = new ArrayList<>();
-//        list.add(aTop);
-//        list.add(aBottom);
+//        List<Animator> taskStatusList = new ArrayList<>();
+//        taskStatusList.add(aTop);
+//        taskStatusList.add(aBottom);
 //
 //        AnimatorSet set = new AnimatorSet();
-//        set.playTogether(list);
+//        set.playTogether(taskStatusList);
 //
 //        set.start();
     }
@@ -357,12 +357,12 @@ public class InvoiceFragment extends Fragment implements PageFragment {
 //        final ObjectAnimator aTop = ObjectAnimator.ofFloat(top, "scaleY", 1, 0);
 //        final ObjectAnimator aBottom = ObjectAnimator.ofFloat(bottom, "scaleY", 1, 0);
 //
-//        List<Animator> list = new ArrayList<>();
-//        list.add(aTop);
-//        list.add(aBottom);
+//        List<Animator> taskStatusList = new ArrayList<>();
+//        taskStatusList.add(aTop);
+//        taskStatusList.add(aBottom);
 //
 //        AnimatorSet set = new AnimatorSet();
-//        set.playTogether(list);
+//        set.playTogether(taskStatusList);
 //        set.start();
 
     }
@@ -419,7 +419,7 @@ public class InvoiceFragment extends Fragment implements PageFragment {
 
     /**
      * The default content for this Fragment has a TextView that is shown when
-     * the list is empty. If you would like to change the text, call this method
+     * the taskStatusList is empty. If you would like to change the text, call this method
      * to supply the text it should use.
      */
     public void setEmptyText(CharSequence emptyText) {

@@ -35,9 +35,9 @@
             android:layout_height="wrap_content"
             android:text="@string/txt"
             android:id="@+id/SITE_txtName"
-            style="@style/Title3TextStyleBlack"
+            style="@style/Title2TextStyleBlack"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="@dimen/mon_padding"
             android:layout_toRightOf="@+id/SITE_image" />
 
     </RelativeLayout>
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:text="00"
             android:id="@+id/SITE_txtTaskCount"
-            style="@style/BlackCircle"
+            style="@style/BlackCircleSmall"
             android:layout_marginRight="4dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true" />
@@ -97,6 +97,7 @@
         android:id="@+id/SITE_staffLayout"
         android:layout_marginTop="@dimen/mon_divider"
         android:layout_marginRight="48dp"
+        android:layout_marginBottom="@dimen/mon_margin"
         android:layout_alignLeft="@id/SITE_layout"
         android:layout_below="@id/SITE_layout">
 
@@ -105,7 +106,7 @@
             android:layout_height="wrap_content"
             android:text="00"
             android:id="@+id/SITE_txtStatusCount"
-            style="@style/GreyCircle"
+            style="@style/GreyCircleSmall"
             android:layout_marginRight="4dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true" />
@@ -125,23 +126,12 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/SITE_divider"
-        android:layout_below="@id/SITE_staffLayout"
-        android:layout_width="260dp"
-        android:layout_marginTop="8dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="32dp"
-        android:paddingLeft="16dp"
-        android:background="@color/grey"
-        android:layout_height="1dp" />
-
-    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/SITE_bottom"
         android:padding="8dp"
         android:layout_marginTop="8dp"
-        android:layout_below="@id/SITE_divider">
+        android:layout_below="@id/SITE_staffLayout">
 
         <TextView
             android:id="@+id/SITE_lastStatusDate"
@@ -200,10 +190,11 @@
         android:id="@+id/SITE_task"
         android:layout_below="@id/SITE_layoutStatus"
         style="@style/TextStyleGreySmall"
-        android:layout_marginTop="8dp"
-        android:layout_margin="8dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginTop="@dimen/mon_padding"
+        android:layout_margin="@dimen/mon_padding"
+        android:layout_marginRight="@dimen/mon_margin"
         android:layout_alignParentRight="true"
+        android:visibility="gone"
         android:text="Build a foundation of concrete and steel beams. Let it dry completely before attempting to start putting up the wall."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

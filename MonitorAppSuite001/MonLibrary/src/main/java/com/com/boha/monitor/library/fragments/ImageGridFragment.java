@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * A fragment representing a list of Items.
+ * A fragment representing a taskStatusList of Items.
  * <project/>
  * Large screen devices (such as tablets) are supported by replacing the ListView
  * with a GridView.

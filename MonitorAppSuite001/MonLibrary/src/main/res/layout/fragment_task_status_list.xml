@@ -27,6 +27,7 @@
         android:layout_below="@id/TASK_STAT_top"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/mon_padding"
+        android:background="@color/white"
         android:dividerHeight="@dimen/mon_divider"
         android:layout_height="match_parent"/>
     <TextView

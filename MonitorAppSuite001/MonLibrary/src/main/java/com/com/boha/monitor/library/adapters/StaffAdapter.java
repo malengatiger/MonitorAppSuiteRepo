@@ -53,7 +53,7 @@ public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
 
 
     static class ViewHolderItem {
-        TextView txtName, txtEmail, txtCellphone;
+        TextView txtName;
         ImageView imgHistory, imgEdit, imgCamera, imgInvite, photo, imgMessage;
         TextView txtNumber, txtCount, txtStaffType;
     }
@@ -66,26 +66,14 @@ public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
             item = new ViewHolderItem();
             item.txtName = (TextView) convertView
                     .findViewById(R.id.PSN_txtName);
-            item.txtEmail = (TextView) convertView
-                    .findViewById(R.id.PSN_txtEmail);
+
             item.txtCount = (TextView) convertView
                     .findViewById(R.id.PSN_txtCounter);
             item.txtNumber = (TextView) convertView
                     .findViewById(R.id.PSN_txtNum);
-            item.txtCellphone = (TextView) convertView
-                    .findViewById(R.id.PSN_txtCell);
+
             item.txtStaffType = (TextView) convertView
                     .findViewById(R.id.PSN_txtStaffType);
-//            item.imgHistory = (ImageView) convertView
-//                    .findViewById(R.id.PA_imgStaffHistory);
-            item.imgCamera = (ImageView) convertView
-                    .findViewById(R.id.PA_imgCamera);
-            item.imgEdit = (ImageView) convertView
-                    .findViewById(R.id.PA_imgEdit);
-            item.imgInvite = (ImageView) convertView
-                    .findViewById(R.id.PA_imgInvite);
-            item.imgMessage = (ImageView) convertView
-                    .findViewById(R.id.PA_imgMessage);
             item.photo = (ImageView) convertView
                     .findViewById(R.id.PSN_imagex);
 
@@ -96,13 +84,7 @@ public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
 
         final CompanyStaffDTO p = mList.get(position);
         item.txtName.setText(p.getFirstName() + " " + p.getLastName());
-        item.txtEmail.setText(p.getEmail());
         item.txtStaffType.setText(p.getCompanyStaffType().getCompanyStaffTypeName());
-        if (p.getCellphone() == null) {
-            item.txtCellphone.setVisibility(View.GONE);
-        } else {
-            item.txtCellphone.setText(p.getCellphone());
-        }
         item.txtNumber.setText("" + (position + 1));
         item.txtCount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,8 +99,6 @@ public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
             }
         });
         Statics.setRobotoFontLight(ctx, item.txtNumber);
-        Statics.setRobotoFontLight(ctx, item.txtEmail);
-        Statics.setRobotoFontLight(ctx, item.txtCellphone);
         Statics.setRobotoFontLight(ctx, item.txtName);
         Statics.setRobotoFontLight(ctx,item.txtStaffType);
 
@@ -127,6 +107,7 @@ public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
         sb.append("company").append(SharedUtil.getCompany(ctx).getCompanyID());
         sb.append("/companyStaff/t").append(p.getCompanyStaffID()).append(".jpg");
 
+        item.photo.setAlpha(1.0f);
         System.out.println(sb.toString());
         ImageLoader.getInstance().displayImage(sb.toString(),item.photo, new ImageLoadingListener() {
             @Override
@@ -136,8 +117,8 @@ public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
 
             @Override
             public void onLoadingFailed(String s, View view, FailReason failReason) {
-                item.photo.setImageDrawable(ctx.getResources().getDrawable(R.drawable.black_woman));
-                item.photo.setAlpha(0.25f);
+                item.photo.setImageDrawable(ctx.getResources().getDrawable(R.drawable.boy));
+                item.photo.setAlpha(0.4f);
             }
 
             @Override

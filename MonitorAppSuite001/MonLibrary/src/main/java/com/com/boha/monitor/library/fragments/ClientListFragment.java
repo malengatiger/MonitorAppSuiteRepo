@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * A fragment representing a list of Items.
+ * A fragment representing a taskStatusList of Items.
  * <project/>
  * Large screen devices (such as tablets) are supported by replacing the ListView
  * with a GridView.
@@ -116,7 +116,7 @@ public class ClientListFragment extends Fragment implements AbsListView.OnItemCl
 
     /**
      * The default content for this Fragment has a TextView that is shown when
-     * the list is empty. If you would like to change the text, call this method
+     * the taskStatusList is empty. If you would like to change the text, call this method
      * to supply the text it should use.
      */
     public void setEmptyText(CharSequence emptyText) {

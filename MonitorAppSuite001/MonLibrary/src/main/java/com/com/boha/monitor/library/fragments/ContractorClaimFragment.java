@@ -1,5 +1,7 @@
 package com.com.boha.monitor.library.fragments;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -75,6 +78,8 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
     TextView txtProject;
     ContractorClaimDTO contractorClaim;
     ProjectSiteSelectionAdapter adapter;
+    ImageView imgLogo;
+    ObjectAnimator objectAnimator;
     static final Locale locale = Locale.getDefault();
     static final SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd MMMM yyyy", locale);
 
@@ -304,6 +309,8 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
 
     private void setFields() {
         imgMore = (ImageView) view.findViewById(R.id.CCX_imgMore);
+        imgLogo = (ImageView) view.findViewById(R.id.CCX_logo);
+        imgLogo.setVisibility(View.GONE);
         txtCount = (TextView) view.findViewById(R.id.CCX_siteCount);
         txtProject = (TextView) view.findViewById(R.id.CCX_projectName);
         engineerSpinner = (Spinner) view.findViewById(R.id.CCX_engineerSpinner);
@@ -363,6 +370,40 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
         }
     }
 
+    public void rotateLogo() {
+        imgLogo.setVisibility(View.VISIBLE);
+        objectAnimator = ObjectAnimator.ofFloat(imgLogo, "rotation", 0.0f, 360f);
+        objectAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+        objectAnimator.setDuration(200);
+        objectAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        objectAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        objectAnimator.start();
+    }
+
+    public void stopRotatingLogo() {
+        imgLogo.setVisibility(View.GONE);
+        objectAnimator.cancel();
+    }
     View top, bottom;
 
     private void animateOn() {
@@ -376,12 +417,12 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
 //        final ObjectAnimator aTop = ObjectAnimator.ofFloat(top, "scaleY", 0, 1);
 //        final ObjectAnimator aBottom = ObjectAnimator.ofFloat(bottom, "scaleY", 0, 1);
 //
-//        List<Animator> list = new ArrayList<>();
-//        list.add(aTop);
-//        list.add(aBottom);
+//        List<Animator> taskStatusList = new ArrayList<>();
+//        taskStatusList.add(aTop);
+//        taskStatusList.add(aBottom);
 //
 //        AnimatorSet set = new AnimatorSet();
-//        set.playTogether(list);
+//        set.playTogether(taskStatusList);
 //
 //        set.start();
     }
@@ -401,12 +442,12 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
 //        final ObjectAnimator aTop = ObjectAnimator.ofFloat(top, "scaleY", 1, 0);
 //        final ObjectAnimator aBottom = ObjectAnimator.ofFloat(bottom, "scaleY", 1, 0);
 //
-//        List<Animator> list = new ArrayList<>();
-//        list.add(aTop);
-//        list.add(aBottom);
+//        List<Animator> taskStatusList = new ArrayList<>();
+//        taskStatusList.add(aTop);
+//        taskStatusList.add(aBottom);
 //
 //        AnimatorSet set = new AnimatorSet();
-//        set.playTogether(list);
+//        set.playTogether(taskStatusList);
 //        set.start();
 
     }
@@ -463,7 +504,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
 
     /**
      * The default content for this Fragment has a TextView that is shown when
-     * the list is empty. If you would like to change the text, call this method
+     * the taskStatusList is empty. If you would like to change the text, call this method
      * to supply the text it should use.
      */
     public void setEmptyText(CharSequence emptyText) {
