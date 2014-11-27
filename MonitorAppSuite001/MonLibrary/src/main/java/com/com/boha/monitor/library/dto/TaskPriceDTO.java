@@ -11,9 +11,18 @@ public class TaskPriceDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer taskPriceID;
     private Date startDate;
+    String taskName;
     private Date endDate;
     private double price;
     private Integer taskID, projectID;
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
 
     public Integer getProjectID() {
         return projectID;

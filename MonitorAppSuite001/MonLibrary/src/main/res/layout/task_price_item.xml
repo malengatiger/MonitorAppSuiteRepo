@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/PRICE_ITEM_top"
+        android:padding="@dimen/mon_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/PRICE_ITEM_number"
+            style="@style/GreyCircleSmall"
+            android:text="0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/PRICE_ITEM_name"
+            android:text="task name"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/mon_padding"
+            android:layout_toRightOf="@id/PRICE_ITEM_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/PRICE_ITEM_price"
+        android:text="70 000.00"
+        style="@style/Title1TextStyleBlue"
+        android:layout_below="@id/PRICE_ITEM_top"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

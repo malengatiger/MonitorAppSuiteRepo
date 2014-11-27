@@ -9,7 +9,6 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.boha.monitor.library"
         minSdkVersion 16
         targetSdkVersion 21
         versionCode 1
@@ -23,7 +22,6 @@ android {
     buildTypes {
         release {
 
-            runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

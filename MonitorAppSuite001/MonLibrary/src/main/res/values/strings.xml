@@ -269,5 +269,6 @@
     <string name="edit_staff">Edit Staff Details</string>
     <string name="date">Date</string>
     <string name="status_name">Status Name</string>
+    <string name="price_list">Price List</string>
 
 </resources>
