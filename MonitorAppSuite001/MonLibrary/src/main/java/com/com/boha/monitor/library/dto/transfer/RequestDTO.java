@@ -26,6 +26,7 @@ import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.ProjectStatusTypeDTO;
+import com.com.boha.monitor.library.dto.SubTaskDTO;
 import com.com.boha.monitor.library.dto.TaskDTO;
 import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.dto.TownshipDTO;
@@ -50,6 +51,7 @@ public class RequestDTO implements Serializable {
     private String email, pin, gcmRegistrationID;
     private Double latitude, longitude;
     private CompanyDTO company;
+    private SubTaskDTO subTask;
     private CompanyStaffDTO companyStaff;
     private ProjectDTO project;
     private EngineerDTO engineer;
@@ -107,7 +109,9 @@ public class RequestDTO implements Serializable {
             GET_ALL_PROJECT_IMAGES = 113,
             GET_SITE_IMAGES = 111,
             GET_TASK_IMAGES = 112,
-            GET_CONTRACTOR_CLAIMS_BY_PROJECT = 114;
+            GET_CONTRACTOR_CLAIMS_BY_PROJECT = 114,
+            GET_CONTRACTOR_CLAIMS_BY_COMPANY = 115,
+            GET_SITE_STATUS = 116;
     //login's
     public static final int
             LOGIN = 200,
@@ -122,7 +126,9 @@ public class RequestDTO implements Serializable {
             ADD_TOWNSHIP = 306,
             ADD_SITE_TASK = 307,
             ADD_BANK_DETAILS = 308,
-            ADD_BANK = 309;
+            ADD_BANK = 309,
+            CONFIRM_LOCATION = 310,
+            ADD_SUB_TASK = 311;
 
     //updates
     public static final int
@@ -162,6 +168,14 @@ public class RequestDTO implements Serializable {
 
     //
 
+
+    public SubTaskDTO getSubTask() {
+        return subTask;
+    }
+
+    public void setSubTask(SubTaskDTO subTask) {
+        this.subTask = subTask;
+    }
 
     public EngineerDTO getEngineer() {
         return engineer;

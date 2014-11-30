@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -18,22 +19,19 @@ import android.widget.ListPopupWindow;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.MonitorMapActivity;
 import com.com.boha.monitor.library.adapters.ProjectSiteAdapter;
 import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
-import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
-import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -77,9 +75,10 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
         ctx = getActivity();
         Bundle b = getArguments();
         if (b != null) {
-            Log.e(LOG, "++++ getting project object from getArguments");
+
             project = (ProjectDTO) b.getSerializable("project");
             lastIndex = b.getInt("index", 0);
+            Log.e(LOG, "++++ onCreateView getting project object from getArguments: status count: " + project.getStatusCount());
         }
         if (savedInstanceState != null) {
             lastIndex = savedInstanceState.getInt("lastIndex", 0);
@@ -135,22 +134,6 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
 
     private void setList() {
         txtCount.setText("" + project.getProjectSiteList().size());
-        for (ProjectSiteDTO site : project.getProjectSiteList()) {
-            List<ProjectSiteTaskStatusDTO> taskStatusList = new ArrayList<>();
-            for (ProjectSiteTaskDTO task : site.getProjectSiteTaskList()) {
-                taskStatusList.addAll(task.getProjectSiteTaskStatusList());
-            }
-            Collections.sort(taskStatusList);
-            site.setStatusCount(taskStatusList.size());
-            if (taskStatusList.size() > 0) {
-                ProjectSiteTaskStatusDTO x = taskStatusList.get(0);
-                site.setLastTaskStatus(x);
-                Log.e(LOG, "task: " + site.getProjectSiteName() + " status: " + taskStatusList.size() + " " + x.getTaskStatus().getTaskStatusName());
-            } else {
-                //Log.w(LOG,"########## no status found, site: " + site.getProjectSiteName());
-            }
-
-        }
 
         projectSiteAdapter = new ProjectSiteAdapter(ctx, R.layout.site_item,
                 project.getProjectSiteList());
@@ -164,9 +147,9 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
                     projectSite = project.getProjectSiteList().get(position);
                     mListener.onProjectSiteClicked(projectSite, position);
                     list = new ArrayList<>();
-                    list.add("Task List");
+                    list.add("Site Status");
                     list.add("Take Picture");
-                    list.add("Status Report");
+                    list.add("Get GPS Coordinates");
                     list.add("Site on Map");
                     list.add("Site Gallery");
                     list.add("Edit Site Details");
@@ -189,10 +172,12 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
                                     mListener.onCameraRequested(projectSite, lastIndex);
                                     break;
                                 case 2:
-                                    mListener.onStatusListRequested(projectSite,lastIndex);
+                                    mListener.onGPSRequested(projectSite,lastIndex);
                                     break;
                                 case 3:
-                                    ToastUtil.toast(ctx,ctx.getString(R.string.under_cons));
+                                    Intent i = new Intent(ctx, MonitorMapActivity.class);
+                                    i.putExtra("projectSite",projectSite);
+                                    startActivity(i);
                                     break;
                                 case 4:
                                     mListener.onGalleryRequested(projectSite,lastIndex);
@@ -396,6 +381,7 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
         public void onPhotoListUpdated(ProjectSiteDTO projectSite, int index);
 
         public void onStatusListRequested(ProjectSiteDTO projectSite, int index);
+        public void onGPSRequested(ProjectSiteDTO projectSite, int index);
     }
 
     ProjectDTO project;

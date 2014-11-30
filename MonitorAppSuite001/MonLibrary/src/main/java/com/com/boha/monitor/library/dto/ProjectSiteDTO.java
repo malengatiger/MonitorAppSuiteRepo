@@ -20,13 +20,12 @@ public class ProjectSiteDTO implements Serializable {
 
     public static final int ACTION_ADD = 1, ACTION_UPDATE = 2, ACTION_DELETE = 3;
     private static final long serialVersionUID = 1L;
-    private Integer projectSiteID;
+    private Integer projectSiteID, locationConfirmed;
     private String projectSiteName, standErfNumber, projectName;
     private Double latitude;
     private Double longitude;
     private Integer activeFlag;
     private Integer statusCount;
-    private ProjectSiteTaskStatusDTO lastTaskStatus;
     private Float accuracy;
     private boolean selected;
     private BeneficiaryDTO beneficiary;
@@ -34,9 +33,26 @@ public class ProjectSiteDTO implements Serializable {
     private List<ProjectSiteTaskDTO> projectSiteTaskList = new ArrayList<>();
     private Integer projectID;
     private List<PhotoUploadDTO> photoUploadList = new ArrayList<>();
+    private ProjectSiteTaskStatusDTO lastStatus;
 
     public boolean isSelected() {
         return selected;
+    }
+
+    public Integer getLocationConfirmed() {
+        return locationConfirmed;
+    }
+
+    public void setLocationConfirmed(Integer locationConfirmed) {
+        this.locationConfirmed = locationConfirmed;
+    }
+
+    public ProjectSiteTaskStatusDTO getLastStatus() {
+        return lastStatus;
+    }
+
+    public void setLastStatus(ProjectSiteTaskStatusDTO lastStatus) {
+        this.lastStatus = lastStatus;
     }
 
     public void setSelected(boolean selected) {
@@ -52,14 +68,6 @@ public class ProjectSiteDTO implements Serializable {
 
     public void setStatusCount(Integer statusCount) {
         this.statusCount = statusCount;
-    }
-
-    public ProjectSiteTaskStatusDTO getLastTaskStatus() {
-        return lastTaskStatus;
-    }
-
-    public void setLastTaskStatus(ProjectSiteTaskStatusDTO lastTaskStatus) {
-        this.lastTaskStatus = lastTaskStatus;
     }
 
     public BeneficiaryDTO getBeneficiary() {

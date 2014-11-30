@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
+import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.util.Statics;
 
 import java.text.DecimalFormat;
@@ -22,11 +23,9 @@ import java.util.Locale;
 public class ProjectSiteTaskAdapter extends ArrayAdapter<ProjectSiteTaskDTO> {
 
     public interface ProjectSiteTaskAdapterListener {
-        public void onCameraRequested(ProjectSiteTaskDTO siteTask);
-
-        public void onStatusRequested(ProjectSiteTaskDTO siteTask);
-
         public void onDeleteRequested(ProjectSiteTaskDTO siteTask);
+
+        public void onCameraRequested(ProjectSiteTaskDTO siteTask);
     }
 
     private final LayoutInflater mInflater;
@@ -41,7 +40,6 @@ public class ProjectSiteTaskAdapter extends ArrayAdapter<ProjectSiteTaskDTO> {
         super(context, textViewResourceId, list);
         this.mLayoutRes = textViewResourceId;
         mList = list;
-
         ctx = context;
         this.mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -64,9 +62,10 @@ public class ProjectSiteTaskAdapter extends ArrayAdapter<ProjectSiteTaskDTO> {
 
     static class ViewHolderItem {
         TextView txtName, txtStatus, txtStaff;
-        TextView txtNumber, txtLastDate, txtStatusCount;
-        ImageView imgStatus, imgDelete, imgCamera;
-        View actions;
+        TextView txtNumber, txtLastDate, txtStatusCount, txtColor;
+        ImageView imgDelete, imgCamera;
+        View cameraLayout;
+
     }
 
     @Override
@@ -75,7 +74,6 @@ public class ProjectSiteTaskAdapter extends ArrayAdapter<ProjectSiteTaskDTO> {
         if (convertView == null) {
             convertView = mInflater.inflate(mLayoutRes, null);
             item = new ViewHolderItem();
-            item.actions = convertView.findViewById(R.id.TSK_bottom);
             item.txtName = (TextView) convertView
                     .findViewById(R.id.TSK_taskName);
             item.txtNumber = (TextView) convertView
@@ -88,13 +86,15 @@ public class ProjectSiteTaskAdapter extends ArrayAdapter<ProjectSiteTaskDTO> {
                     .findViewById(R.id.TSK_lastStatus);
             item.txtStaff = (TextView) convertView
                     .findViewById(R.id.TSK_staff);
+            item.txtColor = (TextView) convertView
+                    .findViewById(R.id.TSK_statusColor);
 
             item.imgCamera = (ImageView) convertView
-                    .findViewById(R.id.TAC_imgCamera);
+                    .findViewById(R.id.TSK_camera);
             item.imgDelete = (ImageView) convertView
-                    .findViewById(R.id.TAC_imgRemove);
-            item.imgStatus = (ImageView) convertView
-                    .findViewById(R.id.TAC_imgStatus);
+                    .findViewById(R.id.TSK_delete);
+            item.cameraLayout = convertView.findViewById(R.id.TSK_cameraLayout);
+
 
             convertView.setTag(item);
         } else {
@@ -112,14 +112,32 @@ public class ProjectSiteTaskAdapter extends ArrayAdapter<ProjectSiteTaskDTO> {
                 item.txtLastDate.setVisibility(View.VISIBLE);
                 item.txtStatus.setVisibility(View.VISIBLE);
                 item.txtStaff.setVisibility(View.VISIBLE);
-                item.txtLastDate.setText(sdf.format(p.getProjectSiteTaskStatusList().get(0).getStatusDate()));
-                item.txtStatus.setText(p.getProjectSiteTaskStatusList().get(0).getTaskStatus().getTaskStatusName());
-                item.txtStaff.setText(p.getProjectSiteTaskStatusList().get(0).getStaffName());
+                List<ProjectSiteTaskStatusDTO> list = p.getProjectSiteTaskStatusList();
+
+                item.txtLastDate.setText(sdf.format(list.get(0).getStatusDate()));
+                item.txtStatus.setText(list.get(0).getTaskStatus().getTaskStatusName());
+                item.txtStaff.setText(list.get(0).getStaffName());
+                int color = list.get(0).getTaskStatus().getStatusColor();
+                switch (color) {
+                    case 1:
+                        item.txtColor.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_oval_small));
+                        break;
+                    case 2:
+                        item.txtColor.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_oval_small));
+                        break;
+                    case 3:
+                        item.txtColor.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval_small));
+                        break;
+                    default:
+                        item.txtColor.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgrey_oval_small));
+                        break;
+                }
 
             } else {
                 item.txtLastDate.setVisibility(View.GONE);
                 item.txtStatus.setVisibility(View.GONE);
                 item.txtStaff.setVisibility(View.GONE);
+                item.txtColor.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgrey_oval_small));
             }
         }
 
@@ -128,15 +146,13 @@ public class ProjectSiteTaskAdapter extends ArrayAdapter<ProjectSiteTaskDTO> {
         Statics.setRobotoFontBold(ctx, item.txtStatusCount);
         Statics.setRobotoFontRegular(ctx, item.txtLastDate);
 
+
         if (listener == null) {
-            item.actions.setVisibility(View.GONE);
+            item.imgCamera.setVisibility(View.GONE);
+            item.imgDelete.setVisibility(View.GONE);
         } else {
-            item.imgStatus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onStatusRequested(p);
-                }
-            });
+            item.imgCamera.setVisibility(View.VISIBLE);
+            item.imgDelete.setVisibility(View.VISIBLE);
             item.imgCamera.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -147,6 +163,12 @@ public class ProjectSiteTaskAdapter extends ArrayAdapter<ProjectSiteTaskDTO> {
                 @Override
                 public void onClick(View v) {
                     listener.onDeleteRequested(p);
+                }
+            });
+            item.cameraLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onCameraRequested(p);
                 }
             });
         }
@@ -164,6 +186,6 @@ public class ProjectSiteTaskAdapter extends ArrayAdapter<ProjectSiteTaskDTO> {
     }
 
     static final Locale x = Locale.getDefault();
-    static final SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm", x);
+    static final SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm", x);
     static final DecimalFormat df = new DecimalFormat("###,###,##0.0");
 }

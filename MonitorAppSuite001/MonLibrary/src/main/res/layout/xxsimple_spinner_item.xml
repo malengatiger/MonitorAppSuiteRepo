@@ -40,13 +40,13 @@
             style="@style/TextStyleSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="start"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:layout_centerVertical="true"
             android:text="Spinner item text here"
             android:layout_toRightOf="@id/image1"
             android:layout_marginLeft="@dimen/mon_padding"
             android:textStyle="normal"
-            android:singleLine="true"
             android:textColor="@color/black" />
     </RelativeLayout>
 </RelativeLayout>

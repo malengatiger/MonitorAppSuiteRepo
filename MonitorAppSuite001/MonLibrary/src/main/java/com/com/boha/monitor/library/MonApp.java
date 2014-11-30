@@ -10,9 +10,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.stream.HttpUrlGlideUrlLoader;
-import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.toolbox.BitmapLruCache;
-import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -20,7 +18,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
-import org.acra.ACRA;
 import org.acra.ReportField;
 import org.acra.annotation.ReportsCrashes;
 
@@ -50,12 +47,12 @@ public class MonApp extends Application {
         super.onCreate();
         Log.d(LOG, "############################ onCreate MonApp has started ---------------->");
 
-        ACRA.init(this);
-        CompanyDTO company = SharedUtil.getCompany(getApplicationContext());
-        if (company != null) {
-            ACRA.getErrorReporter().putCustomData("companyID", "" + company.getCompanyID());
-            ACRA.getErrorReporter().putCustomData("companyName", company.getCompanyName());
-        }
+//        ACRA.init(this);
+//        CompanyDTO company = SharedUtil.getCompany(getApplicationContext());
+//        if (company != null) {
+//            ACRA.getErrorReporter().putCustomData("companyID", "" + company.getCompanyID());
+//            ACRA.getErrorReporter().putCustomData("companyName", company.getCompanyName());
+//        }
 
         Log.e(LOG, "###### ACRA Crash Reporting has been initiated");
         initializeVolley(getApplicationContext());

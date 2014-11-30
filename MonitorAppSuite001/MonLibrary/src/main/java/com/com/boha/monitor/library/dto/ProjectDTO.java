@@ -24,6 +24,7 @@ public class ProjectDTO implements Serializable {
     private Integer projectID,siteCount, statusCount, invoiceCount,
             contractorClaimCount, beneficiaryCount,
             photoCount;
+    private ProjectSiteTaskStatusDTO lastStatus;
     private String projectName, clientName;
     private String description;
     private long dateRegistered;
@@ -44,6 +45,14 @@ public class ProjectDTO implements Serializable {
 
     public void setTaskPriceList(List<TaskPriceDTO> taskPriceList) {
         this.taskPriceList = taskPriceList;
+    }
+
+    public ProjectSiteTaskStatusDTO getLastStatus() {
+        return lastStatus;
+    }
+
+    public void setLastStatus(ProjectSiteTaskStatusDTO lastStatus) {
+        this.lastStatus = lastStatus;
     }
 
     public ProjectDTO(Integer projectID) {

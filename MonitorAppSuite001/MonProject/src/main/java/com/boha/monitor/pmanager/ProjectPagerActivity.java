@@ -31,7 +31,7 @@ import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.fragments.PageFragment;
 import com.com.boha.monitor.library.fragments.ProjectListFragment;
-import com.com.boha.monitor.library.fragments.TaskAssignmentFragment;
+import com.com.boha.monitor.library.fragments.SiteTaskAndStatusAssignmentFragment;
 import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
@@ -151,25 +151,26 @@ public class ProjectPagerActivity extends ActionBarActivity
                         }
                         response = r;
                         buildPages();
+                        CacheUtil.cacheData(ctx, r, CacheUtil.CACHE_DATA, new CacheUtil.CacheUtilListener() {
+                            @Override
+                            public void onFileDataDeserialized(ResponseDTO response) {
+
+                            }
+
+                            @Override
+                            public void onDataCached() {
+
+                            }
+
+                            @Override
+                            public void onError() {
+
+                            }
+                        });
                     }
                 });
 
-                CacheUtil.cacheData(ctx, r, CacheUtil.CACHE_DATA, new CacheUtil.CacheUtilListener() {
-                    @Override
-                    public void onFileDataDeserialized(ResponseDTO response) {
 
-                    }
-
-                    @Override
-                    public void onDataCached() {
-
-                    }
-
-                    @Override
-                    public void onError() {
-
-                    }
-                });
             }
 
             @Override
@@ -318,7 +319,7 @@ public class ProjectPagerActivity extends ActionBarActivity
 
         Intent i = new Intent(this, SitePagerActivity.class);
         i.putExtra("project", project);
-        i.putExtra("type", TaskAssignmentFragment.PROJECT_MANAGER);
+        i.putExtra("type", SiteTaskAndStatusAssignmentFragment.PROJECT_MANAGER);
         startActivity(i);
 
     }

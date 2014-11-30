@@ -212,7 +212,6 @@
     <style name="ButtonRed" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">12sp</item>
         <item name="android:background">@drawable/xred_dark_rounded_corners</item>
     </style>
 
@@ -397,6 +396,16 @@
         <item name="android:textColor">@color/absa_red</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/xyellow_oval</item>
+    </style>
+    <style name="OrangeCircle" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/xorange_oval</item>
+    </style>
+    <style name="OrangeCircleSmall" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/xorange_oval_small</item>
     </style>
     <style name="BlueCircle" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">@color/white</item>

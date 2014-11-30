@@ -12,16 +12,11 @@ import android.widget.TextView;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.ProjectDTO;
-import com.com.boha.monitor.library.dto.ProjectSiteDTO;
-import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
-import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.util.Statics;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -95,19 +90,10 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
         } else {
             item.txtDesc.setText(p.getDescription());
         }
-        int count = 0;
-        List<ProjectSiteTaskStatusDTO> statusList = new ArrayList<>();
-        for (ProjectSiteDTO ps: p.getProjectSiteList()) {
-            for (ProjectSiteTaskDTO task: ps.getProjectSiteTaskList()) {
-                count += task.getProjectSiteTaskStatusList().size();
-                statusList.addAll(task.getProjectSiteTaskStatusList());
-            }
-        }
-        Collections.sort(statusList);
-        item.txtStatusCount.setText("" + count);
-        if (!statusList.isEmpty()) {
-            ProjectSiteTaskStatusDTO status = statusList.get(0);
-            switch (status.getTaskStatus().getStatusColor()) {
+
+        item.txtStatusCount.setText("" + p.getStatusCount());
+        if (p.getLastStatus() != null) {
+            switch (p.getLastStatus().getTaskStatus().getStatusColor()) {
                 case TaskStatusDTO.STATUS_COLOR_RED:
                     item.txtSiteCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval));
                     item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval));

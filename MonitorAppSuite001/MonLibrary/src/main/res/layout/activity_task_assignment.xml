@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.com.boha.monitor.library.fragments.TaskAssignmentFragment"
+        android:name="com.com.boha.monitor.library.fragments.SiteTaskAndStatusAssignmentFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

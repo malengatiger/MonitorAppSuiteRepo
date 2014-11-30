@@ -22,19 +22,19 @@ import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
+import com.com.boha.monitor.library.fragments.GPSScanFragment;
 import com.com.boha.monitor.library.fragments.PageFragment;
 import com.com.boha.monitor.library.fragments.ProjectSiteListFragment;
-import com.com.boha.monitor.library.fragments.TaskAssignmentFragment;
-import com.com.boha.monitor.library.toolbox.BaseVolley;
+import com.com.boha.monitor.library.fragments.SiteTaskAndStatusAssignmentFragment;
 import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
-import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +42,10 @@ import java.util.List;
 public class SitePagerActivity extends ActionBarActivity implements com.google.android.gms.location.LocationListener,
         GooglePlayServicesClient.ConnectionCallbacks,
         GooglePlayServicesClient.OnConnectionFailedListener,
-        ProjectSiteListFragment.ProjectSiteListListener {
+        ProjectSiteListFragment.ProjectSiteListListener, GPSScanFragment.GPSScanFragmentListener {
 
     static final int NUM_ITEMS = 2;
+    GPSScanFragment gpsScanFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +57,11 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
         strip.setVisibility(View.GONE);
 
         project = (ProjectDTO) getIntent().getSerializableExtra("project");
-        type = getIntent().getIntExtra("type", TaskAssignmentFragment.OPERATIONS);
+        type = getIntent().getIntExtra("type", SiteTaskAndStatusAssignmentFragment.OPERATIONS);
 
         setTitle(ctx.getString(R.string.project_sites));
         getSupportActionBar().setSubtitle(project.getProjectName());
+        mLocationClient = new LocationClient(ctx,this,this);
     }
 
     private void getCachedProjectData() {
@@ -83,16 +85,16 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
 
             @Override
             public void onError() {
-
+                getProjectData();
             }
         });
     }
     private void getProjectData() {
+        Log.w(LOG,"################################ getProjectData");
         RequestDTO w = new RequestDTO(RequestDTO.GET_PROJECT_DATA);
         w.setProjectID(project.getProjectID());
 
         setRefreshActionButtonState(true);
-        projectSiteListFragment.rotateLogo();
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
@@ -100,24 +102,29 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
                     @Override
                     public void run() {
                         setRefreshActionButtonState(false);
-                        projectSiteListFragment.stopRotatingLogo();
                         if (!ErrorUtil.checkServerError(ctx,response)) {
                             return;
                         }
                         project = response.getProjectList().get(0);
-                        for (ProjectSiteDTO ps : project.getProjectSiteList()) {
-                            ps.setPhotoUploadList(new ArrayList<PhotoUploadDTO>());
-                            for (PhotoUploadDTO ph : response.getPhotoUploadList()) {
-                                if (ph.getProjectSiteID().intValue() == ps.getProjectSiteID().intValue()) {
-                                    if (ph.getThumbFlag() != null) {
-                                        ps.getPhotoUploadList().add(ph);
-                                    }
-                                }
+
+                        Log.i(LOG, "----- returned project data, photos: " + project.getPhotoUploadList().size());
+                        buildPages();
+                        CacheUtil.cacheProjectData(ctx,response,CacheUtil.CACHE_PROJECT,project.getProjectID(),new CacheUtil.CacheUtilListener() {
+                            @Override
+                            public void onFileDataDeserialized(ResponseDTO response) {
+
                             }
 
-                        }
-                        Log.i(LOG, "----- returned project data, photos: " + response.getPhotoUploadList().size());
-                        buildPages();
+                            @Override
+                            public void onDataCached() {
+
+                            }
+
+                            @Override
+                            public void onError() {
+
+                            }
+                        });
                     }
                 });
             }
@@ -127,8 +134,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.e(LOG, "--------------- websocket closed");
-                        getProjectData();
+                        Log.e(LOG, "getProjectData --------------- websocket closed");
                     }
                 });
             }
@@ -196,58 +202,23 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
 
     boolean isRefresh;
 
-    private void getData() {
-        RequestDTO w = new RequestDTO();
-        w.setRequestType(RequestDTO.GET_PROJECT_DATA);
-        w.setProjectID(project.getProjectID());
-        w.setCompanyID(SharedUtil.getCompany(ctx).getCompanyID());
-
-        if (!BaseVolley.checkNetworkOnDevice(ctx)) {
-            return;
+    private void getGPSCoordinates() {
+        if (!mLocationClient.isConnected()) {
+            mLocationClient.connect();
         }
-        setRefreshActionButtonState(true);
-        WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
-            @Override
-            public void onMessage(final ResponseDTO r) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        setRefreshActionButtonState(false);
-                        if (!ErrorUtil.checkServerError(ctx, r)) {
-                            return;
-                        }
-                        //TODO - use for refresh
-                    }
-                });
+        LocationRequest lr = new LocationRequest();
+        lr.setFastestInterval(1000);
+        lr.setInterval(5000);
+        lr.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-            }
-
-            @Override
-            public void onClose() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        setRefreshActionButtonState(false);
-                    }
-                });
-            }
-
-            @Override
-            public void onError(final String message) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        setRefreshActionButtonState(false);
-                        ToastUtil.errorToast(ctx, message);
-                    }
-                });
-            }
-        });
+        mLocationClient.requestLocationUpdates(lr,this);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        Log.i(LOG,
+                "#################### onStart");
         if (mLocationClient != null) {
             mLocationClient.connect();
             Log.i(LOG,
@@ -258,16 +229,18 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
 
     private void stopPeriodicUpdates() {
         mLocationClient.removeLocationUpdates(this);
+        Log.e(LOG,
+                "#################### stopPeriodicUpdates - removeLocationUpdates");
     }
 
     @Override
     public void onStop() {
-
+        Log.d(LOG,
+                "#################### onStop");
         if (mLocationClient != null) {
             if (mLocationClient.isConnected()) {
                 stopPeriodicUpdates();
             }
-
             // After disconnect() is called, the client is considered "dead".
             mLocationClient.disconnect();
             Log.e("map", "### onStop - locationClient disconnected: "
@@ -276,16 +249,21 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
         super.onStop();
     }
 
+    private Location location;
     @Override
     public void onLocationChanged(Location loc) {
+
         Log.e(LOG, "### .........Location changed, lat: "
                 + loc.getLatitude() + " lng: "
                 + loc.getLongitude()
-                + " -- getting nearby clubs");
+                + " -- accuracy: " + loc.getAccuracy());
+
         latitude = loc.getLatitude();
         longitude = loc.getLongitude();
         mCurrentLocation = loc;
-
+        if (gpsScanFragment != null) {
+            gpsScanFragment.setLocation(loc);
+        }
 
     }
 
@@ -297,10 +275,9 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
         if (mCurrentLocation != null) {
             latitude = mCurrentLocation.getLatitude();
             longitude = mCurrentLocation.getLongitude();
-            Log.e(LOG, "######### onConnected() - starting ServerTask");
             onLocationChanged(mCurrentLocation);
         } else {
-            Log.e("map", "$$$$ mCurrentLocation is NULL");
+            Log.e(LOG, "$$$$ mCurrentLocation is NULL");
         }
     }
 
@@ -335,8 +312,10 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
         data1.putInt("index",selectedSiteIndex);
         projectSiteListFragment.setArguments(data1);
 
+        gpsScanFragment = new GPSScanFragment();
 
         pageFragmentList.add(projectSiteListFragment);
+        pageFragmentList.add(gpsScanFragment);
 
         initializeAdapter();
 
@@ -446,6 +425,13 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
     }
 
     @Override
+    public void onGPSRequested(ProjectSiteDTO projectSite, int index) {
+        getGPSCoordinates();
+        gpsScanFragment.setProjectSite(projectSite);
+        mPager.setCurrentItem(1,true);
+    }
+
+    @Override
     public void onActivityResult(int reqCode, int res, Intent data) {
         switch (reqCode) {
             case SITE_PICTURE_REQUEST:
@@ -460,6 +446,16 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
                 break;
         }
 
+    }
+
+    @Override
+    public void onStartScanRequested() {
+        getGPSCoordinates();
+    }
+
+    @Override
+    public void onEndScanRequested() {
+        stopPeriodicUpdates();
     }
 
 

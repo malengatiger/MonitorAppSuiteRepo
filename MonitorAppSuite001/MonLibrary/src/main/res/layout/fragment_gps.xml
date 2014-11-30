@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="@dimen/mon_padding"
+    android:background="@color/grey"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/GPS_layout1"
+        android:layout_width="match_parent"
+        android:padding="@dimen/mon_padding"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/GPS_nameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/GPS_imgLogo"
+                android:src="@drawable/maono"
+                android:elevation="@dimen/mon_divider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/GPS_siteName"
+                android:text="Site Name"
+                style="@style/Title2TextStyleGreen"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/GPS_label"
+            android:layout_below="@id/GPS_nameLayout"
+            android:text="Desired GPS Accuracy"
+            style="@style/Title3TextStyleGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:layout_below="@id/GPS_label"
+            android:layout_width="match_parent"
+            android:padding="@dimen/mon_padding"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/GPS_desiredAccuracy"
+                android:text="10"
+                style="@style/Title2TextStyleGreen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <SeekBar
+                android:id="@+id/GPS_seekBar"
+                android:max="50"
+                android:layout_toRightOf="@id/GPS_desiredAccuracy"
+                android:layout_marginLeft="@dimen/mon_padding"
+                android:elevation="@dimen/mon_divider"
+                android:progress="10"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/GPS_layout2"
+        android:layout_below="@id/GPS_layout1"
+        android:layout_marginTop="@dimen/mon_divider"
+        android:background="@color/white"
+        android:padding="@dimen/mon_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/GPS_latitude"
+            android:text="00.0000000"
+            android:layout_marginRight="@dimen/mon_margin"
+            style="@style/Title2TextStyleBlue"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/mon_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/GPS_label2"
+            android:text="Latitude"
+            style="@style/Title3TextStyleGrey"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/GPS_latitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/GPS_layout3"
+        android:layout_below="@id/GPS_layout2"
+        android:background="@color/white"
+        android:padding="@dimen/mon_divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/GPS_longitude"
+            android:text="00.0000000"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/mon_margin"
+            android:layout_marginRight="@dimen/mon_margin"
+            style="@style/Title2TextStyleBlue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/GPS_label3"
+            android:text="Longitude"
+            android:layout_toLeftOf="@id/GPS_longitude"
+            android:layout_centerVertical="true"
+            style="@style/Title3TextStyleGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/GPS_layout4"
+        android:layout_below="@id/GPS_layout3"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/mon_margin"
+        android:padding="@dimen/mon_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/GPS_accLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/GPS_label4"
+                android:text="Accuracy"
+                style="@style/Title2TextStyleGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/GPS_label4a"
+                android:text="Measured in metres"
+                android:layout_below="@id/GPS_label4"
+                style="@style/TextStyleGreySmall"
+                android:layout_marginTop="@dimen/mon_padding"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/GPS_accuracy"
+            android:text="00.0"
+            android:layout_toRightOf="@id/GPS_accLayout"
+            android:layout_marginLeft="@dimen/mon_margin"
+            style="@style/Title1TextStyleRed"
+            android:textSize="52sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/GPS_layout4"
+        android:layout_width="match_parent"
+        android:padding="@dimen/mon_padding"
+        android:background="@color/white"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="@dimen/mon_margin"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/GPS_btnStop"
+            android:text="Stop Scanning"
+            style="@style/ButtonNavyBlue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/GPS_btnSave"
+            android:layout_below="@id/GPS_btnStop"
+            android:layout_marginTop="@dimen/mon_padding"
+            android:text="Save GPS Coordinates"
+            style="@style/ButtonRed"
+            android:layout_marginBottom="@dimen/mon_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+</RelativeLayout>

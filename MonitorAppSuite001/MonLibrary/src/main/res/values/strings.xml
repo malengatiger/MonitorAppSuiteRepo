@@ -10,7 +10,6 @@
         <item>Tasks</item>
         <item>Engineers</item>
         <item>Beneficiaries</item>
-
     </string-array>
 
     <string name="pay_mobile">Payment via Mobile</string>
@@ -270,5 +269,19 @@
     <string name="date">Date</string>
     <string name="status_name">Status Name</string>
     <string name="price_list">Price List</string>
+    <string name="task_status_count">Task Status Count</string>
+    <string name="task_already">Task already selected, ignored.</string>
+    <string name="add_task">Select Task to add</string>
+    <string name="pic_reminder">Please take pictures to support the status selected.\n\nDo you want to start taking pictures now?</string>
+    <string name="reminder">Reminder</string>
+    <string name="current_status">Current Task Status</string>
+    <string name="total_updates">Total Status Update</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="start_scan">Start GPS Scan</string>
+    <string name="stop_scan">Stop GPS Scan</string>
+    <string name="confirm_gps">Confirm GPS Location</string>
+    <string name="site_map">Site Location Map</string>
+    <string name="project_map">Project Site Map</string>
+    <string name="site_gallery">Site Update Gallery</string>
 
 </resources>

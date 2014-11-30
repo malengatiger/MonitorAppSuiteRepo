@@ -7,94 +7,59 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/AST_top"
+        android:id="@+id/AST_handle"
         android:padding="@dimen/mon_padding"
+        android:background="@color/beige_pale"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/AST_title"
-            style="@style/Title2TextStyleGrey"
-            android:text="@string/site_tasks"
-            android:layout_centerHorizontal="true"
+            android:id="@+id/AST_title2"
+            style="@style/Title2TextStyleBlack"
+            android:text="@string/site_status"
+            android:layout_marginLeft="@dimen/mon_wider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/AST_siteName"
-            style="@style/Title2TextStyleBlue"
-            android:layout_marginTop="5dp"
-            android:text="Project Site Name"
-            android:layout_below="@id/AST_title"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Spinner
-            android:id="@+id/AST_spinner"
-            android:layout_below="@id/AST_siteName"
-            android:layout_marginTop="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:id="@+id/AST_close"
-            android:src="@android:drawable/ic_delete"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <RelativeLayout
-            android:layout_below="@id/AST_spinner"
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_margin="8dp"
-            android:layout_height="wrap_content">
-
-
-            <Button
-                android:id="@+id/AST_btnAssign"
-                style="@style/ButtonSave"
-                android:text="@string/save"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-
-        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/AST_handle"
-        android:layout_below="@id/AST_top"
+        android:id="@+id/AST_middle"
+        android:layout_below="@id/AST_handle"
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="1dp"></RelativeLayout>
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/traffic_lights" />
+
+    </RelativeLayout>
 
     <RelativeLayout
-        android:layout_below="@id/AST_handle"
+        android:layout_below="@id/AST_middle"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ListView
             android:id="@+id/AST_list"
 
-            android:dividerHeight="8dp"
-            android:layout_marginTop="16dp"
+            android:dividerHeight="@dimen/mon_divider"
+            android:layout_marginTop="@dimen/mon_padding"
             android:background="@color/white"
-            android:layout_marginRight="8dp"
-
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" />
 
-        </ListView>
-        <TextView
-            android:id="@+id/AST_number"
-            style="@style/BlackCircle"
-            android:text="99"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+
     </RelativeLayout>
 
-
+    <TextView
+        android:id="@+id/AST_number"
+        style="@style/BlackCircle"
+        android:text="99"
+        android:layout_marginTop="@dimen/mon_wide"
+        android:layout_marginLeft="@dimen/mon_margin"
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
 </RelativeLayout>

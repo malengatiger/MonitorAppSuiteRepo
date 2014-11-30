@@ -13,11 +13,16 @@ import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
-import com.com.boha.monitor.library.fragments.TaskAssignmentFragment;
+import com.com.boha.monitor.library.dto.transfer.RequestDTO;
+import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
+import com.com.boha.monitor.library.fragments.SiteTaskAndStatusAssignmentFragment;
+import com.com.boha.monitor.library.util.ErrorUtil;
+import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
+import com.com.boha.monitor.library.util.WebSocketUtil;
 
 public class TaskAssignmentActivity extends ActionBarActivity implements
-        TaskAssignmentFragment.ProjectSiteTaskListener{
+        SiteTaskAndStatusAssignmentFragment.ProjectSiteTaskListener{
 
     Context ctx;
     ProjectSiteDTO site;
@@ -28,16 +33,46 @@ public class TaskAssignmentActivity extends ActionBarActivity implements
         ctx = getApplicationContext();
          site = (ProjectSiteDTO)getIntent()
                 .getSerializableExtra("projectSite");
-        int type = getIntent().getIntExtra("type", TaskAssignmentFragment.OPERATIONS);
+        int type = getIntent().getIntExtra("type", SiteTaskAndStatusAssignmentFragment.OPERATIONS);
 
-         taf = (TaskAssignmentFragment)
+         taf = (SiteTaskAndStatusAssignmentFragment)
                 getSupportFragmentManager().findFragmentById(R.id.fragment);
         taf.setProjectSite(site, type);
         setTitle(site.getProjectSiteName());
         getSupportActionBar().setSubtitle(site.getProjectName());
+        getSiteStatus();
     }
 
-    TaskAssignmentFragment taf;
+    private void getSiteStatus() {
+        RequestDTO w = new RequestDTO(RequestDTO.GET_SITE_STATUS);
+        w.setProjectSiteID(site.getProjectSiteID());
+
+        WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
+            @Override
+            public void onMessage(final ResponseDTO response) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!ErrorUtil.checkServerError(ctx,response)) {
+                            return;
+                        }
+                        taf.setProjectSiteTaskList(response.getProjectSiteTaskList());
+                    }
+                });
+            }
+
+            @Override
+            public void onClose() {
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
+    }
+    SiteTaskAndStatusAssignmentFragment taf;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.task_assignment, menu);
@@ -49,7 +84,7 @@ public class TaskAssignmentActivity extends ActionBarActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_add) {
-            taf.openTaskPane();
+            taf.popupTaskList();
             return true;
         }
         if (id == R.id.action_help) {

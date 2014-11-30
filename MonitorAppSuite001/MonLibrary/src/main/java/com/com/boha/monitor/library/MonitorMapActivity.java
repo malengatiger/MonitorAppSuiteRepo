@@ -8,7 +8,7 @@ import android.content.IntentSender;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +25,6 @@ import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.TaskStatusDTO;
-import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.CacheUtil;
@@ -56,7 +55,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class MonitorMapActivity extends FragmentActivity
+public class MonitorMapActivity extends ActionBarActivity
         implements LocationListener,
         GooglePlayServicesClient.ConnectionCallbacks,
         GooglePlayServicesClient.OnConnectionFailedListener {
@@ -107,10 +106,13 @@ public class MonitorMapActivity extends FragmentActivity
         Statics.setRobotoFontBold(ctx,text);
 
         topLayout = findViewById(R.id.top);
+
+        if (projectSite != null) {
+            txtCount.setText("1");
+            text.setText(getString(R.string.site_map));
+        }
         if (project != null) {
-            text.setText(project.getProjectName());
-        } else {
-            text.setText("");
+            text.setText(getString(R.string.project_map));
         }
         googleMap = mapFragment.getMap();
         if (googleMap == null) {
@@ -156,7 +158,7 @@ public class MonitorMapActivity extends FragmentActivity
             }
         });
         if (projectSite != null) {
-            setOneMarker(projectSite.getPhotoUploadList().get(index));
+            setOneMarker();
         }
         if (project != null) {
             getCachedData();
@@ -289,21 +291,20 @@ public class MonitorMapActivity extends FragmentActivity
         return s;
     }
 
-    private void setOneMarker(PhotoUploadDTO dto) {
-        LatLng pnt = new LatLng(dto.getLatitude(), dto.getLongitude());
+    private void setOneMarker() {
+        LatLng pnt = new LatLng(projectSite.getLatitude(), projectSite.getLongitude());
         BitmapDescriptor desc = BitmapDescriptorFactory.fromResource(R.drawable.number_1);
         Marker m =
                 googleMap.addMarker(new MarkerOptions()
                         .title(projectSite.getProjectName())
                         .icon(desc)
-                        .snippet(projectSite.getProjectSiteName() +
-                                "\n" + sdf.format(dto.getDateTaken()))
+                        .snippet(projectSite.getProjectSiteName())
                         .position(pnt));
         markers.add(m);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pnt, 1.0f));
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(12.0f));
         setTitle(projectSite.getProjectName());
-        getActionBar().setSubtitle(projectSite.getProjectSiteName());
+        getSupportActionBar().setSubtitle(projectSite.getProjectSiteName());
     }
 
     private void showDirectionsDialog(final double lat, final double lng) {
@@ -331,6 +332,11 @@ public class MonitorMapActivity extends FragmentActivity
         list = new ArrayList<>();
         list.add("Directions");
         list.add("Status Report");
+        if (projectSite != null) {
+            if (projectSite.getLocationConfirmed() == null) {
+                list.add(getString(R.string.confirm_gps));
+            }
+        }
 
         actionsWindow = new ListPopupWindow(this);
         actionsWindow.setAdapter(new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item, list,
@@ -355,6 +361,9 @@ public class MonitorMapActivity extends FragmentActivity
                     case 1:
 
                         break;
+                    case 2:
+                        confirmLocation();
+                        break;
 
                 }
                 actionsWindow.dismiss();
@@ -363,6 +372,35 @@ public class MonitorMapActivity extends FragmentActivity
 
         actionsWindow.show();
 
+    }
+    private void confirmLocation() {
+        RequestDTO w = new RequestDTO(RequestDTO.CONFIRM_LOCATION);
+        w.setProjectSiteID(projectSite.getProjectSiteID());
+
+        WebSocketUtil.sendRequest(ctx,Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
+            @Override
+            public void onMessage(final ResponseDTO response) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ErrorUtil.checkServerError(ctx,response);
+                        Log.d(LOG, "########## location confirmed, status code: " + response.getStatusCode());
+                        projectSite.setLocationConfirmed(1);
+                        ToastUtil.toast(ctx,"Site location has been confirmed");
+                    }
+                });
+            }
+
+            @Override
+            public void onClose() {
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
     }
     private void startDirectionsMap(double lat, double lng) {
         Log.i(LOG, "startDirectionsMap ..........");

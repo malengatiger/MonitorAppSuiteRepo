@@ -15,7 +15,7 @@
         android:id="@+id/TE_imgDelete"
         android:src="@android:drawable/ic_delete"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="52dp"
         android:layout_marginRight="@dimen/mon_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -29,6 +29,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <EditText
+        android:id="@+id/TE_editTaskPrice"
+        android:layout_marginTop="@dimen/mon_padding"
+        android:layout_below="@id/TE_editTaskName"
+        android:hint="99 000 000.00"
+        style="@style/Title1TextStyleBlue"
+        android:layout_marginLeft="@dimen/mon_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <RelativeLayout
         android:id="@+id/TE_numLayout"
         android:layout_marginTop="@dimen/mon_padding"
@@ -40,8 +50,7 @@
         <NumberPicker
             android:id="@+id/TE_numberPicker"
             android:layout_alignParentRight="true"
-
-            android:layout_marginRight="48dp"
+            android:layout_marginRight="@dimen/mon_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
@@ -57,7 +66,7 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_below="@id/TE_numLayout"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/mon_margin"
         android:padding="@dimen/mon_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -72,14 +81,14 @@
             android:id="@+id/TE_btnSave"
             android:text="@string/save"
             android:layout_below="@id/TE_btnCancel"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/mon_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         </RelativeLayout>
     <ProgressBar
         android:id="@+id/TE_progress"
-        android:layout_marginTop="88dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="@dimen/mon_margin"
         style="@android:style/Widget.ProgressBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

@@ -1,97 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:padding="0dp"
-    android:layout_height="wrap_content">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/card_view"
+    android:elevation="@dimen/mon_padding"
+    tools:cardCornerRadius="16dp">
 
     <RelativeLayout
-        android:id="@+id/TSK_top"
-        android:padding="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/TSK_number"
-            style="@style/GreyCircleSmall"
-            android:text="01"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:id="@+id/TSK_topA"
+            android:layout_margin="@dimen/mon_divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/TSK_taskName"
-            style="@style/TextStyle"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/TSK_number"
-            android:layout_marginLeft="8dp"
-            android:text="Task name here and over there. truly, James?"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/TSK_delete"
+                android:src="@android:drawable/ic_delete"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/TSK_top"
+            android:layout_below="@id/TSK_topA"
+            android:padding="@dimen/mon_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/TSK_number"
+                style="@style/GreyCircleSmall"
+                android:text="01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/TSK_taskName"
+                style="@style/TextStyle"
+                android:layout_toRightOf="@id/TSK_number"
+                android:layout_marginLeft="@dimen/mon_padding"
+                android:layout_centerVertical="true"
+                android:text="Task name here and over there. truly, James?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/TSK_statusLayout"
+            android:layout_below="@id/TSK_top"
+            android:layout_marginLeft="@dimen/mon_margin"
+            android:layout_marginTop="@dimen/mon_padding"
+            android:layout_marginRight="@dimen/mon_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/TSK_statusCount"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/mon_margin"
+                style="@style/Title1TextStyleBlue"
+                android:text="0"
+                android:textSize="48sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/TSK_label"
+                style="@style/TextStyleGrey"
+                android:layout_toLeftOf="@id/TSK_statusCount"
+                android:text="@string/task_status_count"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/mon_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/TSK_statusLayout2"
+            android:layout_below="@id/TSK_statusLayout"
+            android:layout_marginLeft="@dimen/mon_margin"
+            android:layout_marginTop="@dimen/mon_padding"
+            android:layout_marginRight="@dimen/mon_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/TSK_statusColor"
+                android:layout_marginLeft="@dimen/mon_margin"
+                style="@style/GreyCircleSmall"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/mon_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/TSK_label2"
+                style="@style/TextStyleGrey"
+                android:layout_toLeftOf="@id/TSK_statusColor"
+                android:text="@string/current_status"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:padding="@dimen/mon_margin"
+            android:layout_marginLeft="@dimen/mon_margin"
+            android:layout_below="@id/TSK_statusLayout2"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/TSK_lastStatusDate"
+                style="@style/TextStyleGreen"
+                android:layout_marginTop="8dp"
+                android:text="5 November 1956 10:33"
+                android:layout_marginLeft="@dimen/mon_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/TSK_lastStatus"
+                style="@style/TextStyleSmall"
+                android:layout_marginTop="4dp"
+                android:text="Last status on this date"
+                android:layout_below="@id/TSK_lastStatusDate"
+                android:layout_alignLeft="@id/TSK_lastStatusDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RelativeLayout
+                android:layout_below="@id/TSK_lastStatus"
+                android:layout_marginLeft="@dimen/mon_padding"
+                android:layout_marginTop="@dimen/mon_padding"
+                android:padding="@dimen/mon_padding"
+                android:id="@+id/TSK_cameraLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/TSK_staff"
+                    style="@style/TextStyleBoldBlueSmall"
+
+                    android:text="Jm Coetzee"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/TSK_camera"
+                    android:src="@drawable/camera_a32"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/mon_padding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </RelativeLayout>
     </RelativeLayout>
+</android.support.v7.widget.CardView>
 
-    <RelativeLayout
-        android:id="@+id/TSK_statusLayout"
-        android:layout_below="@id/TSK_top"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/TSK_label"
-            style="@style/TextStyleGrey"
-            android:text="@string/task_status"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/TSK_statusCount"
-            android:layout_toRightOf="@id/TSK_label"
-            android:layout_marginLeft="16dp"
-            style="@style/Title1TextStyleBlue"
-            android:text="0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/TSK_lastStatusDate"
-            style="@style/TextStyleGreen"
-            android:layout_marginTop="8dp"
-            android:text="5 November 1956 10:33"
-            android:layout_toRightOf="@id/TSK_statusCount"
-            android:layout_marginLeft="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/TSK_lastStatus"
-            style="@style/TextStyleSmall"
-            android:layout_marginTop="4dp"
-            android:text="Last status on this date"
-            android:layout_below="@id/TSK_lastStatusDate"
-            android:layout_alignLeft="@id/TSK_lastStatusDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/TSK_staff"
-            style="@style/TextStyleBoldBlueSmall"
-            android:layout_marginTop="4dp"
-            android:text="Jm Coetzee"
-            android:layout_below="@id/TSK_lastStatus"
-            android:layout_alignLeft="@id/TSK_lastStatusDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/TSK_bottom"
-        android:layout_below="@id/TSK_statusLayout"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include layout="@layout/task_actions" />
-    </RelativeLayout>
-
-
-</RelativeLayout>

@@ -51,8 +51,8 @@ import com.com.boha.monitor.library.fragments.EngineerListFragment;
 import com.com.boha.monitor.library.fragments.PageFragment;
 import com.com.boha.monitor.library.fragments.ProjectListFragment;
 import com.com.boha.monitor.library.fragments.ProjectStatusTypeListFragment;
+import com.com.boha.monitor.library.fragments.SiteTaskAndStatusAssignmentFragment;
 import com.com.boha.monitor.library.fragments.StaffListFragment;
-import com.com.boha.monitor.library.fragments.TaskAssignmentFragment;
 import com.com.boha.monitor.library.fragments.TaskListFragment;
 import com.com.boha.monitor.library.fragments.TaskStatusListFragment;
 import com.com.boha.monitor.library.util.CacheUtil;
@@ -595,7 +595,7 @@ public class OperationsPagerActivity extends ActionBarActivity
 
         Intent i = new Intent(this, SitePagerActivity.class);
         i.putExtra("project",project);
-        i.putExtra("type", TaskAssignmentFragment.OPERATIONS);
+        i.putExtra("type", SiteTaskAndStatusAssignmentFragment.OPERATIONS);
         startActivity(i);
 
     }

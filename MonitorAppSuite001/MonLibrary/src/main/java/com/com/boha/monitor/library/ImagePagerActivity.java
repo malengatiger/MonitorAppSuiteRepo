@@ -199,7 +199,6 @@ public class ImagePagerActivity extends ActionBarActivity implements ImageGridFr
                         }
                         response = r;
                         buildPages();
-                        //setTitle(response.getCompany().getCompanyName());
                         if (isRefresh) {
                             isRefresh = false;
                             mPager.setCurrentItem(currentPageIndex);
@@ -246,7 +245,8 @@ public class ImagePagerActivity extends ActionBarActivity implements ImageGridFr
                 imageGridFragment.setArguments(data1);
                 break;
             case SITE:
-                setTitle(projectSite.getProjectSiteName());
+                setTitle(getString(R.string.site_gallery));
+                getSupportActionBar().setSubtitle(projectSite.getProjectName());
                 Bundle data2 = new Bundle();
                 data2.putSerializable("projectSite", projectSite);
                 imageGridFragment.setArguments(data2);

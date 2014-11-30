@@ -1,6 +1,8 @@
 package com.com.boha.monitor.library.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,8 @@ import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.util.Statics;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -46,7 +50,7 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
     static class ViewHolderItem {
         TextView txtName, txtLastStatus, txtTaskName;
         TextView txtTaskCount, txtStatusCount;
-        TextView txtNumber, txtDate, txtStatusColor;
+        TextView txtNumber, txtDate;
         ImageView imgHero;
         View statLayout1, statLayout2;
     }
@@ -54,7 +58,7 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         random = new Random(System.currentTimeMillis());
-        ViewHolderItem item;
+        final ViewHolderItem item;
         if (convertView == null) {
             convertView = mInflater.inflate(mLayoutRes, null);
             item = new ViewHolderItem();
@@ -64,9 +68,7 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
                     .findViewById(R.id.SITE_image);
             item.txtTaskCount = (TextView) convertView
                     .findViewById(R.id.SITE_txtTaskCount);
-            item.txtStatusColor = (TextView) convertView
-                    .findViewById(R.id.SITE_statusColor);
-            item.txtTaskName = (TextView) convertView
+                        item.txtTaskName = (TextView) convertView
                     .findViewById(R.id.SITE_task);
             item.statLayout1 = convertView.findViewById(R.id.SITE_bottom);
             item.statLayout2 = convertView.findViewById(R.id.SITE_layoutStatus);
@@ -90,35 +92,54 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
         item.txtStatusCount.setText("" + p.getStatusCount());
         Statics.setRobotoFontLight(ctx,item.txtName);
         if (p.getPhotoUploadList() != null && !p.getPhotoUploadList().isEmpty()) {
-
-            String uri = Statics.IMAGE_URL + p.getPhotoUploadList().get(0).getUri();
+            Log.i("ProjectSiteAdapter","+++++++++ photos found for site: " + p.getPhotoUploadList().size());
+            final String uri = Statics.IMAGE_URL + p.getPhotoUploadList().get(0).getUri();
             item.imgHero.setVisibility(View.VISIBLE);
-            ImageLoader.getInstance().displayImage(uri,item.imgHero);
+            //
+            ImageLoader.getInstance().displayImage(uri, item.imgHero, new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String s, View view) {
 
+                }
+
+                @Override
+                public void onLoadingFailed(String s, View view, FailReason failReason) {
+                    Log.e("ProjectSiteAdapter","-------- onLoadingFailed, failReason: " + failReason.toString());
+                    item.imgHero.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                }
+
+                @Override
+                public void onLoadingCancelled(String s, View view) {
+
+                }
+            });
         } else {
-            item.imgHero.setImageDrawable(ctx.getResources().getDrawable(R.drawable.house));
+            //item.imgHero.setImageDrawable(ctx.getResources().getDrawable(R.drawable.house));
+            //System.out.println("----------------> used default photo" );
+            item.imgHero.setVisibility(View.GONE);
         }
-        if (p.getLastTaskStatus() != null) {
-            item.txtLastStatus.setText(p.getLastTaskStatus().getTaskStatus().getTaskStatusName());
-            item.txtTaskName.setText(p.getLastTaskStatus().getTask().getTaskName());
-            item.txtDate.setText(sdf.format(p.getLastTaskStatus().getStatusDate()));
+        if (p.getLastStatus() != null) {
+            item.txtLastStatus.setText(p.getLastStatus().getTaskStatus().getTaskStatusName());
+            item.txtTaskName.setText(p.getLastStatus().getTask().getTaskName());
+            item.txtDate.setText(sdf.format(p.getLastStatus().getStatusDate()));
             item.statLayout1.setVisibility(View.VISIBLE);
             item.statLayout2.setVisibility(View.VISIBLE);
-            switch (p.getLastTaskStatus().getTaskStatus().getStatusColor()) {
+            switch (p.getLastStatus().getTaskStatus().getStatusColor()) {
                 case TaskStatusDTO.STATUS_COLOR_GREEN:
-                    item.txtStatusColor.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_box));
-                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
-                    item.txtTaskCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
+                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_oval_small));
+                    item.txtTaskCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_oval_small));
                     break;
                 case TaskStatusDTO.STATUS_COLOR_YELLOW:
-                    item.txtStatusColor.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_box));
-                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_oval));
-                    item.txtTaskCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_oval));
+                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_oval_small));
+                    item.txtTaskCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_oval_small));
                     break;
                 case TaskStatusDTO.STATUS_COLOR_RED:
-                    item.txtStatusColor.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_box));
-                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval));
-                    item.txtTaskCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval));
+                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval_small));
+                    item.txtTaskCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval_small));
                     break;
             }
 
@@ -126,24 +147,15 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
             item.statLayout1.setVisibility(View.GONE);
             item.statLayout2.setVisibility(View.GONE);
         }
-//        if (p.getPhotoUploadList() != null) {
-//            int count = 0;
-//            for (PhotoUploadDTO px : p.getPhotoUploadList()) {
-//                if (px.getThumbFlag() != null) {
-//                    count++;
-//                }
-//            }
-//            item.txtImageCount.setText("" + count);
-//        } else
-//            item.txtImageCount.setText("0");
+
         if (p.getProjectSiteTaskList() == null) {
             item.txtTaskCount.setText("0");
         } else {
             item.txtTaskCount.setText("" + p.getProjectSiteTaskList().size());
         }
 
-        if (p.getLastTaskStatus() != null) {
-            item.txtDate.setText(sdf.format(p.getLastTaskStatus().getStatusDate()));
+        if (p.getLastStatus() != null) {
+            item.txtDate.setText(sdf.format(p.getLastStatus().getStatusDate()));
             item.txtDate.setVisibility(View.VISIBLE);
         }
 

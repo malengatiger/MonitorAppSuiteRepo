@@ -117,7 +117,7 @@ public class ImageGridFragment extends Fragment implements PageFragment {
         if (projectSite != null) {
             txtTitle.setText(projectSite.getProjectName());
             txtSubTitle.setText(projectSite.getProjectSiteName());
-            if (projectSite.getPhotoUploadList() != null) {
+            if (projectSite.getPhotoUploadList() != null && !projectSite.getPhotoUploadList().isEmpty()) {
                 txtCount.setText("" + (projectSite.getPhotoUploadList().size()));
                 Date end = projectSite.getPhotoUploadList().get(0).getDateTaken();
                 int size = projectSite.getPhotoUploadList().size();

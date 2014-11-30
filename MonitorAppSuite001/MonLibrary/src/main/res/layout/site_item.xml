@@ -1,204 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:padding="0dp"
-    android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/SITE_heroImage"
-        android:src="@drawable/under_construction"
-        android:scaleType="centerCrop"
-        android:layout_width="match_parent"
-        android:layout_height="140dp" />
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/card_view"
+    android:elevation="@dimen/mon_padding"
+    tools:cardCornerRadius="16dp">
 
     <RelativeLayout
-        android:id="@+id/SITE_top"
-        android:padding="8dp"
-        android:layout_below="@id/SITE_heroImage"
         android:layout_width="match_parent"
+        android:padding="0dp"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/SITE_image"
-            android:layout_centerVertical="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:text="00"
-            style="@style/GreyCircleSmall" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt"
-            android:id="@+id/SITE_txtName"
-            style="@style/Title2TextStyleBlack"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/mon_padding"
-            android:layout_toRightOf="@+id/SITE_image" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/SITE_descLayout"
-        android:visibility="gone"
-        android:layout_alignLeft="@id/SITE_top"
-        android:layout_below="@id/SITE_top">
-
-        <TextView
-            android:id="@+id/SITE_txtDesc"
-            style="@style/TextStyle"
-            android:text="A description"
-            android:padding="5dp"
+        <ImageView
+            android:id="@+id/SITE_heroImage"
+            android:src="@drawable/under_construction"
+            android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
+            android:layout_height="140dp" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/SITE_layout"
-        android:layout_marginRight="48dp"
-        android:layout_alignLeft="@id/SITE_top"
-        android:layout_below="@id/SITE_top">
+        <RelativeLayout
+            android:id="@+id/SITE_top"
+            android:padding="8dp"
+            android:layout_below="@id/SITE_heroImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/SITE_image"
+                android:layout_centerVertical="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="00"
+                style="@style/GreyCircleSmall" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt"
+                android:id="@+id/SITE_txtName"
+                style="@style/Title2TextStyleBlack"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/mon_padding"
+                android:layout_toRightOf="@+id/SITE_image" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="00"
-            android:id="@+id/SITE_txtTaskCount"
-            style="@style/BlackCircleSmall"
-            android:layout_marginRight="4dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true" />
+            android:id="@+id/SITE_descLayout"
+            android:visibility="gone"
+            android:layout_alignLeft="@id/SITE_top"
+            android:layout_below="@id/SITE_top">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/SITE_txtDesc"
+                style="@style/TextStyle"
+                android:text="A description"
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/site_tasks"
-            android:id="@+id/SITE_txtlabel"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/SITE_txtTaskCount"
-            android:layout_marginRight="20dp"
-            style="@style/TextStyleGrey"
-            android:textSize="16sp"
+            android:id="@+id/SITE_layout"
+            android:layout_marginRight="48dp"
+            android:layout_alignLeft="@id/SITE_top"
+            android:layout_below="@id/SITE_top">
 
-            android:layout_marginLeft="10dp" />
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00"
+                android:id="@+id/SITE_txtTaskCount"
+                style="@style/BlackCircleSmall"
+                android:layout_marginRight="4dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/SITE_staffLayout"
-        android:layout_marginTop="@dimen/mon_divider"
-        android:layout_marginRight="48dp"
-        android:layout_marginBottom="@dimen/mon_margin"
-        android:layout_alignLeft="@id/SITE_layout"
-        android:layout_below="@id/SITE_layout">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/site_tasks"
+                android:id="@+id/SITE_txtlabel"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/SITE_txtTaskCount"
+                android:layout_marginRight="20dp"
+                style="@style/TextStyleGrey"
+                android:textSize="16sp"
 
-        <TextView
-            android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="00"
-            android:id="@+id/SITE_txtStatusCount"
-            style="@style/GreyCircleSmall"
-            android:layout_marginRight="4dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true" />
+            android:id="@+id/SITE_staffLayout"
+            android:layout_marginTop="@dimen/mon_padding"
+            android:layout_marginRight="48dp"
+            android:layout_alignLeft="@id/SITE_layout"
+            android:layout_below="@id/SITE_layout">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00"
+                android:id="@+id/SITE_txtStatusCount"
+                style="@style/GreyCircleSmall"
+                android:layout_marginRight="4dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/site_status_count"
+                android:id="@+id/SITE_txtlabel2"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/SITE_txtStatusCount"
+                android:layout_marginRight="20dp"
+                style="@style/TextStyleGrey"
+                android:textSize="16sp"
+
+                android:layout_marginLeft="10dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/site_status_count"
-            android:id="@+id/SITE_txtlabel2"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/SITE_txtStatusCount"
-            android:layout_marginRight="20dp"
-            style="@style/TextStyleGrey"
-            android:textSize="16sp"
+            android:id="@+id/SITE_bottom"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/SITE_staffLayout">
 
-            android:layout_marginLeft="10dp" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/SITE_lastStatusDate"
+                style="@style/TextStyleBoldBlueSmall"
+                android:text="@string/date"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/mon_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/SITE_bottom"
-        android:padding="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_below="@id/SITE_staffLayout">
+            <TextView
+                android:id="@+id/SITE_label"
+                style="@style/TextStyleGrey"
+                android:text="@string/last_status"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:layout_toLeftOf="@id/SITE_lastStatusDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/SITE_layoutStatus"
+            android:layout_below="@id/SITE_bottom"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/mon_margin"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/SITE_lastStatus"
+                style="@style/TextStyleBold"
+                android:text="@string/status_name"
+                android:layout_marginLeft="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/mon_margin"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/SITE_lastStatusDate"
-            style="@style/TextStyleBoldBlueSmall"
-            android:text="@string/date"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:id="@+id/SITE_task"
+            android:layout_below="@id/SITE_layoutStatus"
+            style="@style/TextStyleGreySmall"
+            android:layout_marginTop="@dimen/mon_padding"
+            android:layout_margin="@dimen/mon_padding"
             android:layout_marginRight="@dimen/mon_margin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/SITE_label"
-            style="@style/TextStyleGrey"
-            android:text="@string/last_status"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="16dp"
-            android:layout_toLeftOf="@id/SITE_lastStatusDate"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:text="Build a foundation of concrete and steel beams. Let it dry completely before attempting to start putting up the wall."
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
 
     </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/SITE_layoutStatus"
-        android:layout_below="@id/SITE_bottom"
-        android:layout_width="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/mon_margin"
-        android:layout_marginBottom="@dimen/mon_margin"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/SITE_statusColor"
-            android:background="@drawable/xgrey_box"
-            android:paddingLeft="44dp"
-            android:text="                       "
-            android:textSize="4sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/SITE_lastStatus"
-            style="@style/TextStyleBoldSmall"
-            android:text="@string/status_name"
-            android:layout_marginLeft="16dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/SITE_statusColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/SITE_task"
-        android:layout_below="@id/SITE_layoutStatus"
-        style="@style/TextStyleGreySmall"
-        android:layout_marginTop="@dimen/mon_padding"
-        android:layout_margin="@dimen/mon_padding"
-        android:layout_marginRight="@dimen/mon_margin"
-        android:layout_alignParentRight="true"
-        android:visibility="gone"
-        android:text="Build a foundation of concrete and steel beams. Let it dry completely before attempting to start putting up the wall."
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
-
-</RelativeLayout>
+</android.support.v7.widget.CardView>
