@@ -283,5 +283,6 @@
     <string name="site_map">Site Location Map</string>
     <string name="project_map">Project Site Map</string>
     <string name="site_gallery">Site Update Gallery</string>
+    <string name="status_rept">Status Report</string>
 
 </resources>

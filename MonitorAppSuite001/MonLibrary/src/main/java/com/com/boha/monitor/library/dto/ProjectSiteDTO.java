@@ -34,6 +34,7 @@ public class ProjectSiteDTO implements Serializable {
     private Integer projectID;
     private List<PhotoUploadDTO> photoUploadList = new ArrayList<>();
     private ProjectSiteTaskStatusDTO lastStatus;
+    private List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList;
 
     public boolean isSelected() {
         return selected;
@@ -45,6 +46,14 @@ public class ProjectSiteDTO implements Serializable {
 
     public void setLocationConfirmed(Integer locationConfirmed) {
         this.locationConfirmed = locationConfirmed;
+    }
+
+    public List<ProjectSiteTaskStatusDTO> getProjectSiteTaskStatusList() {
+        return projectSiteTaskStatusList;
+    }
+
+    public void setProjectSiteTaskStatusList(List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList) {
+        this.projectSiteTaskStatusList = projectSiteTaskStatusList;
     }
 
     public ProjectSiteTaskStatusDTO getLastStatus() {

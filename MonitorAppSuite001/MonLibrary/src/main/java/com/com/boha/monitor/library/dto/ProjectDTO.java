@@ -36,6 +36,7 @@ public class ProjectDTO implements Serializable {
     private List<InvoiceDTO> invoiceList;
     private List<TaskPriceDTO> taskPriceList;
     private List<ContractorClaimDTO> contractorClaimList = new ArrayList<>();
+    private List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList;
     public ProjectDTO() {
     }
 
@@ -45,6 +46,14 @@ public class ProjectDTO implements Serializable {
 
     public void setTaskPriceList(List<TaskPriceDTO> taskPriceList) {
         this.taskPriceList = taskPriceList;
+    }
+
+    public List<ProjectSiteTaskStatusDTO> getProjectSiteTaskStatusList() {
+        return projectSiteTaskStatusList;
+    }
+
+    public void setProjectSiteTaskStatusList(List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList) {
+        this.projectSiteTaskStatusList = projectSiteTaskStatusList;
     }
 
     public ProjectSiteTaskStatusDTO getLastStatus() {

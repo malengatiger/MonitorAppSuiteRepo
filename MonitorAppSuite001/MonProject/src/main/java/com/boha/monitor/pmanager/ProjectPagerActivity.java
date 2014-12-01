@@ -10,6 +10,8 @@ import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,12 +28,14 @@ import com.com.boha.monitor.library.dialogs.ProjectDialog;
 import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
+import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.fragments.PageFragment;
 import com.com.boha.monitor.library.fragments.ProjectListFragment;
 import com.com.boha.monitor.library.fragments.SiteTaskAndStatusAssignmentFragment;
+import com.com.boha.monitor.library.fragments.StatusReportFragment;
 import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
@@ -44,16 +48,19 @@ import java.util.List;
 
 
 public class ProjectPagerActivity extends ActionBarActivity
-        implements ProjectListFragment.ProjectListListener {
+        implements ProjectListFragment.ProjectListListener, StatusReportFragment.StatusReportListener {
 
     private DrawerLayout mDrawerLayout;
     private DrawerAdapter mDrawerAdapter;
+    private LayoutInflater inflater;
+    static final String LOG = ProjectPagerActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer);
         ctx = getApplicationContext();
+        inflater = getLayoutInflater();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mPager = (ViewPager) findViewById(R.id.pager);
         PagerTitleStrip strip = (PagerTitleStrip) findViewById(R.id.pager_title_strip);
@@ -85,6 +92,8 @@ public class ProjectPagerActivity extends ActionBarActivity
                     sTitles.add(s);
                 }
                 mDrawerAdapter = new DrawerAdapter(getApplicationContext(), R.layout.drawer_item, sTitles, company);
+                View v = inflater.inflate(R.layout.hero_image, null);
+                drawerListView.addHeaderView(v);
                 drawerListView.setAdapter(mDrawerAdapter);
                 drawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -132,6 +141,7 @@ public class ProjectPagerActivity extends ActionBarActivity
     }
 
     private void getCompanyData() {
+        Log.w(LOG,"############# getCompanyData................");
         RequestDTO w = new RequestDTO();
         w.setRequestType(RequestDTO.GET_COMPANY_DATA);
         w.setCompanyID(SharedUtil.getCompany(ctx).getCompanyID());
@@ -146,6 +156,7 @@ public class ProjectPagerActivity extends ActionBarActivity
                     public void run() {
                         setRefreshActionButtonState(false);
                         projectListFragment.stopRotatingLogo();
+                        Log.e(LOG,"############# getCompanyData responded");
                         if (!ErrorUtil.checkServerError(ctx, r)) {
                             return;
                         }
@@ -190,6 +201,8 @@ public class ProjectPagerActivity extends ActionBarActivity
             }
         });
     }
+
+    List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList;
 
     public static final int PROJECTS = 0,
             STAFF = 1, MANAGE_DATA = 2, SITE_REPORTS = 3, BENEFICIARIES = 4, PROJECT_MAPS = 5,
@@ -244,14 +257,13 @@ public class ProjectPagerActivity extends ActionBarActivity
         data1.putSerializable("response", response);
         projectListFragment.setArguments(data1);
 
+        statusReportFragment = new StatusReportFragment();
+        statusReportFragment.setArguments(data1);
+
 
         pageFragmentList.add(projectListFragment);
+        pageFragmentList.add(statusReportFragment);
 
-        initializeAdapter();
-
-    }
-
-    private void initializeAdapter() {
         adapter = new PagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(adapter);
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -269,9 +281,11 @@ public class ProjectPagerActivity extends ActionBarActivity
             public void onPageScrollStateChanged(int arg0) {
             }
         });
+
     }
 
     ProjectListFragment projectListFragment;
+    StatusReportFragment statusReportFragment;
 
     PagerAdapter adapter;
     ViewPager mPager;
@@ -352,6 +366,11 @@ public class ProjectPagerActivity extends ActionBarActivity
         Intent i = new Intent(this, ClaimAndInvoicePagerActivity.class);
         i.putExtra("project",project);
         startActivity(i);
+    }
+
+    @Override
+    public void onStatusReportRequested() {
+        mPager.setCurrentItem(1,true);
     }
 
     static final int PICTURE_REQUESTED = 9133;

@@ -18,7 +18,6 @@ public class StatusReportActivity extends ActionBarActivity implements StatusRep
 
         StatusReportFragment srf = (StatusReportFragment)getSupportFragmentManager().findFragmentById(R.id.fragment);
         ProjectSiteDTO ps = (ProjectSiteDTO)getIntent().getSerializableExtra("projectSite");
-        srf.setProjectSite(ps);
         setTitle(getApplicationContext().getResources().getString(R.string.task_status));
     }
 
@@ -42,15 +41,6 @@ public class StatusReportActivity extends ActionBarActivity implements StatusRep
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void setBusy() {
-
-    }
-
-    @Override
-    public void setNotBusy() {
-
-    }
 
     @Override
     public void onPause() {

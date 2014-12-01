@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.Util;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +73,7 @@ public class ProjectListFragment extends Fragment implements PageFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.w(LOG,"######### onCreateView");
         view = inflater.inflate(R.layout.fragment_project, container, false);
         this.inflater = inflater;
         ctx = getActivity();
@@ -78,8 +81,14 @@ public class ProjectListFragment extends Fragment implements PageFragment {
         imgLogo = (ImageView) view.findViewById(R.id.PROJ_LIST_img);
         Bundle b = getArguments();
         if (b != null) {
+            Log.w(LOG,"######### onCreateView getArguments not null ...");
             ResponseDTO r = (ResponseDTO) b.getSerializable("response");
-            projectList = r.getCompany().getProjectList();
+            if (r.getCompany() != null) {
+                projectList = r.getCompany().getProjectList();
+                statusCountInPeriod = r.getStatusCountInPeriod();
+            } else {
+                Log.e(LOG,"-----------------> ERROR company frome getArguments is null");
+            }
         }
 
 
@@ -94,7 +103,10 @@ public class ProjectListFragment extends Fragment implements PageFragment {
         return view;
     }
 
+
+    Integer statusCountInPeriod;
     ObjectAnimator objectAnimator;
+    static final DecimalFormat df = new DecimalFormat("###,###,###,###");
 
     public void stopRotatingLogo() {
         if (objectAnimator != null)
@@ -131,13 +143,21 @@ public class ProjectListFragment extends Fragment implements PageFragment {
     }
 
     private void setList() {
-
-
+        if (projectList == null) {
+            Log.e(LOG,"-----------> projectList is null. Possible illegally called");
+            return;
+        }
         adapter = new ProjectAdapter(ctx, R.layout.project_item, projectList);
         mListView.setAdapter(adapter);
         View v = inflater.inflate(R.layout.hero_image_project, null);
-        TextView stCount = (TextView) v.findViewById(R.id.HERO_statusCount);
-        stCount.setText("" + statusCount);
+        txtStatusCount = (TextView) v.findViewById(R.id.HERO_statusCount);
+        txtStatusCount.setText(df.format(statusCountInPeriod));
+        txtStatusCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onStatusReportRequested();
+            }
+        });
         mListView.addHeaderView(v);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -201,6 +221,10 @@ public class ProjectListFragment extends Fragment implements PageFragment {
     TextView txtName;
 
     private void setTotals() {
+        if (projectList == null) {
+            Log.e(LOG,"-----------------------> projectList is null");
+            return;
+        }
         txtProjectCount.setText("" + projectList.size());
         statusCount = 0;
         for (ProjectDTO p : projectList) {
@@ -295,6 +319,7 @@ public class ProjectListFragment extends Fragment implements PageFragment {
         public void onMapRequested(ProjectDTO project);
 
         public void onClaimsAndInvoicesRequested(ProjectDTO project);
+        public void onStatusReportRequested();
     }
 
     private List<ProjectDTO> projectList;

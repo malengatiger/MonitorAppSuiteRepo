@@ -47,7 +47,7 @@ import java.util.List;
 public class ResponseDTO implements Serializable {
 
     private PhotoCache photoCache;
-    private Integer statusCode;
+    private Integer statusCode,statusCountInPeriod;
     private String message, sessionID, GCMRegistrationID,fileString;
     private List<String> taskImageFileNameList;
     private List<BankDTO> bankList;
@@ -83,6 +83,14 @@ public class ResponseDTO implements Serializable {
     //
     private CompanyDTO company;
     private CompanyStaffDTO companyStaff;
+
+    public Integer getStatusCountInPeriod() {
+        return statusCountInPeriod;
+    }
+
+    public void setStatusCountInPeriod(Integer statusCountInPeriod) {
+        this.statusCountInPeriod = statusCountInPeriod;
+    }
 
     public List<PhotoUploadDTO> getPhotoUploadList() {
         return photoUploadList;

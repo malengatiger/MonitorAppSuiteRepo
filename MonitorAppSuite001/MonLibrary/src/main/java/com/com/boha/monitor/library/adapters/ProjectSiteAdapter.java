@@ -50,7 +50,7 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
     static class ViewHolderItem {
         TextView txtName, txtLastStatus, txtTaskName;
         TextView txtTaskCount, txtStatusCount;
-        TextView txtNumber, txtDate;
+        TextView txtNumber, txtDate, txtBen;
         ImageView imgHero;
         View statLayout1, statLayout2;
     }
@@ -66,6 +66,8 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
                     .findViewById(R.id.SITE_txtName);
             item.txtNumber = (TextView) convertView
                     .findViewById(R.id.SITE_image);
+            item.txtBen = (TextView) convertView
+                    .findViewById(R.id.SITE_txtBeneficiary);
             item.txtTaskCount = (TextView) convertView
                     .findViewById(R.id.SITE_txtTaskCount);
                         item.txtTaskName = (TextView) convertView
@@ -90,9 +92,11 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
         item.txtName.setText(p.getProjectSiteName());
         item.txtNumber.setText("" + (position + 1));
         item.txtStatusCount.setText("" + p.getStatusCount());
+        if (p.getBeneficiary() != null) {
+            item.txtBen.setText(p.getBeneficiary().getFullName());
+        }
         Statics.setRobotoFontLight(ctx,item.txtName);
         if (p.getPhotoUploadList() != null && !p.getPhotoUploadList().isEmpty()) {
-            Log.i("ProjectSiteAdapter","+++++++++ photos found for site: " + p.getPhotoUploadList().size());
             final String uri = Statics.IMAGE_URL + p.getPhotoUploadList().get(0).getUri();
             item.imgHero.setVisibility(View.VISIBLE);
             //

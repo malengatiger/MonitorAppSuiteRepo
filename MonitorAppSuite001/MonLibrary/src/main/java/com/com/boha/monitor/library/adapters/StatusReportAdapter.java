@@ -1,8 +1,6 @@
 package com.com.boha.monitor.library.adapters;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,10 +42,9 @@ public class StatusReportAdapter extends ArrayAdapter<ProjectSiteTaskStatusDTO> 
 
     static class ViewHolderItem {
         TextView txtTaskName, txtStatus,txtDate;
-        TextView txtNumber, txtColor;
+        TextView txtColor, txtProject, txtSite, txtStaff;
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolderItem item;
@@ -55,15 +52,19 @@ public class StatusReportAdapter extends ArrayAdapter<ProjectSiteTaskStatusDTO> 
             convertView = mInflater.inflate(mLayoutRes, null);
             item = new ViewHolderItem();
             item.txtTaskName = (TextView) convertView
-                    .findViewById(R.id.ROW_task);
-            item.txtNumber = (TextView) convertView
-                    .findViewById(R.id.ROW_number);
+                    .findViewById(R.id.SRC_txtTask);
+            item.txtProject = (TextView) convertView
+                    .findViewById(R.id.SRC_txtProject);
             item.txtStatus = (TextView) convertView
-                    .findViewById(R.id.ROW_status);
+                    .findViewById(R.id.SRC_txtStatus);
             item.txtDate = (TextView) convertView
-                    .findViewById(R.id.ROW_date);
+                    .findViewById(R.id.SRC_txtDate);
             item.txtColor = (TextView) convertView
-                    .findViewById(R.id.ROW_color);
+                    .findViewById(R.id.SRC_txtColor);
+            item.txtSite = (TextView) convertView
+                    .findViewById(R.id.SRC_txtProjectSite);
+            item.txtStaff = (TextView) convertView
+                    .findViewById(R.id.SRC_txtStaff);
 
             convertView.setTag(item);
         } else {
@@ -72,19 +73,22 @@ public class StatusReportAdapter extends ArrayAdapter<ProjectSiteTaskStatusDTO> 
 
         final ProjectSiteTaskStatusDTO p = mList.get(position);
         item.txtTaskName.setText(p.getTask().getTaskName());
-        item.txtNumber.setText(""+(position+ 1));
+        item.txtProject.setText(p.getProjectName());
         item.txtDate.setText(sdf.format(p.getStatusDate()));
         item.txtStatus.setText(p.getTaskStatus().getTaskStatusName());
-
+        item.txtSite.setText(p.getProjectSiteName());
+        if (p.getStaffName() != null) {
+            item.txtStaff.setText(p.getStaffName());
+        }
         switch (p.getTaskStatus().getStatusColor()) {
             case TaskStatusDTO.STATUS_COLOR_GREEN:
-                item.txtColor.setBackground(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
+                item.txtColor.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_oval_small));
                 break;
             case TaskStatusDTO.STATUS_COLOR_RED:
-                item.txtColor.setBackground(ctx.getResources().getDrawable(R.drawable.xred_oval));
+                item.txtColor.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval_small));
                 break;
             case TaskStatusDTO.STATUS_COLOR_YELLOW:
-                item.txtColor.setBackground(ctx.getResources().getDrawable(R.drawable.xorange_oval));
+                item.txtColor.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_oval_small));
                 break;
         }
 

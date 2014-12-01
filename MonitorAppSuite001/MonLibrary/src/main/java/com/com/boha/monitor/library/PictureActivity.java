@@ -25,6 +25,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -71,14 +72,14 @@ public class PictureActivity extends ActionBarActivity implements GLSurfaceView.
         setContentView(R.layout.camera);
         setFields();
 
-
         mLocationRequest = LocationRequest.create();
-        mLocationRequest.setInterval(2000);
+        mLocationRequest.setInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setFastestInterval(1000);
 
         mLocationClient = new LocationClient(getApplicationContext(), this,
                 this);
+
         //get objects
         if (savedInstanceState != null) {
             Log.e(LOG,"##### savedInstanceState is LOADED");
@@ -126,13 +127,23 @@ public class PictureActivity extends ActionBarActivity implements GLSurfaceView.
     }
 
 
+    ImageView imgCamera;
     private void setFields() {
         image = (ImageView) findViewById(R.id.CAM_image);
-        mEffectView = (GLSurfaceView) findViewById(R.id.effectsview);
-        mEffectView.setEGLContextClientVersion(2);
-        mEffectView.setRenderer(this);
-        mEffectView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
-        mCurrentEffect = R.id.none;
+        imgCamera = (ImageView) findViewById(R.id.CAM_imgCamera);
+
+        imgCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchTakePictureIntent();
+            }
+        });
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchTakePictureIntent();
+            }
+        });
     }
 
     @Override
@@ -201,21 +212,24 @@ public class PictureActivity extends ActionBarActivity implements GLSurfaceView.
         } else {
             Log.w(LOG, "Old Location lat: " + this.location.getLatitude() +
                     " long: " + this.location.getLongitude() + " - accuracy: " + this.location.getAccuracy());
-            if (this.location.getAccuracy() > location.getAccuracy()) {
+
+            if (location.getAccuracy() == ACCURAY_THRESHOLD || location.getAccuracy() < ACCURAY_THRESHOLD) {
                 this.location = location;
+                mLocationClient.removeLocationUpdates(this);
             }
         }
-        Log.e(LOG, "Location has changed to lat: " + location.getLatitude() +
+        Log.e(LOG, "++Location has changed to lat: " + location.getLatitude() +
                 " long: " + location.getLongitude() + " - accuracy: " + location.getAccuracy());
     }
 
     Location location;
-
+    static final float ACCURAY_THRESHOLD = 10;
     @Override
     public void onConnected(Bundle bundle) {
         Log.i(LOG,
                 "### ---> LocationClient onConnected() -  >> ");
         location = mLocationClient.getLastLocation();
+        mLocationClient.requestLocationUpdates(mLocationRequest,this);
     }
 
     @Override

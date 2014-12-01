@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/card_view"
     android:elevation="@dimen/mon_padding"
-    tools:cardCornerRadius="16dp">
+    tools:cardCornerRadius="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
 
         <RelativeLayout
             android:id="@+id/SITE_top"
-            android:padding="8dp"
+            android:padding="@dimen/mon_padding"
             android:layout_below="@id/SITE_heroImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -52,19 +52,19 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/SITE_descLayout"
-            android:visibility="gone"
-            android:layout_alignLeft="@id/SITE_top"
+            android:id="@+id/SITE_benLayout"
+            android:layout_marginLeft="@dimen/mon_wider"
             android:layout_below="@id/SITE_top">
 
             <TextView
-                android:id="@+id/SITE_txtDesc"
-                style="@style/TextStyle"
-                android:text="A description"
-                android:padding="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="beneficiary name"
+                android:id="@+id/SITE_txtBeneficiary"
+                style="@style/TextStyleBoldBlueSmall" />
+
         </RelativeLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -72,7 +72,7 @@
             android:id="@+id/SITE_layout"
             android:layout_marginRight="48dp"
             android:layout_alignLeft="@id/SITE_top"
-            android:layout_below="@id/SITE_top">
+            android:layout_below="@id/SITE_benLayout">
 
             <TextView
                 android:layout_width="wrap_content"
