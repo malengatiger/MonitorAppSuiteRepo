@@ -16,14 +16,15 @@
         android:id="@+id/TTS_name"
         style="@style/TextStyle"
         android:layout_toRightOf="@id/TTS_number"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="@dimen/mon_margin"
         android:text="Name of task comes here and can be as long as you like!"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <RelativeLayout
+        android:id="@+id/TTS_seqLayout"
         android:layout_below="@id/TTS_name"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="@dimen/mon_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -32,7 +33,7 @@
             style="@style/Title2TextStyleBlue"
             android:text="99"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="48dp"
+            android:layout_marginRight="@dimen/mon_middle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -43,6 +44,33 @@
             android:layout_marginRight="8dp"
             android:layout_toLeftOf="@id/TTS_sequenceNumber"
             android:text="@string/task_seq_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/TTS_priceLayout"
+        android:layout_below="@id/TTS_seqLayout"
+        android:layout_marginTop="@dimen/mon_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/TTS_price"
+            style="@style/Title2TextStyleGreen"
+            android:text="00 000.00"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/mon_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/TTS_labelx"
+            style="@style/TextStyleGreySmall"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/mon_padding"
+            android:layout_toLeftOf="@id/TTS_price"
+            android:text="@string/task_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

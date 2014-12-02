@@ -28,6 +28,7 @@ import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.ProjectStatusTypeDTO;
 import com.com.boha.monitor.library.dto.SubTaskDTO;
 import com.com.boha.monitor.library.dto.TaskDTO;
+import com.com.boha.monitor.library.dto.TaskPriceDTO;
 import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.dto.TownshipDTO;
 
@@ -54,6 +55,7 @@ public class RequestDTO implements Serializable {
     private Double latitude, longitude;
     private CompanyDTO company;
     private SubTaskDTO subTask;
+    private TaskPriceDTO taskPrice;
     private CompanyStaffDTO companyStaff;
     private ProjectDTO project;
     private EngineerDTO engineer;
@@ -173,6 +175,14 @@ public class RequestDTO implements Serializable {
 
     //
 
+
+    public TaskPriceDTO getTaskPrice() {
+        return taskPrice;
+    }
+
+    public void setTaskPrice(TaskPriceDTO taskPrice) {
+        this.taskPrice = taskPrice;
+    }
 
     public Date getStartDate() {
         return startDate;

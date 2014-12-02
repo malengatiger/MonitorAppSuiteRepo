@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="0dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,14 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <ImageView
-        android:id="@+id/TE_imgDelete"
-        android:src="@android:drawable/ic_delete"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="52dp"
-        android:layout_marginRight="@dimen/mon_padding"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/TE_editTaskName"
@@ -26,69 +17,91 @@
         android:layout_below="@id/TE_banner"
         android:hint="@string/task_name"
         android:layout_marginLeft="@dimen/mon_padding"
+        android:inputType="textCapWords"
+        style="@style/Title2TextStyleBlack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/TE_editTaskPrice"
-        android:layout_marginTop="@dimen/mon_padding"
-        android:layout_below="@id/TE_editTaskName"
-        android:hint="99 000 000.00"
-        style="@style/Title1TextStyleBlue"
-        android:layout_marginLeft="@dimen/mon_padding"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <RelativeLayout
-        android:id="@+id/TE_numLayout"
-        android:layout_marginTop="@dimen/mon_padding"
+        android:id="@+id/TE_layout1"
         android:layout_below="@id/TE_editTaskName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
-        <NumberPicker
-            android:id="@+id/TE_numberPicker"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/mon_margin"
+        <TextView
+            android:id="@+id/TE_label0"
+            style="@style/TextStyleGreySmall"
+            android:text="Task Price"
+            android:layout_marginLeft="@dimen/mon_margin"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/TE_editTaskPrice"
+            android:layout_marginTop="@dimen/mon_padding"
+            android:hint="Enter Price"
+            android:layout_toRightOf="@id/TE_label0"
+            android:inputType="numberDecimal"
+            style="@style/Title1TextStyleGreen"
+            android:layout_marginLeft="@dimen/mon_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/TE_numLayout"
+        android:layout_marginTop="@dimen/mon_padding"
+        android:layout_below="@id/TE_layout1"
+        android:padding="@dimen/mon_padding"
+        style="@style/Title1TextStyleGreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/TE_label"
             style="@style/TextStyleGreySmall"
             android:text="@string/task_seq_no"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/TE_numberPicker"
+            android:layout_marginLeft="@dimen/mon_margin"
             android:layout_marginRight="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <EditText
+            android:id="@+id/TE_numberPicker"
+            android:layout_marginRight="@dimen/mon_margin"
+            android:layout_width="100dp"
+            android:layout_toRightOf="@id/TE_label"
+            android:text="1"
+            style="@style/Title2TextStyleBlue"
+            android:inputType="number"
+            android:layout_height="wrap_content" />
+
+
+
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_below="@id/TE_numLayout"
-        android:layout_marginTop="@dimen/mon_margin"
-        android:padding="@dimen/mon_padding"
+        android:padding="@dimen/mon_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <Button
-            style="@style/ButtonCancel"
-            android:id="@+id/TE_btnCancel"
-            android:text="@string/cancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+
         <Button
             style="@style/ButtonRed"
             android:id="@+id/TE_btnSave"
             android:text="@string/save"
-            android:layout_below="@id/TE_btnCancel"
-            android:layout_marginTop="@dimen/mon_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        </RelativeLayout>
+    </RelativeLayout>
+
     <ProgressBar
         android:id="@+id/TE_progress"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="44dp"
         android:layout_marginLeft="@dimen/mon_margin"
+        android:visibility="gone"
         style="@android:style/Widget.ProgressBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

@@ -1,5 +1,7 @@
 package com.com.boha.monitor.library.fragments;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,21 +14,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
-import android.widget.NumberPicker;
+import android.widget.ListPopupWindow;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.adapters.PopupListAdapter;
 import com.com.boha.monitor.library.adapters.TaskAdapter;
+import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.TaskDTO;
+import com.com.boha.monitor.library.dto.TaskPriceDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.CacheUtil;
+import com.com.boha.monitor.library.util.ErrorUtil;
+import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
+import com.com.boha.monitor.library.util.WebSocketUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,10 +67,14 @@ public class TaskListFragment extends Fragment implements PageFragment {
 
     Context ctx;
     TextView txtCount, txtName;
-    EditText editTaskName;
-    NumberPicker numberPicker;
+    EditText editTaskName, editPrice;
+    Button btnSave;
+    EditText numberPicker;
     View view;
     View editLayout;
+    ListPopupWindow actionsPopupWindow;
+    List<String> list;
+    TextView txtTitle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,15 +92,243 @@ public class TaskListFragment extends Fragment implements PageFragment {
 
     public void openEditPanel() {
         editLayout.setVisibility(View.VISIBLE);
+        ObjectAnimator an = ObjectAnimator.ofFloat(editLayout, "scaleX", 0, 1);
+        an.setDuration(300);
+        an.start();
     }
+
+    public void closeEditPanel() {
+        ObjectAnimator an = ObjectAnimator.ofFloat(editLayout, "alpha", 1, 0);
+        an.setDuration(60);
+        an.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                editLayout.setAlpha(1);
+                editLayout.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        an.start();
+    }
+
+    int action;
     private void setFields() {
         editLayout = view.findViewById(R.id.TL_editLayout);
         txtCount = (TextView) view.findViewById(R.id.TL_count);
-        editTaskName = (EditText)view.findViewById(R.id.TL_editName);
-        numberPicker = (NumberPicker)view.findViewById(R.id.TL_numberPicker);
+        txtTitle = (TextView) view.findViewById(R.id.TL_title);
+        editTaskName = (EditText) view.findViewById(R.id.TE_editTaskName);
+        editPrice = (EditText) view.findViewById(R.id.TE_editTaskPrice);
+        numberPicker = (EditText) view.findViewById(R.id.TE_numberPicker);
+        btnSave = (Button)view.findViewById(R.id.TE_btnSave);
         editLayout.setVisibility(View.GONE);
-        TextView title = (TextView) view.findViewById(R.id.TL_title);
-        Statics.setRobotoFontLight(ctx,title);
+        Statics.setRobotoFontLight(ctx, txtTitle);
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ObjectAnimator an = ObjectAnimator.ofFloat(btnSave,"alpha", 1,0);
+                an.setDuration(100);
+                an.setRepeatMode(ObjectAnimator.REVERSE);
+                an.setRepeatCount(1);
+                an.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        switch (action) {
+                            case TaskDTO.ACTION_ADD:
+                                registerTask();
+                                break;
+                            case TaskDTO.ACTION_UPDATE:
+                                updateTask();
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
+                an.start();
+            }
+        });
+        txtCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ObjectAnimator an = ObjectAnimator.ofFloat(txtCount,"scaleY", 0, 1);
+                an.setDuration(100);
+                an.setRepeatMode(ObjectAnimator.REVERSE);
+                an.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        if (editLayout.getVisibility() == View.GONE) {
+                            openEditPanel();
+                        } else {
+                            closeEditPanel();
+                        }
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
+                an.start();
+            }
+        });
+    }
+    TaskPriceDTO taskPrice;
+    private void registerTask() {
+        task = new TaskDTO();
+        CompanyDTO c = new CompanyDTO();
+        c.setCompanyID(SharedUtil.getCompany(ctx).getCompanyID());
+        task.setCompanyID(c.getCompanyID());
+        if (editTaskName.getText().toString().isEmpty()) {
+            ToastUtil.toast(ctx, ctx.getResources().getString(R.string.enter_task_name));
+            return;
+        }
+
+        if (numberPicker.getText().toString().isEmpty()) {
+            ToastUtil.toast(ctx, ctx.getString(R.string.enter_task_number));
+            return;
+        }
+
+        task.setTaskName(editTaskName.getText().toString());
+        task.setTaskNumber(Integer.parseInt(numberPicker.getText().toString()));
+
+        RequestDTO w = new RequestDTO();
+        w.setRequestType(RequestDTO.ADD_COMPANY_TASK);
+        w.setTask(task);
+
+        if (editPrice.getText().toString().isEmpty()) {
+            ToastUtil.toast(ctx, ctx.getString(R.string.enter_price));
+            return;
+        }
+        taskPrice = new TaskPriceDTO();
+        taskPrice.setPrice(Double.parseDouble(editPrice.getText().toString()));
+        w.setTaskPrice(taskPrice);
+
+        WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
+            @Override
+            public void onMessage(final ResponseDTO response) {
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!ErrorUtil.checkServerError(ctx, response)) {
+                            return;
+                        }
+                        task = response.getTaskList().get(0);
+                        taskList.add(0,task);
+                        txtCount.setText(""+ taskList.size());
+                        adapter.notifyDataSetChanged();
+                        closeEditPanel();
+                    }
+                });
+            }
+
+            @Override
+            public void onClose() {
+
+            }
+
+            @Override
+            public void onError(final String message) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+
+            }
+        });
+
+    }
+
+    private void updateTask() {
+        if (editTaskName.getText().toString().isEmpty()) {
+            ToastUtil.toast(ctx, ctx.getString(R.string.enter_taskname));
+            return;
+        }
+        TaskDTO t = new TaskDTO();
+        t.setTaskID(task.getTaskID());
+        t.setTaskName(editTaskName.getText().toString());
+        t.setTaskNumber(Integer.parseInt(numberPicker.getText().toString()));
+        //TODO - update task and price, check that price has changed
+        if (!editPrice.getText().toString().isEmpty()) {
+            double newPrice = Double.parseDouble(editPrice.getText().toString());
+            if (taskPrice == null || taskPrice.getPrice() != newPrice) {
+                TaskPriceDTO tp = new TaskPriceDTO();
+                tp.setTaskID(task.getTaskID());
+                tp.setPrice(newPrice);
+                task.getTaskPriceList().add(0,tp);
+                t.setTaskPriceList(new ArrayList<TaskPriceDTO>());
+                t.getTaskPriceList().add(0,tp);
+                adapter.notifyDataSetChanged();
+            }
+        }
+        RequestDTO w = new RequestDTO(RequestDTO.UPDATE_COMPANY_TASK);
+        w.setTask(t);
+
+        WebSocketUtil.sendRequest(ctx,Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
+            @Override
+            public void onMessage(ResponseDTO response) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                        closeEditPanel();
+                    }
+                });
+            }
+
+            @Override
+            public void onClose() {
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
+    }
+    private void deleteTask() {
+
     }
     private void setList() {
         mListView = (AbsListView) view.findViewById(R.id.TL_list);
@@ -98,13 +339,56 @@ public class TaskListFragment extends Fragment implements PageFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 task = taskList.get(position);
-                mListener.onTaskClicked(task);
+                //mListener.onTaskClicked(task);
+                if (list == null) {
+                    list = new ArrayList<String>();
+                    list.add("Go to Sub Tasks");
+                    list.add("Add New Task");
+                    list.add("Edit this Task");
+                }
+                actionsPopupWindow = new ListPopupWindow(ctx);
+                actionsPopupWindow.setAnchorView(txtTitle);
+                actionsPopupWindow.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item,
+                        list, ctx.getString(R.string.task_actions), false));
+                actionsPopupWindow.setWidth(600);
+                actionsPopupWindow.setModal(true);
+                actionsPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        switch (position) {
+                            case 0:
+                                mListener.onSubTasksRequested(task);
+                                break;
+                            case 1:
+                                action = TaskDTO.ACTION_ADD;
+                                openEditPanel();
+                                break;
+                            case 2:
+                                action = TaskDTO.ACTION_UPDATE;
+                                editTaskName.setText(task.getTaskName());
+                                if (task.getTaskPriceList() != null && !task.getTaskPriceList().isEmpty()) {
+                                    editPrice.setText("" + task.getTaskPriceList().get(0).getPrice());
+                                } else {
+                                    editPrice.setHint("0.00");
+                                }
+                                if (task.getTaskNumber() != null) {
+                                    numberPicker.setText(""+task.getTaskNumber());
+                                } else {
+                                    numberPicker.setText("0");
+                                }
+                                openEditPanel();
+                                break;
+                        }
+                        actionsPopupWindow.dismiss();
+                    }
+                });
+                actionsPopupWindow.show();
             }
         });
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e(LOG,"***** onItemLongClick position: " + position);
+                Log.e(LOG, "***** onItemLongClick position: " + position);
                 AlertDialog.Builder b = new AlertDialog.Builder(ctx);
                 b.setTitle("Move task")
                         .setMessage("Move this task up or down")
@@ -124,12 +408,7 @@ public class TaskListFragment extends Fragment implements PageFragment {
                 return true;
             }
         });
-        txtCount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.toast(ctx, "Under Construction");
-            }
-        });
+
     }
 
     private void getTaskData() {
@@ -141,7 +420,7 @@ public class TaskListFragment extends Fragment implements PageFragment {
                         taskList = response.getCompany().getTaskList();
                         setList();
                     } else {
-                        Log.e(LOG,"######## no company tasks found");
+                        Log.e(LOG, "######## no company tasks found");
                     }
                 }
                 getRemoteData();
@@ -158,6 +437,7 @@ public class TaskListFragment extends Fragment implements PageFragment {
             }
         });
     }
+
     private void getRemoteData() {
         //TODO - refresh task data from server
         RequestDTO w = new RequestDTO();
@@ -180,7 +460,6 @@ public class TaskListFragment extends Fragment implements PageFragment {
         super.onDetach();
         mListener = null;
     }
-
 
 
     TaskDTO task;
@@ -223,7 +502,10 @@ public class TaskListFragment extends Fragment implements PageFragment {
 
     public interface TaskListListener {
         public void onTaskClicked(TaskDTO task);
-        public void onSequenceClicked(TaskDTO task);
+
+        public void onSubTasksRequested(TaskDTO task);
+
+        public void onNewTaskRequested();
     }
 
     ProjectDTO project;

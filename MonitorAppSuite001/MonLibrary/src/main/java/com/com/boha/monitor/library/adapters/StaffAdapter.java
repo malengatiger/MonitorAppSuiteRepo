@@ -104,7 +104,7 @@ public class StaffAdapter extends ArrayAdapter<CompanyStaffDTO> {
 
         StringBuilder sb = new StringBuilder();
         sb.append(Statics.IMAGE_URL);
-        sb.append("company").append(SharedUtil.getCompany(ctx).getCompanyID());
+        sb.append("monitor_images/company").append(SharedUtil.getCompany(ctx).getCompanyID());
         sb.append("/companyStaff/t").append(p.getCompanyStaffID()).append(".jpg");
 
         item.photo.setAlpha(1.0f);

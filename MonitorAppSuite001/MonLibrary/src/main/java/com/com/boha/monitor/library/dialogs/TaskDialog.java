@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +16,10 @@ import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.SubTaskActivity;
 import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.TaskDTO;
+import com.com.boha.monitor.library.dto.TaskPriceDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.ErrorUtil;
@@ -24,6 +27,9 @@ import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.WebSocketUtil;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 /**
  * Add, update and delete company tasks
@@ -38,11 +44,11 @@ public class TaskDialog extends DialogFragment {
     }
     TaskDialogListener listener;
     Context context;
-    EditText editTaskName;
+    EditText editTaskName, editPrice;
     NumberPicker numberPicker;
     ImageView imgDelete;
     ProgressBar progressBar;
-    Button btnCancel, btnSave;
+    Button btnSubTasks, btnSave;
     TaskDTO task;
     String title;
     View view;
@@ -54,29 +60,34 @@ public class TaskDialog extends DialogFragment {
                              Bundle savedInstanceState) {
         this.view = inflater.inflate(R.layout.task_edit, container);
         editTaskName = (EditText) view.findViewById(R.id.TE_editTaskName);
+        editPrice = (EditText) view.findViewById(R.id.TE_editTaskPrice);
         numberPicker = (NumberPicker) view.findViewById(R.id.TE_numberPicker);
         numberPicker.setMinValue(1);
         numberPicker.setMaxValue(100);
 
-        imgDelete = (ImageView)view.findViewById(R.id.TE_imgDelete);
-        imgDelete.setVisibility(View.GONE);
+
 
         progressBar = (ProgressBar) view.findViewById(R.id.TE_progress);
         progressBar.setVisibility(View.GONE);
 
 
-        btnCancel = (Button) view.findViewById(R.id.TE_btnCancel);
         btnSave = (Button) view.findViewById(R.id.TE_btnSave);
         getDialog().setTitle(context.getString(R.string.task));
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
+        btnSubTasks.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
                 dismiss();
+                Intent i = new Intent(getActivity(), SubTaskActivity.class);
+                i.putExtra("task", task);
+                startActivity(i);
 
             }
         });
+        if (action == TaskDTO.ACTION_ADD) {
+            btnSubTasks.setVisibility(View.GONE);
+        }
         btnSave.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -123,10 +134,16 @@ public class TaskDialog extends DialogFragment {
         return view;
     }
 
+    TaskPriceDTO taskPrice;
     private void fillForm() {
         editTaskName.setText(task.getTaskName());
         numberPicker.setValue(task.getTaskNumber());
+        if (task.getTaskPriceList() != null && !task.getTaskPriceList().isEmpty()) {
+            taskPrice = task.getTaskPriceList().get(0);
+            editPrice.setText(df.format(taskPrice.getPrice()));
+        }
     }
+    static final DecimalFormat df = new DecimalFormat("###,###,###,###,###,###,###,##0.00");
     private void registerTask() {
         task = new TaskDTO();
         CompanyDTO c = new CompanyDTO();
@@ -148,6 +165,14 @@ public class TaskDialog extends DialogFragment {
         RequestDTO w = new RequestDTO();
         w.setRequestType(RequestDTO.ADD_COMPANY_TASK);
         w.setTask(task);
+
+        if (editPrice.getText().toString().isEmpty()) {
+            ToastUtil.toast(context, context.getString(R.string.enter_price));
+            return;
+        }
+        taskPrice = new TaskPriceDTO();
+        taskPrice.setPrice(Double.parseDouble(editPrice.getText().toString()));
+        w.setTaskPrice(taskPrice);
 
         progressBar.setVisibility(View.VISIBLE);
         WebSocketUtil.sendRequest(context, Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
@@ -188,7 +213,44 @@ public class TaskDialog extends DialogFragment {
     }
 
     private void updateTask() {
+        if (editTaskName.getText().toString().isEmpty()) {
+            ToastUtil.toast(context, context.getString(R.string.enter_taskname));
+            return;
+        }
+        TaskDTO t = new TaskDTO();
+        t.setTaskID(task.getTaskID());
+        t.setTaskName(editTaskName.getText().toString());
+        t.setTaskNumber(numberPicker.getValue());
+        //TODO - update task and price, check that price has changed
+        if (!editPrice.getText().toString().isEmpty()) {
+            double newPrice = Double.parseDouble(editPrice.getText().toString());
+            if (taskPrice.getPrice() != newPrice) {
+                TaskPriceDTO tp = new TaskPriceDTO();
+                tp.setTaskID(task.getTaskID());
+                tp.setPrice(newPrice);
+                t.setTaskPriceList(new ArrayList<TaskPriceDTO>());
+                t.getTaskPriceList().add(0,tp);
+            }
+        }
+        RequestDTO w = new RequestDTO(RequestDTO.UPDATE_COMPANY_TASK);
+        w.setTask(t);
 
+        WebSocketUtil.sendRequest(context,Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
+            @Override
+            public void onMessage(ResponseDTO response) {
+
+            }
+
+            @Override
+            public void onClose() {
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
     }
     private void deleteTask() {
 

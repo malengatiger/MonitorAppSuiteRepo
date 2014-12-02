@@ -25,6 +25,7 @@ import com.com.boha.monitor.library.ImagePagerActivity;
 import com.com.boha.monitor.library.MonitorMapActivity;
 import com.com.boha.monitor.library.PictureActivity;
 import com.com.boha.monitor.library.SitePagerActivity;
+import com.com.boha.monitor.library.SubTaskActivity;
 import com.com.boha.monitor.library.adapters.DrawerAdapter;
 import com.com.boha.monitor.library.dialogs.BeneficiaryDialog;
 import com.com.boha.monitor.library.dialogs.ClientDialog;
@@ -631,6 +632,11 @@ public class OperationsPagerActivity extends ActionBarActivity
     }
 
     @Override
+    public void onStatusReportRequested() {
+
+    }
+
+    @Override
     public void onCompanyStaffClicked(CompanyStaffDTO companyStaff) {
 
     }
@@ -741,6 +747,7 @@ public class OperationsPagerActivity extends ActionBarActivity
 
     @Override
     public void onTaskClicked(TaskDTO task) {
+
         TaskDialog td = new TaskDialog();
         td.setAction(TaskDTO.ACTION_UPDATE);
         td.setContext(ctx);
@@ -768,12 +775,45 @@ public class OperationsPagerActivity extends ActionBarActivity
         });
         td.show(getFragmentManager(),"TD_DIAG");
     }
-    static final String LOG = OperationsPagerActivity.class.getSimpleName();
+
     @Override
-    public void onSequenceClicked(TaskDTO task) {
-        //TODO - show up/down dialog
-        //when updated - taskListFragment.updateSequence
+    public void onSubTasksRequested(TaskDTO task) {
+        Intent i = new Intent(ctx, SubTaskActivity.class);
+        i.putExtra("task", task);
+        startActivity(i);
     }
+
+    @Override
+    public void onNewTaskRequested() {
+        TaskDialog td = new TaskDialog();
+        td.setAction(TaskDTO.ACTION_ADD);
+        td.setContext(ctx);
+        td.setListener(new TaskDialog.TaskDialogListener() {
+            @Override
+            public void onTaskAdded(TaskDTO task) {
+                taskListFragment.addTask(task);
+            }
+
+            @Override
+            public void onTaskUpdated(TaskDTO task) {
+                Log.i(LOG,"####### task updated");
+            }
+
+            @Override
+            public void onTaskDeleted(TaskDTO task) {
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
+        td.show(getFragmentManager(),"TD_DIAG");
+    }
+
+    static final String LOG = OperationsPagerActivity.class.getSimpleName();
+
 
     @Override
     public void onEngineerClicked(EngineerDTO engineer) {

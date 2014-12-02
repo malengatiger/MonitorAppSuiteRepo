@@ -151,7 +151,11 @@ public class ProjectListFragment extends Fragment implements PageFragment {
         mListView.setAdapter(adapter);
         View v = inflater.inflate(R.layout.hero_image_project, null);
         txtStatusCount = (TextView) v.findViewById(R.id.HERO_statusCount);
-        txtStatusCount.setText(df.format(statusCountInPeriod));
+        if (statusCountInPeriod != null) {
+            txtStatusCount.setText(df.format(statusCountInPeriod));
+        } else {
+            txtStatusCount.setText("0");
+        }
         txtStatusCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

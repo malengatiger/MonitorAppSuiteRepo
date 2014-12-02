@@ -53,8 +53,8 @@ public class MonApp extends Application {
 //            ACRA.getErrorReporter().putCustomData("companyID", "" + company.getCompanyID());
 //            ACRA.getErrorReporter().putCustomData("companyName", company.getCompanyName());
 //        }
-
-        Log.e(LOG, "###### ACRA Crash Reporting has been initiated");
+//
+//        Log.e(LOG, "###### ACRA Crash Reporting has been initiated");
         initializeVolley(getApplicationContext());
 
         File cacheDir = StorageUtils.getCacheDirectory(this);

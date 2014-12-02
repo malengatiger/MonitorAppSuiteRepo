@@ -23,6 +23,13 @@ public class TaskDTO implements Serializable, Comparable<TaskDTO> {
 
     public static final int ACTION_UPDATE = 2, ACTION_ADD = 1;
 
+    public List<SubTaskDTO> getSubTaskList() {
+        return subTaskList;
+    }
+
+    public void setSubTaskList(List<SubTaskDTO> subTaskList) {
+        this.subTaskList = subTaskList;
+    }
 
     public List<TaskPriceDTO> getTaskPriceList() {
         return taskPriceList;

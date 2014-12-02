@@ -1,5 +1,6 @@
 package com.com.boha.monitor.library.fragments;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -138,6 +139,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
     }
 
     private void sendTaskStatus() {
+        Log.w(LOG,"############## sending taskStatus");
         RequestDTO w = new RequestDTO(RequestDTO.ADD_PROJECT_SITE_TASK_STATUS);
         ProjectSiteTaskStatusDTO s = new ProjectSiteTaskStatusDTO();
         s.setProjectSiteTaskID(projectSiteTask.getProjectSiteTaskID());
@@ -145,12 +147,27 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
         s.setTaskStatus(taskStatus);
         w.setProjectSiteTaskStatus(s);
 
+        switch (taskStatus.getStatusColor()) {
+            case TaskStatusDTO.STATUS_COLOR_GREEN:
+                rotateTotal(tgreen);
+                break;
+            case TaskStatusDTO.STATUS_COLOR_YELLOW:
+                rotateTotal(tyellow);
+                break;
+            case TaskStatusDTO.STATUS_COLOR_RED:
+                rotateTotal(tred);
+                break;
+            default:
+                rotateTotal(txtCount);
+                break;
+        }
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        stopRotatingTotal();
                         if (!ErrorUtil.checkServerError(ctx, response)) {
                             return;
                         }
@@ -219,7 +236,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
         w.setRequestType(RequestDTO.ADD_PROJECT_SITE_TASK);
         w.setProjectSiteTask(pst);
 
-        mListener.setBusy();
+        rotateTotal(txtCount);
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
@@ -227,7 +244,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mListener.setNotBusy();
+                        stopRotatingTotal();
                         if (!ErrorUtil.checkServerError(ctx, response)) {
                             return;
                         }
@@ -308,75 +325,6 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
 
             }
         });
-//        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(AbsListView view, int scrollState) {
-//
-//            }
-//
-//            @Override
-//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//                if(mLastFirstVisibleItem<firstVisibleItem)
-//                {
-//                    Log.i(LOG,"SCROLLING ITEMS UP.......firstVisibleItem: " + firstVisibleItem);
-//                    final ObjectAnimator an = ObjectAnimator.ofFloat(trafficLayout, "scaleY", 1, 0);
-//                    an.setDuration(300);
-//                    an.addListener(new Animator.AnimatorListener() {
-//                        @Override
-//                        public void onAnimationStart(Animator animation) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onAnimationEnd(Animator animation) {
-//                            trafficLayout.setVisibility(View.GONE);
-//                        }
-//
-//                        @Override
-//                        public void onAnimationCancel(Animator animation) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onAnimationRepeat(Animator animation) {
-//
-//                        }
-//                    });
-//                    an.start();
-//                    //trafficLayout.setVisibility(View.GONE);
-//                }
-//                if(mLastFirstVisibleItem>firstVisibleItem)
-//                {
-//                    Log.e(LOG,"SCROLLING ITEMS DOWN.......firstVisibleItem: " + firstVisibleItem);
-//                    final ObjectAnimator an = ObjectAnimator.ofFloat(trafficLayout, "scaleY", 0, 1);
-//                    an.setDuration(300);
-//                    an.addListener(new Animator.AnimatorListener() {
-//                        @Override
-//                        public void onAnimationStart(Animator animation) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onAnimationEnd(Animator animation) {
-//                            trafficLayout.setVisibility(View.VISIBLE);
-//                        }
-//
-//                        @Override
-//                        public void onAnimationCancel(Animator animation) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onAnimationRepeat(Animator animation) {
-//
-//                        }
-//                    });
-//                    an.start();
-//                    //
-//                }
-//                mLastFirstVisibleItem=firstVisibleItem;
-//            }
-//        });
         Util.animateRotationY(txtCount, 1000);
     }
     private int mLastFirstVisibleItem;
@@ -388,6 +336,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
     View trafficLayout;
     int reds = 0, yellows = 0, greens = 0, greys = 0;
     int lastIndex;
+    ObjectAnimator objectAnimator;
 
     private void getSummary() {
         greens = 0; reds = 0; yellows = 0; greys = 0;
@@ -457,6 +406,18 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
         //req.setRequestType(RequestDTO.DELETE_INVOIC);
     }
 
+    private void rotateTotal(TextView v) {
+        objectAnimator = ObjectAnimator.ofFloat(v,"rotate",0.0f,360f);
+        objectAnimator.setDuration(200);
+        objectAnimator.setRepeatMode(ObjectAnimator.INFINITE);
+        objectAnimator.setRepeatCount(1);
+        objectAnimator.start();
+    }
+    private void stopRotatingTotal() {
+        if (objectAnimator != null) {
+            objectAnimator.cancel();
+        }
+    }
     private void getCachedData() {
 
         CacheUtil.getCachedData(ctx, CacheUtil.CACHE_DATA, new CacheUtil.CacheUtilListener() {

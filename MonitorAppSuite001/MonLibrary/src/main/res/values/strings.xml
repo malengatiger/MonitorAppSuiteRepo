@@ -284,5 +284,11 @@
     <string name="project_map">Project Site Map</string>
     <string name="site_gallery">Site Update Gallery</string>
     <string name="status_rept">Status Report</string>
+    <string name="title_activity_sub_task">SubTaskActivity</string>
+    <string name="enter_subtask">Please enter name of sub task</string>
+    <string name="task_actions">Task Actions</string>
+    <string name="enter_price">Please enter the Task price for invoice purposes</string>
+    <string name="enter_taskname">Please enter task name</string>
+    <string name="task_price">Task Price</string>
 
 </resources>

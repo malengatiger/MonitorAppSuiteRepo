@@ -42,7 +42,7 @@ public class StatusReportAdapter extends ArrayAdapter<ProjectSiteTaskStatusDTO> 
 
     static class ViewHolderItem {
         TextView txtTaskName, txtStatus,txtDate;
-        TextView txtColor, txtProject, txtSite, txtStaff;
+        TextView txtColor, txtStaff;
     }
 
     @Override
@@ -53,16 +53,14 @@ public class StatusReportAdapter extends ArrayAdapter<ProjectSiteTaskStatusDTO> 
             item = new ViewHolderItem();
             item.txtTaskName = (TextView) convertView
                     .findViewById(R.id.SRC_txtTask);
-            item.txtProject = (TextView) convertView
-                    .findViewById(R.id.SRC_txtProject);
+
             item.txtStatus = (TextView) convertView
                     .findViewById(R.id.SRC_txtStatus);
             item.txtDate = (TextView) convertView
                     .findViewById(R.id.SRC_txtDate);
             item.txtColor = (TextView) convertView
                     .findViewById(R.id.SRC_txtColor);
-            item.txtSite = (TextView) convertView
-                    .findViewById(R.id.SRC_txtProjectSite);
+
             item.txtStaff = (TextView) convertView
                     .findViewById(R.id.SRC_txtStaff);
 
@@ -72,11 +70,9 @@ public class StatusReportAdapter extends ArrayAdapter<ProjectSiteTaskStatusDTO> 
         }
 
         final ProjectSiteTaskStatusDTO p = mList.get(position);
-        item.txtTaskName.setText(p.getTask().getTaskName());
-        item.txtProject.setText(p.getProjectName());
+        item.txtTaskName.setText(p.getProjectSiteName() + " - " + p.getTask().getTaskName());
         item.txtDate.setText(sdf.format(p.getStatusDate()));
         item.txtStatus.setText(p.getTaskStatus().getTaskStatusName());
-        item.txtSite.setText(p.getProjectSiteName());
         if (p.getStaffName() != null) {
             item.txtStaff.setText(p.getStaffName());
         }
@@ -93,8 +89,10 @@ public class StatusReportAdapter extends ArrayAdapter<ProjectSiteTaskStatusDTO> 
         }
 
 
-        Statics.setRobotoFontLight(ctx,item.txtDate);
+        Statics.setRobotoFontBold(ctx,item.txtDate);
         Statics.setRobotoFontLight(ctx, item.txtStatus);
+        Statics.setRobotoFontLight(ctx, item.txtTaskName);
+        Statics.setRobotoFontLight(ctx, item.txtStaff);
 
         animateView(convertView);
         return (convertView);

@@ -53,7 +53,7 @@
         </activity>
         <activity
             android:name="com.com.boha.monitor.library.SitePagerActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" android:parentActivityName=".ProjectPagerActivity" />
         <activity
             android:name="com.com.boha.monitor.library.PictureActivity"
             android:configChanges="keyboardHidden|orientation">
@@ -65,6 +65,11 @@
         <activity
             android:name="com.com.boha.monitor.library.ClaimAndInvoicePagerActivity"
             android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.com.boha.monitor.library.SubTaskActivity"
+            android:label="@string/title_activity_sub_task"
+            android:parentActivityName=".ProjectPagerActivity">
         </activity>
 
     </application>

@@ -14,8 +14,7 @@
         tools:cardCornerRadius="8dp">
 
         <RelativeLayout
-            android:layout_marginBottom="@dimen/mon_divider"
-
+            android:layout_marginBottom="@dimen/mon_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -66,38 +65,8 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/SRC_projectLayout"
-                android:layout_below="@id/SRC_statusLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/SRC_txtProject"
-                    style="@style/TextStyleSmall"
-                    android:text="Project name here"
-                    android:layout_marginLeft="@dimen/mon_widest"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/SRC_projectSiteLayout"
-                android:layout_below="@id/SRC_projectLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/SRC_txtProjectSite"
-                    style="@style/TextStyleBlueSmall"
-                    android:text="Site name here"
-                    android:layout_marginLeft="@dimen/mon_widest"
-                    android:layout_centerVertical="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </RelativeLayout>
-            <RelativeLayout
                 android:id="@+id/SRC_staffLayout"
-                android:layout_below="@id/SRC_projectSiteLayout"
+                android:layout_below="@id/SRC_statusLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

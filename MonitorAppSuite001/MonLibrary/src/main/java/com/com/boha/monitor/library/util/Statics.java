@@ -16,7 +16,7 @@ public class Statics {
 
 //    public static final String WEBSOCKET_URL = "ws://bohamaker.com:51490/mwp/";
 //    public static final String URL = "http://bohamaker.com:51490/mwp/";
-//    public static final String IMAGE_URL = "http://bohamaker.com:51490/monitor_images/";
+//    public static final String IMAGE_URL = "http://bohamaker.com:51490/";
 //    public static final String PDF_URL = "http://bohamaker.com:51490/monitor_documents/";
 
     //google cloud http://mggolf-303.appspot.com/golf?JSON={requestType:38,golfGroupID:21}

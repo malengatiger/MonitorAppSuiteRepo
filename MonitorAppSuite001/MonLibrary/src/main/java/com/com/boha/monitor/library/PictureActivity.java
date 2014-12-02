@@ -56,13 +56,11 @@ import org.acra.ACRA;
 import java.io.File;
 import java.io.IOException;
 
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
-
 /**
  * Created by aubreyM on 2014/04/21.
  */
-public class PictureActivity extends ActionBarActivity implements GLSurfaceView.Renderer, LocationListener, GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
+public class PictureActivity extends ActionBarActivity implements
+        LocationListener, GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
     LocationRequest mLocationRequest;
     LocationClient mLocationClient;
 
@@ -536,35 +534,6 @@ public class PictureActivity extends ActionBarActivity implements GLSurfaceView.
         Log.i(LOG, "Thumbnail file length: " + currentThumbFile.length());
         Log.i(LOG, "Full file length: " + currentFullFile.length());
 
-    }
-
-    @Override
-    public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
-
-    }
-
-    @Override
-    public void onSurfaceChanged(GL10 gl10, int width, int height) {
-        if (mTexRenderer != null) {
-            mTexRenderer.updateViewSize(width, height);
-        }
-    }
-
-    @Override
-    public void onDrawFrame(GL10 gl10) {
-        if (!mInitialized) {
-            //Only need to do this once
-            mEffectContext = EffectContext.createWithCurrentGlContext();
-            mTexRenderer.init();
-            loadTextures();
-            mInitialized = true;
-        }
-        if (mCurrentEffect != R.id.none) {
-            //if an effect is chosen initialize it and apply it to the texture
-            initEffect();
-            applyEffect();
-        }
-        renderResult();
     }
 
     private void initEffect() {
