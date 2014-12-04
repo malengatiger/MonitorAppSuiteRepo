@@ -25,11 +25,13 @@ public class SubTaskAdapter extends ArrayAdapter<SubTaskDTO>  {
     private final int mLayoutRes;
     private List<SubTaskDTO> mList;
     private Context ctx;
+    private boolean hidePrice;
 
    public SubTaskAdapter(Context context, int textViewResourceId,
-                         List<SubTaskDTO> list) {
+                         List<SubTaskDTO> list, boolean hidePrice) {
         super(context, textViewResourceId, list);
         this.mLayoutRes = textViewResourceId;
+        this.hidePrice = hidePrice;
         mList = list;
         ctx = context;
         this.mInflater = (LayoutInflater) context
@@ -43,6 +45,7 @@ public class SubTaskAdapter extends ArrayAdapter<SubTaskDTO>  {
     static class ViewHolderItem {
         TextView txtName;
         TextView txtNumber, txtSequence;
+        View priceLayout;
     }
 
     @Override
@@ -57,10 +60,15 @@ public class SubTaskAdapter extends ArrayAdapter<SubTaskDTO>  {
                     .findViewById(R.id.TTS_number);
             item.txtSequence = (TextView) convertView
                     .findViewById(R.id.TTS_sequenceNumber);
+            item.priceLayout = convertView.findViewById(R.id.TTS_priceLayout);
 
             convertView.setTag(item);
         } else {
             item = (ViewHolderItem) convertView.getTag();
+        }
+
+        if (hidePrice) {
+            item.priceLayout.setVisibility(View.GONE);
         }
 
         final SubTaskDTO p = mList.get(position);

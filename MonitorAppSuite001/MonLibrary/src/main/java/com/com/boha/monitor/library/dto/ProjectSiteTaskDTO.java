@@ -25,10 +25,26 @@ public class ProjectSiteTaskDTO implements Serializable, Comparable<ProjectSiteT
     private Integer projectSiteID, projectID;
     private List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList = new ArrayList<>();
     private List<PhotoUploadDTO> photoUploadList = new ArrayList<>();
+    private String projectSiteName, projectName;
 
     public ProjectSiteTaskDTO() {
     }
 
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getProjectSiteName() {
+        return projectSiteName;
+    }
+
+    public void setProjectSiteName(String projectSiteName) {
+        this.projectSiteName = projectSiteName;
+    }
 
     public List<PhotoUploadDTO> getPhotoUploadList() {
         return photoUploadList;

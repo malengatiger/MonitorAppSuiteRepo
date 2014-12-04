@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="@dimen/mon_padding"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/SSS_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/SSS_number"
+            style="@style/GreyCircle"
+            android:text="0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/SSS_taskName"
+            style="@style/TextStyle"
+            android:layout_toRightOf="@id/SSS_number"
+            android:layout_marginLeft="@dimen/mon_margin"
+            android:layout_centerVertical="true"
+            android:text="Name of task comes here and can be as long as you like!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/SSS_lastStatusLayout"
+        android:layout_below="@id/SSS_top"
+        android:padding="@dimen/mon_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/SSS_label"
+            style="@style/TextStyleGreySmall"
+            android:layout_marginLeft="@dimen/mon_padding"
+            android:text="Last Status Date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:id="@+id/SSS_dateLayout2"
+            android:layout_below="@id/SSS_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/SSS_date"
+                style="@style/Title2TextStyleBlue"
+                android:text="10 December 2014"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/mon_middle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/SSS_time"
+                style="@style/Title3TextStyleRed"
+                android:text="10:30"
+                android:layout_below="@id/SSS_date"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/mon_middle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/SSS_staffName"
+                style="@style/TextStyleSmall"
+                android:text="Aubrey OperationsMgr"
+                android:layout_below="@id/SSS_time"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/mon_middle"
+                android:layout_marginTop="@dimen/mon_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/SSS_statusLayout"
+        android:layout_below="@id/SSS_lastStatusLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/SSS_labelx"
+            style="@style/TextStyleGreySmall"
+            android:layout_marginRight="@dimen/mon_padding"
+            android:layout_centerHorizontal="true"
+            android:text="@string/current_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/SSS_status"
+            style="@style/Title3TextStyleBlack"
+            android:layout_below="@id/SSS_labelx"
+            android:text="Whatever the status happens to be at the time of writing"
+            android:layout_marginLeft="@dimen/mon_margin"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/mon_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

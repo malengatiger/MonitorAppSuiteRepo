@@ -54,7 +54,6 @@
             android:id="@+id/TSK_statusLayout"
             android:layout_below="@id/TSK_top"
             android:layout_marginLeft="@dimen/mon_margin"
-            android:layout_marginTop="@dimen/mon_padding"
             android:layout_marginRight="@dimen/mon_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -64,9 +63,9 @@
                 android:id="@+id/TSK_statusCount"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/mon_margin"
-                style="@style/Title1TextStyleBlue"
+                style="@style/Title2TextStyleBlue"
                 android:text="0"
-                android:textSize="48sp"
+                android:textSize="28sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -85,7 +84,6 @@
             android:id="@+id/TSK_statusLayout2"
             android:layout_below="@id/TSK_statusLayout"
             android:layout_marginLeft="@dimen/mon_margin"
-            android:layout_marginTop="@dimen/mon_padding"
             android:layout_marginRight="@dimen/mon_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -113,7 +111,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:padding="@dimen/mon_margin"
+            android:padding="@dimen/mon_padding"
             android:layout_marginLeft="@dimen/mon_margin"
             android:layout_below="@id/TSK_statusLayout2"
             android:layout_height="wrap_content">
@@ -129,7 +127,7 @@
 
             <TextView
                 android:id="@+id/TSK_lastStatus"
-                style="@style/TextStyleSmall"
+                style="@style/TextStyleBold"
                 android:layout_marginTop="4dp"
                 android:text="Last status on this date"
                 android:layout_below="@id/TSK_lastStatusDate"
@@ -140,7 +138,6 @@
             <RelativeLayout
                 android:layout_below="@id/TSK_lastStatus"
                 android:layout_marginLeft="@dimen/mon_padding"
-                android:layout_marginTop="@dimen/mon_padding"
                 android:padding="@dimen/mon_padding"
                 android:id="@+id/TSK_cameraLayout"
                 android:layout_width="match_parent"

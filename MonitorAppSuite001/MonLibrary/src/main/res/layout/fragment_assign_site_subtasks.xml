@@ -7,40 +7,48 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/AST_handle"
+        android:id="@+id/SUBSTAT_handle"
         android:padding="@dimen/mon_padding"
         android:background="@color/beige_pale"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/AST_title2"
+            android:id="@+id/SUBSTAT_title2"
             style="@style/Title2TextStyleBlack"
-            android:text="@string/site_status"
-            android:layout_centerHorizontal="true"
+            android:text="Sub Task Status"
+            android:layout_marginLeft="@dimen/mon_widest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/AST_middle"
-        android:layout_below="@id/AST_handle"
+        android:id="@+id/SUBSTAT_middle"
+        android:layout_below="@id/SUBSTAT_handle"
         android:background="@color/white"
+        android:padding="@dimen/mon_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include layout="@layout/traffic_lights" />
+        <TextView
+            android:id="@+id/SUBSTAT_taskName"
+            android:text="Task name here"
+            style="@style/Title2TextStyleBlue"
+            android:layout_marginLeft="@dimen/mon_widest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_below="@id/AST_middle"
+        android:layout_below="@id/SUBSTAT_middle"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ListView
-            android:id="@+id/AST_list"
+            android:id="@+id/SUBSTAT_list"
+
             android:dividerHeight="@dimen/mon_divider"
             android:background="@color/white"
             android:layout_width="match_parent"
@@ -50,9 +58,10 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/AST_number"
-        style="@style/BlackCircle"
-        android:text="99"
+        android:id="@+id/SUBSTAT_number"
+        style="@style/GreenCircle"
+        android:text="+"
+        android:textSize="28sp"
         android:layout_marginTop="@dimen/mon_wide"
         android:layout_marginLeft="@dimen/mon_margin"
         android:layout_alignParentLeft="true"

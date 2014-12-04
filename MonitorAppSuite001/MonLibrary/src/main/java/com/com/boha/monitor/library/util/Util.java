@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -37,10 +38,74 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Random;
 
 public class Util {
 
     static final String LOG = Util.class.getSimpleName();
+    static Random random = new Random(System.currentTimeMillis());
+    public static Drawable getRandomHeroImage(Context ctx) {
+        random = new Random(System.currentTimeMillis());
+        int index = random.nextInt(17);
+        switch (index) {
+            case 0:
+                return ctx.getResources().getDrawable(R.drawable.banner_construction1);
+            case 1:
+                return ctx.getResources().getDrawable(
+                        R.drawable.banner_construction3);
+            case 2:
+                return ctx.getResources().getDrawable(
+                        R.drawable.banner_construction4);
+            case 3:
+                return ctx.getResources().getDrawable(
+                        R.drawable.banner_construction5);
+            case 4:
+                return ctx.getResources().getDrawable(
+                        R.drawable.banner_construction6);
+            case 5:
+                return ctx.getResources().getDrawable(
+                        R.drawable.banner_construction7);
+            case 6:
+                return ctx.getResources().getDrawable(
+                        R.drawable.banner_construction8);
+            case 7:
+                return ctx.getResources().getDrawable(
+                        R.drawable.banner_construction9);
+            case 8:
+                return ctx.getResources().getDrawable(
+                        R.drawable.banner_construction10);
+            case 9:
+                return ctx.getResources().getDrawable(
+                        R.drawable.banner_construction11);
+            case 10:
+                return ctx.getResources().getDrawable(
+                        R.drawable.banner_construction13);
+            case 11:
+                return ctx.getResources().getDrawable(
+                        R.drawable.banner_construction14);
+            case 12:
+                return ctx.getResources().getDrawable(
+                        R.drawable.banner_report);
+            case 13:
+                return ctx.getResources().getDrawable(
+                        R.drawable.banner_report3);
+            case 14:
+                return ctx.getResources().getDrawable(
+                        R.drawable.banner_construction1);
+            case 15:
+                return ctx.getResources().getDrawable(
+                        R.drawable.banner_report);
+            case 16:
+                return ctx.getResources().getDrawable(
+                        R.drawable.banner_report2);
+            case 17:
+                return ctx.getResources().getDrawable(
+                       R.drawable.banner_report3);
+
+        }
+        return ctx.getResources().getDrawable(
+                R.drawable.banner_report2);
+    }
     public static void writeLocationToExif(String filePath, Location loc) {
         try {
             ExifInterface ef = new ExifInterface(filePath);

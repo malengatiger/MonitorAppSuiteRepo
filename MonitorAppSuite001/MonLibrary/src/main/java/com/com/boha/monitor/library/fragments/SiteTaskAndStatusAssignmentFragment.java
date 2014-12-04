@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListPopupWindow;
 import android.widget.ListView;
@@ -51,6 +52,8 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
         public void onProjectSiteTaskAdded(ProjectSiteTaskDTO task);
 
         public void onProjectSiteTaskDeleted();
+
+        public void onSubTaskListRequested(ProjectSiteTaskDTO task, ProjectSiteTaskStatusDTO taskStatus);
 
         public void onStatusDialogRequested(ProjectSiteDTO projectSite, ProjectSiteTaskDTO siteTask);
 
@@ -177,23 +180,26 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
                                 s.getProjectSiteTaskStatusList().add(0, projectSiteTaskStatus);
                                 setList();
                                 mListView.setSelection(lastIndex);
-                                AlertDialog.Builder d = new AlertDialog.Builder(getActivity());
-                                d.setTitle(ctx.getString(R.string.reminder))
-                                        .setMessage(ctx.getString(R.string.pic_reminder))
-                                        .setPositiveButton(ctx.getString(R.string.yes), new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                mListener.onCameraRequested(s, PhotoUploadDTO.TASK_IMAGE);
-                                            }
-                                        })
-                                        .setNegativeButton(ctx.getString(R.string.no), new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-
-                                            }
-                                        })
-                                        .show();
+//                                AlertDialog.Builder d = new AlertDialog.Builder(getActivity());
+//                                d.setTitle(ctx.getString(R.string.reminder))
+//                                        .setMessage(ctx.getString(R.string.pic_reminder))
+//                                        .setPositiveButton(ctx.getString(R.string.yes), new DialogInterface.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(DialogInterface dialog, int which) {
+//                                                mListener.onCameraRequested(s, PhotoUploadDTO.TASK_IMAGE);
+//                                            }
+//                                        })
+//                                        .setNegativeButton(ctx.getString(R.string.no), new DialogInterface.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(DialogInterface dialog, int which) {
+//
+//                                            }
+//                                        })
+//                                        .show();
                             }
+                        }
+                        if (hasSubTasks) {
+                            mListener.onSubTaskListRequested(projectSiteTask,projectSiteTaskStatus);
                         }
 
                     }
@@ -313,21 +319,34 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
 
         getSummary();
         tot.setText("" + (greens + yellows + reds));
-
+        View v = inflater.inflate(R.layout.hero_image,null);
+        if (mListView.getHeaderViewsCount() == 0) {
+            ImageView image = (ImageView) v.findViewById(R.id.HERO_image);
+            TextView caption = (TextView) v.findViewById(R.id.HERO_caption);
+            image.setImageDrawable(Util.getRandomHeroImage(ctx));
+            caption.setText(ctx.getString(R.string.task_status));
+            mListView.addHeaderView(v);
+        }
         mListView.setAdapter(adapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                lastIndex = position;
-                projectSiteTask = projectSiteTaskList.get(position);
+                lastIndex = position - 1;
+                projectSiteTask = projectSiteTaskList.get(position - 1);
+                if (projectSiteTask.getTask().getSubTaskList() != null && !projectSiteTask.getTask().getSubTaskList().isEmpty()) {
+                    hasSubTasks = true;
+                } else {
+                    hasSubTasks = false;
+                }
                 showPopup();
 
 
             }
         });
+        mListView.setSelection(lastIndex);
         Util.animateRotationY(txtCount, 1000);
     }
-    private int mLastFirstVisibleItem;
+    private boolean hasSubTasks;
     ProjectSiteTaskDTO projectSiteTask;
     TextView tgreen;
     TextView tyellow;
@@ -369,12 +388,11 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
     }
 
     private void showPopup() {
-
-
         actionsWindow = new ListPopupWindow(getActivity());
         actionsWindow.setAdapter(new TaskStatusAdapter(ctx, R.layout.task_status_item_small, taskStatusList, projectSiteTask.getTask().getTaskName()));
-        actionsWindow.setAnchorView(txtTitle);
+        actionsWindow.setAnchorView(handle);
         actionsWindow.setWidth(700);
+        actionsWindow.setHorizontalOffset(72);
         actionsWindow.setModal(true);
         actionsWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -397,6 +415,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
             if (task.getProjectSiteTaskID().intValue() == taskStatus.getProjectSiteTaskID().intValue()) {
                 task.getProjectSiteTaskStatusList().add(0, taskStatus);
                 adapter.notifyDataSetChanged();
+                mListView.setSelection(lastIndex);
             }
         }
     }
@@ -503,6 +522,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
         projectSiteTaskList.add(task);
         //Collections.sort(taskPriceList);
         adapter.notifyDataSetChanged();
+        mListView.setSelection(lastIndex);
         txtCount.setText("" + projectSiteTaskList.size());
         try {
             Thread.sleep(1000);

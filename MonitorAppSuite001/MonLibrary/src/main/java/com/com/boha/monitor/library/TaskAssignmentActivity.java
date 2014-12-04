@@ -116,6 +116,27 @@ public class TaskAssignmentActivity extends ActionBarActivity implements
     }
 
     @Override
+    public void onSubTaskListRequested(ProjectSiteTaskDTO task, ProjectSiteTaskStatusDTO taskStatus) {
+        Intent i = new Intent(ctx, SubTaskStatusAssignmentActivity.class);
+        task.setProjectSiteName(site.getProjectSiteName());
+        task.setProjectName(site.getProjectName());
+        i.putExtra("projectSiteTask", task);
+        i.putExtra("projectSiteTaskStatus",taskStatus);
+        startActivityForResult(i,SUBTASK_ASSIGNMENT);
+    }
+
+    static final int SUBTASK_ASSIGNMENT = 11413;
+    @Override
+    public void onActivityResult(int reqCode,int resCode, Intent data) {
+        switch (reqCode) {
+            case SUBTASK_ASSIGNMENT:
+                if (resCode == RESULT_OK) {
+                    getSiteStatus();
+                }
+                break;
+        }
+    }
+    @Override
     public void onStatusDialogRequested(ProjectSiteDTO projectSite, ProjectSiteTaskDTO siteTask) {
         StatusDialog d = new StatusDialog();
         d.setProjectSite(projectSite);

@@ -4,6 +4,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
+        android:id="@+id/HERO_image"
         android:src="@drawable/house"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"

@@ -8,6 +8,7 @@ package com.com.boha.monitor.library.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -23,10 +24,18 @@ public class ProjectSiteTaskStatusDTO implements Serializable, Comparable<Projec
     private Integer projectSiteTaskID;
     private Integer companyStaffID;
     private String projectSiteName, projectName, staffName;
+    private List<SubTaskStatusDTO> subTaskStatusList;
 
     public ProjectSiteTaskStatusDTO() {
     }
 
+    public List<SubTaskStatusDTO> getSubTaskStatusList() {
+        return subTaskStatusList;
+    }
+
+    public void setSubTaskStatusList(List<SubTaskStatusDTO> subTaskStatusList) {
+        this.subTaskStatusList = subTaskStatusList;
+    }
 
     public TaskDTO getTask() {
         return task;

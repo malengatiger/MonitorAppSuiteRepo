@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/TRAFF_top"
-        android:padding="@dimen/mon_divider"
+        android:padding="@dimen/mon_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/TRAFF_title"
-        android:text="@string/total_updates"
-        android:layout_centerHorizontal="true"
-        style="@style/TextStyleBoldSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/TRAFF_title"
+            android:text="@string/total_updates"
+            android:layout_centerHorizontal="true"
+            style="@style/TextStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_below="@id/TRAFF_top"
@@ -22,6 +25,7 @@
         android:orientation="horizontal"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/TRAFF_count"
             android:text="00"
@@ -29,8 +33,10 @@
             android:textStyle="normal"
             android:layout_marginRight="@dimen/mon_wide"
             android:layout_centerVertical="true"
+            android:elevation="@dimen/mon_divider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/TRAFF_grey"
             android:text="00"
@@ -40,31 +46,37 @@
             android:layout_marginLeft="@dimen/mon_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/TRAFF_red"
             android:text="00"
             style="@style/RedCircle"
             android:layout_toRightOf="@id/TRAFF_grey"
             android:layout_marginLeft="@dimen/mon_padding"
+            android:elevation="@dimen/mon_divider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/TRAFF_yellow"
             android:text="00"
             style="@style/OrangeCircle"
             android:layout_toRightOf="@id/TRAFF_red"
             android:layout_marginLeft="@dimen/mon_padding"
+            android:elevation="@dimen/mon_divider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/TRAFF_green"
             android:text="00"
             style="@style/GreenCircle"
+            android:elevation="@dimen/mon_divider"
             android:layout_toRightOf="@id/TRAFF_yellow"
             android:layout_marginLeft="@dimen/mon_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        </RelativeLayout>
+    </RelativeLayout>
 
 
 </RelativeLayout>

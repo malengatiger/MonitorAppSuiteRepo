@@ -290,5 +290,8 @@
     <string name="enter_price">Please enter the Task price for invoice purposes</string>
     <string name="enter_taskname">Please enter task name</string>
     <string name="task_price">Task Price</string>
+    <string name="title_activity_sub_task_status_assignment">SubTaskStatusAssignmentActivity</string>
+    <string name="status_not">Status not updated</string>
+    <string name="subtask_status">SubTask Status</string>
 
 </resources>

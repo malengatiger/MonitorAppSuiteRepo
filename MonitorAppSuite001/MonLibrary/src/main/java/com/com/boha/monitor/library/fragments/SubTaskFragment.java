@@ -322,7 +322,7 @@ public class SubTaskFragment extends Fragment implements PageFragment {
             an.start();
         }
 
-        adapter = new SubTaskAdapter(ctx, R.layout.task_list_item, subTaskList);
+        adapter = new SubTaskAdapter(ctx, R.layout.task_list_item, subTaskList, false);
         mListView.setAdapter(adapter);
         txtCount.setText("" + subTaskList.size());
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

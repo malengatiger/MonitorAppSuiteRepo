@@ -219,7 +219,7 @@ public class StatusReportFragment extends Fragment implements PageFragment {
     Random random;
     List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList;
 
-    private void getProjectStatus() {
+    public void getProjectStatus() {
         RequestDTO w = new RequestDTO(RequestDTO.GET_PROJECT_STATUS_IN_PERIOD);
         w.setProjectID(project.getProjectID());
         w.setEndDate(endDate);
@@ -228,6 +228,10 @@ public class StatusReportFragment extends Fragment implements PageFragment {
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
+                if (getActivity() == null) {
+                    Log.e(LOG,"-------- state ERROR - onMessage getActivity is NULL");
+                    return;
+                }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

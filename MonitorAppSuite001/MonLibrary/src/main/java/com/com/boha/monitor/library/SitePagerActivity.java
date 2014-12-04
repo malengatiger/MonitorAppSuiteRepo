@@ -253,7 +253,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
     @Override
     public void onLocationChanged(Location loc) {
 
-        Log.e(LOG, "### .........Location changed, lat: "
+        Log.w(LOG, "### Location changed, lat: "
                 + loc.getLatitude() + " lng: "
                 + loc.getLongitude()
                 + " -- accuracy: " + loc.getAccuracy());
@@ -328,6 +328,14 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
             @Override
             public void onPageSelected(int arg0) {
                 currentPageIndex = arg0;
+                if (currentPageIndex == 1) {
+                    if (gpsScanFragment.getProjectSite() == null) {
+                        mPager.setCurrentItem(0);
+                    }
+                }
+                if (currentPageIndex == 0) {
+                    gpsScanFragment.setProjectSite(null);
+                }
             }
 
             @Override

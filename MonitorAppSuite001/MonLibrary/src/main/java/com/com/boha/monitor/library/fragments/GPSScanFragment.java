@@ -37,10 +37,12 @@ public class GPSScanFragment extends Fragment implements PageFragment {
 
     public interface GPSScanFragmentListener {
         public void onStartScanRequested();
+
         public void onEndScanRequested();
     }
 
     private GPSScanFragmentListener listener;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -81,24 +83,24 @@ public class GPSScanFragment extends Fragment implements PageFragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_gps, container, false);
         ctx = getActivity();
-        desiredAccuracy = (TextView)view.findViewById(R.id.GPS_desiredAccuracy);
-        txtAccuracy = (TextView)view.findViewById(R.id.GPS_accuracy);
-        txtLat = (TextView)view.findViewById(R.id.GPS_latitude);
-        txtLng = (TextView)view.findViewById(R.id.GPS_longitude);
-        btnSave = (Button)view.findViewById(R.id.GPS_btnSave);
-        btnScan = (Button)view.findViewById(R.id.GPS_btnStop);
-        seekBar = (SeekBar)view.findViewById(R.id.GPS_seekBar);
-        imgLogo = (ImageView)view.findViewById(R.id.GPS_imgLogo);
-        txtName = (TextView)view.findViewById(R.id.GPS_siteName);
+        desiredAccuracy = (TextView) view.findViewById(R.id.GPS_desiredAccuracy);
+        txtAccuracy = (TextView) view.findViewById(R.id.GPS_accuracy);
+        txtLat = (TextView) view.findViewById(R.id.GPS_latitude);
+        txtLng = (TextView) view.findViewById(R.id.GPS_longitude);
+        btnSave = (Button) view.findViewById(R.id.GPS_btnSave);
+        btnScan = (Button) view.findViewById(R.id.GPS_btnStop);
+        seekBar = (SeekBar) view.findViewById(R.id.GPS_seekBar);
+        imgLogo = (ImageView) view.findViewById(R.id.GPS_imgLogo);
+        txtName = (TextView) view.findViewById(R.id.GPS_siteName);
         rotateLogo();
         btnSave.setVisibility(View.GONE);
-        Statics.setRobotoFontLight(ctx,txtLat);
-        Statics.setRobotoFontLight(ctx,txtLng);
+        Statics.setRobotoFontLight(ctx, txtLat);
+        Statics.setRobotoFontLight(ctx, txtLng);
 
         imgLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (projectSite.getLatitude() !=  null) {
+                if (projectSite.getLatitude() != null) {
                     Intent i = new Intent(ctx, MonitorMapActivity.class);
                     i.putExtra("projectSite", projectSite);
                     startActivity(i);
@@ -144,18 +146,25 @@ public class GPSScanFragment extends Fragment implements PageFragment {
             }
         });
 
+        listener.onStartScanRequested();
+        isScanning = true;
+        btnScan.setText(ctx.getString(R.string.stop_scan));
+        rotateLogo();
         return view;
     }
 
     public void stopRotatingLogo() {
-        if (objectAnimator != null)
+        if (objectAnimator != null) {
             objectAnimator.cancel();
+            Log.e(LOG, "###### stopRotatingLogo - objectAnimator.cancel");
+        }
     }
 
     public void rotateLogo() {
+        Log.w(LOG, "++++++= rotateLogo ..............");
         objectAnimator = ObjectAnimator.ofFloat(imgLogo, "rotation", 0.0f, 360f);
         objectAnimator.setRepeatCount(ObjectAnimator.INFINITE);
-        objectAnimator.setDuration(500);
+        objectAnimator.setDuration(200);
         objectAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         objectAnimator.addListener(new Animator.AnimatorListener() {
             @Override
@@ -178,8 +187,9 @@ public class GPSScanFragment extends Fragment implements PageFragment {
 
             }
         });
-        objectAnimator.start();
+        //objectAnimator.start();
     }
+
     private void sendGPSData() {
 
         RequestDTO w = new RequestDTO(RequestDTO.UPDATE_PROJECT_SITE);
@@ -191,17 +201,17 @@ public class GPSScanFragment extends Fragment implements PageFragment {
         w.setProjectSite(site);
 
         rotateLogo();
-        WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
+        WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         stopRotatingLogo();
-                        if (!ErrorUtil.checkServerError(ctx,response)) {
+                        if (!ErrorUtil.checkServerError(ctx, response)) {
                             return;
                         }
-                        Log.w(LOG,"++++++++++++ project site location updated");
+                        Log.w(LOG, "++++++++++++ project site location updated");
                     }
                 });
             }
@@ -217,6 +227,7 @@ public class GPSScanFragment extends Fragment implements PageFragment {
             }
         });
     }
+
     public void setLocation(Location location) {
         this.location = location;
         txtLat.setText("" + location.getLatitude());
@@ -233,6 +244,7 @@ public class GPSScanFragment extends Fragment implements PageFragment {
             Log.d(LOG, "----------- onEndScanRequested - stopped scanning");
         }
     }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -249,11 +261,17 @@ public class GPSScanFragment extends Fragment implements PageFragment {
         super.onDetach();
         listener = null;
     }
+
     Location location;
     static final String LOG = GPSScanFragment.class.getSimpleName();
 
     public void setProjectSite(ProjectSiteDTO projectSite) {
         this.projectSite = projectSite;
-        txtName.setText(projectSite.getProjectSiteName());
+        if (projectSite != null)
+            txtName.setText(projectSite.getProjectSiteName());
+    }
+
+    public ProjectSiteDTO getProjectSite() {
+        return projectSite;
     }
 }

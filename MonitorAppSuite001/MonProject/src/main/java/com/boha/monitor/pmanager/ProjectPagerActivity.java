@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.com.boha.monitor.library.ClaimAndInvoicePagerActivity;
@@ -41,6 +42,7 @@ import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
+import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
 import java.util.ArrayList;
@@ -93,6 +95,8 @@ public class ProjectPagerActivity extends ActionBarActivity
                 }
                 mDrawerAdapter = new DrawerAdapter(getApplicationContext(), R.layout.drawer_item, sTitles, company);
                 View v = inflater.inflate(R.layout.hero_image, null);
+                ImageView img = (ImageView)v.findViewById(R.id.HERO_image);
+                img.setBackgroundDrawable(Util.getRandomHeroImage(ctx));
                 drawerListView.addHeaderView(v);
                 drawerListView.setAdapter(mDrawerAdapter);
                 drawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -141,13 +145,14 @@ public class ProjectPagerActivity extends ActionBarActivity
     }
 
     private void getCompanyData() {
-        Log.w(LOG,"############# getCompanyData................");
+        Log.w(LOG, "############# getCompanyData................");
         RequestDTO w = new RequestDTO();
         w.setRequestType(RequestDTO.GET_COMPANY_DATA);
         w.setCompanyID(SharedUtil.getCompany(ctx).getCompanyID());
 
         setRefreshActionButtonState(true);
-        projectListFragment.rotateLogo();
+        if (projectListFragment != null)
+            projectListFragment.rotateLogo();
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO r) {
@@ -155,8 +160,9 @@ public class ProjectPagerActivity extends ActionBarActivity
                     @Override
                     public void run() {
                         setRefreshActionButtonState(false);
-                        projectListFragment.stopRotatingLogo();
-                        Log.e(LOG,"############# getCompanyData responded");
+                        if (projectListFragment != null)
+                            projectListFragment.stopRotatingLogo();
+                        Log.e(LOG, "############# getCompanyData responded");
                         if (!ErrorUtil.checkServerError(ctx, r)) {
                             return;
                         }
@@ -209,6 +215,7 @@ public class ProjectPagerActivity extends ActionBarActivity
             INVOICES = 6, HAPPY_LETTERS = 7, STATUS_NOTIFICATIONS = 8;
 
     Menu mMenu;
+
     public void setRefreshActionButtonState(final boolean refreshing) {
         if (mMenu != null) {
             final MenuItem refreshItem = mMenu.findItem(R.id.action_refresh);
@@ -221,6 +228,7 @@ public class ProjectPagerActivity extends ActionBarActivity
             }
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.manager_pager, menu);
@@ -233,7 +241,7 @@ public class ProjectPagerActivity extends ActionBarActivity
         int id = item.getItemId();
 
         if (id == R.id.action_help) {
-            ToastUtil.toast(ctx,ctx.getString(R.string.under_cons));
+            ToastUtil.toast(ctx, ctx.getString(R.string.under_cons));
             return true;
         }
         if (id == R.id.action_refresh) {
@@ -348,29 +356,29 @@ public class ProjectPagerActivity extends ActionBarActivity
 
     @Override
     public void onGalleryRequested(ProjectDTO project) {
-        Intent i = new Intent(this,ImagePagerActivity.class);
-        i.putExtra("project",project);
-        i.putExtra("type",ImagePagerActivity.PROJECT);
+        Intent i = new Intent(this, ImagePagerActivity.class);
+        i.putExtra("project", project);
+        i.putExtra("type", ImagePagerActivity.PROJECT);
         startActivity(i);
     }
 
     @Override
     public void onMapRequested(ProjectDTO project) {
         Intent i = new Intent(this, MonitorMapActivity.class);
-        i.putExtra("project",project);
+        i.putExtra("project", project);
         startActivity(i);
     }
 
     @Override
     public void onClaimsAndInvoicesRequested(ProjectDTO project) {
         Intent i = new Intent(this, ClaimAndInvoicePagerActivity.class);
-        i.putExtra("project",project);
+        i.putExtra("project", project);
         startActivity(i);
     }
 
     @Override
     public void onStatusReportRequested() {
-        mPager.setCurrentItem(1,true);
+        mPager.setCurrentItem(1, true);
     }
 
     static final int PICTURE_REQUESTED = 9133;

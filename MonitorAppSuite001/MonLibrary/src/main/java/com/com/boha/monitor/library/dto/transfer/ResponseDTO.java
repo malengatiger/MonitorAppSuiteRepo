@@ -31,6 +31,7 @@ import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.ProjectStatusTypeDTO;
 import com.com.boha.monitor.library.dto.ProvinceDTO;
 import com.com.boha.monitor.library.dto.SubTaskDTO;
+import com.com.boha.monitor.library.dto.SubTaskStatusDTO;
 import com.com.boha.monitor.library.dto.TaskDTO;
 import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.dto.TownshipDTO;
@@ -51,6 +52,7 @@ public class ResponseDTO implements Serializable {
     private String message, sessionID, GCMRegistrationID,fileString;
     private List<String> taskImageFileNameList;
     private List<BankDTO> bankList;
+    private List<SubTaskStatusDTO> subTaskStatusList;
     private List<SubTaskDTO> subTaskList;
     private List<String> siteImageFileNameList;
     private List<PhotoUploadDTO> photoUploadList = new ArrayList<>();
@@ -83,6 +85,14 @@ public class ResponseDTO implements Serializable {
     //
     private CompanyDTO company;
     private CompanyStaffDTO companyStaff;
+
+    public List<SubTaskStatusDTO> getSubTaskStatusList() {
+        return subTaskStatusList;
+    }
+
+    public void setSubTaskStatusList(List<SubTaskStatusDTO> subTaskStatusList) {
+        this.subTaskStatusList = subTaskStatusList;
+    }
 
     public Integer getStatusCountInPeriod() {
         return statusCountInPeriod;

@@ -27,6 +27,7 @@ import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.ProjectStatusTypeDTO;
 import com.com.boha.monitor.library.dto.SubTaskDTO;
+import com.com.boha.monitor.library.dto.SubTaskStatusDTO;
 import com.com.boha.monitor.library.dto.TaskDTO;
 import com.com.boha.monitor.library.dto.TaskPriceDTO;
 import com.com.boha.monitor.library.dto.TaskStatusDTO;
@@ -50,6 +51,7 @@ public class RequestDTO implements Serializable {
             projectSiteID, projectSiteTaskID,loginType,
             countryID, contractorClaimID, invoiceID,
             beneficiaryID, engineerID;
+    private SubTaskStatusDTO subTaskStatus;
     private Date startDate, endDate;
     private String email, pin, gcmRegistrationID;
     private Double latitude, longitude;
@@ -135,7 +137,8 @@ public class RequestDTO implements Serializable {
             ADD_BANK_DETAILS = 308,
             ADD_BANK = 309,
             CONFIRM_LOCATION = 310,
-            ADD_SUB_TASK = 311;
+            ADD_SUB_TASK = 311,
+            ADD_SUBTASK_STATUS = 312;
 
     //updates
     public static final int
@@ -175,6 +178,14 @@ public class RequestDTO implements Serializable {
 
     //
 
+
+    public SubTaskStatusDTO getSubTaskStatus() {
+        return subTaskStatus;
+    }
+
+    public void setSubTaskStatus(SubTaskStatusDTO subTaskStatus) {
+        this.subTaskStatus = subTaskStatus;
+    }
 
     public TaskPriceDTO getTaskPrice() {
         return taskPrice;
