@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.com.boha.monitor.library.ClaimAndInvoicePagerActivity;
 import com.com.boha.monitor.library.ImagePagerActivity;
@@ -97,6 +98,8 @@ public class ProjectPagerActivity extends ActionBarActivity
                 View v = inflater.inflate(R.layout.hero_image, null);
                 ImageView img = (ImageView)v.findViewById(R.id.HERO_image);
                 img.setBackgroundDrawable(Util.getRandomHeroImage(ctx));
+                TextView txt = (TextView)v.findViewById(R.id.HERO_caption);
+                txt.setText(ctx.getString(R.string.projects));
                 drawerListView.addHeaderView(v);
                 drawerListView.setAdapter(mDrawerAdapter);
                 drawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

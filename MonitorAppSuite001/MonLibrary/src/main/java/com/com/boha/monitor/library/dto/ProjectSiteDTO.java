@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author aubreyM
  */
-public class ProjectSiteDTO implements Serializable {
+public class ProjectSiteDTO implements Serializable, Comparable<ProjectSiteDTO> {
 
     public static final int ACTION_ADD = 1, ACTION_UPDATE = 2, ACTION_DELETE = 3;
     private static final long serialVersionUID = 1L;
@@ -186,4 +186,20 @@ public class ProjectSiteDTO implements Serializable {
     }
 
 
+    /**
+     * Compares this object to the specified object to determine their relative
+     * order.
+     *
+     * @param another the object to compare to this instance.
+     * @return a negative integer if this instance is less than {@code another};
+     * a positive integer if this instance is greater than
+     * {@code another}; 0 if this instance has the same order as
+     * {@code another}.
+     * @throws ClassCastException if {@code another} cannot be converted into something
+     *                            comparable to {@code this} instance.
+     */
+    @Override
+    public int compareTo(ProjectSiteDTO another) {
+        return this.projectSiteName.compareTo(another.getProjectSiteName());
+    }
 }

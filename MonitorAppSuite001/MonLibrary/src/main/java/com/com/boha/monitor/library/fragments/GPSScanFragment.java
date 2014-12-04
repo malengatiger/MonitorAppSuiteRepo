@@ -102,6 +102,8 @@ public class GPSScanFragment extends Fragment implements PageFragment {
             public void onClick(View v) {
                 if (projectSite.getLatitude() != null) {
                     Intent i = new Intent(ctx, MonitorMapActivity.class);
+                    projectSite.setLatitude(location.getLatitude());
+                    projectSite.setLongitude(location.getLongitude());
                     i.putExtra("projectSite", projectSite);
                     startActivity(i);
                 }

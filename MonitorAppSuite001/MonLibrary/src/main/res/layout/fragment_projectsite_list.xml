@@ -10,13 +10,14 @@
     <RelativeLayout
         android:id="@+id/SITE_LIST_TOP"
         android:layout_width="match_parent"
-        android:layout_height="1dp">
+        android:layout_height="wrap_content">
+        <include layout="@layout/search_layout" />
 
     </RelativeLayout>
 
     <ListView
         android:background="@color/white"
-        android:id="@android:id/list"
+        android:id="@+id/SLT_list"
         android:layout_below="@id/SITE_LIST_TOP"
         android:layout_marginTop="8dp"
         android:dividerHeight="8dp"

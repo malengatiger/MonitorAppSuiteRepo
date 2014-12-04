@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/beige_pale"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/SLT_heroImage"
+        android:src="@drawable/banner_construction11"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
+
+    <RelativeLayout
+        android:id="@+id/SLT_bottomLayout"
+        android:layout_below="@id/SLT_heroImage"
+        android:layout_width="match_parent"
+        android:padding="@dimen/mon_padding"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/SLT_imgSearch1"
+            android:src="@android:drawable/ic_menu_search"
+            android:text="Find Something"
+            android:layout_alignParentLeft="true"
+            android:tint="@color/blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/SLT_editSearch"
+            android:layout_marginLeft="@dimen/mon_wider"
+            android:layout_marginRight="@dimen/mon_wider"
+            android:hint="Search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/SLT_imgSearch2"
+            android:src="@android:drawable/ic_menu_search"
+            android:text="Find Something"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/mon_padding"
+            android:tint="@color/blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+</RelativeLayout>

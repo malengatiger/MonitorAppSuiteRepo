@@ -12,7 +12,7 @@
 
         <TextView
             android:id="@+id/SSS_number"
-            style="@style/GreyCircle"
+            style="@style/GreyCircleSmall"
             android:text="0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -52,7 +52,7 @@
 
             <TextView
                 android:id="@+id/SSS_date"
-                style="@style/Title2TextStyleBlue"
+                style="@style/Title3TextStyleBlue"
                 android:text="10 December 2014"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/mon_middle"
@@ -106,7 +106,7 @@
             android:text="Whatever the status happens to be at the time of writing"
             android:layout_marginLeft="@dimen/mon_margin"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/mon_padding"
+            android:layout_marginTop="@dimen/mon_divider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

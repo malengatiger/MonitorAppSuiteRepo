@@ -7,13 +7,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListPopupWindow;
 import android.widget.TextView;
@@ -32,6 +36,7 @@ import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -64,6 +69,8 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
     View view, topView;
     ImageView imgLogo;
     ObjectAnimator objectAnimator;
+    ImageView imgSearch1, imgSearch2, heroImage;
+    EditText editSearch;
 
     static final String LOG = ProjectSiteListFragment.class.getSimpleName();
 
@@ -87,8 +94,51 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
         txtCount = (TextView) view.findViewById(R.id.SITE_LIST_siteCount);
         imgLogo = (ImageView) view.findViewById(R.id.SITE_LIST_imgLogo);
         topView = view.findViewById(R.id.SITE_LIST_TOP);
+        imgSearch1 = (ImageView) view.findViewById(R.id.SLT_imgSearch1);
+        imgSearch2 = (ImageView) view.findViewById(R.id.SLT_imgSearch2);
+        editSearch = (EditText)view.findViewById(R.id.SLT_editSearch);
+        heroImage  = (ImageView) view.findViewById(R.id.SLT_heroImage);
+        heroImage.setImageDrawable(Util.getRandomHeroImage(ctx));
+
+        editSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                search();
+            }
+        });
+
+        editSearch.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                return false;
+            }
+        });
+        imgSearch1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search();
+            }
+        });
+        imgSearch2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search();
+            }
+        });
+
         imgLogo.setVisibility(View.GONE);
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
+        mListView = (AbsListView) view.findViewById(R.id.SLT_list);
         Statics.setRobotoFontLight(ctx, txtCount);
         if (project.getProjectSiteList() != null && !project.getProjectSiteList().isEmpty()) {
             setList();
@@ -96,6 +146,20 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
         return view;
     }
 
+    private void search() {
+        if (editSearch.getText().toString().isEmpty()) {
+            return;
+        }
+        int index = 0;
+        for (ProjectSiteDTO site: project.getProjectSiteList()) {
+            if (site.getProjectSiteName().contains(editSearch.getText().toString())) {
+                break;
+            }
+            index++;
+        }
+        mListView.setSelection(index);
+
+    }
     public void rotateLogo() {
         imgLogo.setVisibility(View.VISIBLE);
         objectAnimator = ObjectAnimator.ofFloat(imgLogo, "rotation", 0.0f, 360f);
@@ -134,6 +198,7 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
 
     private void setList() {
         txtCount.setText("" + project.getProjectSiteList().size());
+        Collections.sort(project.getProjectSiteList());
 
         projectSiteAdapter = new ProjectSiteAdapter(ctx, R.layout.site_item,
                 project.getProjectSiteList());
@@ -157,7 +222,7 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
                     actionsWindow = new ListPopupWindow(getActivity());
                     actionsWindow.setAdapter(new SpinnerListAdapter(ctx,
                             R.layout.xxsimple_spinner_item, list, SpinnerListAdapter.INVOICE_ACTIONS, project.getProjectName(), false));
-                    actionsWindow.setAnchorView(topView);
+                    actionsWindow.setAnchorView(heroImage);
                     actionsWindow.setWidth(600);
                     actionsWindow.setHorizontalOffset(72);
                     actionsWindow.setModal(true);
