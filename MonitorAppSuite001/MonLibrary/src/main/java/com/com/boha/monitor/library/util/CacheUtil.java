@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by aubreyM on 2014/06/30.
@@ -44,6 +45,7 @@ public class CacheUtil {
     public static void cacheData(Context context, ResponseDTO r, int type, CacheUtilListener cacheUtilListener) {
         dataType = type;
         response = r;
+        response.setLastCacheDate(new Date());
         listener = cacheUtilListener;
         ctx = context;
         new CacheTask().execute();
@@ -52,6 +54,7 @@ public class CacheUtil {
     public static void cacheProjectData(Context context, ResponseDTO r, int type, Integer pID, CacheUtilListener cacheUtilListener) {
         dataType = type;
         response = r;
+        response.setLastCacheDate(new Date());
         listener = cacheUtilListener;
         projectID = pID;
         ctx = context;

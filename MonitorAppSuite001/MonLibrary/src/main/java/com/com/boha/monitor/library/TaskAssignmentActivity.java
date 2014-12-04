@@ -117,6 +117,7 @@ public class TaskAssignmentActivity extends ActionBarActivity implements
 
     @Override
     public void onSubTaskListRequested(ProjectSiteTaskDTO task, ProjectSiteTaskStatusDTO taskStatus) {
+        if (task == null) throw new UnsupportedOperationException("##onSubTaskListRequested, ProjectSiteTaskDTO is null");
         Intent i = new Intent(ctx, SubTaskStatusAssignmentActivity.class);
         task.setProjectSiteName(site.getProjectSiteName());
         task.setProjectName(site.getProjectName());

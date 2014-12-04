@@ -75,6 +75,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
                         buildPages();
                     }
                 }
+
                 getProjectData();
             }
 
@@ -208,10 +209,14 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
         }
         LocationRequest lr = new LocationRequest();
         lr.setFastestInterval(1000);
-        lr.setInterval(5000);
+        lr.setInterval(2500);
         lr.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-        mLocationClient.requestLocationUpdates(lr,this);
+        try {
+            mLocationClient.requestLocationUpdates(lr, this);
+        } catch (IllegalStateException e) {
+            Log.e(LOG,"---- mLocationClient.requestLocationUpdates ILLEGAL STATE",e);
+        }
     }
 
     @Override
@@ -305,19 +310,23 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
 
     private void buildPages() {
 
-        pageFragmentList = new ArrayList<>();
-        projectSiteListFragment = new ProjectSiteListFragment();
-        Bundle data1 = new Bundle();
-        data1.putSerializable("project", project);
-        data1.putInt("index",selectedSiteIndex);
-        projectSiteListFragment.setArguments(data1);
+        if (pageFragmentList == null) {
+            pageFragmentList = new ArrayList<>();
+            projectSiteListFragment = new ProjectSiteListFragment();
+            Bundle data1 = new Bundle();
+            data1.putSerializable("project", project);
+            data1.putInt("index", selectedSiteIndex);
+            projectSiteListFragment.setArguments(data1);
 
-        gpsScanFragment = new GPSScanFragment();
+            gpsScanFragment = new GPSScanFragment();
 
-        pageFragmentList.add(projectSiteListFragment);
-        pageFragmentList.add(gpsScanFragment);
+            pageFragmentList.add(projectSiteListFragment);
+            pageFragmentList.add(gpsScanFragment);
 
-        initializeAdapter();
+            initializeAdapter();
+        } else {
+            projectSiteListFragment.setProject(project);
+        }
 
     }
 

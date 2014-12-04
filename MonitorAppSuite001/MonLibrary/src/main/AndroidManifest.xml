@@ -22,18 +22,7 @@
             android:name="com.com.boha.monitor.library.services.PhotoUploadService"
             android:exported="false" />
 
-        <activity
-            android:name="com.com.boha.monitor.library.StatusReportActivity"
-            android:label="@string/title_activity_status_report" >
-        </activity>
-        <activity
-            android:name="com.com.boha.monitor.library.SubTaskActivity"
-            android:label="@string/title_activity_sub_task" >
-        </activity>
-        <activity
-            android:name="com.com.boha.monitor.library.SubTaskStatusAssignmentActivity"
-            android:label="@string/title_activity_sub_task_status_assignment" >
-        </activity>
+
     </application>
 
 </manifest>

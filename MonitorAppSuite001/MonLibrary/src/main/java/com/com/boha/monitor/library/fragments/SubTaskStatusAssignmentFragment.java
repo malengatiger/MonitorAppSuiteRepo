@@ -1,5 +1,6 @@
 package com.com.boha.monitor.library.fragments;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -68,6 +69,7 @@ public class SubTaskStatusAssignmentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.w(LOG,"########## onCreateView");
         this.inflater = inflater;
         view = inflater.inflate(R.layout.fragment_assign_site_subtasks, container, false);
         ctx = getActivity();
@@ -90,10 +92,17 @@ public class SubTaskStatusAssignmentFragment extends Fragment {
         getCachedData();
         return view;
     }
-
-    public void setProjectSiteTask(ProjectSiteTaskDTO task, ProjectSiteTaskStatusDTO projectSiteTaskStatus) {
+    @Override
+    public void onStop() {
+        Log.e(LOG,"############## onStop");
+    }
+    @Override
+    public void onResume() {
+        Log.w(LOG,"############## onResume");
+    }
+    public void setProjectSiteTask(ProjectSiteTaskDTO task, ProjectSiteTaskStatusDTO status) {
         this.task = task;
-        this.projectSiteTaskStatus = projectSiteTaskStatus;
+        this.projectSiteTaskStatus = status;
         subTaskList = task.getTask().getSubTaskList();
         txtTaskName.setText(task.getTask().getTaskName());
         if (projectSiteTaskStatus != null) {
@@ -110,6 +119,8 @@ public class SubTaskStatusAssignmentFragment extends Fragment {
             }
         }
         setList();
+        mListView.setEnabled(false);
+        mListView.setAlpha(0.5f);
     }
     List<SubTaskStatusDTO> subTaskStatusList;
     private void setList() {
@@ -230,6 +241,10 @@ public class SubTaskStatusAssignmentFragment extends Fragment {
                                 break;
                         }
 
+                        mListView.setEnabled(true);
+                        ObjectAnimator an = ObjectAnimator.ofFloat(mListView, "alpha", 0f, 1f);
+                        an.setDuration(1000);
+                        an.start();
                     }
                 });
             }

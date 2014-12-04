@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/mon_padding"
+    android:background="@color/grey"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/top"
+        android:background="@color/white"
+        android:padding="@dimen/mon_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        style="@style/Title2TextStyleBlue"
+        android:text="Animate Views"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/middle"
+        android:layout_below="@id/top"
+        android:layout_marginTop="@dimen/mon_padding"
+        android:background="@color/white"
+        android:padding="@dimen/mon_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/traffic_lights"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/bottom"
+        android:layout_below="@id/middle"
+        android:layout_marginTop="@dimen/mon_padding"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/fragment_assign_site_subtasks"/>
+    </RelativeLayout>
+
+</RelativeLayout>

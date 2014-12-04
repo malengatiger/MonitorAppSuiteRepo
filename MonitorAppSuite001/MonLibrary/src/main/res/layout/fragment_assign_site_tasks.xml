@@ -33,9 +33,17 @@
         <include layout="@layout/traffic_lights" />
 
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/AST_subs"
+        android:layout_below="@id/AST_middle"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/fragment_assign_site_subtasks"/>
+        </RelativeLayout>
 
     <RelativeLayout
-        android:layout_below="@id/AST_middle"
+        android:layout_below="@id/AST_subs"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

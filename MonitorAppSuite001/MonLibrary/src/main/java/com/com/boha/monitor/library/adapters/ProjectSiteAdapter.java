@@ -168,7 +168,7 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
         Statics.setRobotoFontBold(ctx, item.txtDate);
         Statics.setRobotoFontLight(ctx, item.txtName);
 
-        animateView(convertView);
+        //animateView(convertView);
         return (convertView);
     }
 

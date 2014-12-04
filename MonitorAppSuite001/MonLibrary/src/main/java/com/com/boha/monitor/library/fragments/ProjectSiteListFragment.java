@@ -100,6 +100,8 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
         heroImage  = (ImageView) view.findViewById(R.id.SLT_heroImage);
         heroImage.setImageDrawable(Util.getRandomHeroImage(ctx));
 
+        Util.resizeHeight(heroImage, 300,1000,null);
+
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -195,6 +197,12 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
         objectAnimator.cancel();
     }
 
+    public void setProject(ProjectDTO project) {
+        this.project = project;
+        Collections.sort(project.getProjectSiteList());
+        projectSiteAdapter.notifyDataSetChanged();
+
+    }
 
     private void setList() {
         txtCount.setText("" + project.getProjectSiteList().size());

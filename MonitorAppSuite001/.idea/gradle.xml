@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/MonLibrary" />
             <option value="$PROJECT_DIR$/MonOperations" />
             <option value="$PROJECT_DIR$/MonProject" />
+            <option value="$PROJECT_DIR$/appToTestAnimation" />
           </set>
         </option>
       </GradleProjectSettings>

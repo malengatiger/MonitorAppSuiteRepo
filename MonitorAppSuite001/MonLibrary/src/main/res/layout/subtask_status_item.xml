@@ -2,7 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:padding="@dimen/mon_padding"
+    android:padding="@dimen/mon_margin"
     android:layout_height="wrap_content">
 
     <RelativeLayout
@@ -39,8 +39,9 @@
         <TextView
             android:id="@+id/SSS_label"
             style="@style/TextStyleGreySmall"
-            android:layout_marginLeft="@dimen/mon_padding"
+            android:layout_marginRight="@dimen/mon_padding"
             android:text="Last Status Date"
+            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

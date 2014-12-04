@@ -2,8 +2,6 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:padding="@dimen/mon_padding"
-    android:background="@color/grey"
     android:layout_height="match_parent">
 
     <RelativeLayout
@@ -59,7 +57,7 @@
 
     <TextView
         android:id="@+id/SUBSTAT_number"
-        style="@style/GreenCircle"
+        style="@style/GreyCircle"
         android:text="+"
         android:textSize="28sp"
         android:layout_marginTop="@dimen/mon_wide"

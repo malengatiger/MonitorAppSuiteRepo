@@ -1,5 +1,6 @@
 package com.com.boha.monitor.library.util;
 
+import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -21,7 +22,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
+import android.widget.TextView;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.ProjectDTO;
@@ -38,18 +41,305 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Random;
 
 public class Util {
 
+    public interface UtilAnimationListener {
+        public void onAnimationEnded();
+    }
+
     static final String LOG = Util.class.getSimpleName();
     static Random random = new Random(System.currentTimeMillis());
+    static int maxFlashes, count;
+
+    static final int DURATION_FAST = 100, PAUSE_FAST = 100,
+            DURATION_MEDIUM = 300, PAUSE_MEDIUM = 300,
+            DURATION_SLOW = 500, PAUSE_SLOW = 500;
+
+    public static final int FLASH_SLOW = 1,
+            FLASH_MEDIUM = 2,
+            FLASH_FAST = 3,
+            INFINITE_FLASHES = 9999;
+
+    public static void resizeHeight(final View view, final int height, final long duration, final UtilAnimationListener listener) {
+        Log.e(LOG, "##### view height is " + height);
+
+
+        ResizeAnimation a = new ResizeAnimation(view, 0);
+        a.setDuration(1);
+        a.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ResizeAnimation an = new ResizeAnimation(view, height);
+                an.setDuration(duration);
+                an.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        if (listener != null)
+                            listener.onAnimationEnded();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                view.startAnimation(an);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        view.startAnimation(a);
+    }
+
+    public static void flashOnce(View view, long duration) {
+        ObjectAnimator an = ObjectAnimator.ofFloat(view, "alpha", 0, 1);
+        an.setRepeatMode(ObjectAnimator.REVERSE);
+        an.setDuration(duration);
+        an.setInterpolator(new AccelerateDecelerateInterpolator());
+        an.start();
+
+    }
+
+    public static void flashInfinite(final View view, final long duration) {
+        ObjectAnimator an = ObjectAnimator.ofFloat(view, "alpha", 0, 1);
+        an.setRepeatMode(ObjectAnimator.REVERSE);
+        an.setDuration(duration);
+        an.setInterpolator(new AccelerateDecelerateInterpolator());
+        an.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                flashInfinite(view, duration);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        an.start();
+
+    }
+
+    public static void flashSeveralTimes(final View view, final long duration, final int max) {
+        final ObjectAnimator an = ObjectAnimator.ofFloat(view, "alpha", 0, 1);
+        an.setRepeatMode(ObjectAnimator.REVERSE);
+        an.setDuration(duration);
+        an.setInterpolator(new AccelerateDecelerateInterpolator());
+        an.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                count++;
+                if (count > max) {
+                    count = 0;
+                    an.cancel();
+                    return;
+                }
+                flashSeveralTimes(view, duration, max);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        an.start();
+
+    }
+
+    public static void flashTrafficLights(final TextView red, final TextView amber, final TextView green,
+                                          final int max, final int pace) {
+        maxFlashes = max;
+        ObjectAnimator an = ObjectAnimator.ofFloat(red, "alpha", 0, 1);
+        ObjectAnimator an2 = ObjectAnimator.ofFloat(amber, "alpha", 0, 1);
+        ObjectAnimator an3 = ObjectAnimator.ofFloat(green, "alpha", 0, 1);
+        AnimatorSet aSet = new AnimatorSet();
+        switch (pace) {
+            case FLASH_FAST:
+                an.setDuration(DURATION_FAST);
+                aSet.setStartDelay(PAUSE_FAST);
+                break;
+            case FLASH_MEDIUM:
+                an.setDuration(DURATION_MEDIUM);
+                aSet.setStartDelay(PAUSE_MEDIUM);
+                break;
+            case FLASH_SLOW:
+                an.setDuration(DURATION_SLOW);
+                aSet.setStartDelay(PAUSE_SLOW);
+                break;
+        }
+
+        an.setInterpolator(new AccelerateDecelerateInterpolator());
+        an2.setInterpolator(new AccelerateDecelerateInterpolator());
+        an3.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        an.setRepeatMode(ObjectAnimator.REVERSE);
+        an2.setRepeatMode(ObjectAnimator.REVERSE);
+        an3.setRepeatMode(ObjectAnimator.REVERSE);
+
+        List<Animator> animatorList = new ArrayList<>();
+        animatorList.add((Animator) an);
+        animatorList.add((Animator) an2);
+        animatorList.add((Animator) an3);
+
+
+        aSet.playSequentially(animatorList);
+        aSet.setInterpolator(new AccelerateDecelerateInterpolator());
+
+
+        aSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                count++;
+                if (maxFlashes == INFINITE_FLASHES) {
+                    flashTrafficLights(red, amber, green, max, pace);
+                    return;
+                }
+
+                if (count > maxFlashes) {
+                    count = 0;
+                    return;
+                }
+                flashTrafficLights(red, amber, green, max, pace);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        aSet.start();
+    }
+
+    public static void shrink(View view, long duration, final UtilAnimationListener listener) {
+        ObjectAnimator anx = ObjectAnimator.ofFloat(view, "scaleX", 1, 0);
+        ObjectAnimator any = ObjectAnimator.ofFloat(view, "scaleY", 1, 0);
+
+        anx.setDuration(duration);
+        any.setDuration(duration);
+        anx.setInterpolator(new AccelerateInterpolator());
+        any.setInterpolator(new AccelerateInterpolator());
+
+        AnimatorSet set = new AnimatorSet();
+        List<Animator> animatorList = new ArrayList<>();
+        animatorList.add((Animator) anx);
+        animatorList.add((Animator) any);
+        set.playTogether(animatorList);
+        set.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (listener != null)
+                    listener.onAnimationEnded();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        set.start();
+    }
+
+    public static void explode(View view, long duration, final UtilAnimationListener listener) {
+        ObjectAnimator anx = ObjectAnimator.ofFloat(view, "scaleX", 0, 1);
+        ObjectAnimator any = ObjectAnimator.ofFloat(view, "scaleY", 0, 1);
+
+        anx.setDuration(duration);
+        any.setDuration(duration);
+        anx.setInterpolator(new AccelerateInterpolator());
+        any.setInterpolator(new AccelerateInterpolator());
+
+        AnimatorSet set = new AnimatorSet();
+        List<Animator> animatorList = new ArrayList<>();
+        animatorList.add((Animator) anx);
+        animatorList.add((Animator) any);
+        set.playTogether(animatorList);
+        set.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (listener != null)
+                    listener.onAnimationEnded();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        set.start();
+    }
+
     public static Drawable getRandomHeroImage(Context ctx) {
         random = new Random(System.currentTimeMillis());
         int index = random.nextInt(17);
         switch (index) {
             case 0:
-                return ctx.getResources().getDrawable(R.drawable.banner_construction1);
+                return ctx.getResources().getDrawable(R.drawable.banner_construction10);
             case 1:
                 return ctx.getResources().getDrawable(
                         R.drawable.banner_construction3);
@@ -61,7 +351,7 @@ public class Util {
                         R.drawable.banner_construction5);
             case 4:
                 return ctx.getResources().getDrawable(
-                        R.drawable.banner_construction6);
+                        R.drawable.banner_construction5);
             case 5:
                 return ctx.getResources().getDrawable(
                         R.drawable.banner_construction7);
@@ -91,7 +381,7 @@ public class Util {
                         R.drawable.banner_report3);
             case 14:
                 return ctx.getResources().getDrawable(
-                        R.drawable.banner_construction1);
+                        R.drawable.banner_report2);
             case 15:
                 return ctx.getResources().getDrawable(
                         R.drawable.banner_report);
@@ -100,12 +390,13 @@ public class Util {
                         R.drawable.banner_report2);
             case 17:
                 return ctx.getResources().getDrawable(
-                       R.drawable.banner_report3);
+                        R.drawable.banner_report3);
 
         }
         return ctx.getResources().getDrawable(
                 R.drawable.banner_report2);
     }
+
     public static void writeLocationToExif(String filePath, Location loc) {
         try {
             ExifInterface ef = new ExifInterface(filePath);
@@ -115,34 +406,39 @@ public class Util {
                 ef.setAttribute(ExifInterface.TAG_GPS_LATITUDE_REF, "N");
             else
                 ef.setAttribute(ExifInterface.TAG_GPS_LATITUDE_REF, "S");
-            if (loc.getLongitude()>0)
+            if (loc.getLongitude() > 0)
                 ef.setAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF, "E");
             else
                 ef.setAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF, "W");
             ef.saveAttributes();
-            Log.e(LOG,"### Exif attributes written to " + filePath);
-        } catch (IOException e) {}
+            Log.e(LOG, "### Exif attributes written to " + filePath);
+        } catch (IOException e) {
+        }
     }
+
     //-----------------------------------------------------------------------------------
     private static String decimalToDMS(double coord) {
         coord = coord > 0 ? coord : -coord;  // -105.9876543 -> 105.9876543
-        String sOut = Integer.toString((int)coord) + "/1,";   // 105/1,
+        String sOut = Integer.toString((int) coord) + "/1,";   // 105/1,
         coord = (coord % 1) * 60;         // .987654321 * 60 = 59.259258
-        sOut = sOut + Integer.toString((int)coord) + "/1,";   // 105/1,59/1,
+        sOut = sOut + Integer.toString((int) coord) + "/1,";   // 105/1,59/1,
         coord = (coord % 1) * 60000;             // .259258 * 60000 = 15555
-        sOut = sOut + Integer.toString((int)coord) + "/1000";   // 105/1,59/1,15555/1000
-        Log.i(LOG,"decimalToDMS coord: " + coord + " converted to: " + sOut);
+        sOut = sOut + Integer.toString((int) coord) + "/1000";   // 105/1,59/1,15555/1000
+        Log.i(LOG, "decimalToDMS coord: " + coord + " converted to: " + sOut);
         return sOut;
     }
+
     public static Location getLocationFromExif(String filePath) {
         String sLat = "", sLatR = "", sLon = "", sLonR = "";
         try {
             ExifInterface ef = new ExifInterface(filePath);
-            sLat  = ef.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
-            sLon  = ef.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
+            sLat = ef.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
+            sLon = ef.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
             sLatR = ef.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF);
             sLonR = ef.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF);
-        } catch (IOException e) {return null;}
+        } catch (IOException e) {
+            return null;
+        }
 
         double lat = DMSToDouble(sLat);
         if (lat > 180.0) return null;
@@ -158,18 +454,20 @@ public class Util {
         Log.i(LOG, "----> File Exif lat: " + loc.getLatitude() + " lng: " + loc.getLongitude());
         return loc;
     }
+
     //-------------------------------------------------------------------------
-    private static double DMSToDouble(String sDMS){
+    private static double DMSToDouble(String sDMS) {
         double dRV = 999.0;
         try {
             String[] DMSs = sDMS.split(",", 3);
             String s[] = DMSs[0].split("/", 2);
-            dRV = (new Double(s[0])/new Double(s[1]));
+            dRV = (new Double(s[0]) / new Double(s[1]));
             s = DMSs[1].split("/", 2);
-            dRV += ((new Double(s[0])/new Double(s[1]))/60);
+            dRV += ((new Double(s[0]) / new Double(s[1])) / 60);
             s = DMSs[2].split("/", 2);
-            dRV += ((new Double(s[0])/new Double(s[1]))/3600);
-        } catch (Exception e) {}
+            dRV += ((new Double(s[0]) / new Double(s[1])) / 3600);
+        } catch (Exception e) {
+        }
         return dRV;
     }
 
@@ -178,20 +476,22 @@ public class Util {
     public static final long WEEK = 7 * DAY;
     public static final long WEEKS = 2 * WEEK;
     public static final long MONTH = 30 * DAY;
+
     public interface ProjectDataRefreshListener {
         public void onDataRefreshed(ProjectDTO project);
+
         public void onError();
     }
 
     public static void refreshProjectData(final Activity activity,
                                           final Context ctx, final Integer projectID,
                                           final ProjectDataRefreshListener listener) {
-        Log.i(LOG,"######## refreshProjectData started ....");
+        Log.i(LOG, "######## refreshProjectData started ....");
         RequestDTO w = new RequestDTO();
         w.setRequestType(RequestDTO.GET_PROJECT_DATA);
         w.setProjectID(projectID);
 
-        WebSocketUtil.sendRequest(ctx,Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
+        WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
                 activity.runOnUiThread(new Runnable() {
@@ -232,6 +532,7 @@ public class Util {
             }
         });
     }
+
     public static String getTruncated(double num) {
         String x = "" + num;
         int idx = x.indexOf(".");
@@ -288,7 +589,7 @@ public class Util {
         return sb.toString();
     }
 
-    public static void hide (View view, long duration) {
+    public static void hide(View view, long duration) {
         ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", 1, 0);
         ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", 1, 0);
         AnimatorSet animSetXY = new AnimatorSet();
@@ -300,7 +601,8 @@ public class Util {
         }
         animSetXY.start();
     }
-    public static void show (View view, long duration) {
+
+    public static void show(View view, long duration) {
         ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", 0, 1);
         ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", 0, 1);
         AnimatorSet animSetXY = new AnimatorSet();
@@ -339,7 +641,7 @@ public class Util {
 
     public static void animateSlideRight(View view, long duration) {
         final ObjectAnimator an = ObjectAnimator.ofFloat(
-                view, "translate", 0, 100,0,100);
+                view, "translate", 0, 100, 0, 100);
         //an.setRepeatCount(ObjectAnimator.REVERSE);
         an.setDuration(duration);
         an.setInterpolator(new AccelerateDecelerateInterpolator());

@@ -39,6 +39,7 @@ import com.com.boha.monitor.library.util.PhotoCache;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,7 +48,9 @@ import java.util.List;
  */
 public class ResponseDTO implements Serializable {
 
+    private double elapsedRequestTimeInSeconds;
     private PhotoCache photoCache;
+    private Date lastCacheDate;
     private Integer statusCode,statusCountInPeriod;
     private String message, sessionID, GCMRegistrationID,fileString;
     private List<String> taskImageFileNameList;
@@ -86,6 +89,14 @@ public class ResponseDTO implements Serializable {
     private CompanyDTO company;
     private CompanyStaffDTO companyStaff;
 
+    public double getElapsedRequestTimeInSeconds() {
+        return elapsedRequestTimeInSeconds;
+    }
+
+    public void setElapsedRequestTimeInSeconds(double elapsedRequestTimeInSeconds) {
+        this.elapsedRequestTimeInSeconds = elapsedRequestTimeInSeconds;
+    }
+
     public List<SubTaskStatusDTO> getSubTaskStatusList() {
         return subTaskStatusList;
     }
@@ -108,6 +119,14 @@ public class ResponseDTO implements Serializable {
 
     public void setPhotoUploadList(List<PhotoUploadDTO> photoUploadList) {
         this.photoUploadList = photoUploadList;
+    }
+
+    public Date getLastCacheDate() {
+        return lastCacheDate;
+    }
+
+    public void setLastCacheDate(Date lastCacheDate) {
+        this.lastCacheDate = lastCacheDate;
     }
 
     public List<EngineerDTO> getEngineerList() {

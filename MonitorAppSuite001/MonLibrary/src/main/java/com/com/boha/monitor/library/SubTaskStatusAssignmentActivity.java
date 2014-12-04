@@ -2,6 +2,7 @@ package com.com.boha.monitor.library;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -14,20 +15,32 @@ public class SubTaskStatusAssignmentActivity extends ActionBarActivity {
 
     ProjectSiteTaskDTO projectSiteTask;
     ProjectSiteTaskStatusDTO projectSiteTaskStatus;
+    static final String LOG = SubTaskStatusAssignmentActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.w(LOG,"############# onCreate.................................not called.......");
         setContentView(R.layout.activity_subtask_status);
         subTaskStatusAssignmentFragment = (SubTaskStatusAssignmentFragment)
                 getSupportFragmentManager().findFragmentById(R.id.fragment);
         projectSiteTask = (ProjectSiteTaskDTO)getIntent().getSerializableExtra("projectSiteTask");
         projectSiteTaskStatus = (ProjectSiteTaskStatusDTO)getIntent().getSerializableExtra("projectSiteTaskStatus");
+        if (projectSiteTask == null)
+            throw new UnsupportedOperationException("### projectSiteTask is NULL from Intent");
         subTaskStatusAssignmentFragment.setProjectSiteTask(projectSiteTask, projectSiteTaskStatus);
 
         setTitle(projectSiteTask.getProjectSiteName());
         getSupportActionBar().setSubtitle(projectSiteTask.getProjectName());
     }
 
+    @Override
+    public void onStop() {
+        Log.e(LOG,"############## onStop");
+    }
+    @Override
+    public void onResume() {
+        Log.e(LOG,"############## onResume");
+    }
 
     SubTaskStatusAssignmentFragment subTaskStatusAssignmentFragment;
     @Override

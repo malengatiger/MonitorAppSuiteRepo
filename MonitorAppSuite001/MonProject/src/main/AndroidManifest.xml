@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.boha.monitor.pmanager" >
+    package="com.boha.monitor.pmanager">
 
     <application
         android:allowBackup="true"
         android:name="com.com.boha.monitor.library.MonApp"
         android:icon="@drawable/ic_launcher"
-        android:theme="@style/ProjectManagerTheme" >
+        android:theme="@style/ProjectManagerTheme">
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -26,7 +26,7 @@
         <activity
             android:name=".SignInActivity"
             android:screenOrientation="portrait"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -42,35 +42,37 @@
         <activity
             android:name="com.com.boha.monitor.library.MonitorMapActivity"
             android:label="@string/title_activity_monitor_map"
-            android:parentActivityName="com.com.boha.monitor.library.ImageActivity" >
+            android:parentActivityName="com.com.boha.monitor.library.ImageActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.com.boha.monitor.library.ImageActivity" />
         </activity>
         <activity
             android:name=".ProjectPagerActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.com.boha.monitor.library.SitePagerActivity"
-            android:screenOrientation="portrait" android:parentActivityName=".ProjectPagerActivity" />
+            android:screenOrientation="portrait"
+            android:parentActivityName=".ProjectPagerActivity" />
         <activity
             android:name="com.com.boha.monitor.library.PictureActivity"
-            android:configChanges="keyboardHidden|orientation">
-        </activity>
+            android:configChanges="keyboardHidden|orientation"></activity>
         <activity
             android:name="com.com.boha.monitor.library.ImagePagerActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.com.boha.monitor.library.ClaimAndInvoicePagerActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.com.boha.monitor.library.StatusReportActivity"
+            android:label="@string/title_activity_status_report"></activity>
         <activity
             android:name="com.com.boha.monitor.library.SubTaskActivity"
-            android:label="@string/title_activity_sub_task"
-            android:parentActivityName=".ProjectPagerActivity">
-        </activity>
+            android:label="@string/title_activity_sub_task"></activity>
+        <activity
+            android:name="com.com.boha.monitor.library.SubTaskStatusAssignmentActivity"
+            android:label="@string/title_activity_sub_task_status_assignment"
+            android:parentActivityName="com.com.boha.monitor.library.TaskAssignmentActivity"></activity>
 
     </application>
     <permission
