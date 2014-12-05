@@ -2,11 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:id="@+id/TRAFF_main"
+    android:background="@color/beige_pale"
     android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/TRAFF_top"
-        android:padding="@dimen/mon_padding"
+        android:padding="@dimen/mon_middle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -15,6 +16,7 @@
             android:text="@string/total_updates"
             android:layout_centerHorizontal="true"
             style="@style/TextStyleSmall"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>

@@ -94,13 +94,17 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
         txtCount = (TextView) view.findViewById(R.id.SITE_LIST_siteCount);
         imgLogo = (ImageView) view.findViewById(R.id.SITE_LIST_imgLogo);
         topView = view.findViewById(R.id.SITE_LIST_TOP);
+
         imgSearch1 = (ImageView) view.findViewById(R.id.SLT_imgSearch1);
         imgSearch2 = (ImageView) view.findViewById(R.id.SLT_imgSearch2);
         editSearch = (EditText)view.findViewById(R.id.SLT_editSearch);
         heroImage  = (ImageView) view.findViewById(R.id.SLT_heroImage);
         heroImage.setImageDrawable(Util.getRandomHeroImage(ctx));
 
-        Util.resizeHeight(heroImage, 300,1000,null);
+        View v = view.findViewById(R.id.SLT_searchLayout);
+
+        //Util.resizeHeight(v, 400, 1000, null);
+        Util.expand(v,2500, null);
 
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override

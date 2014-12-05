@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="@color/beige_pale"
+    android:id="@+id/SLT_searchLayout"
     android:layout_height="wrap_content">
 
     <ImageView
@@ -9,7 +10,7 @@
         android:src="@drawable/banner_construction11"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
-        android:layout_height="100dp" />
+        android:layout_height="120dp" />
 
     <RelativeLayout
         android:id="@+id/SLT_bottomLayout"

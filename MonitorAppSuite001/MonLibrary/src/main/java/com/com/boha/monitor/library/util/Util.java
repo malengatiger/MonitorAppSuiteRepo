@@ -20,6 +20,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
@@ -62,6 +63,60 @@ public class Util {
             FLASH_MEDIUM = 2,
             FLASH_FAST = 3,
             INFINITE_FLASHES = 9999;
+
+    public static void expand(View view, int duration, final UtilAnimationListener listener) {
+
+        //set Visible
+        view.setVisibility(View.VISIBLE);
+
+        final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        view.measure(widthSpec, heightSpec);
+
+        ValueAnimator mAnimator = slideAnimator(view, 0, view.getMeasuredHeight());
+        mAnimator.setDuration(duration);
+        mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (listener != null) listener.onAnimationEnded();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        mAnimator.start();
+
+    }
+
+    private static ValueAnimator slideAnimator(final View view, int start, int end) {
+
+        ValueAnimator animator = ValueAnimator.ofInt(start, end);
+
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                //Update Height
+                int value = (Integer) valueAnimator.getAnimatedValue();
+                ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+                layoutParams.height = value;
+                view.setLayoutParams(layoutParams);
+            }
+        });
+        return animator;
+    }
 
     public static void resizeHeight(final View view, final int height, final long duration, final UtilAnimationListener listener) {
         Log.e(LOG, "##### view height is " + height);
