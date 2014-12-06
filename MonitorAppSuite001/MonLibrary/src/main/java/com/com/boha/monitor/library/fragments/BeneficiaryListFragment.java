@@ -2,6 +2,7 @@ package com.com.boha.monitor.library.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.BeneficiaryImportActivity;
 import com.com.boha.monitor.library.adapters.BeneficiaryAdapter;
 import com.com.boha.monitor.library.dialogs.ProjectPopupDialog;
 import com.com.boha.monitor.library.dto.BeneficiaryDTO;
@@ -20,7 +22,6 @@ import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 
 import java.util.ArrayList;
@@ -72,12 +73,26 @@ public class BeneficiaryListFragment extends Fragment implements PageFragment {
             return view;
         }
         Bundle args = getArguments();
+
         if (args != null) {
             ResponseDTO r = (ResponseDTO) args.getSerializable("projectList");
             projectList = r.getProjectList();
             txtProjectName.setText(projectList.get(0).getProjectName());
             getBeneficiaryList(projectList.get(0).getProjectID());
         }
+
+        txtCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ctx, BeneficiaryImportActivity.class);
+                if (project == null) {
+                    i.putExtra("project", projectList.get(0));
+                } else {
+                    i.putExtra("project", project);
+                }
+                startActivity(i);
+            }
+        });
 
         return view;
     }
@@ -124,12 +139,7 @@ public class BeneficiaryListFragment extends Fragment implements PageFragment {
                 mListener.onBeneficiaryClicked(beneficiary);
             }
         });
-        txtCount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.toast(ctx, "Under Construction");
-            }
-        });
+
     }
 
     @Override
@@ -188,7 +198,7 @@ public class BeneficiaryListFragment extends Fragment implements PageFragment {
 
     /**
      * This interface must be implemented by activities that contain this
-     * fragment to allow objectAnimator interaction in this fragment to be communicated
+     * fragment to allow logoAnimator interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
      */

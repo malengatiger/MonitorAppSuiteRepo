@@ -25,12 +25,15 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
+
+import org.apache.commons.io.FileUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -42,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -50,7 +54,10 @@ public class Util {
     public interface UtilAnimationListener {
         public void onAnimationEnded();
     }
-
+    public static double getElapsed(long start, long end) {
+        BigDecimal m = new BigDecimal(end - start).divide(new BigDecimal(1000));
+        return m.doubleValue();
+    }
     static final String LOG = Util.class.getSimpleName();
     static Random random = new Random(System.currentTimeMillis());
     static int maxFlashes, count;
@@ -64,9 +71,68 @@ public class Util {
             FLASH_FAST = 3,
             INFINITE_FLASHES = 9999;
 
-    public static void expand(View view, int duration, final UtilAnimationListener listener) {
+    public static void expandOrCollapse(final View view, int duration, final boolean isExpandRequired, final UtilAnimationListener listener) {
+        TranslateAnimation an = null;
+        if (isExpandRequired) {
+            an = new TranslateAnimation(0.0f, 0.0f, -view.getHeight(), 0.0f);
+            view.setVisibility(View.VISIBLE);
+        } else {
+            an = new TranslateAnimation(0.0f, 0.0f, 0.0f, -view.getHeight());
+        }
+        an.setDuration(duration);
+        an.setInterpolator(new AccelerateDecelerateInterpolator());
+        an.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
 
-        //set Visible
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.setVisibility(View.GONE);
+                if (listener != null)
+                    listener.onAnimationEnded();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+    }
+    public static void collapse(final View view, int duration, final UtilAnimationListener listener) {
+        int finalHeight = view.getHeight();
+
+        ValueAnimator mAnimator = slideAnimator(view, finalHeight, 0);
+        mAnimator.setDuration(duration);
+        mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        mAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                view.setVisibility(View.GONE);
+                if (listener != null)
+                    listener.onAnimationEnded();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        mAnimator.start();
+    }
+    public static void expand(View view, int duration, final UtilAnimationListener listener) {
         view.setVisibility(View.VISIBLE);
 
         final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
@@ -1085,5 +1151,55 @@ public class Util {
             }
         }
         return directory.canWrite();
+    }
+    public static List<File> getImportFilesOnSD() {
+        File extDir = Environment.getExternalStorageDirectory();
+        String state = Environment.getExternalStorageState();
+        // TODO check thru all state possibilities
+        if (!state.equalsIgnoreCase(Environment.MEDIA_MOUNTED)) {
+            return new ArrayList<File>();
+        }
+
+        ArrayList<File> fileList = new ArrayList<File>();
+        @SuppressWarnings("unchecked")
+        Iterator<File> iter = FileUtils.iterateFiles(extDir, new String[]{
+                "csv", "txt"}, true);
+
+        while (iter.hasNext()) {
+            File file = iter.next();
+            if (file.getName().startsWith("._")) {
+                continue;
+            }
+            fileList.add(0,file);
+            Log.d(LOG, "### Import File: " + file.getAbsolutePath());
+        }
+
+        Log.i(LOG, "### sd Import Files in list : " + fileList.size());
+        return fileList;
+    }
+    public static List<File> getImportFiles() {
+        File extDir = Environment.getRootDirectory();
+        String state = Environment.getExternalStorageState();
+        // TODO check thru all state possibilities
+        if (!state.equalsIgnoreCase(Environment.MEDIA_MOUNTED)) {
+            return new ArrayList<File>();
+        }
+
+        ArrayList<File> fileList = new ArrayList<File>();
+        @SuppressWarnings("unchecked")
+        Iterator<File> iter = FileUtils.iterateFiles(extDir, new String[]{
+                "csv"}, true);
+
+        while (iter.hasNext()) {
+            File file = iter.next();
+            if (file.getName().startsWith("._")) {
+                continue;
+            }
+            fileList.add(file);
+            Log.d(LOG, "### disk Import File: " + file.getAbsolutePath());
+        }
+
+        Log.i(LOG, "### Import Files in list : " + fileList.size());
+        return fileList;
     }
 }

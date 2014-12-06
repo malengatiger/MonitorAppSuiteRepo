@@ -209,7 +209,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
         }
         LocationRequest lr = new LocationRequest();
         lr.setFastestInterval(1000);
-        lr.setInterval(2500);
+        lr.setInterval(2000);
         lr.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         try {
@@ -340,6 +340,8 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
                 if (currentPageIndex == 1) {
                     if (gpsScanFragment.getProjectSite() == null) {
                         mPager.setCurrentItem(0);
+                    } else {
+                        gpsScanFragment.startScan();
                     }
                 }
                 if (currentPageIndex == 0) {

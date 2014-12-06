@@ -35,6 +35,7 @@ import com.com.boha.monitor.library.dto.TownshipDTO;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author aubreyM
@@ -81,6 +82,7 @@ public class RequestDTO implements Serializable {
     private ProjectSiteTaskStatusDTO projectSiteTaskStatus;
     private ProjectStatusTypeDTO projectStatusType;
     private BeneficiaryDTO beneficiary;
+    private List<BeneficiaryDTO> beneficiaryList;
     //register actors
     public static final int
             REGISTER_COMPANY = 1,
@@ -90,7 +92,8 @@ public class RequestDTO implements Serializable {
             REGISTER_PROJECT_SITE_STAFF = 5,
             REGISTER_CLIENT = 6,
             REGISTER_BENEFICIARY = 7,
-            REGISTER_ENGINEER = 8;
+            REGISTER_ENGINEER = 8,
+            IMPORT_BENEFICIARIES = 9;
     //add stuff
     public static final int
             ADD_PROJECT_SITE_TASK = 11,
@@ -178,6 +181,14 @@ public class RequestDTO implements Serializable {
 
     //
 
+
+    public List<BeneficiaryDTO> getBeneficiaryList() {
+        return beneficiaryList;
+    }
+
+    public void setBeneficiaryList(List<BeneficiaryDTO> beneficiaryList) {
+        this.beneficiaryList = beneficiaryList;
+    }
 
     public SubTaskStatusDTO getSubTaskStatus() {
         return subTaskStatus;

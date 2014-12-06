@@ -2,20 +2,8 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/blue_pale"
     android:padding="0dp"
     android:layout_height="match_parent">
-
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:id="@+id/BEN_imagex"
-        android:scaleType="centerCrop"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/boy" />
 
     <RelativeLayout
         android:id="@+id/BEN_top"
@@ -30,7 +18,6 @@
             android:text="@string/zero"
             android:id="@+id/BEN_txtNum"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="12dp"
             style="@style/GreyCircleSmall" />
 
 
@@ -39,10 +26,9 @@
             android:layout_height="wrap_content"
             android:text="beneficary name"
             android:id="@+id/BEN_txtName"
-            style="@style/Title2TextStyleBlack"
+            android:layout_centerVertical="true"
+            style="@style/Title3TextStyleBlack"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="12dp"
-
             android:layout_toRightOf="@+id/BEN_txtNum" />
     </RelativeLayout>
 
@@ -50,64 +36,114 @@
         android:id="@+id/BEN_bottom"
         android:layout_below="@id/BEN_top"
         android:layout_marginLeft="56dp"
-        android:visibility="gone"
-        android:layout_marginBottom="12dp"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="email@address"
-            android:layout_marginTop="12dp"
-            android:id="@+id/BEN_txtEmail"
+        <RelativeLayout
+            android:id="@+id/BEN_idLayout"
+            android:padding="@dimen/mon_divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            style="@style/TextStyle"
-            android:textStyle="normal"
-            android:layout_marginLeft="5dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID Number"
+                android:id="@+id/BEN_idnumberLabel"
+                style="@style/TextStyleGreySmall"
+                android:layout_marginLeft="5dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="099 999 9999"
-            android:id="@+id/BEN_txtCell"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="16dp"
-            android:layout_below="@+id/BEN_txtEmail"
-            style="@style/TextStyleBlue" />
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="676767557757"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/mon_margin"
+                android:id="@+id/BEN_idnumber"
+                style="@style/TextStyleBlue"
+                android:layout_marginLeft="5dp" />
+        </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/BEN_subsidyLayout"
+            android:layout_below="@id/BEN_idLayout"
+            android:padding="@dimen/mon_divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:id="@+id/BEN_layoutCount"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="80dp"
-        android:layout_marginRight="8dp"
-        android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subsidy"
+                android:id="@+id/BEN_subsidyLabel"
+                android:layout_marginLeft="5dp"
+                style="@style/TextStyleGreySmall" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R127 000.00"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/mon_margin"
+                android:id="@+id/BEN_subsidy"
+                style="@style/TextStyleGreen"
 
-        <TextView
-            android:id="@+id/BEN_txtHappy"
-            android:text="@string/no"
-            android:background="@drawable/xred_oval"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content" />
+                android:layout_marginLeft="5dp" />
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/BEN_txtHappyLabel"
-            android:text="Happy Letter"
-            style="@style/TextStyleGrey"
-            android:textColor="@color/white"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_toLeftOf="@id/BEN_txtHappy"
-            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:id="@+id/BEN_siteLayout"
+            android:layout_below="@id/BEN_subsidyLayout"
+            android:padding="@dimen/mon_divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Site Number"
+                android:id="@+id/BEN_siteNumberLabel"
+                android:layout_marginLeft="5dp"
+                style="@style/TextStyleGreySmall" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="82937"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/mon_margin"
+                android:id="@+id/BEN_siteNumber"
+                style="@style/TextStyleRed"
+                android:layout_marginLeft="5dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/BEN_statusLayout"
+            android:layout_below="@id/BEN_siteLayout"
+            android:padding="@dimen/mon_divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:layout_centerVertical="true"
+                android:id="@+id/BEN_stausLabel"
+                android:layout_marginLeft="5dp"
+                style="@style/TextStyleGreySmall" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Approved or Declined"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/mon_margin"
+                android:id="@+id/BEN_status"
+                style="@style/TextStyle"
+                android:layout_marginLeft="5dp" />
+        </RelativeLayout>
     </RelativeLayout>
 
 

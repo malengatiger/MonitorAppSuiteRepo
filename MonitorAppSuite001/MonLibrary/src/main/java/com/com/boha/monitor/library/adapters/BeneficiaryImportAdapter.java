@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
@@ -19,25 +18,20 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class BeneficiaryAdapter extends ArrayAdapter<BeneficiaryDTO> {
-
-    public interface BeneficiaryAdapterListener {
-        public void onBeneficiaryEditRequested(BeneficiaryDTO client);
-    }
+public class BeneficiaryImportAdapter extends ArrayAdapter<BeneficiaryDTO> {
 
     private final LayoutInflater mInflater;
     private final int mLayoutRes;
     private List<BeneficiaryDTO> mList;
     private Context ctx;
-    private BeneficiaryAdapterListener listener;
+    private boolean hideDetail;
 
-    public BeneficiaryAdapter(Context context, int textViewResourceId,
-                              List<BeneficiaryDTO> list,
-                              BeneficiaryAdapterListener listener) {
+    public BeneficiaryImportAdapter(Context context, int textViewResourceId,
+                                    List<BeneficiaryDTO> list, boolean hideDetail) {
         super(context, textViewResourceId, list);
         this.mLayoutRes = textViewResourceId;
         mList = list;
-        this.listener = listener;
+        this.hideDetail = hideDetail;
         ctx = context;
         this.mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -48,10 +42,10 @@ public class BeneficiaryAdapter extends ArrayAdapter<BeneficiaryDTO> {
 
 
     static class ViewHolderItem {
-        TextView txtName, txtCell, txtEmail;
-        TextView txtNumber, txtHappy;
-        ImageView image;
-        View nameLayout;
+        TextView txtName, txtID, txtSubsidy;
+        TextView txtNumber, txtStatus, txtSite;
+        View detailLayout;
+
     }
 
     @Override
@@ -64,28 +58,34 @@ public class BeneficiaryAdapter extends ArrayAdapter<BeneficiaryDTO> {
                     .findViewById(R.id.BEN_txtName);
             item.txtNumber = (TextView) convertView
                     .findViewById(R.id.BEN_txtNum);
-
-            item.txtHappy = (TextView) convertView
-                    .findViewById(R.id.BEN_txtHappy);
-            item.image = (ImageView)convertView.findViewById(R.id.BEN_imagex);
+            item.txtID = (TextView) convertView
+                    .findViewById(R.id.BEN_idnumber);
+            item.txtSite = (TextView) convertView
+                    .findViewById(R.id.BEN_siteNumber);
+            item.txtSubsidy = (TextView) convertView
+                    .findViewById(R.id.BEN_subsidy);
+            item.txtStatus = (TextView) convertView
+                    .findViewById(R.id.BEN_status);
+            item.detailLayout = convertView.findViewById(R.id.BEN_bottom);
 
 
             convertView.setTag(item);
         } else {
             item = (ViewHolderItem) convertView.getTag();
         }
+        if (hideDetail) {
+            item.detailLayout.setVisibility(View.GONE);
+        }
 
         final BeneficiaryDTO p = mList.get(position);
         item.txtName.setText(p.getFullName());
         item.txtNumber.setText("" + (position + 1));
 
-
-        item.txtNumber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onBeneficiaryEditRequested(p);
-            }
-        });
+        item.txtStatus.setText(p.getStatus());
+        item.txtSite.setText(p.getSiteNumber());
+        if (p.getAmountAuthorized() != null)
+            item.txtSubsidy.setText(df.format(p.getAmountAuthorized()));
+        item.txtID.setText(p.getiDNumber());
 
         Statics.setRobotoFontLight(ctx, item.txtNumber);
         Statics.setRobotoFontLight(ctx, item.txtName);
@@ -104,5 +104,5 @@ public class BeneficiaryAdapter extends ArrayAdapter<BeneficiaryDTO> {
 
     static final Locale x = Locale.getDefault();
     static final SimpleDateFormat y = new SimpleDateFormat("dd MMMM yyyy", x);
-    static final DecimalFormat df = new DecimalFormat("###,###,##0.0");
+    static final DecimalFormat df = new DecimalFormat("###,###,###,###,###,###,##0.00");
 }

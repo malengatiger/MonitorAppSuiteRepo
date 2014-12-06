@@ -22,7 +22,10 @@
             android:name="com.com.boha.monitor.library.services.PhotoUploadService"
             android:exported="false" />
 
-
+        <activity
+            android:name="com.com.boha.monitor.library.BeneficiaryImportActivity"
+            android:label="@string/title_activity_beneficiary_import" >
+        </activity>
     </application>
 
 </manifest>

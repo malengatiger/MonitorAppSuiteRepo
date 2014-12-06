@@ -131,7 +131,7 @@ public class WebSocketUtil {
 
             @Override
             public void onClose(final int i, String s, boolean b) {
-                Log.e(LOG, "########## WEBSOCKET onClose, status code:  " + i + " boolean: " + b);
+                Log.e(LOG, "########## WEBSOCKET onClose, status code:  " + i + " boolean: " + b + " string: " + s);
                 webSocketListener.onClose();
             }
 
@@ -144,7 +144,7 @@ public class WebSocketUtil {
             }
         };
 
-        Log.d(LOG, "#### #### -------------> starting mWebSocketClient.connect ...");
+        Log.w(LOG, "#### #### ---> starting mWebSocketClient.connect ...");
         mWebSocketClient.connect();
     }
 
@@ -230,15 +230,17 @@ public class WebSocketUtil {
             }
 
             if (content != null) {
-                Log.e(LOG, "############# parseData, resonse unpacked - elapsed: " + getElapsed()
-                        + "\n" + content);
+                Log.i(LOG, "############# parseData, resonse unpacked OK - elapsed: " + getElapsed());
                 ResponseDTO response = gson.fromJson(content, ResponseDTO.class);
                 if (response.getStatusCode() == 0) {
+                    Log.w(LOG, "############# response status code is 0 - OK");
                     webSocketListener.onMessage(response);
                 } else {
+                    Log.e(LOG, "############# response status code is > 0 - server found ERROR");
                     webSocketListener.onError(response.getMessage());
                 }
             } else {
+                Log.e(LOG, "---------- Content from server failed. Response is null");
                 webSocketListener.onError("Content from server failed. Response is null");
             }
         } catch (Exception e) {

@@ -6,12 +6,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListPopupWindow;
 import android.widget.ListView;
@@ -62,7 +65,8 @@ public class ProjectListFragment extends Fragment implements PageFragment {
     View topView;
     LayoutInflater inflater;
     View view;
-    ImageView imgLogo;
+    ImageView imgLogo, imgSearch1, imgSearch2;
+    EditText editSearch;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,8 +81,46 @@ public class ProjectListFragment extends Fragment implements PageFragment {
         view = inflater.inflate(R.layout.fragment_project, container, false);
         this.inflater = inflater;
         ctx = getActivity();
-        topView = view.findViewById(R.id.PROJ_LIST_layoutx);
+        topView = view.findViewById(R.id.topTop);
         imgLogo = (ImageView) view.findViewById(R.id.PROJ_LIST_img);
+        txtStatusCount = (TextView) view.findViewById(R.id.HERO_P_statusCount);
+        heroImage = (ImageView)view.findViewById(R.id.HERO_P_image);
+        imgSearch1 = (ImageView) view.findViewById(R.id.SLT_imgSearch1);
+        imgSearch2 = (ImageView) view.findViewById(R.id.SLT_imgSearch2);
+        editSearch = (EditText)view.findViewById(R.id.SLT_editSearch);
+
+        editSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.e(LOG,"#### search text afterTextChanged");
+                search();
+            }
+        });
+
+
+        imgSearch1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search();
+            }
+        });
+        imgSearch2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search();
+            }
+        });
+
         Bundle b = getArguments();
         if (b != null) {
             Log.w(LOG,"######### onCreateView getArguments not null ...");
@@ -100,12 +142,33 @@ public class ProjectListFragment extends Fragment implements PageFragment {
 
         setTotals();
         setList();
+        //Util.expand(topView,2000,null);
         return view;
     }
 
+    private void search() {
+        if (editSearch.getText().toString().isEmpty()) {
+            return;
+        }
+        int index = 0;
+        for (ProjectDTO site: projectList) {
+            if (site.getProjectName().contains(editSearch.getText().toString())) {
+                break;
+            }
+            index++;
+        }
+        mListView.setSelection(index);
 
+    }
+    @Override
+    public void onResume() {
+        Log.e(LOG,"######### onResume");
+
+        super.onResume();
+    }
     Integer statusCountInPeriod;
     ObjectAnimator objectAnimator;
+    ImageView heroImage;
     static final DecimalFormat df = new DecimalFormat("###,###,###,###");
 
     public void stopRotatingLogo() {
@@ -149,8 +212,7 @@ public class ProjectListFragment extends Fragment implements PageFragment {
         }
         adapter = new ProjectAdapter(ctx, R.layout.project_item, projectList);
         mListView.setAdapter(adapter);
-        View v = inflater.inflate(R.layout.hero_image_project, null);
-        txtStatusCount = (TextView) v.findViewById(R.id.HERO_statusCount);
+
         if (statusCountInPeriod != null) {
             txtStatusCount.setText(df.format(statusCountInPeriod));
         } else {
@@ -162,12 +224,11 @@ public class ProjectListFragment extends Fragment implements PageFragment {
                 mListener.onStatusReportRequested();
             }
         });
-        mListView.addHeaderView(v);
+
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) return;
-                project = projectList.get(position - 1);
+                project = projectList.get(position);
                 list = new ArrayList<>();
                 list.add("Site List");
                 list.add("Claims & Invoices");
@@ -180,7 +241,7 @@ public class ProjectListFragment extends Fragment implements PageFragment {
                 actionsWindow = new ListPopupWindow(getActivity());
                 actionsWindow.setAdapter(new SpinnerListAdapter(ctx,
                         R.layout.xxsimple_spinner_item, list, SpinnerListAdapter.INVOICE_ACTIONS, project.getProjectName(), false));
-                actionsWindow.setAnchorView(txtLabel);
+                actionsWindow.setAnchorView(txtProjectCount);
                 actionsWindow.setWidth(600);
                 actionsWindow.setModal(true);
                 actionsWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -215,6 +276,7 @@ public class ProjectListFragment extends Fragment implements PageFragment {
                 actionsWindow.show();
             }
         });
+
     }
 
     ListPopupWindow actionsWindow;
@@ -301,7 +363,7 @@ public class ProjectListFragment extends Fragment implements PageFragment {
 
     /**
      * This interface must be implemented by activities that contain this
-     * fragment to allow objectAnimator interaction in this fragment to be communicated
+     * fragment to allow logoAnimator interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
      * <project>

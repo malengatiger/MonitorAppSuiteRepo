@@ -80,10 +80,6 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
             item = (ViewHolderItem) convertView.getTag();
         }
 
-        if (position == 0) {
-            System.out.println("Position is at the top");
-        }
-
         final ProjectDTO p = mList.get(position);
         item.txtName.setText(p.getProjectName());
         item.txtClient.setText(p.getClientName());

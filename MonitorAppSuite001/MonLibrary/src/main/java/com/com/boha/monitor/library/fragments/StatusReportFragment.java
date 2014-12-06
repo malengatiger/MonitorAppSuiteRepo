@@ -224,15 +224,16 @@ public class StatusReportFragment extends Fragment implements PageFragment {
         w.setProjectID(project.getProjectID());
         w.setEndDate(endDate);
         w.setStartDate(startDate);
+        final Activity act = getActivity();
         rotateLogo();
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
-                if (getActivity() == null) {
+                if (act == null) {
                     Log.e(LOG,"-------- state ERROR - onMessage getActivity is NULL");
                     return;
                 }
-                getActivity().runOnUiThread(new Runnable() {
+                act.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         objectAnimator.cancel();

@@ -20,15 +20,40 @@ public class BeneficiaryDTO implements Serializable, Comparable<BeneficiaryDTO> 
     private String lastName;
     private String middleName;
     private String iDNumber;
-    private String email;
-    private String cellphone;
+    private String email, siteNumber;
+    private String cellphone, status;
+    private boolean selected;
     private Double amountAuthorized, amountPaid;
     private Date dateRegistered, phbDate;
     private CompanyDTO company;
-    private TownshipDTO township;
+    private String townshipName;
     private ProjectSiteDTO projectSite;
 
     public static final int ACTION_ADD = 313, ACTION_UPDATE = 314;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public String getSiteNumber() {
+        return siteNumber;
+    }
+
+    public void setSiteNumber(String siteNumber) {
+        this.siteNumber = siteNumber;
+    }
 
     public ProjectSiteDTO getProjectSite() {
         return projectSite;
@@ -155,12 +180,12 @@ public class BeneficiaryDTO implements Serializable, Comparable<BeneficiaryDTO> 
         this.iDNumber = iDNumber;
     }
 
-    public TownshipDTO getTownship() {
-        return township;
+    public String getTownshipName() {
+        return townshipName;
     }
 
-    public void setTownship(TownshipDTO township) {
-        this.township = township;
+    public void setTownshipName(String townshipName) {
+        this.townshipName = townshipName;
     }
 
     /**

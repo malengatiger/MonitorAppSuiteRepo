@@ -49,6 +49,7 @@
         </activity>
         <activity
             android:name=".ProjectPagerActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.com.boha.monitor.library.SitePagerActivity"

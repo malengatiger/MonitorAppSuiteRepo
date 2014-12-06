@@ -21,8 +21,8 @@
                 android:id="@+id/GPS_imgLogo"
                 android:src="@drawable/maono"
                 android:elevation="@dimen/mon_divider"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="32dp"
+                android:layout_height="32dp" />
 
             <TextView
                 android:id="@+id/GPS_siteName"
@@ -50,7 +50,7 @@
 
             <TextView
                 android:id="@+id/GPS_desiredAccuracy"
-                android:text="10"
+                android:text="5"
                 style="@style/Title2TextStyleGreen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -58,10 +58,11 @@
             <SeekBar
                 android:id="@+id/GPS_seekBar"
                 android:max="50"
+
                 android:layout_toRightOf="@id/GPS_desiredAccuracy"
                 android:layout_marginLeft="@dimen/mon_padding"
                 android:elevation="@dimen/mon_divider"
-                android:progress="10"
+                android:progress="5"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -71,9 +72,8 @@
     <RelativeLayout
         android:id="@+id/GPS_layout2"
         android:layout_below="@id/GPS_layout1"
-        android:layout_marginTop="@dimen/mon_divider"
         android:background="@color/white"
-        android:padding="@dimen/mon_padding"
+        android:padding="@dimen/mon_divider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -131,7 +131,7 @@
         android:id="@+id/GPS_layout4"
         android:layout_below="@id/GPS_layout3"
         android:background="@color/white"
-        android:layout_marginTop="@dimen/mon_margin"
+        android:layout_marginTop="@dimen/mon_divider"
         android:padding="@dimen/mon_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -147,6 +147,7 @@
                 style="@style/Title2TextStyleGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
             <TextView
                 android:id="@+id/GPS_label4a"
                 android:text="Measured in metres"
@@ -164,7 +165,7 @@
             android:layout_toRightOf="@id/GPS_accLayout"
             android:layout_marginLeft="@dimen/mon_margin"
             style="@style/Title1TextStyleRed"
-            android:textSize="52sp"
+            android:textSize="48sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
@@ -176,11 +177,38 @@
         android:background="@color/white"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="@dimen/mon_margin"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/GPS_elapsedLayout"
+            android:padding="@dimen/mon_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/GPS_elapsedLabel"
+                style="@style/TextStyleGreySmall"
+                android:text="@string/elapsed_time"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Chronometer
+                android:id="@+id/GPS_chrono"
+                android:gravity="center"
+                android:layout_toRightOf="@id/GPS_elapsedLabel"
+                android:layout_marginLeft="@dimen/mon_margin"
+                style="@style/Title2TextStyleGreen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+        </RelativeLayout>
 
         <Button
             android:id="@+id/GPS_btnStop"
             android:text="Stop Scanning"
+            android:layout_below="@id/GPS_elapsedLayout"
             style="@style/ButtonNavyBlue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -195,5 +223,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </RelativeLayout>
+
 
 </RelativeLayout>

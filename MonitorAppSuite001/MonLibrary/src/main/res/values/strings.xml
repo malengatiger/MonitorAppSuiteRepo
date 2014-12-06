@@ -134,7 +134,7 @@
     <string name="refresh">Refresh</string>
     <string name="upload_pic">Upload Picture</string>
     <string name="failed_import">Failed to import Players</string>
-    <string name="import_ok">Players successfully imported into Group\'s database</string>
+    <string name="import_ok">Beneficiaries successfully imported into Company\'s database</string>
     <string name="nine_holes_reminder">9 hole tournament. Score the front OR the the back nine.</string>
     <string name="view_video">Watch Video</string>
     <string name="delete_video">Remove Video from Device</string>
@@ -293,5 +293,8 @@
     <string name="title_activity_sub_task_status_assignment">SubTaskStatusAssignmentActivity</string>
     <string name="status_not">Status not updated</string>
     <string name="subtask_status">SubTask Status</string>
+    <string name="elapsed_time">Elapsed Time in seconds</string>
+    <string name="title_activity_beneficiary_import">BeneficiaryImportActivity</string>
+    <string name="select_file">Please select file</string>
 
 </resources>

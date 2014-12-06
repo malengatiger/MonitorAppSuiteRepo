@@ -34,12 +34,7 @@ public class MainActivity extends ActionBarActivity {
         top.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Util.resizeHeight(bottom,1000,new Util.UtilAnimationListener() {
-                    @Override
-                    public void onAnimationEnded() {
 
-                    }
-                });
             }
         });
         bottom.setOnClickListener(new View.OnClickListener() {

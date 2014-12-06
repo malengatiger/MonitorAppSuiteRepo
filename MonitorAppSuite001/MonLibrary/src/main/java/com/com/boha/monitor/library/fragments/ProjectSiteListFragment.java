@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,7 +103,7 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
         View v = view.findViewById(R.id.SLT_searchLayout);
 
         //Util.resizeHeight(v, 400, 1000, null);
-        Util.expand(v,2500, null);
+        Util.expand(v,1000, null);
 
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -123,13 +122,6 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
             }
         });
 
-        editSearch.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                return false;
-            }
-        });
         imgSearch1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -437,7 +429,7 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
 
     /**
      * This interface must be implemented by activities that contain this
-     * fragment to allow objectAnimator interaction in this fragment to be communicated
+     * fragment to allow logoAnimator interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
      * <project/>

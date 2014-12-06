@@ -7,13 +7,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -25,7 +28,10 @@ import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.Statics;
+import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
+
+import java.text.DecimalFormat;
 
 
 public class GPSScanFragment extends Fragment implements PageFragment {
@@ -76,13 +82,31 @@ public class GPSScanFragment extends Fragment implements PageFragment {
     ProjectSiteDTO projectSite;
     ImageView imgLogo;
     Context ctx;
-    ObjectAnimator objectAnimator;
+    ObjectAnimator logoAnimator;
+    long start, end;
+    Chronometer chronometer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.w(LOG,"###### onCreateView");
         view = inflater.inflate(R.layout.fragment_gps, container, false);
         ctx = getActivity();
+
+        setFields();
+        return view;
+    }
+
+    public void startScan() {
+        listener.onStartScanRequested();
+        rotateLogo();
+        txtAccuracy.setText("0.00");
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        chronometer.start();
+        isScanning = true;
+        btnScan.setText(ctx.getString(R.string.stop_scan));
+    }
+    private void setFields() {
         desiredAccuracy = (TextView) view.findViewById(R.id.GPS_desiredAccuracy);
         txtAccuracy = (TextView) view.findViewById(R.id.GPS_accuracy);
         txtLat = (TextView) view.findViewById(R.id.GPS_latitude);
@@ -92,12 +116,25 @@ public class GPSScanFragment extends Fragment implements PageFragment {
         seekBar = (SeekBar) view.findViewById(R.id.GPS_seekBar);
         imgLogo = (ImageView) view.findViewById(R.id.GPS_imgLogo);
         txtName = (TextView) view.findViewById(R.id.GPS_siteName);
-        rotateLogo();
+        chronometer = (Chronometer)view.findViewById(R.id.GPS_chrono);
+
         btnSave.setVisibility(View.GONE);
-        Statics.setRobotoFontLight(ctx, txtLat);
-        Statics.setRobotoFontLight(ctx, txtLng);
+        Statics.setRobotoFontBold(ctx, txtLat);
+        Statics.setRobotoFontBold(ctx, txtLng);
 
         imgLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (projectSite.getLatitude() != null) {
+                    Intent i = new Intent(ctx, MonitorMapActivity.class);
+                    projectSite.setLatitude(location.getLatitude());
+                    projectSite.setLongitude(location.getLongitude());
+                    i.putExtra("projectSite", projectSite);
+                    startActivity(i);
+                }
+            }
+        });
+        txtAccuracy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (projectSite.getLatitude() != null) {
@@ -133,11 +170,14 @@ public class GPSScanFragment extends Fragment implements PageFragment {
                     isScanning = false;
                     btnScan.setText(ctx.getString(R.string.start_scan));
                     stopRotatingLogo();
+                    chronometer.stop();
                 } else {
                     listener.onStartScanRequested();
                     isScanning = true;
                     btnScan.setText(ctx.getString(R.string.stop_scan));
                     rotateLogo();
+                    chronometer.setBase(SystemClock.elapsedRealtime());
+                    chronometer.start();
                 }
             }
         });
@@ -147,28 +187,28 @@ public class GPSScanFragment extends Fragment implements PageFragment {
                 sendGPSData();
             }
         });
-
-        listener.onStartScanRequested();
-        isScanning = true;
-        btnScan.setText(ctx.getString(R.string.stop_scan));
-        rotateLogo();
-        return view;
     }
-
     public void stopRotatingLogo() {
-        if (objectAnimator != null) {
-            objectAnimator.cancel();
-            Log.e(LOG, "###### stopRotatingLogo - objectAnimator.cancel");
+        pleaseStop = true;
+        if (logoAnimator != null) {
+            logoAnimator.cancel();
+            Log.e(LOG, "###### stopRotatingLogo - logoAnimator.cancel");
         }
     }
 
+    boolean pleaseStop;
+    public void resetLogo() {
+        logoAnimator = ObjectAnimator.ofFloat(imgLogo, "rotation", 0, 360);
+        logoAnimator.setDuration(200);
+        logoAnimator.start();
+    }
     public void rotateLogo() {
-        Log.w(LOG, "++++++= rotateLogo ..............");
-        objectAnimator = ObjectAnimator.ofFloat(imgLogo, "rotation", 0.0f, 360f);
-        objectAnimator.setRepeatCount(ObjectAnimator.INFINITE);
-        objectAnimator.setDuration(200);
-        objectAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-        objectAnimator.addListener(new Animator.AnimatorListener() {
+        btnScan.setText(ctx.getString(R.string.stop_scan));
+        if (logoAnimator != null) logoAnimator.cancel();
+        logoAnimator = ObjectAnimator.ofFloat(imgLogo, "rotation", 0, 360);
+        logoAnimator.setDuration(200);
+        logoAnimator.setInterpolator(new AccelerateInterpolator());
+        logoAnimator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
 
@@ -176,7 +216,13 @@ public class GPSScanFragment extends Fragment implements PageFragment {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-
+                if (!pleaseStop) {
+                    rotateLogo();
+                } else {
+                    pleaseStop = false;
+                    resetLogo();
+                    Log.w(LOG, "#### not repeating the logo anim anymore");
+                }
             }
 
             @Override
@@ -189,7 +235,37 @@ public class GPSScanFragment extends Fragment implements PageFragment {
 
             }
         });
-        //objectAnimator.start();
+       // logoAnimator.start();
+        //flashAccuracy();
+    }
+    public void flashAccuracy() {
+        Log.w(LOG, "++++++= flashAccuracy ..............");
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(txtAccuracy, "alpha", 0, 1);
+        objectAnimator.setRepeatMode(ObjectAnimator.REVERSE);
+        objectAnimator.setDuration(200);
+        objectAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        objectAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                flashAccuracy();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        objectAnimator.start();
     }
 
     private void sendGPSData() {
@@ -238,15 +314,20 @@ public class GPSScanFragment extends Fragment implements PageFragment {
 
         if (location.getAccuracy() == seekBar.getProgress()
                 || location.getAccuracy() < seekBar.getProgress()) {
+            end = System.currentTimeMillis();
             listener.onEndScanRequested();
             isScanning = false;
             stopRotatingLogo();
+            chronometer.stop();
+            resetLogo();
             btnScan.setText(ctx.getString(R.string.start_scan));
             btnSave.setVisibility(View.VISIBLE);
             Log.d(LOG, "----------- onEndScanRequested - stopped scanning");
         }
+        Util.flashSeveralTimes(imgLogo,200,5);
     }
 
+    static final DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
