@@ -13,17 +13,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/BC_hero"
+            android:src="@drawable/banner_construction13"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mon_hero_height_small" />
+
         <TextView
             android:id="@+id/BC_title"
             style="@style/Title2TextStyleGrey"
             android:text="@string/bennie_list"
             android:layout_marginLeft="8dp"
-            android:padding="4dp"
+            android:layout_marginTop="@dimen/mon_wide"
+            android:textColor="@color/blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <RelativeLayout
-            android:layout_below="@id/BC_title"
+            android:layout_below="@id/BC_hero"
             android:background="@color/white"
             android:padding="4dp"
             android:layout_width="match_parent"
@@ -32,11 +40,12 @@
             <TextView
                 android:id="@+id/BC_projectName"
                 android:text="Project Name Here"
-                style="@style/Title3TextStyleBlue"
-                android:layout_marginLeft="16dp"
-                android:padding="2dp"
+                style="@style/Title2TextStyleBlue"
+                android:layout_marginLeft="@dimen/mon_padding"
+                android:layout_centerVertical="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
         </RelativeLayout>
 
     </RelativeLayout>
@@ -52,10 +61,11 @@
 
     <TextView
         android:id="@+id/BC_count"
-        style="@style/BlackCircle"
-        android:text="99"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="8dp"
+        style="@style/RedCircle"
+        android:text="+"
+        android:layout_marginRight="@dimen/mon_padding"
+        android:layout_marginTop="@dimen/mon_wider"
+        android:elevation="@dimen/mon_padding"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

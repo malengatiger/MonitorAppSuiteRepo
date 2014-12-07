@@ -25,7 +25,6 @@ import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.fragments.ImageFragment;
 import com.com.boha.monitor.library.fragments.ImageGridFragment;
 import com.com.boha.monitor.library.fragments.PageFragment;
-import com.com.boha.monitor.library.toolbox.BaseVolley;
 import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.PhotoCache;
@@ -183,9 +182,7 @@ public class ImagePagerActivity extends ActionBarActivity implements ImageGridFr
     }
 
     private void getServerData(RequestDTO w) {
-        if (!BaseVolley.checkNetworkOnDevice(ctx)) {
-            return;
-        }
+
         setRefreshActionButtonState(true);
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override

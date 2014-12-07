@@ -22,7 +22,7 @@
         -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBG9wbuf9x0ipJt4gf2OAm_LY-4zqw8ymg" />
+            android:value="AIzaSyCsgtnrR5JXX_w5jTYIZiFZv7aZX52iwgo" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="1413591595584751" />
@@ -76,7 +76,8 @@
 
         <service android:name="com.com.boha.monitor.library.services.PhotoUploadService" />
 
-
+        <activity android:name="com.com.boha.monitor.library.SubTaskActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.com.boha.monitor.library.SubTaskStatusAssignmentActivity" android:screenOrientation="portrait" />
     </application>
 
     <permission

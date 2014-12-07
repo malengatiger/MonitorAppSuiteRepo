@@ -8,15 +8,15 @@
         android:src="@drawable/house"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
-        android:layout_height="100dp"/>
+        android:layout_height="@dimen/mon_hero_height_small"/>
     <TextView
         android:id="@+id/HERO_caption"
         android:text="Operations"
         android:textColor="@color/white"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="70dp"
-        android:layout_marginRight="16dp"
-        style="@style/Title3TextStyleBlue"
+        android:layout_marginTop="@dimen/mon_wider"
+        android:layout_marginRight="@dimen/mon_margin"
+        style="@style/TextStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

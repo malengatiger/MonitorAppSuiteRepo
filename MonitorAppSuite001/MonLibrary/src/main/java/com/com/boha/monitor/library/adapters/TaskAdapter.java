@@ -83,7 +83,7 @@ public class TaskAdapter extends ArrayAdapter<TaskDTO>  {
         Statics.setRobotoFontLight(ctx, item.txtName);
 
 
-        animateView(convertView);
+        //animateView(convertView);
         return (convertView);
     }
     static final DecimalFormat df = new DecimalFormat("###,###,###,###,###,###,###,##0.00");

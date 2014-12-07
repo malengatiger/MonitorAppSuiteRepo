@@ -66,8 +66,9 @@ public class GCMUtil {
                     }
 
                     @Override
-                    public void onError(String message) {
+                    public void onError(final String message) {
                         Log.e(LOG, "############ Device failed to register on server GCM regime\n" + message);
+
                     }
                 });
                 Log.i(LOG, msg);

@@ -42,18 +42,31 @@
             android:layout_height="wrap_content" />
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/EDD_color"
+        android:layout_below="@id/EDD_top"
+        android:text="@string/status"
+        android:background="@drawable/xgrey_oval"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_width="@dimen/mon_widest"
+        android:layout_height="@dimen/mon_widest" />
+
     <RadioGroup
         android:id="@+id/EDD_radios"
-        android:layout_below="@id/EDD_top"
-        android:padding="12dp"
+        android:layout_below="@id/EDD_color"
+        android:padding="@dimen/mon_middle"
         android:orientation="horizontal"
+        android:layout_marginTop="@dimen/mon_padding"
+        android:layout_marginLeft="@dimen/mon_wide"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <RadioButton
             android:id="@+id/EDD_radioGreen"
             android:text="Green"
-            android:paddingRight="8dp"
+            android:paddingRight="@dimen/mon_padding"
             android:layout_weight="1"
             android:textColor="@color/green"
             android:layout_width="wrap_content"
@@ -62,7 +75,7 @@
         <RadioButton
             android:id="@+id/EDD_radioYellow"
             android:text="Yellow"
-            android:paddingRight="8dp"
+            android:paddingRight="@dimen/mon_padding"
             android:layout_weight="1"
             android:textColor="@color/orange"
             android:layout_width="wrap_content"
@@ -71,7 +84,7 @@
         <RadioButton
             android:id="@+id/EDD_radioRed"
             android:text="Red"
-            android:paddingRight="8dp"
+            android:paddingRight="@dimen/mon_padding"
             android:layout_weight="1"
             android:textColor="@color/absa_red"
             android:layout_width="wrap_content"
@@ -79,28 +92,19 @@
 
     </RadioGroup>
 
+
     <RelativeLayout
         android:layout_below="@id/EDD_radios"
-        android:padding="10dp"
-        android:layout_marginTop="16dp"
+        android:padding="@dimen/mon_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
 
         <Button
-            android:id="@+id/EDD_btnCancel"
-            android:layout_marginTop="16dp"
-            android:text="@string/cancel"
-            style="@style/ButtonCancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
             android:id="@+id/EDD_btnChange"
             android:text="@string/change_item"
             style="@style/ButtonRed"
-            android:layout_marginTop="16dp"
-            android:layout_below="@id/EDD_btnCancel"
+            android:layout_marginTop="@dimen/mon_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

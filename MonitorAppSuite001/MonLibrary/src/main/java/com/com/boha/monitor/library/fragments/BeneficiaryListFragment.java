@@ -2,7 +2,6 @@ package com.com.boha.monitor.library.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,12 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListPopupWindow;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
-import com.com.boha.monitor.library.BeneficiaryImportActivity;
 import com.com.boha.monitor.library.adapters.BeneficiaryAdapter;
-import com.com.boha.monitor.library.dialogs.ProjectPopupDialog;
+import com.com.boha.monitor.library.adapters.PopupListAdapter;
 import com.com.boha.monitor.library.dto.BeneficiaryDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
@@ -24,6 +27,7 @@ import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.Util;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,30 +47,39 @@ public class BeneficiaryListFragment extends Fragment implements PageFragment {
     }
 
     Context ctx;
-    View view;
+    View view, topView, hero;
     TextView txtCount, txtTitle, txtProjectName;
     static final String LOG = BeneficiaryListFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d(LOG, "######### onCreateView");
+        Log.d(LOG, "### onCreateView");
         view = inflater.inflate(R.layout.fragment_beneficiary_list, container, false);
         ctx = getActivity();
+        topView = view.findViewById(R.id.BC_top);
+        hero = view.findViewById(R.id.BC_hero);
         mListView = (AbsListView) view.findViewById(R.id.BC_list);
         txtCount = (TextView) view.findViewById(R.id.BC_count);
         txtTitle = (TextView) view.findViewById(R.id.BC_title);
-        txtProjectName= (TextView) view.findViewById(R.id.BC_projectName);
+        txtProjectName = (TextView) view.findViewById(R.id.BC_projectName);
         Statics.setRobotoFontLight(ctx, txtTitle);
         txtProjectName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               showProjectDialog();
+                Util.flashSeveralTimes(txtProjectName, 100, 1, new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        showProjectPopup();
+                    }
+                });
+
             }
         });
+
         if (savedInstanceState != null) {
-            Log.e(LOG,"##### onCreateView, savedInstanceState not null");
-            ResponseDTO r = (ResponseDTO)savedInstanceState.getSerializable("projectList");
+            Log.e(LOG, "## onCreateView, savedInstanceState not = null");
+            ResponseDTO r = (ResponseDTO) savedInstanceState.getSerializable("projectList");
             projectList = r.getProjectList();
             txtProjectName.setText(projectList.get(0).getProjectName());
             getBeneficiaryList(projectList.get(0).getProjectID());
@@ -84,43 +97,79 @@ public class BeneficiaryListFragment extends Fragment implements PageFragment {
         txtCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ctx, BeneficiaryImportActivity.class);
-                if (project == null) {
-                    i.putExtra("project", projectList.get(0));
-                } else {
-                    i.putExtra("project", project);
-                }
-                startActivity(i);
+                Util.flashSeveralTimes(txtCount, 100, 1, new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        if (project != null) {
+                            mListener.onBeneficiaryImportRequested(project);
+                        } else {
+                            if (!projectList.isEmpty())
+                                mListener.onBeneficiaryImportRequested(projectList.get(0));
+                        }
+                    }
+                });
+
             }
         });
 
         return view;
     }
 
-    private void showProjectDialog() {
-        ProjectPopupDialog diag = new ProjectPopupDialog();
-        diag.setContext(ctx);
-        diag.setProjectList(projectList);
-        diag.setListener(new ProjectPopupDialog.ProjectPopupDialogListener() {
+    public void expandTopView() {
+       // Util.expand(topView, 500, null);
+    }
+    private void showProjectPopup() {
+
+        final ListPopupWindow pop = new ListPopupWindow(ctx);
+        List<String> sList = new ArrayList<>();
+        for (ProjectDTO d: projectList) {
+            sList.add(d.getProjectName());
+        }
+        View pv = getActivity().getLayoutInflater().inflate(R.layout.hero_image, null);
+        ImageView img = (ImageView) pv.findViewById(R.id.HERO_image);
+        TextView cap = (TextView) pv.findViewById(R.id.HERO_caption);
+        Statics.setRobotoFontLight(ctx,cap);
+        cap.setText("Select Project");
+        img.setImageDrawable(Util.getRandomHeroImage(ctx));
+        pop.setAnchorView(hero);
+        pop.setPromptView(pv);
+        pop.setPromptPosition(ListPopupWindow.POSITION_PROMPT_ABOVE);
+        pop.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item, sList, false));
+        pop.setModal(true);
+        pop.setWidth(720);
+        pop.setHeight(1000);
+        pop.setHorizontalOffset(72);
+        pop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onProjectClicked(ProjectDTO p) {
-                project = p;
-                txtProjectName.setText(p.getProjectName());
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                project = projectList.get(position);
                 getBeneficiaryList(project.getProjectID());
+                pop.dismiss();
             }
         });
-        diag.show(getActivity().getFragmentManager(), "PROJ_DIAG");
+        pop.show();
+
     }
 
+    private void setCounts() {
+        for (ProjectDTO p: projectList) {
+            if (p.getBeneficiaryList() != null) {
+                p.setBeneficiaryCount(p.getBeneficiaryList().size());
+            } else {
+                p.setBeneficiaryCount(0);
+            }
+        }
+    }
     @Override
     public void onSaveInstanceState(Bundle state) {
-        Log.e(LOG,"####### onSaveInstanceState");
+        Log.e(LOG, "####### onSaveInstanceState");
         ResponseDTO r = new ResponseDTO();
         r.setProjectList(projectList);
         state.putSerializable("projectList", r);
         super.onSaveInstanceState(state);
     }
 
+    PopupWindow benPopupWindow;
     private void setList() {
         if (beneficiaryList == null) beneficiaryList = new ArrayList<>();
         txtCount.setText("" + beneficiaryList.size());
@@ -136,12 +185,48 @@ public class BeneficiaryListFragment extends Fragment implements PageFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 beneficiary = beneficiaryList.get(position);
-                mListener.onBeneficiaryClicked(beneficiary);
+                //mListener.onBeneficiaryClicked(beneficiary);
+                View benView = getActivity().getLayoutInflater().inflate(R.layout.beneficiary_item,null);
+                TextView name = (TextView) benView.findViewById(R.id.BEN_txtName);
+                TextView num = (TextView) benView.findViewById(R.id.BEN_txtNum);
+                TextView idnum = (TextView) benView.findViewById(R.id.BEN_idnumber);
+                TextView status = (TextView) benView.findViewById(R.id.BEN_status);
+                TextView subsidy = (TextView) benView.findViewById(R.id.BEN_subsidy);
+                TextView site = (TextView) benView.findViewById(R.id.BEN_siteNumber);
+                Button btn = (Button)benView.findViewById(R.id.BEN_btnClose);
+                btn.setVisibility(View.VISIBLE);
+
+
+                name.setText(beneficiary.getFullName());
+                num.setText("" + (position + 1));
+                num.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
+                idnum.setText(beneficiary.getiDNumber());
+                status.setText(beneficiary.getStatus());
+                site.setText(beneficiary.getSiteNumber());
+                subsidy.setText(df.format(beneficiary.getAmountAuthorized()));
+                benView.setBackgroundColor(ctx.getResources().getColor(R.color.white));
+
+                if (benPopupWindow == null)
+                benPopupWindow = new PopupWindow(benView,
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                else {
+                    benPopupWindow.dismiss();
+                }
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        benPopupWindow.dismiss();
+                        benPopupWindow = null;
+                    }
+                });
+                benPopupWindow.showAsDropDown(txtTitle, 0, 0);
             }
         });
 
     }
 
+    static final DecimalFormat df = new DecimalFormat("###,###,###,###,###,###,###,###.00");
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -205,7 +290,23 @@ public class BeneficiaryListFragment extends Fragment implements PageFragment {
     public interface BeneficiaryListListener {
         public void onBeneficiaryClicked(BeneficiaryDTO beneficiary);
 
+        public void onBeneficiaryImportRequested(ProjectDTO project);
+
         public void onBeneficiaryEditRequested(BeneficiaryDTO beneficiary);
+    }
+
+    public void refreshBeneficiaryList(ProjectDTO p) {
+        Log.e(LOG,"## refreshBeneficiaryList. size: " + p.getBeneficiaryList().size());
+        if (project != null) {
+            project.setBeneficiaryList(p.getBeneficiaryList());
+            beneficiaryList = project.getBeneficiaryList();
+        } else {
+            projectList.get(0).setBeneficiaryList(p.getBeneficiaryList());
+            beneficiaryList = projectList.get(0).getBeneficiaryList();
+        }
+
+        setList();
+
     }
 
     BeneficiaryDTO beneficiary;

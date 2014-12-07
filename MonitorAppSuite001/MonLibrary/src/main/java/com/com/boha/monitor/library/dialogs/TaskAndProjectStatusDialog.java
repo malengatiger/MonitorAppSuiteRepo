@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.ProjectDTO;
@@ -24,6 +26,7 @@ import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
+import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
 /**
@@ -34,9 +37,10 @@ public class TaskAndProjectStatusDialog extends DialogFragment {
     Context context;
     EditText editName, editDesc;
     ProgressBar progressBar;
-    Button btnCancel, btnSave;
+    Button  btnSave;
     RadioButton radioRed, radioGreen, radioYellow;
     View view;
+    TextView txtColor;
     ImageView imgDelete;
     int action, type;
     public static final int
@@ -50,6 +54,7 @@ public class TaskAndProjectStatusDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.view = inflater.inflate(R.layout.edit_dialog, container);
+        txtColor = (TextView)view.findViewById(R.id.EDD_color);
         editName = (EditText) view.findViewById(R.id.EDD_edit);
         editDesc = (EditText) view.findViewById(R.id.EDD_desc);
         radioGreen = (RadioButton) view.findViewById(R.id.EDD_radioGreen);
@@ -62,7 +67,6 @@ public class TaskAndProjectStatusDialog extends DialogFragment {
         progressBar = (ProgressBar) view.findViewById(R.id.EDD_progress);
         progressBar.setVisibility(View.GONE);
 
-        btnCancel = (Button) view.findViewById(R.id.EDD_btnCancel);
         btnSave = (Button) view.findViewById(R.id.EDD_btnChange);
         switch (type) {
             case TASK_STATUS:
@@ -73,6 +77,54 @@ public class TaskAndProjectStatusDialog extends DialogFragment {
                 break;
         }
 
+
+
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                //flash btn
+                Util.flashOnce(btnSave,100,new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        update();
+                    }
+                });
+
+            }
+        });
+
+        radioGreen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    txtColor.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.xgreen_oval));
+                    txtColor.setText("Green");
+                    Util.flashSeveralTimes(txtColor, 200, 2, null);
+                }
+            }
+        });
+        radioYellow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    txtColor.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.xorange_oval));
+                    txtColor.setText("Yellow");
+                    Util.flashSeveralTimes(txtColor, 200, 2, null);
+                }
+            }
+        });
+        radioRed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    txtColor.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.xred_oval));
+                    txtColor.setText("Red");
+                    Util.flashSeveralTimes(txtColor, 200, 2, null);
+                }
+            }
+        });
         switch (action) {
             case ACTION_ADD:
                 btnSave.setText(context.getString(R.string.save));
@@ -105,25 +157,6 @@ public class TaskAndProjectStatusDialog extends DialogFragment {
                 break;
 
         }
-
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                dismiss();
-
-            }
-        });
-        btnSave.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                update();
-            }
-        });
-
-
-
         return view;
     }
 
@@ -236,17 +269,21 @@ public class TaskAndProjectStatusDialog extends DialogFragment {
         WebSocketUtil.sendRequest(context, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressBar.setVisibility(View.GONE);
-                        if (!ErrorUtil.checkServerError(context, response)) {
-                            return;
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar.setVisibility(View.GONE);
+                            if (!ErrorUtil.checkServerError(context, response)) {
+                                return;
+                            }
+                            dismiss();
+                            listener.onComplete();
                         }
-                        dismiss();
-                        listener.onComplete();
-                    }
-                });
+                    });
+                } else {
+                    listener.onComplete();
+                }
 
             }
 

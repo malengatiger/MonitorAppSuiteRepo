@@ -54,10 +54,12 @@ public class Util {
     public interface UtilAnimationListener {
         public void onAnimationEnded();
     }
+
     public static double getElapsed(long start, long end) {
         BigDecimal m = new BigDecimal(end - start).divide(new BigDecimal(1000));
         return m.doubleValue();
     }
+
     static final String LOG = Util.class.getSimpleName();
     static Random random = new Random(System.currentTimeMillis());
     static int maxFlashes, count;
@@ -100,6 +102,7 @@ public class Util {
             }
         });
     }
+
     public static void collapse(final View view, int duration, final UtilAnimationListener listener) {
         int finalHeight = view.getHeight();
 
@@ -132,6 +135,7 @@ public class Util {
         });
         mAnimator.start();
     }
+
     public static void expand(View view, int duration, final UtilAnimationListener listener) {
         view.setVisibility(View.VISIBLE);
 
@@ -228,11 +232,33 @@ public class Util {
         view.startAnimation(a);
     }
 
-    public static void flashOnce(View view, long duration) {
+    public static void flashOnce(View view, long duration, final UtilAnimationListener listener) {
         ObjectAnimator an = ObjectAnimator.ofFloat(view, "alpha", 0, 1);
         an.setRepeatMode(ObjectAnimator.REVERSE);
         an.setDuration(duration);
         an.setInterpolator(new AccelerateDecelerateInterpolator());
+        an.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (listener != null)
+                    listener.onAnimationEnded();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
         an.start();
 
     }
@@ -267,7 +293,9 @@ public class Util {
 
     }
 
-    public static void flashSeveralTimes(final View view, final long duration, final int max) {
+    public static void flashSeveralTimes(final View view,
+                                         final long duration, final int max,
+                                         final UtilAnimationListener listener) {
         final ObjectAnimator an = ObjectAnimator.ofFloat(view, "alpha", 0, 1);
         an.setRepeatMode(ObjectAnimator.REVERSE);
         an.setDuration(duration);
@@ -284,9 +312,11 @@ public class Util {
                 if (count > max) {
                     count = 0;
                     an.cancel();
+                    if (listener != null)
+                        listener.onAnimationEnded();
                     return;
                 }
-                flashSeveralTimes(view, duration, max);
+                flashSeveralTimes(view, duration, max, listener);
             }
 
             @Override
@@ -648,7 +678,7 @@ public class Util {
             }
 
             @Override
-            public void onError(String message) {
+            public void onError(final String message) {
 
             }
         });
@@ -1152,6 +1182,7 @@ public class Util {
         }
         return directory.canWrite();
     }
+
     public static List<File> getImportFilesOnSD() {
         File extDir = Environment.getExternalStorageDirectory();
         String state = Environment.getExternalStorageState();
@@ -1170,13 +1201,14 @@ public class Util {
             if (file.getName().startsWith("._")) {
                 continue;
             }
-            fileList.add(0,file);
+            fileList.add(0, file);
             Log.d(LOG, "### Import File: " + file.getAbsolutePath());
         }
 
         Log.i(LOG, "### sd Import Files in list : " + fileList.size());
         return fileList;
     }
+
     public static List<File> getImportFiles() {
         File extDir = Environment.getRootDirectory();
         String state = Environment.getExternalStorageState();

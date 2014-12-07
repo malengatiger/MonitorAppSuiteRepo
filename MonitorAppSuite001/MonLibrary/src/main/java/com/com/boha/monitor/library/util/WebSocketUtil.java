@@ -3,8 +3,10 @@ package com.com.boha.monitor.library.util;
 import android.content.Context;
 import android.util.Log;
 
+import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
+import com.com.boha.monitor.library.toolbox.BaseVolley;
 import com.google.gson.Gson;
 
 import org.java_websocket.client.WebSocketClient;
@@ -38,11 +40,16 @@ public class WebSocketUtil {
     public static void disconnectSession() {
         if (mWebSocketClient != null) {
             mWebSocketClient.close();
-            Log.e(LOG, "@@@@@@@@ webSocket session disconnected");
+            Log.e(LOG, "@@ webSocket session disconnected");
         }
     }
 
     public static void sendRequest(Context c, final String suffix, RequestDTO req, WebSocketListener listener) {
+        if (!BaseVolley.checkNetworkOnDevice(c)) {
+            listener.onError("Network connections unavailable");
+            return;
+        }
+
         start = System.currentTimeMillis();
         webSocketListener = listener;
         request = req;
@@ -64,7 +71,7 @@ public class WebSocketUtil {
             } else {
                 String json = gson.toJson(req);
                 mWebSocketClient.send(json);
-                Log.d(LOG, "########### web socket message sent\n" + json);
+                Log.d(LOG, "## web socket message sent\n" + json);
             }
 
 
@@ -88,17 +95,17 @@ public class WebSocketUtil {
         mWebSocketClient = new WebSocketClient(uri) {
             @Override
             public void onOpen(ServerHandshake serverHandshake) {
-                Log.w(LOG, "########## WEBSOCKET Opened: " + serverHandshake.getHttpStatusMessage() + " elapsed ms: " + (end - start));
+                Log.w(LOG, "## WEBSOCKET Opened: " + serverHandshake.getHttpStatusMessage() + " elapsed ms: " + (end - start));
                 String json = gson.toJson(request);
                 mWebSocketClient.send(json);
-                Log.d(LOG, "########### web socket request sent after onOpen\n" + json);
+                Log.d(LOG, "## web socket request sent after onOpen\n" + json);
             }
 
             @Override
             public void onMessage(String response) {
                 end = System.currentTimeMillis();
                 TimerUtil.killTimer();
-                Log.i(LOG, "########## onMessage, length: " + response.length() + " elapsed: " + getElapsed()
+                Log.i(LOG, "## onMessage, length: " + response.length() + " elapsed: " + getElapsed()
                         + "\nString: " + response);
                 try {
                     ResponseDTO r = gson.fromJson(response, ResponseDTO.class);
@@ -144,7 +151,7 @@ public class WebSocketUtil {
             }
         };
 
-        Log.w(LOG, "#### #### ---> starting mWebSocketClient.connect ...");
+        Log.w(LOG, "##---> starting mWebSocketClient.connect ...");
         mWebSocketClient.connect();
     }
 
@@ -157,14 +164,14 @@ public class WebSocketUtil {
                 Log.w(LOG, "########## WEBSOCKET Opened: " + serverHandshake.getHttpStatusMessage());
                 String json = gson.toJson(request);
                 mWebSocketClient.send(json);
-                Log.d(LOG, "########### web socket request sent after onOpen\n" + json);
+                Log.d(LOG, "### web socket request sent after onOpen\n" + json);
             }
 
             @Override
             public void onMessage(String response) {
                 TimerUtil.killTimer();
                 end = System.currentTimeMillis();
-                Log.i(LOG, "########## onMessage, length: " + response.length() + " elapsed: " + getElapsed()
+                Log.i(LOG, "### onMessage, length: " + response.length() + " elapsed: " + getElapsed()
                         + "\n" + response);
                 try {
                     ResponseDTO r = gson.fromJson(response, ResponseDTO.class);
@@ -199,7 +206,7 @@ public class WebSocketUtil {
             @Override
             public void onError(final Exception e) {
                 Log.e(LOG, "onError ", e);
-                webSocketListener.onError("Server communications failed. Please try again");
+                webSocketListener.onError(ctx.getString(R.string.server_comms_failed));
 
 
             }
@@ -211,7 +218,7 @@ public class WebSocketUtil {
     }
 
     private static void parseData(ByteBuffer bb) {
-        Log.i(LOG, "########## parseData ByteBuffer capacity: " + ZipUtil.getKilobytes(bb.capacity())) ;
+        Log.i(LOG, "### parseData ByteBuffer capacity: " + ZipUtil.getKilobytes(bb.capacity())) ;
         String content = null;
         try {
             //check if dd is not compressed
@@ -230,17 +237,17 @@ public class WebSocketUtil {
             }
 
             if (content != null) {
-                Log.i(LOG, "############# parseData, resonse unpacked OK - elapsed: " + getElapsed());
+                Log.i(LOG, "### parseData, resonse unpacked OK - elapsed: " + getElapsed());
                 ResponseDTO response = gson.fromJson(content, ResponseDTO.class);
                 if (response.getStatusCode() == 0) {
-                    Log.w(LOG, "############# response status code is 0 - OK");
+                    Log.w(LOG, "### response status code is 0 - OK");
                     webSocketListener.onMessage(response);
                 } else {
-                    Log.e(LOG, "############# response status code is > 0 - server found ERROR");
+                    Log.e(LOG, "## response status code is > 0 - server found ERROR");
                     webSocketListener.onError(response.getMessage());
                 }
             } else {
-                Log.e(LOG, "---------- Content from server failed. Response is null");
+                Log.e(LOG, "-- Content from server failed. Response is null");
                 webSocketListener.onError("Content from server failed. Response is null");
             }
         } catch (Exception e) {
@@ -250,7 +257,7 @@ public class WebSocketUtil {
     }
 
     static WebSocketClient mWebSocketClient;
-    static final String LOG = WebSocketUtil.class.getName();
+    static final String LOG = WebSocketUtil.class.getSimpleName();
     static final Gson gson = new Gson();
 
     public static String getElapsed() {

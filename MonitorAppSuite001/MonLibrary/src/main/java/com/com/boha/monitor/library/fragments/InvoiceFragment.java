@@ -148,8 +148,14 @@ public class InvoiceFragment extends Fragment implements PageFragment {
             }
 
             @Override
-            public void onError(String message) {
-
+            public void onError(final String message) {
+                Log.e(LOG, "---- ERROR websocket - " + message);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.errorToast(ctx,message);
+                    }
+                });
             }
         });
     }

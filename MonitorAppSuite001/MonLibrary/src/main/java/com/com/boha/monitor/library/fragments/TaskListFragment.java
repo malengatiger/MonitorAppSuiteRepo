@@ -16,6 +16,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListPopupWindow;
 import android.widget.TextView;
@@ -70,22 +71,27 @@ public class TaskListFragment extends Fragment implements PageFragment {
     EditText editTaskName, editPrice;
     Button btnSave;
     EditText numberPicker;
-    View view;
+    View view, topView;
     View editLayout;
     ListPopupWindow actionsPopupWindow;
     List<String> list;
     TextView txtTitle;
+    ImageView hero;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.task_list, container, false);
+        view = inflater.inflate(R.layout.fragment_task_list, container, false);
         ctx = getActivity();
+        hero = (ImageView)view.findViewById(R.id.FTL_hero);
         setFields();
         getTaskData();
         return view;
     }
 
+    public void expandHeroImage() {
+        //Util.expand(hero,1000,null);
+    }
     public void updateSequenceNumber(TaskDTO task) {
 
     }
@@ -127,9 +133,10 @@ public class TaskListFragment extends Fragment implements PageFragment {
 
     int action;
     private void setFields() {
-        editLayout = view.findViewById(R.id.TL_editLayout);
-        txtCount = (TextView) view.findViewById(R.id.TL_count);
-        txtTitle = (TextView) view.findViewById(R.id.TL_title);
+        topView = view.findViewById(R.id.FTL_top);
+        editLayout = view.findViewById(R.id.FTL_editLayout);
+        txtCount = (TextView) view.findViewById(R.id.FTL_count);
+        txtTitle = (TextView) view.findViewById(R.id.FTL_title);
         editTaskName = (EditText) view.findViewById(R.id.TE_editTaskName);
         editPrice = (EditText) view.findViewById(R.id.TE_editTaskPrice);
         numberPicker = (EditText) view.findViewById(R.id.TE_numberPicker);
@@ -140,18 +147,9 @@ public class TaskListFragment extends Fragment implements PageFragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ObjectAnimator an = ObjectAnimator.ofFloat(btnSave,"alpha", 1,0);
-                an.setDuration(100);
-                an.setRepeatMode(ObjectAnimator.REVERSE);
-                an.setRepeatCount(1);
-                an.addListener(new Animator.AnimatorListener() {
+                Util.flashOnce(btnSave,100, new Util.UtilAnimationListener() {
                     @Override
-                    public void onAnimationStart(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
+                    public void onAnimationEnded() {
                         switch (action) {
                             case TaskDTO.ACTION_ADD:
                                 registerTask();
@@ -159,20 +157,14 @@ public class TaskListFragment extends Fragment implements PageFragment {
                             case TaskDTO.ACTION_UPDATE:
                                 updateTask();
                                 break;
+                            default:
+                                action = TaskDTO.ACTION_ADD;
+                                registerTask();
+                                break;
                         }
                     }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {
-
-                    }
                 });
-                an.start();
+
             }
         });
         txtCount.setOnClickListener(new View.OnClickListener() {
@@ -212,6 +204,7 @@ public class TaskListFragment extends Fragment implements PageFragment {
     }
     TaskPriceDTO taskPrice;
     private void registerTask() {
+        Log.w(LOG,"## registerTask");
         task = new TaskDTO();
         CompanyDTO c = new CompanyDTO();
         c.setCompanyID(SharedUtil.getCompany(ctx).getCompanyID());
@@ -322,8 +315,14 @@ public class TaskListFragment extends Fragment implements PageFragment {
             }
 
             @Override
-            public void onError(String message) {
-
+            public void onError(final String message) {
+                Log.e(LOG, "---- ERROR websocket - " + message);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.errorToast(ctx,message);
+                    }
+                });
             }
         });
     }
@@ -331,7 +330,7 @@ public class TaskListFragment extends Fragment implements PageFragment {
 
     }
     private void setList() {
-        mListView = (AbsListView) view.findViewById(R.id.TL_list);
+        mListView = (AbsListView) view.findViewById(R.id.FTL_list);
         adapter = new TaskAdapter(ctx, R.layout.task_list_item, taskList);
         mListView.setAdapter(adapter);
         txtCount.setText("" + taskList.size());
@@ -339,7 +338,13 @@ public class TaskListFragment extends Fragment implements PageFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 task = taskList.get(position);
-                //mListener.onTaskClicked(task);
+                View pv = getActivity().getLayoutInflater().inflate(R.layout.hero_image, null);
+                ImageView img = (ImageView) pv.findViewById(R.id.HERO_image);
+                TextView cap = (TextView) pv.findViewById(R.id.HERO_caption);
+                Statics.setRobotoFontLight(ctx,cap);
+                cap.setText(ctx.getString(R.string.select_action));
+                img.setImageDrawable(Util.getRandomHeroImage(ctx));
+
                 if (list == null) {
                     list = new ArrayList<String>();
                     list.add("Go to Sub Tasks");
@@ -348,6 +353,7 @@ public class TaskListFragment extends Fragment implements PageFragment {
                 }
                 actionsPopupWindow = new ListPopupWindow(ctx);
                 actionsPopupWindow.setAnchorView(txtTitle);
+                actionsPopupWindow.setPromptView(pv);
                 actionsPopupWindow.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item,
                         list, ctx.getString(R.string.task_actions), false));
                 actionsPopupWindow.setWidth(600);

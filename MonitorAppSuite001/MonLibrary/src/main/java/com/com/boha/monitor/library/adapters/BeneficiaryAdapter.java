@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
@@ -50,8 +49,7 @@ public class BeneficiaryAdapter extends ArrayAdapter<BeneficiaryDTO> {
     static class ViewHolderItem {
         TextView txtName, txtCell, txtEmail;
         TextView txtNumber, txtHappy;
-        ImageView image;
-        View nameLayout;
+
     }
 
     @Override
@@ -61,13 +59,12 @@ public class BeneficiaryAdapter extends ArrayAdapter<BeneficiaryDTO> {
             convertView = mInflater.inflate(mLayoutRes, null);
             item = new ViewHolderItem();
             item.txtName = (TextView) convertView
-                    .findViewById(R.id.BEN_txtName);
+                    .findViewById(R.id.BEN_CARD_txtName);
             item.txtNumber = (TextView) convertView
-                    .findViewById(R.id.BEN_txtNum);
+                    .findViewById(R.id.BEN_CARD_txtNum);
 
             item.txtHappy = (TextView) convertView
-                    .findViewById(R.id.BEN_txtHappy);
-            item.image = (ImageView)convertView.findViewById(R.id.BEN_imagex);
+                    .findViewById(R.id.BEN_CARD_txtHappy);
 
 
             convertView.setTag(item);
@@ -90,7 +87,7 @@ public class BeneficiaryAdapter extends ArrayAdapter<BeneficiaryDTO> {
         Statics.setRobotoFontLight(ctx, item.txtNumber);
         Statics.setRobotoFontLight(ctx, item.txtName);
 
-        animateView(convertView);
+        //animateView(convertView);
         return (convertView);
     }
 

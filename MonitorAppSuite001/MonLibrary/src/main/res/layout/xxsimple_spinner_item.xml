@@ -3,24 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="0dp">
-    <RelativeLayout
-        android:id="@+id/top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/banner"
-            android:src="@drawable/banner_gold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/title"
-            style="@style/TextStyleBlueSmall"
-            android:layout_below="@id/banner"
-            android:padding="@dimen/mon_padding"
-            android:text="Title for Popup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        </RelativeLayout>
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/top"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--<ImageView-->
+            <!--android:id="@+id/banner"-->
+            <!--android:src="@drawable/banner_gold"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
+        <!--<TextView-->
+            <!--android:id="@+id/title"-->
+            <!--style="@style/TextStyleBlueSmall"-->
+            <!--android:layout_below="@id/banner"-->
+            <!--android:padding="@dimen/mon_padding"-->
+            <!--android:text="Title for Popup"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+        <!--</RelativeLayout>-->
 
     <RelativeLayout
         android:layout_below="@id/top"

@@ -4,34 +4,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    android:padding="8dp"
+    android:padding="@dimen/mon_padding"
     tools:context="com.com.boha.monitor.library.fragments.ProjectSiteStaffListFragment">
 
     <RelativeLayout
         android:id="@+id/STAFF_LIST_layoutx"
-        android:padding="4dp"
-        android:background="@color/beige_pale"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/STAFF_LIST_hero"
+            android:src="@drawable/banner_office1"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mon_hero_height_small" />
 
         <TextView
             android:id="@+id/STAFF_LIST_label"
             style="@style/Title2TextStyleGrey"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/mon_wide"
+            android:textColor="@color/white"
             android:text="@string/company_staff"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="@dimen/mon_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
 
     </RelativeLayout>
+
     <ListView
         android:id="@android:id/list"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/mon_padding"
         android:layout_below="@id/STAFF_LIST_layoutx"
         android:background="@color/white"
-        android:dividerHeight="5dp"
+        android:dividerHeight="@dimen/mon_divider"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -39,8 +45,8 @@
         android:id="@+id/STAFF_LIST_staffCount"
         android:text="00"
         style="@style/BlackCircle"
-        android:layout_marginTop="24dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginTop="@dimen/mon_wider"
+        android:layout_marginRight="@dimen/mon_padding"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

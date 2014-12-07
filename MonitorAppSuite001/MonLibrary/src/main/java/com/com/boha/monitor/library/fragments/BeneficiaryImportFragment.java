@@ -26,7 +26,6 @@ import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
-import com.com.boha.monitor.library.toolbox.BaseVolley;
 import com.com.boha.monitor.library.util.ImportUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
@@ -58,7 +57,7 @@ public class BeneficiaryImportFragment extends Fragment implements PageFragment 
     }
 
     public interface ImportListener {
-        public void onBeneficiariesImported();
+        public void onBeneficiariesImported(ProjectDTO project);
     }
 
     ImportListener listener;
@@ -75,7 +74,7 @@ public class BeneficiaryImportFragment extends Fragment implements PageFragment 
     ProgressBar progressBar;
 
     int index = 0, pageCnt = 0, totalPages = 0;
-    static final int PAGE_SIZE = 30;
+    static final int PAGE_SIZE = 1024;
     @Override
     public void onAttach(Activity a) {
         if (a instanceof ImportListener) {
@@ -84,6 +83,7 @@ public class BeneficiaryImportFragment extends Fragment implements PageFragment 
             throw new UnsupportedOperationException("Host activity " +
             a.getLocalClassName() + " must implement ImportListener");
         }
+        super.onAttach(a);
     }
 
     public BeneficiaryImportFragment() {
@@ -297,25 +297,29 @@ public class BeneficiaryImportFragment extends Fragment implements PageFragment 
                 } catch (Exception e) {
                 }
             }
-            sendData(list);
+            if (!list.isEmpty()) {
+                sendData(list);
+            }else {
+                weIsDone();
+            }
 
         } else {
-
-            ToastUtil.toast(ctx, ctx.getResources().getString(R.string.import_ok));
-            listener.onBeneficiariesImported();
+            weIsDone();
         }
 
 
     }
 
+    private void weIsDone() {
+        ToastUtil.toast(ctx, ctx.getResources().getString(R.string.import_ok));
+        listener.onBeneficiariesImported(project);
+    }
     private void sendData(List<BeneficiaryDTO> list) {
         Log.e(LOG, "### totalPages: " + totalPages + " pageCnt: " + pageCnt + " list: " + list.size());
         RequestDTO w = new RequestDTO();
         w.setRequestType(RequestDTO.IMPORT_BENEFICIARIES);
         w.setBeneficiaryList(list);
-        if (!BaseVolley.checkNetworkOnDevice(ctx)) {
-            return;
-        }
+
         progressBar.setVisibility(View.VISIBLE);
         WebSocketUtil.sendRequest(ctx,Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
             @Override
@@ -329,6 +333,8 @@ public class BeneficiaryImportFragment extends Fragment implements PageFragment 
                         progressBar.setVisibility(View.GONE);
                         if (response.getStatusCode() == 0) {
                             pageCnt++;
+                            beneficiaryList = response.getBeneficiaryList();
+                            project.setBeneficiaryList(beneficiaryList);
                             controlImport();
                         }
                     }
@@ -342,8 +348,14 @@ public class BeneficiaryImportFragment extends Fragment implements PageFragment 
             }
 
             @Override
-            public void onError(String message) {
+            public void onError(final String message) {
                 Log.e(LOG, "---- ERROR websocket - " + message);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.errorToast(ctx,message);
+                    }
+                });
             }
         });
 

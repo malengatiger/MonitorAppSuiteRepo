@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -67,8 +68,14 @@ public class TaskAssignmentActivity extends ActionBarActivity implements
             }
 
             @Override
-            public void onError(String message) {
-
+            public void onError(final String message) {
+                Log.e("TaskAssignmentActivity", "---- ERROR websocket - " + message);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.errorToast(ctx,message);
+                    }
+                });
             }
         });
     }
@@ -150,8 +157,14 @@ public class TaskAssignmentActivity extends ActionBarActivity implements
             }
 
             @Override
-            public void onError(String message) {
-
+            public void onError(final String message) {
+                Log.e("TaskAssignmentActivity", "---- ERROR websocket - " + message);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.errorToast(ctx,message);
+                    }
+                });
             }
         });
         d.show(getFragmentManager(),"DIAG_STATUS");

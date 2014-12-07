@@ -95,7 +95,7 @@ public class ZipUtil {
     }
 
     public static String uncompressGZip(ByteBuffer bytes) throws Exception {
-        Log.w("ZipUtil", "############# packed length: " + getKilobytes(bytes.capacity()));
+        Log.w("ZipUtil", "## packed length: " + getKilobytes(bytes.capacity()));
         GZIPInputStream gzipInputStream = new GZIPInputStream(new ByteArrayInputStream(bytes.array()));
         OutputStream out = new ByteArrayOutputStream();
         byte[] buf = new byte[1024];
@@ -107,7 +107,7 @@ public class ZipUtil {
         out.close();
 
         String res = out.toString();
-        Log.i("ZipUtil", "############# unpacked length, in KB: " + getKilobytes(res.length()));
+        Log.i("ZipUtil", "## unpacked length, in KB: " + getKilobytes(res.length()));
         return res;
 
 

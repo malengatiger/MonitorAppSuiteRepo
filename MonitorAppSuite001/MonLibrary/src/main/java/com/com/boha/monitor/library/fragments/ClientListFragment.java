@@ -16,7 +16,6 @@ import com.com.boha.monitor.library.adapters.ClientAdapter;
 import com.com.boha.monitor.library.dto.ClientDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 
 import java.util.ArrayList;
@@ -84,7 +83,12 @@ public class ClientListFragment extends Fragment implements AbsListView.OnItemCl
         txtCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.toast(ctx, "Under Construction");
+                Util.flashOnce(txtCount,100,new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        mListener.onNewClientRequested();
+                    }
+                });
             }
         });
     }
@@ -158,6 +162,7 @@ public class ClientListFragment extends Fragment implements AbsListView.OnItemCl
     public interface ClientListListener {
         public void onClientClicked(ClientDTO client);
         public void onClientEditRequested(ClientDTO client);
+        public void onNewClientRequested();
     }
 
     ClientDTO client;

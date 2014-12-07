@@ -16,7 +16,6 @@ import com.com.boha.monitor.library.adapters.EngineerAdapter;
 import com.com.boha.monitor.library.dto.EngineerDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 
 import java.util.ArrayList;
@@ -68,6 +67,17 @@ public class EngineerListFragment extends Fragment implements AbsListView.OnItem
                 setList();
             }
         }
+        txtCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Util.flashOnce(txtCount,100,new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        mListener.onNewEngineerRequested();
+                    }
+                });
+            }
+        });
 
 
         return view;
@@ -89,12 +99,7 @@ public class EngineerListFragment extends Fragment implements AbsListView.OnItem
         mListView.setAdapter(adapter);
 
         mListView.setOnItemClickListener(this);
-        txtCount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.toast(ctx,"Under Construction");
-            }
-        });
+
     }
     @Override
     public void onAttach(Activity activity) {
@@ -166,6 +171,7 @@ public class EngineerListFragment extends Fragment implements AbsListView.OnItem
     public interface EngineerListListener {
         public void onEngineerClicked(EngineerDTO engineer);
         public void onEngineerEditRequested(EngineerDTO engineer);
+        public void onNewEngineerRequested();
     }
 
     EngineerDTO engineer;

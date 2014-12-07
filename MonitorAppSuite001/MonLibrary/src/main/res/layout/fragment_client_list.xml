@@ -9,15 +9,22 @@
 
     <RelativeLayout
         android:id="@+id/FC_top"
-        android:background="@color/beige_pale"
-        android:padding="4dp"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/FC_hero"
+            android:src="@drawable/banner_meeting3"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mon_hero_height_small" />
         <TextView
             android:id="@+id/FC_title"
             style="@style/Title2TextStyleGrey"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/mon_wide"
             android:text="@string/client_list"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="@dimen/mon_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -36,7 +43,7 @@
         style="@style/BlackCircle"
         android:text="99"
         android:elevation="@dimen/mon_padding"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="@dimen/mon_wider"
         android:layout_marginRight="8dp"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"

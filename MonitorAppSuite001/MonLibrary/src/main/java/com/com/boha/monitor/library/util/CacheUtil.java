@@ -149,10 +149,12 @@ public class CacheUtil {
 
         @Override
         protected void onPostExecute(Integer v) {
-            if (v > 0) {
-                listener.onError();
-            } else
-                listener.onDataCached();
+            if (listener != null) {
+                if (v > 0) {
+                    listener.onError();
+                } else
+                    listener.onDataCached();
+            }
         }
     }
 

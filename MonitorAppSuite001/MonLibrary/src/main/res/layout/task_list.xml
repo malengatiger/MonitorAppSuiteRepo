@@ -8,16 +8,33 @@
     <RelativeLayout
         android:id="@+id/TL_top"
         android:background="@color/beige_pale"
-        android:padding="4dp"
+        android:padding="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/TL_hero"
+            android:src="@drawable/banner_construction11"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
+
         <TextView
             android:id="@+id/TL_title"
-            style="@style/Title2TextStyleGrey"
+            style="@style/Title2TextStyleBlue"
             android:text="@string/tasks"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="@dimen/mon_padding"
             android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/TL_count"
+            style="@style/RedCircle"
+            android:text="33"
+            android:elevation="@dimen/mon_padding"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/mon_padding"
+            android:layout_marginTop="@dimen/mon_wide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -39,23 +56,13 @@
 
     <ListView
         android:id="@+id/TL_list"
-        android:layout_marginTop="8dp"
         android:layout_below="@id/TL_editLayout"
         android:background="@color/white"
         android:dividerHeight="@dimen/mon_divider"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/TL_count"
-        style="@style/RedCircle"
-        android:text="33"
-        android:elevation="8dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
 
 
 </RelativeLayout>

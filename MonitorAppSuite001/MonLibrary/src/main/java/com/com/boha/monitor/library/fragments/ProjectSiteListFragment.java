@@ -31,6 +31,7 @@ import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.Statics;
+import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
@@ -309,8 +310,14 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
             }
 
             @Override
-            public void onError(String message) {
-
+            public void onError(final String message) {
+                Log.e(LOG, "---- ERROR websocket - " + message);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.errorToast(ctx, message);
+                    }
+                });
             }
         });
 
@@ -356,8 +363,14 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
             }
 
             @Override
-            public void onError(String message) {
-
+            public void onError(final String message) {
+                Log.e(LOG, "---- ERROR websocket - " + message);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.errorToast(ctx,message);
+                    }
+                });
             }
         });
 

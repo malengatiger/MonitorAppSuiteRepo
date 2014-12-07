@@ -16,7 +16,6 @@ import com.com.boha.monitor.library.adapters.ProjectStatusTypeAdapter;
 import com.com.boha.monitor.library.dto.ProjectStatusTypeDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 
 import java.util.ArrayList;
@@ -65,7 +64,7 @@ public class ProjectStatusTypeListFragment extends Fragment implements AbsListVi
         txtCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.toast(ctx,"Under Construction");
+                mListener.onNewProjectStatusTypeRequested();
             }
         });
         return view;
@@ -145,6 +144,7 @@ public class ProjectStatusTypeListFragment extends Fragment implements AbsListVi
      */
     public interface ProjectStatusTypeListListener {
         public void onProjectStatusTypeClicked(ProjectStatusTypeDTO statusType);
+        public void onNewProjectStatusTypeRequested();
     }
 
     List<ProjectStatusTypeDTO> projectStatusTypeList;

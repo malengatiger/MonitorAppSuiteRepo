@@ -226,8 +226,14 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
             }
 
             @Override
-            public void onError(String message) {
-
+            public void onError(final String message) {
+                Log.e(LOG, "---- ERROR websocket - " + message);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.errorToast(ctx,message);
+                    }
+                });
             }
         });
     }
@@ -753,8 +759,14 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
             }
 
             @Override
-            public void onError(String message) {
-
+            public void onError(final String message) {
+                Log.e(LOG, "---- ERROR websocket - " + message);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.errorToast(ctx,message);
+                    }
+                });
             }
         });
     }

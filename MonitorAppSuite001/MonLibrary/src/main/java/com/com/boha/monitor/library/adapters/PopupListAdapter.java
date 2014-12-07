@@ -55,8 +55,8 @@ public class PopupListAdapter extends ArrayAdapter<String> {
 
 
     static class ViewHolderItem {
-        TextView txtString, txtTitle;
-        ImageView image, banner;
+        TextView txtString;
+        ImageView image;
     }
 
     @Override
@@ -76,41 +76,20 @@ public class PopupListAdapter extends ArrayAdapter<String> {
             item = new ViewHolderItem();
             item.txtString = (TextView) convertView
                     .findViewById(R.id.text1);
-            item.txtTitle = (TextView) convertView
-                    .findViewById(R.id.title);
+
             item.image = (ImageView) convertView
                     .findViewById(R.id.image1);
-            item.banner = (ImageView) convertView
-                    .findViewById(R.id.banner);
 
             convertView.setTag(item);
         } else {
             item = (ViewHolderItem) convertView.getTag();
         }
 
-        if (title != null) {
-            item.txtTitle.setVisibility(View.VISIBLE);
-            item.banner.setVisibility(View.VISIBLE);
-            item.txtTitle.setText(title);
-        } else {
-            item.txtTitle.setVisibility(View.GONE);
 
-        }
-        if (position == 0) {
-            item.banner.setVisibility(View.VISIBLE);
-            item.txtTitle.setVisibility(View.VISIBLE);
-        } else {
-            item.banner.setVisibility(View.GONE);
-            item.txtTitle.setVisibility(View.GONE);
-        }
-        if (hideBanner) {
-            item.banner.setVisibility(View.GONE);
-        }
         item.image.setImageDrawable(ctx.getResources().getDrawable(android.R.drawable.ic_input_add));
         final String p = mList.get(position);
         item.txtString.setText(p);
         Statics.setRobotoFontLight(ctx, item.txtString);
-        Statics.setRobotoFontLight(ctx, item.txtTitle);
         return (convertView);
     }
 

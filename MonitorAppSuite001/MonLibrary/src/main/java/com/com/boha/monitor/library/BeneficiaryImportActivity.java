@@ -3,6 +3,7 @@ package com.com.boha.monitor.library;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -17,6 +18,7 @@ public class BeneficiaryImportActivity extends ActionBarActivity implements Bene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ben_import);
+
         beneficiaryImportFragment = (BeneficiaryImportFragment)getFragmentManager().findFragmentById(R.id.fragment);
         project = (ProjectDTO)getIntent().getSerializableExtra("project");
         beneficiaryImportFragment.setProject(project);
@@ -52,19 +54,26 @@ public class BeneficiaryImportActivity extends ActionBarActivity implements Bene
     }
 
     @Override
-    public void onBeneficiariesImported() {
+    public void onBeneficiariesImported(ProjectDTO project) {
+        Log.d(LOG,"## onBeneficiariesImported. list: " + project.getBeneficiaryList().size());
         beneficiariesImported = true;
+        this.project = project;
         onBackPressed();
     }
+    static final String LOG = BeneficiaryImportActivity.class.getSimpleName();
     @Override
     public void onBackPressed() {
         Intent i = new Intent();
         if (beneficiariesImported) {
-            setResult(RESULT_OK);
+            Log.i(LOG,"## passing project on to pager caller, list = " + project.getBeneficiaryList().size());
+            i.putExtra("project",project);
+            setResult(RESULT_OK, i);
         } else {
             setResult(RESULT_CANCELED);
         }
         finish();
+        //super.onBackPressed();
+        Log.e(LOG,"##### onBackPressed");
 
     }
 }

@@ -18,7 +18,6 @@ import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 
 import java.util.ArrayList;
@@ -83,7 +82,7 @@ public class TaskStatusListFragment extends Fragment implements PageFragment {
         txtCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.toast(ctx,"Under Construction");
+                mListener.onNewTaskStatusRequested();
             }
         });
         return view;
@@ -146,6 +145,7 @@ public class TaskStatusListFragment extends Fragment implements PageFragment {
 
     public interface TaskStatusListListener {
         public void onTaskStatusClicked(TaskStatusDTO taskStatus);
+        public void onNewTaskStatusRequested();
     }
 
     ProjectDTO project;

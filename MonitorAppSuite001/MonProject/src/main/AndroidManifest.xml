@@ -69,11 +69,13 @@
             android:label="@string/title_activity_status_report"></activity>
         <activity
             android:name="com.com.boha.monitor.library.SubTaskActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_sub_task"></activity>
         <activity
             android:name="com.com.boha.monitor.library.SubTaskStatusAssignmentActivity"
             android:label="@string/title_activity_sub_task_status_assignment"
             android:parentActivityName="com.com.boha.monitor.library.TaskAssignmentActivity"></activity>
+
 
     </application>
     <permission

@@ -7,7 +7,6 @@
 
     <RelativeLayout
         android:id="@+id/BEN_top"
-        android:layout_below="@id/BEN_imagex"
         android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -144,6 +143,23 @@
                 style="@style/TextStyle"
                 android:layout_marginLeft="5dp" />
         </RelativeLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/mon_margin"
+        android:layout_marginBottom="@dimen/mon_wider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/BEN_btnClose"
+            android:text="Close Beneficiary Details"
+            android:layout_alignParentBottom="true"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
     </RelativeLayout>
 
 

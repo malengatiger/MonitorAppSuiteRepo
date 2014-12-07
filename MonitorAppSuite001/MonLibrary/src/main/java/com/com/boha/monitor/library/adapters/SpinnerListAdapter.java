@@ -89,26 +89,26 @@ public class SpinnerListAdapter extends ArrayAdapter<String> {
             item = (ViewHolderItem) convertView.getTag();
         }
 
-        if (title != null) {
-            if (position == 0) {
-                item.txtTitle.setVisibility(View.VISIBLE);
-                item.banner.setVisibility(View.VISIBLE);
-                item.txtTitle.setText(title);
-            } else {
-                item.txtTitle.setVisibility(View.GONE);
-                item.banner.setVisibility(View.GONE);
-            }
-        } else {
-            item.txtTitle.setVisibility(View.GONE);
-            if (position == 0) {
-                item.banner.setVisibility(View.VISIBLE);
-            } else {
-                item.banner.setVisibility(View.GONE);
-            }
-        }
-        if (hideBanner) {
-            item.banner.setVisibility(View.GONE);
-        }
+//        if (title != null) {
+//            if (position == 0) {
+//                item.txtTitle.setVisibility(View.VISIBLE);
+//                item.banner.setVisibility(View.VISIBLE);
+//                item.txtTitle.setText(title);
+//            } else {
+//                item.txtTitle.setVisibility(View.GONE);
+//                item.banner.setVisibility(View.GONE);
+//            }
+//        } else {
+//            item.txtTitle.setVisibility(View.GONE);
+//            if (position == 0) {
+//                item.banner.setVisibility(View.VISIBLE);
+//            } else {
+//                item.banner.setVisibility(View.GONE);
+//            }
+//        }
+//        if (hideBanner) {
+//            item.banner.setVisibility(View.GONE);
+//        }
         switch (type) {
             case INVOICE_ACTIONS:
                 item.image.setImageDrawable(ctx.getResources().getDrawable(android.R.drawable.ic_input_add));

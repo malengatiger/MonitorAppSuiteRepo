@@ -191,8 +191,14 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
                 }
 
                 @Override
-                public void onError(String message) {
-
+                public void onError(final String message) {
+                    Log.e(LOG, "---- ERROR websocket - " + message);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtil.errorToast(ctx,message);
+                        }
+                    });
                 }
             });
             d.show(getFragmentManager(), "PSD_DIAG");
@@ -390,8 +396,14 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
             }
 
             @Override
-            public void onError(String message) {
-
+            public void onError(final String message) {
+                Log.e(LOG, "---- ERROR websocket - " + message);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.errorToast(ctx,message);
+                    }
+                });
             }
         });
         d.show(getFragmentManager(), "PSD_DIAG");

@@ -296,5 +296,8 @@
     <string name="elapsed_time">Elapsed Time in seconds</string>
     <string name="title_activity_beneficiary_import">BeneficiaryImportActivity</string>
     <string name="select_file">Please select file</string>
+    <string name="server_comms_failed">Server communications failed. Please try again</string>
+    <string name="select_action">Select Action</string>
+    <string name="status">Status</string>
 
 </resources>
