@@ -21,8 +21,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.adapters.PopupListAdapter;
 import com.com.boha.monitor.library.adapters.ProjectAdapter;
-import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
@@ -238,11 +238,20 @@ public class ProjectListFragment extends Fragment implements PageFragment {
                 list.add("Project Gallery");
                 list.add("Edit Project");
 
+                View v = getActivity().getLayoutInflater().inflate(R.layout.hero_image,null);
+                TextView cap =(TextView)v.findViewById(R.id.HERO_caption);
+                cap.setText(ctx.getString(R.string.select_action));
+                ImageView img = (ImageView)v.findViewById(R.id.HERO_image);
+                img.setImageDrawable(Util.getRandomHeroImage(ctx));
+
                 actionsWindow = new ListPopupWindow(getActivity());
-                actionsWindow.setAdapter(new SpinnerListAdapter(ctx,
-                        R.layout.xxsimple_spinner_item, list, SpinnerListAdapter.INVOICE_ACTIONS, project.getProjectName(), false));
+                actionsWindow.setPromptView(v);
+                actionsWindow.setPromptPosition(ListPopupWindow.POSITION_PROMPT_ABOVE);
+                actionsWindow.setAdapter(new PopupListAdapter(ctx,
+                        R.layout.xxsimple_spinner_item, list,false));
                 actionsWindow.setAnchorView(txtProjectCount);
                 actionsWindow.setWidth(600);
+                actionsWindow.setHorizontalOffset(100);
                 actionsWindow.setModal(true);
                 actionsWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override

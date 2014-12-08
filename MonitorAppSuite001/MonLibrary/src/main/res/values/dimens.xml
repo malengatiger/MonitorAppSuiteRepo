@@ -10,9 +10,9 @@
     <dimen name="mon_wide">24dp</dimen>
     <dimen name="mon_wider">48dp</dimen>
     <dimen name="mon_widest">72dp</dimen>
-    <dimen name="mon_hero_height_small">80dp</dimen>
-    <dimen name="mon_hero_height_medium">140dp</dimen>
-    <dimen name="mon_hero_height_large">200dp</dimen>
+    <dimen name="mon_hero_height_small">100dp</dimen>
+    <dimen name="mon_hero_height_medium">160dp</dimen>
+    <dimen name="mon_hero_height_large">210dp</dimen>
     <dimen name="done_label_size">14sp</dimen>
     <dimen name="date_picker_component_width">270dip</dimen>
     <dimen name="date_picker_header_height">30dip</dimen>

@@ -16,13 +16,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ListPopupWindow;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.adapters.PopupListAdapter;
 import com.com.boha.monitor.library.adapters.ProjectSiteSelectionAdapter;
-import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.dto.ContractorClaimDTO;
 import com.com.boha.monitor.library.dto.ContractorClaimSiteDTO;
 import com.com.boha.monitor.library.dto.EngineerDTO;
@@ -59,7 +59,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
     }
 
     Context ctx;
-    View view;
+    View view, topView, middleView;
     TextView txtCount, txtName;
     ProjectDTO project;
     List<ProjectDTO> projectList;
@@ -74,7 +74,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
     CheckBox chkSelectAll;
     ImageView imgMore;
     ListView siteListView;
-    Spinner taskSpinner, engineerSpinner;
+    TextView txtTaskName, txtEngineerName;
     TextView txtProject;
     ContractorClaimDTO contractorClaim;
     ProjectSiteSelectionAdapter adapter;
@@ -86,7 +86,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.w(LOG,"###### onCreateView");
+        Log.w(LOG, "###### onCreateView");
         view = inflater.inflate(R.layout.fragment_contractor_claim, container, false);
         ctx = getActivity();
         setFields();
@@ -98,6 +98,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
         Log.w(LOG, "############ onResume");
         super.onResume();
     }
+
     @Override
     public void onSaveInstanceState(Bundle b) {
         Log.e(LOG, "############ onSaveInstanceState");
@@ -105,7 +106,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
         r.setEngineerList(engineerList);
         r.setTaskList(taskList);
         r.setProjectSiteList(siteList);
-        b.putSerializable("response",r);
+        b.putSerializable("response", r);
         super.onSaveInstanceState(b);
     }
 
@@ -175,7 +176,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        ToastUtil.errorToast(ctx, message);
                     }
                 });
             }
@@ -239,9 +240,6 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
 
     }
 
-    List<String> engineers;
-    List<String> tasks;
-
     public void setProject(ProjectDTO p) {
         project = p;
         if (project != null) {
@@ -252,75 +250,91 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
             setList();
         }
     }
+
     public void setData(List<EngineerDTO> engineers,
                         List<TaskDTO> tasks) {
         engineerList = engineers;
         taskList = tasks;
-        if (engineers != null) {
-            setSpinners();
-        }
+
     }
-    private void setSpinners() {
-        engineers = new ArrayList<>();
-        engineers.add(ctx.getString(R.string.select_engineer));
-        for (EngineerDTO p : engineerList) {
-            engineers.add(p.getEngineerName());
-        }
-        Log.w(LOG,"##### setting engineer dropdown");
-        SpinnerListAdapter a2 = new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item_blue, engineers, SpinnerListAdapter.ENGINEER_LIST, true);
-        engineerSpinner.setAdapter(a2);
-        engineerSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.w(LOG,"##### engineer item selected: " + position);
-                if (position == 0) {
-                    engineer = null;
-                } else {
-                    engineer = engineerList.get(position - 1);
-                }
-            }
 
+
+    private void showTaskPopup() {
+        List<String> list = new ArrayList<>();
+        for (TaskDTO t : taskList) {
+            list.add(t.getTaskName());
+        }
+        View v = getActivity().getLayoutInflater().inflate(R.layout.hero_image, null);
+        TextView cap = (TextView) v.findViewById(R.id.HERO_caption);
+        cap.setText(ctx.getString(R.string.select_action));
+        ImageView img = (ImageView) v.findViewById(R.id.HERO_image);
+        img.setImageDrawable(Util.getRandomHeroImage(ctx));
+
+        final ListPopupWindow p = new ListPopupWindow(ctx);
+        p.setAnchorView(txtProject);
+        p.setPromptView(v);
+        p.setPromptPosition(ListPopupWindow.POSITION_PROMPT_ABOVE);
+        p.setHorizontalOffset(72);
+        p.setWidth(720);
+        p.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item, list, false));
+        p.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                task = taskList.get(position);
+                txtTaskName.setText(task.getTaskName());
+                p.dismiss();
+                Util.shakeX(btnDate, 50, 5, null);
+            }
+        });
+        p.show();
+    }
+
+    private void showEngineerPopup() {
+        List<String> list = new ArrayList<>();
+        for (EngineerDTO t : engineerList) {
+            list.add(t.getEngineerName());
+        }
+        View v = getActivity().getLayoutInflater().inflate(R.layout.hero_image, null);
+        TextView cap = (TextView) v.findViewById(R.id.HERO_caption);
+        cap.setText(ctx.getString(R.string.select_action));
+        ImageView img = (ImageView) v.findViewById(R.id.HERO_image);
+        img.setImageDrawable(Util.getRandomHeroImage(ctx));
+
+        final ListPopupWindow p = new ListPopupWindow(ctx);
+        p.setAnchorView(txtProject);
+        p.setPromptView(v);
+        p.setPromptPosition(ListPopupWindow.POSITION_PROMPT_ABOVE);
+        p.setHorizontalOffset(72);
+        p.setWidth(720);
+        p.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item, list, false));
+        p.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                engineer = engineerList.get(position);
+                txtEngineerName.setText(engineer.getEngineerName());
+                p.dismiss();
+                Util.shakeX(txtTaskName,100,3, new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        Util.shakeX(btnDate, 50, 3, null);
+                    }
+                });
 
             }
         });
-        //
-        tasks = new ArrayList<>();
-        tasks.add(ctx.getString(R.string.select_task));
-        for (TaskDTO p : taskList) {
-            tasks.add(p.getTaskName());
-        }
-        Log.w(LOG,"##### setting task dropdown");
-        SpinnerListAdapter a3 = new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item, tasks, SpinnerListAdapter.TASK_LIST, true);
-        taskSpinner.setAdapter(a3);
-        taskSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.w(LOG,"##### task item selected: " + position);
-                if (position == 0) {
-                    task = null;
-                } else {
-                    task = taskList.get(position - 1);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
+        p.show();
     }
 
     private void setFields() {
+        middleView = view.findViewById(R.id.CCX_middle);
+        topView = view.findViewById(R.id.CCX_topTop);
         imgMore = (ImageView) view.findViewById(R.id.CCX_imgMore);
         imgLogo = (ImageView) view.findViewById(R.id.CCX_logo);
         imgLogo.setVisibility(View.GONE);
         txtCount = (TextView) view.findViewById(R.id.CCX_siteCount);
         txtProject = (TextView) view.findViewById(R.id.CCX_projectName);
-        engineerSpinner = (Spinner) view.findViewById(R.id.CCX_engineerSpinner);
-        taskSpinner = (Spinner) view.findViewById(R.id.CCX_taskSpinner);
+        txtEngineerName = (TextView) view.findViewById(R.id.CCX_engineerSpinner);
+        txtTaskName = (TextView) view.findViewById(R.id.CCX_taskSpinner);
         btnDate = (Button) view.findViewById(R.id.CCX_btnDate);
         btnSave = (Button) view.findViewById(R.id.CCX_btnSave);
         siteListView = (ListView) view.findViewById(R.id.CCX_list);
@@ -328,16 +342,53 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
         txtCount.setText("0");
         TextView title = (TextView) view.findViewById(R.id.CCX_title);
         Statics.setRobotoFontLight(ctx, title);
+        Statics.setRobotoFontLight(ctx, txtEngineerName);
+        Statics.setRobotoFontLight(ctx, txtTaskName);
+        txtEngineerName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Util.flashOnce(txtEngineerName, 100, new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        showEngineerPopup();
+                    }
+                });
+            }
+        });
+        txtTaskName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Util.flashOnce(txtTaskName, 100, new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        showTaskPopup();
+                    }
+                });
+            }
+        });
+
         btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showClaimDateDialog();
+
+                Util.flashOnce(btnDate, 100, new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        showClaimDateDialog();
+                    }
+                });
             }
         });
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendData();
+                Util.flashOnce(btnSave, 100, new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        sendData();
+                    }
+                });
+
             }
         });
         chkSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -354,7 +405,8 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
                     }
                 }
                 txtCount.setText("" + count);
-                adapter.notifyDataSetChanged();
+                if (adapter != null)
+                    adapter.notifyDataSetChanged();
             }
         });
         imgMore.setOnClickListener(new View.OnClickListener() {
@@ -363,17 +415,23 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
                 onMoreClicked();
             }
         });
+
+        Util.flashSeveralTimes(txtEngineerName, 200, 3, null);
     }
 
     private void onMoreClicked() {
-        if (!isListOpen) {
-            animateOff();
-            isListOpen = true;
+        Util.flashOnce(imgMore, 100, new Util.UtilAnimationListener() {
+            @Override
+            public void onAnimationEnded() {
+                if (topView.getVisibility() == View.VISIBLE) {
+                    Util.collapse(topView, 1000,null);
 
-        } else {
-            animateOn();
-            isListOpen = false;
-        }
+                } else {
+                    Util.expand(topView, 1000, null);
+                }
+            }
+        });
+
     }
 
     public void rotateLogo() {
@@ -410,53 +468,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
         imgLogo.setVisibility(View.GONE);
         objectAnimator.cancel();
     }
-    View top, bottom;
 
-    private void animateOn() {
-        if (top == null) {
-            top = view.findViewById(R.id.CCX_middle);
-            bottom = view.findViewById(R.id.CCX_bottom);
-        }
-        top.setVisibility(View.VISIBLE);
-        bottom.setVisibility(View.VISIBLE);
-
-//        final ObjectAnimator aTop = ObjectAnimator.ofFloat(top, "scaleY", 0, 1);
-//        final ObjectAnimator aBottom = ObjectAnimator.ofFloat(bottom, "scaleY", 0, 1);
-//
-//        List<Animator> taskStatusList = new ArrayList<>();
-//        taskStatusList.add(aTop);
-//        taskStatusList.add(aBottom);
-//
-//        AnimatorSet set = new AnimatorSet();
-//        set.playTogether(taskStatusList);
-//
-//        set.start();
-    }
-
-    private void animateOff() {
-        if (top == null) {
-            top = view.findViewById(R.id.CCX_middle);
-            bottom = view.findViewById(R.id.CCX_bottom);
-        }
-        top.setVisibility(View.GONE);
-        bottom.setVisibility(View.GONE);
-
-//        if (top == null) {
-//            top = view.findViewById(R.id.CCX_top);
-//            bottom = view.findViewById(R.id.CCX_bottom);
-//        }
-//        final ObjectAnimator aTop = ObjectAnimator.ofFloat(top, "scaleY", 1, 0);
-//        final ObjectAnimator aBottom = ObjectAnimator.ofFloat(bottom, "scaleY", 1, 0);
-//
-//        List<Animator> taskStatusList = new ArrayList<>();
-//        taskStatusList.add(aTop);
-//        taskStatusList.add(aBottom);
-//
-//        AnimatorSet set = new AnimatorSet();
-//        set.playTogether(taskStatusList);
-//        set.start();
-
-    }
 
     boolean isListOpen;
 
@@ -471,9 +483,11 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
                         count++;
                     }
                 }
+
                 txtCount.setText("" + count);
             }
         });
+
         siteListView.setAdapter(adapter);
 
         siteListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -488,6 +502,8 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
                 ToastUtil.toast(ctx, "Under Construction");
             }
         });
+        chkSelectAll.setChecked(true);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

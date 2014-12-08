@@ -141,7 +141,6 @@ public class SpinnerListAdapter extends ArrayAdapter<String> {
         final String p = mList.get(position);
         item.txtString.setText(p);
         Statics.setRobotoFontLight(ctx, item.txtString);
-        Statics.setRobotoFontLight(ctx, item.txtTitle);
         return (convertView);
     }
 

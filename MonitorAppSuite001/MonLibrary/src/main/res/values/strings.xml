@@ -299,5 +299,6 @@
     <string name="server_comms_failed">Server communications failed. Please try again</string>
     <string name="select_action">Select Action</string>
     <string name="status">Status</string>
+    <string name="save_coords">Save Coordinates</string>
 
 </resources>

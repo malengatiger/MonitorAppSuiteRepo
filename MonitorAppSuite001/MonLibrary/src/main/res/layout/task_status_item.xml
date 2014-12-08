@@ -5,29 +5,9 @@
     android:padding="0dp"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:id="@+id/TST_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/TST_banner"
-            android:src="@drawable/banner_gold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/TST_title"
-            android:text="Title"
-            style="@style/TextStyleBlueSmall"
-            android:padding="@dimen/mon_padding"
-            android:layout_below="@id/TST_banner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/TST_bottom"
-        android:layout_below="@id/TST_top"
         android:padding="@dimen/mon_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -26,6 +27,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
@@ -72,6 +74,16 @@ public class Util {
             FLASH_MEDIUM = 2,
             FLASH_FAST = 3,
             INFINITE_FLASHES = 9999;
+
+    public static View getHeroView(Context ctx, String caption) {
+        LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflater.inflate(R.layout.hero_image, null);
+        ImageView img = (ImageView) v.findViewById(R.id.HERO_image);
+        TextView txt = (TextView) v.findViewById(R.id.HERO_caption);
+        img.setImageDrawable(getRandomHeroImage(ctx));
+        txt.setText(caption);
+        return v;
+    }
 
     public static void expandOrCollapse(final View view, int duration, final boolean isExpandRequired, final UtilAnimationListener listener) {
         TranslateAnimation an = null;
@@ -331,6 +343,36 @@ public class Util {
         });
         an.start();
 
+    }
+
+    public static void shakeX(final View v, int duration, int max, final UtilAnimationListener listener) {
+        final ObjectAnimator an = ObjectAnimator.ofFloat(v, "x", v.getX(), v.getX() + 20f);
+        an.setDuration(duration);
+        an.setRepeatMode(ObjectAnimator.REVERSE);
+        an.setRepeatCount(max);
+        an.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (listener != null)
+                    listener.onAnimationEnded();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        an.start();
     }
 
     public static void flashTrafficLights(final TextView red, final TextView amber, final TextView green,

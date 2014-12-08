@@ -6,14 +6,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
+import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
+import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.util.Statics;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -22,6 +22,8 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -70,7 +72,7 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
                     .findViewById(R.id.SITE_txtBeneficiary);
             item.txtTaskCount = (TextView) convertView
                     .findViewById(R.id.SITE_txtTaskCount);
-                        item.txtTaskName = (TextView) convertView
+            item.txtTaskName = (TextView) convertView
                     .findViewById(R.id.SITE_task);
             item.statLayout1 = convertView.findViewById(R.id.SITE_bottom);
             item.statLayout2 = convertView.findViewById(R.id.SITE_layoutStatus);
@@ -91,11 +93,14 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
         final ProjectSiteDTO p = mList.get(position);
         item.txtName.setText(p.getProjectSiteName());
         item.txtNumber.setText("" + (position + 1));
-        item.txtStatusCount.setText("" + p.getStatusCount());
+        if (p.getStatusCount() != null)
+            item.txtStatusCount.setText("" + p.getStatusCount());
+        else
+            item.txtStatusCount.setText("0");
         if (p.getBeneficiary() != null) {
             item.txtBen.setText(p.getBeneficiary().getFullName());
         }
-        Statics.setRobotoFontLight(ctx,item.txtName);
+        Statics.setRobotoFontLight(ctx, item.txtName);
         if (p.getPhotoUploadList() != null && !p.getPhotoUploadList().isEmpty()) {
             final String uri = Statics.IMAGE_URL + p.getPhotoUploadList().get(0).getUri();
             item.imgHero.setVisibility(View.VISIBLE);
@@ -108,7 +113,7 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
 
                 @Override
                 public void onLoadingFailed(String s, View view, FailReason failReason) {
-                    Log.e("ProjectSiteAdapter","-------- onLoadingFailed, failReason: " + failReason.toString());
+                    Log.e("ProjectSiteAdapter", "-------- onLoadingFailed, failReason: " + failReason.toString());
                     item.imgHero.setVisibility(View.GONE);
                 }
 
@@ -126,6 +131,7 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
             //System.out.println("----------------> used default photo" );
             item.imgHero.setVisibility(View.GONE);
         }
+
         if (p.getLastStatus() != null) {
             item.txtLastStatus.setText(p.getLastStatus().getTaskStatus().getTaskStatusName());
             item.txtTaskName.setText(p.getLastStatus().getTask().getTaskName());
@@ -134,22 +140,28 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
             item.statLayout2.setVisibility(View.VISIBLE);
             switch (p.getLastStatus().getTaskStatus().getStatusColor()) {
                 case TaskStatusDTO.STATUS_COLOR_GREEN:
-                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_oval_small));
+                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
                     item.txtTaskCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_oval_small));
                     break;
                 case TaskStatusDTO.STATUS_COLOR_YELLOW:
-                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_oval_small));
+                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_oval));
                     item.txtTaskCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_oval_small));
                     break;
                 case TaskStatusDTO.STATUS_COLOR_RED:
-                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval_small));
+                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval));
                     item.txtTaskCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval_small));
+                    break;
+                default:
+                    item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgrey_oval));
+                    item.txtTaskCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgrey_oval_small));
                     break;
             }
 
         } else {
             item.statLayout1.setVisibility(View.GONE);
             item.statLayout2.setVisibility(View.GONE);
+            item.txtStatusCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgrey_oval));
+            item.txtTaskCount.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgrey_oval_small));
         }
 
         if (p.getProjectSiteTaskList() == null) {
@@ -163,22 +175,13 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
             item.txtDate.setVisibility(View.VISIBLE);
         }
 
-
         Statics.setRobotoFontLight(ctx, item.txtNumber);
         Statics.setRobotoFontBold(ctx, item.txtDate);
         Statics.setRobotoFontLight(ctx, item.txtName);
 
-        //animateView(convertView);
         return (convertView);
     }
 
-    public void animateView(final View view) {
-        Animation a = AnimationUtils.loadAnimation(ctx, R.anim.grow_fade_in_center);
-        a.setDuration(500);
-        if (view == null)
-            return;
-        view.startAnimation(a);
-    }
 
     static final Locale x = Locale.getDefault();
     static final SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm", x);

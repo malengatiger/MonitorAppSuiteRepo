@@ -60,9 +60,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
 
         public void onStatusDialogRequested(ProjectSiteDTO projectSite, ProjectSiteTaskDTO siteTask);
 
-        public void setBusy();
-
-        public void setNotBusy();
+        public void onProjectSiteTaskStatusAdded(ProjectSiteTaskStatusDTO taskStatus);
 
         public void onCameraRequested(ProjectSiteTaskDTO siteTask, int type);
     }
@@ -103,6 +101,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.d(LOG, "########## onCreateView");
+
         this.inflater = inflater;
         view = inflater.inflate(R.layout.fragment_assign_site_tasks, container, false);
         ctx = getActivity();
@@ -135,7 +134,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
         if (projectSite != null) {
             setList();
         }
-
+//
         getCachedData();
         return view;
     }
@@ -183,6 +182,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
                             return;
                         }
                         projectSiteTaskStatus = response.getProjectSiteTaskStatusList().get(0);
+                        projectSiteTask.setStatusDone(true);
                         for (final ProjectSiteTaskDTO s : projectSiteTaskList) {
                             if (s.getProjectSiteTaskID().intValue() == projectSiteTaskStatus.getProjectSiteTaskID().intValue()) {
                                 s.getProjectSiteTaskStatusList().add(0, projectSiteTaskStatus);
@@ -215,6 +215,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
                         } else {
                            showPictureReminderDialog();
                         }
+                        mListener.onProjectSiteTaskStatusAdded(projectSiteTaskStatus);
 
                     }
                 });
@@ -280,6 +281,8 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
                         projectSiteTaskList.add(0, response.getProjectSiteTaskList().get(0));
                         adapter.notifyDataSetChanged();
                         txtCount.setText("" + projectSiteTaskList.size());
+                        mListener.onProjectSiteTaskAdded(response.getProjectSiteTaskList().get(0));
+
                     }
                 });
 
@@ -295,7 +298,6 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mListener.setNotBusy();
                         ToastUtil.errorToast(ctx, message);
                     }
                 });
@@ -341,11 +343,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
         tot.setText("" + (greens + yellows + reds));
         View v = inflater.inflate(R.layout.hero_image, null);
         if (mListView.getHeaderViewsCount() == 0) {
-            ImageView image = (ImageView) v.findViewById(R.id.HERO_image);
-            TextView caption = (TextView) v.findViewById(R.id.HERO_caption);
-            image.setImageDrawable(Util.getRandomHeroImage(ctx));
-            caption.setText(ctx.getString(R.string.task_status));
-            mListView.addHeaderView(v);
+            mListView.addHeaderView(Util.getHeroView(ctx, ctx.getString(R.string.task_status)));
         }
         mListView.setAdapter(adapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -353,11 +351,16 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(LOG, "##### setOnItemClickListener, position: " + position);
                 lastIndex = position;
+
                 int index = position - 1;
                 if (index < 0) {
                     projectSiteTask = projectSiteTaskList.get(0);
                 } else {
                     projectSiteTask = projectSiteTaskList.get(position - 1);
+                }
+                if (projectSiteTask.isStatusDone()) {
+                    ToastUtil.toast(ctx,"Status already completed");
+                    return;
                 }
                 if (projectSiteTask.getTask().getSubTaskList() != null && !projectSiteTask.getTask().getSubTaskList().isEmpty()) {
                     hasSubTasks = true;
@@ -417,12 +420,16 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
         tgreen.setText("" + greens);
         tyellow.setText("" + yellows);
         tred.setText("" + reds);
-        Util.flashTrafficLights(tred, tyellow, tgreen, 20, Util.FLASH_FAST);
+        Util.flashTrafficLights(tred, tyellow, tgreen, 5, Util.FLASH_FAST);
     }
 
     private void showPopup() {
+        View v = Util.getHeroView(ctx, ctx.getString(R.string.select_status));
+
         actionsWindow = new ListPopupWindow(getActivity());
-        actionsWindow.setAdapter(new TaskStatusAdapter(ctx, R.layout.task_status_item_small, taskStatusList, projectSiteTask.getTask().getTaskName()));
+        actionsWindow.setPromptView(v);
+        actionsWindow.setPromptPosition(ListPopupWindow.POSITION_PROMPT_ABOVE);
+        actionsWindow.setAdapter(new TaskStatusAdapter(ctx, R.layout.task_status_item_small, taskStatusList,true));
         actionsWindow.setAnchorView(handle);
         actionsWindow.setWidth(700);
         actionsWindow.setHorizontalOffset(72);

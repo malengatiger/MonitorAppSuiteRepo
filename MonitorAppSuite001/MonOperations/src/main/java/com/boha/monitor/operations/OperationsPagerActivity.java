@@ -534,6 +534,8 @@ public class OperationsPagerActivity extends ActionBarActivity
                 if (pf instanceof TaskListFragment) {
                     taskListFragment.expandHeroImage();
                 }
+                if (pf instanceof StaffListFragment) {
+                }
             }
 
             @Override

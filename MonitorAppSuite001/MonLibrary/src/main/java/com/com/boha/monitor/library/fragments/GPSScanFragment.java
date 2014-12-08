@@ -81,7 +81,7 @@ public class GPSScanFragment extends Fragment implements PageFragment {
     SeekBar seekBar;
     boolean isScanning;
     ProjectSiteDTO projectSite;
-    ImageView imgLogo;
+    ImageView imgLogo, hero;
     Context ctx;
     ObjectAnimator logoAnimator;
     long start, end;
@@ -91,6 +91,7 @@ public class GPSScanFragment extends Fragment implements PageFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.w(LOG,"###### onCreateView");
+
         view = inflater.inflate(R.layout.fragment_gps, container, false);
         ctx = getActivity();
 
@@ -108,6 +109,7 @@ public class GPSScanFragment extends Fragment implements PageFragment {
         btnScan.setText(ctx.getString(R.string.stop_scan));
     }
     private void setFields() {
+
         desiredAccuracy = (TextView) view.findViewById(R.id.GPS_desiredAccuracy);
         txtAccuracy = (TextView) view.findViewById(R.id.GPS_accuracy);
         txtLat = (TextView) view.findViewById(R.id.GPS_latitude);
@@ -116,6 +118,7 @@ public class GPSScanFragment extends Fragment implements PageFragment {
         btnScan = (Button) view.findViewById(R.id.GPS_btnStop);
         seekBar = (SeekBar) view.findViewById(R.id.GPS_seekBar);
         imgLogo = (ImageView) view.findViewById(R.id.GPS_imgLogo);
+        hero = (ImageView) view.findViewById(R.id.GPS_hero);
         txtName = (TextView) view.findViewById(R.id.GPS_siteName);
         chronometer = (Chronometer)view.findViewById(R.id.GPS_chrono);
 
@@ -126,25 +129,32 @@ public class GPSScanFragment extends Fragment implements PageFragment {
         imgLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (projectSite.getLatitude() != null) {
-                    Intent i = new Intent(ctx, MonitorMapActivity.class);
-                    projectSite.setLatitude(location.getLatitude());
-                    projectSite.setLongitude(location.getLongitude());
-                    i.putExtra("projectSite", projectSite);
-                    startActivity(i);
-                }
+                Util.flashOnce(imgLogo,100,new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        if (projectSite.getLatitude() != null) {
+                            Intent i = new Intent(ctx, MonitorMapActivity.class);
+                            i.putExtra("projectSite", projectSite);
+                            startActivity(i);
+                        }
+                    }
+                });
             }
         });
         txtAccuracy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (projectSite.getLatitude() != null) {
-                    Intent i = new Intent(ctx, MonitorMapActivity.class);
-                    projectSite.setLatitude(location.getLatitude());
-                    projectSite.setLongitude(location.getLongitude());
-                    i.putExtra("projectSite", projectSite);
-                    startActivity(i);
-                }
+                Util.flashOnce(txtAccuracy,100,new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        if (projectSite.getLatitude() != null) {
+                            Intent i = new Intent(ctx, MonitorMapActivity.class);
+                            i.putExtra("projectSite", projectSite);
+                            startActivity(i);
+                        }
+                    }
+                });
+
             }
         });
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -166,26 +176,39 @@ public class GPSScanFragment extends Fragment implements PageFragment {
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isScanning) {
-                    listener.onEndScanRequested();
-                    isScanning = false;
-                    btnScan.setText(ctx.getString(R.string.start_scan));
-                    stopRotatingLogo();
-                    chronometer.stop();
-                } else {
-                    listener.onStartScanRequested();
-                    isScanning = true;
-                    btnScan.setText(ctx.getString(R.string.stop_scan));
-                    rotateLogo();
-                    chronometer.setBase(SystemClock.elapsedRealtime());
-                    chronometer.start();
-                }
+                Util.flashOnce(btnScan,100,new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        if (isScanning) {
+                            listener.onEndScanRequested();
+                            isScanning = false;
+                            btnScan.setText(ctx.getString(R.string.start_scan));
+                            stopRotatingLogo();
+                            chronometer.stop();
+                        } else {
+                            listener.onStartScanRequested();
+                            isScanning = true;
+                            btnScan.setText(ctx.getString(R.string.stop_scan));
+                            rotateLogo();
+                            chronometer.setBase(SystemClock.elapsedRealtime());
+                            chronometer.start();
+                            Util.collapse(btnSave,300,null);
+                        }
+                    }
+                });
+
             }
         });
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendGPSData();
+                Util.flashOnce(btnSave,100,new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        sendGPSData();
+                    }
+                });
+
             }
         });
     }
@@ -321,7 +344,6 @@ public class GPSScanFragment extends Fragment implements PageFragment {
 
         if (location.getAccuracy() == seekBar.getProgress()
                 || location.getAccuracy() < seekBar.getProgress()) {
-            end = System.currentTimeMillis();
             listener.onEndScanRequested();
             isScanning = false;
             stopRotatingLogo();
@@ -329,9 +351,12 @@ public class GPSScanFragment extends Fragment implements PageFragment {
             resetLogo();
             btnScan.setText(ctx.getString(R.string.start_scan));
             btnSave.setVisibility(View.VISIBLE);
+            projectSite.setLatitude(location.getLatitude());
+            projectSite.setLongitude(location.getLongitude());
+            Util.expand(btnSave,200,null);
             Log.d(LOG, "----------- onEndScanRequested - stopped scanning");
         }
-        Util.flashSeveralTimes(imgLogo,200,5, null);
+        Util.flashSeveralTimes(hero,300,1, null);
     }
 
     static final DecimalFormat df = new DecimalFormat("###,###,###,##0.00");

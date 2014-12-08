@@ -84,7 +84,6 @@ public class InvoiceAdapter extends ArrayAdapter<InvoiceDTO> {
         Statics.setRobotoFontLight(ctx, item.txtDate);
         Statics.setRobotoFontLight(ctx, item.txtEngineerName);
 
-        animateView(convertView);
         return (convertView);
     }
 

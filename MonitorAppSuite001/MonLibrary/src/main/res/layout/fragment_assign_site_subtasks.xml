@@ -59,7 +59,6 @@
         android:id="@+id/SUBSTAT_number"
         style="@style/GreyCircle"
         android:text="+"
-        android:textSize="28sp"
         android:layout_marginTop="@dimen/mon_wide"
         android:layout_marginLeft="@dimen/mon_margin"
         android:layout_alignParentLeft="true"

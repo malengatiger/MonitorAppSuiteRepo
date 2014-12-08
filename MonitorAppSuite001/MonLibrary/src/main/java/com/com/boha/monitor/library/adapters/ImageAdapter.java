@@ -103,7 +103,7 @@ public class ImageAdapter extends ArrayAdapter<PhotoUploadDTO> {
 
 
         Statics.setRobotoFontLight(ctx, item.txtNumber);
-        // animateView(convertView);
+
         return (convertView);
     }
 

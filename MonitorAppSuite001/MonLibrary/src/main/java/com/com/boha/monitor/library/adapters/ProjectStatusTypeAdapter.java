@@ -1,13 +1,9 @@
 package com.com.boha.monitor.library.adapters;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -47,7 +43,6 @@ public class ProjectStatusTypeAdapter extends ArrayAdapter<ProjectStatusTypeDTO>
         TextView txtNumber;
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolderItem item;
@@ -70,30 +65,22 @@ public class ProjectStatusTypeAdapter extends ArrayAdapter<ProjectStatusTypeDTO>
         if (p.getStatusColor() != null) {
             switch (p.getStatusColor()) {
                 case TaskStatusDTO.STATUS_COLOR_GREEN:
-                    item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
+                    item.txtNumber.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xgreen_oval));
                     break;
                 case TaskStatusDTO.STATUS_COLOR_RED:
-                    item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xred_oval));
+                    item.txtNumber.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval));
                     break;
                 case TaskStatusDTO.STATUS_COLOR_YELLOW:
-                    item.txtNumber.setBackground(ctx.getResources().getDrawable(R.drawable.xorange_oval));
+                    item.txtNumber.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xorange_oval));
                     break;
             }
         }
         Statics.setRobotoFontLight(ctx,item.txtNumber);
         Statics.setRobotoFontLight(ctx, item.txtName);
 
-        animateView(convertView);
         return (convertView);
     }
 
-    public void animateView(final View view) {
-        Animation a = AnimationUtils.loadAnimation(ctx, R.anim.grow_fade_in_center);
-        a.setDuration(500);
-        if (view == null)
-            return;
-        view.startAnimation(a);
-    }
 
     static final Locale x = Locale.getDefault();
     static final SimpleDateFormat y = new SimpleDateFormat("dd MMMM yyyy", x);

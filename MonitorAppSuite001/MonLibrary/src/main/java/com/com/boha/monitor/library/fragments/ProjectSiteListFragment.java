@@ -27,8 +27,11 @@ import com.com.boha.monitor.library.adapters.ProjectSiteAdapter;
 import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
+import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
+import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
+import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
@@ -97,14 +100,14 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
 
         imgSearch1 = (ImageView) view.findViewById(R.id.SLT_imgSearch1);
         imgSearch2 = (ImageView) view.findViewById(R.id.SLT_imgSearch2);
-        editSearch = (EditText)view.findViewById(R.id.SLT_editSearch);
-        heroImage  = (ImageView) view.findViewById(R.id.SLT_heroImage);
+        editSearch = (EditText) view.findViewById(R.id.SLT_editSearch);
+        heroImage = (ImageView) view.findViewById(R.id.SLT_heroImage);
         heroImage.setImageDrawable(Util.getRandomHeroImage(ctx));
 
         View v = view.findViewById(R.id.SLT_searchLayout);
 
         //Util.resizeHeight(v, 400, 1000, null);
-        Util.expand(v,1000, null);
+        Util.expand(v, 1000, null);
 
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -140,6 +143,7 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
         mListView = (AbsListView) view.findViewById(R.id.SLT_list);
         Statics.setRobotoFontLight(ctx, txtCount);
         if (project.getProjectSiteList() != null && !project.getProjectSiteList().isEmpty()) {
+            projectSiteList = project.getProjectSiteList();
             setList();
         }
         return view;
@@ -150,7 +154,7 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
             return;
         }
         int index = 0;
-        for (ProjectSiteDTO site: project.getProjectSiteList()) {
+        for (ProjectSiteDTO site : project.getProjectSiteList()) {
             if (site.getProjectSiteName().contains(editSearch.getText().toString())) {
                 break;
             }
@@ -159,6 +163,7 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
         mListView.setSelection(index);
 
     }
+
     public void rotateLogo() {
         imgLogo.setVisibility(View.VISIBLE);
         objectAnimator = ObjectAnimator.ofFloat(imgLogo, "rotation", 0.0f, 360f);
@@ -201,12 +206,15 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
 
     }
 
+    List<ProjectSiteDTO> projectSiteList;
+
     private void setList() {
-        txtCount.setText("" + project.getProjectSiteList().size());
-        Collections.sort(project.getProjectSiteList());
+        Log.i(LOG, "## setList");
+        txtCount.setText("" + projectSiteList.size());
+        Collections.sort(projectSiteList);
 
         projectSiteAdapter = new ProjectSiteAdapter(ctx, R.layout.site_item,
-                project.getProjectSiteList());
+                projectSiteList);
         mListView.setAdapter(projectSiteAdapter);
         mListView.setSelection(lastIndex);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -215,7 +223,6 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
                 if (null != mListener) {
                     lastIndex = position;
                     projectSite = project.getProjectSiteList().get(position);
-                    mListener.onProjectSiteClicked(projectSite, position);
                     list = new ArrayList<>();
                     list.add("Site Status");
                     list.add("Take Picture");
@@ -224,7 +231,15 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
                     list.add("Site Gallery");
                     list.add("Edit Site Details");
 
+                    View v = getActivity().getLayoutInflater().inflate(R.layout.hero_image, null);
+                    TextView cap = (TextView) v.findViewById(R.id.HERO_caption);
+                    cap.setText(ctx.getString(R.string.select_action));
+                    ImageView img = (ImageView) v.findViewById(R.id.HERO_image);
+                    img.setImageDrawable(Util.getRandomHeroImage(ctx));
+
                     actionsWindow = new ListPopupWindow(getActivity());
+                    actionsWindow.setPromptView(v);
+                    actionsWindow.setPromptPosition(ListPopupWindow.POSITION_PROMPT_ABOVE);
                     actionsWindow.setAdapter(new SpinnerListAdapter(ctx,
                             R.layout.xxsimple_spinner_item, list, SpinnerListAdapter.INVOICE_ACTIONS, project.getProjectName(), false));
                     actionsWindow.setAnchorView(heroImage);
@@ -242,18 +257,18 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
                                     mListener.onCameraRequested(projectSite, lastIndex);
                                     break;
                                 case 2:
-                                    mListener.onGPSRequested(projectSite,lastIndex);
+                                    mListener.onGPSRequested(projectSite, lastIndex);
                                     break;
                                 case 3:
                                     Intent i = new Intent(ctx, MonitorMapActivity.class);
-                                    i.putExtra("projectSite",projectSite);
+                                    i.putExtra("projectSite", projectSite);
                                     startActivity(i);
                                     break;
                                 case 4:
-                                    mListener.onGalleryRequested(projectSite,lastIndex);
+                                    mListener.onGalleryRequested(projectSite, lastIndex);
                                     break;
                                 case 5:
-                                    mListener.onProjectSiteEditRequested(projectSite,lastIndex);
+                                    mListener.onProjectSiteEditRequested(projectSite, lastIndex);
                                     break;
 
                             }
@@ -271,13 +286,37 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
     List<String> list;
     ListPopupWindow actionsWindow;
 
-    public void refreshData(ProjectSiteDTO site) {
+    public void refreshData(ResponseDTO resp) {
+        Log.w(LOG, "### refreshData... status: " + resp.getProjectSiteTaskStatusList().size());
+        List<ProjectSiteTaskStatusDTO> pList = resp.getProjectSiteTaskStatusList();
 
-        Log.i(LOG, "###### refreshData");
-        if (projectSite == null) throw new UnsupportedOperationException("ProjectSiteDTO is null");
-        RequestDTO w = new RequestDTO();
-        w.setRequestType(RequestDTO.GET_PROJECT_SITE_DATA);
-        w.setProjectSiteID(site.getProjectSiteID());
+        List<ProjectSiteDTO> list = new ArrayList<>();
+        for (ProjectSiteDTO s : projectSiteList) {
+            for (ProjectSiteTaskDTO task : s.getProjectSiteTaskList()) {
+                for (ProjectSiteTaskStatusDTO sta : pList) {
+                    if (task.getProjectSiteTaskID().intValue() == sta.getProjectSiteTaskID().intValue()) {
+                        if (s.getStatusCount() == null) {
+                            s.setStatusCount(1);
+                        } else {
+                            s.setStatusCount(s.getStatusCount() + 1);
+                        }
+                        s.setLastStatus(sta);
+                    }
+                }
+            }
+
+            list.add(s);
+        }
+        projectSiteList = list;
+        setList();
+        //getProjectData();
+
+    }
+
+    private void getProjectData() {
+        Log.w(LOG, "################################ getProjectData");
+        RequestDTO w = new RequestDTO(RequestDTO.GET_PROJECT_DATA);
+        w.setProjectID(project.getProjectID());
 
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
@@ -288,30 +327,42 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
                         if (!ErrorUtil.checkServerError(ctx, response)) {
                             return;
                         }
-                        projectSite.setPhotoUploadList(response.getPhotoUploadList());
-
+                        project = response.getProjectList().get(0);
+                        projectSiteList = project.getProjectSiteList();
                         setList();
-                        index = 0;
-                        for (ProjectSiteDTO ps : project.getProjectSiteList()) {
-                            if (ps.getProjectSiteID() == projectSite.getProjectSiteID()) {
-                                break;
+                        CacheUtil.cacheProjectData(ctx, response, CacheUtil.CACHE_PROJECT, project.getProjectID(), new CacheUtil.CacheUtilListener() {
+                            @Override
+                            public void onFileDataDeserialized(ResponseDTO response) {
+
                             }
-                            index++;
-                        }
-                        mListView.setSelection(index);
-                        mListener.onPhotoListUpdated(projectSite, index);
+
+                            @Override
+                            public void onDataCached() {
+
+                            }
+
+                            @Override
+                            public void onError() {
+
+                            }
+                        });
                     }
                 });
             }
 
             @Override
             public void onClose() {
-
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e(LOG, "getProjectData --------------- websocket closed");
+                    }
+                });
             }
 
             @Override
             public void onError(final String message) {
-                Log.e(LOG, "---- ERROR websocket - " + message);
+
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -320,8 +371,6 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
                 });
             }
         });
-
-
     }
 
     public void refreshPhotoList(ProjectSiteDTO site) {
@@ -368,7 +417,7 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        ToastUtil.errorToast(ctx, message);
                     }
                 });
             }
@@ -464,6 +513,7 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
         public void onPhotoListUpdated(ProjectSiteDTO projectSite, int index);
 
         public void onStatusListRequested(ProjectSiteDTO projectSite, int index);
+
         public void onGPSRequested(ProjectSiteDTO projectSite, int index);
     }
 

@@ -7,9 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListPopupWindow;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
@@ -43,7 +43,7 @@ public class StaffListFragment extends Fragment
     /**
      * The fragment's ListView/GridView.
      */
-    private AbsListView mListView;
+    private ListView mListView;
 
     public StaffListFragment() {
     }
@@ -57,7 +57,7 @@ public class StaffListFragment extends Fragment
 
     Context ctx;
     TextView txtCount, txtName;
-    View view;
+    View view, topView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,9 +72,12 @@ public class StaffListFragment extends Fragment
 
         txtCount = (TextView) view.findViewById(R.id.STAFF_LIST_staffCount);
         txtName = (TextView) view.findViewById(R.id.STAFF_LIST_label);
+        topView = view.findViewById(R.id.STAFF_LIST_top);
+        mListView = (ListView) view.findViewById(R.id.STAFF_LIST_list);
 
         Statics.setRobotoFontLight(ctx, txtName);
         txtCount.setText("" + companyStaffList.size());
+
         setList();
         return view;
     }
@@ -99,8 +102,7 @@ public class StaffListFragment extends Fragment
     ListPopupWindow staffActionsWindow;
     List<String> list;
     private void setList() {
-        // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
+
         staffAdapter = new StaffAdapter(ctx, R.layout.staff_card,
                 companyStaffList, new StaffAdapter.StaffAdapterListener() {
             @Override
@@ -113,9 +115,8 @@ public class StaffListFragment extends Fragment
 
             }
         });
-        mListView.setAdapter(staffAdapter);
 
-        // Set OnItemClickListener so we can be notified on item clicks
+        mListView.setAdapter(staffAdapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

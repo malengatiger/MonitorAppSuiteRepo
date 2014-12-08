@@ -139,11 +139,13 @@ public class BeneficiaryListFragment extends Fragment implements PageFragment {
         pop.setWidth(720);
         pop.setHeight(1000);
         pop.setHorizontalOffset(72);
+
         pop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 project = projectList.get(position);
                 getBeneficiaryList(project.getProjectID());
+                txtProjectName.setText(project.getProjectName());
                 pop.dismiss();
             }
         });

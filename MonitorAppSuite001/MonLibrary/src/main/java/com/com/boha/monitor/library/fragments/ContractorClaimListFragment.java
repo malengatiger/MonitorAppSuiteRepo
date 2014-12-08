@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListPopupWindow;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,11 +47,12 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
     }
 
     Context ctx;
-    View view;
+    View view, topView;
     TextView txtCount, txtName;
     ProjectDTO project;
     ListView mListView;
     LayoutInflater inflater;
+    ImageView hero;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,12 +63,34 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
 
         txtCount = (TextView) view.findViewById(R.id.FCC_count);
         txtName = (TextView) view.findViewById(R.id.FCC_title);
+        topView = view.findViewById(R.id.FCC_top);
+        hero = (ImageView) view.findViewById(R.id.FCC_hero);
         mListView = (ListView) view.findViewById(R.id.FCC_list);
 
         Statics.setRobotoFontLight(ctx, txtName);
+        hero.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                    Util.collapse(topView, 1500, null);
+
+            }
+        });
+        txtName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         return view;
     }
 
+    public void collapseHeroImage() {
+        Util.collapse(topView,1000,null);
+    }
+    public void expandHeroImage() {
+        Util.expand(topView, 1200, null);
+    }
     public void setProject(ProjectDTO p) {
         project = p;
         contractorClaimList = project.getContractorClaimList();
@@ -149,23 +173,34 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
                 invoicePopupWindow.show();
             }
         });
-        View v = inflater.inflate(R.layout.banner_image, null);
-        if (mListView.getHeaderViewsCount() == 0) {
-            mListView.addHeaderView(v);
-        }
+
         mListView.setAdapter(adapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                contractorClaim = contractorClaimList.get(position - 1);
+                contractorClaim = contractorClaimList.get(position);
                 mListener.onContractorClaimClicked(contractorClaim);
             }
         });
         txtCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.toast(ctx, "Under Construction");
+                if (topView.getVisibility() == View.GONE) {
+                    Util.flashOnce(txtCount,100,new Util.UtilAnimationListener() {
+                        @Override
+                        public void onAnimationEnded() {
+                            Util.expand(topView, 1200, null);
+                        }
+                    });
+                } else {
+                    Util.flashOnce(txtCount,100,new Util.UtilAnimationListener() {
+                        @Override
+                        public void onAnimationEnded() {
+                            Util.collapse(topView, 1200, null);
+                        }
+                    });
+                }
             }
         });
     }
@@ -250,6 +285,9 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
 
         Util.animateRotationY(txtCount, 500);
     }
+
+
+
 
     /**
      * This interface must be implemented by activities that contain this

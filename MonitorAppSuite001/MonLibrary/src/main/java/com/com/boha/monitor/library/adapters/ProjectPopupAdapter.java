@@ -70,7 +70,6 @@ public class ProjectPopupAdapter extends ArrayAdapter<ProjectDTO>  {
         Statics.setRobotoFontLight(ctx, item.txtName);
 
 
-        animateView(convertView);
         return (convertView);
     }
 

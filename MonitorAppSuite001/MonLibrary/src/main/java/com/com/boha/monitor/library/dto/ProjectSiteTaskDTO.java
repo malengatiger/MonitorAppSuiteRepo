@@ -21,6 +21,7 @@ public class ProjectSiteTaskDTO implements Serializable, Comparable<ProjectSiteT
     private static final long serialVersionUID = 1L;
     private Integer projectSiteTaskID;
     private TaskDTO task;
+    private boolean statusDone;
     private long dateRegistered;
     private Integer projectSiteID, projectID;
     private List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList = new ArrayList<>();
@@ -28,6 +29,14 @@ public class ProjectSiteTaskDTO implements Serializable, Comparable<ProjectSiteT
     private String projectSiteName, projectName;
 
     public ProjectSiteTaskDTO() {
+    }
+
+    public boolean isStatusDone() {
+        return statusDone;
+    }
+
+    public void setStatusDone(boolean statusDone) {
+        this.statusDone = statusDone;
     }
 
     public String getProjectName() {

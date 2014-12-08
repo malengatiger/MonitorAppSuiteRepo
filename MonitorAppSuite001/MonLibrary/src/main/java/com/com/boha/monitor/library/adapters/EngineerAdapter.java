@@ -89,7 +89,6 @@ public class EngineerAdapter extends ArrayAdapter<EngineerDTO> {
         Statics.setRobotoFontLight(ctx, item.txtEmail);
         Statics.setRobotoFontLight(ctx, item.txtCell);
 
-        animateView(convertView);
         return (convertView);
     }
 

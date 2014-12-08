@@ -1,8 +1,9 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="OperationsTheme" parent="Theme.AppCompat.Light">
+        <item name="android:windowTitleStyle">@style/actionBarStyle</item>
         <item name="colorPrimary">@color/blue</item>
-        <item name="colorPrimaryDark">@color/background_material_dark</item>
+        <item name="colorPrimaryDark">@color/background_floating_material_dark</item>
     </style>
     <style name="ProjectManagerTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/grey</item>
@@ -64,6 +65,11 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="actionBarStyle" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/blue</item>
+        <item name="android:textStyle">normal</item>
+    </style>
     <style name="Title1TextStyleBlue" parent="@android:style/TextAppearance.Large">
         <item name="android:textColor">@color/navy_blue</item>
         <item name="android:textStyle">bold</item>
@@ -356,6 +362,14 @@
     <style name="TransparentCircle" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">@color/white</item>
         <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/xtransparent_oval</item>
+    </style>
+    <style name="TransparentCircleSmall" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:width">32dp</item>
+        <item name="android:height">32dp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:background">@drawable/xtransparent_oval</item>
     </style>
     <style name="GreenCircle" parent="@android:style/TextAppearance.Small">

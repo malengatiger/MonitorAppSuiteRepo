@@ -113,7 +113,6 @@ public class ProjectAdapter extends ArrayAdapter<ProjectDTO> {
         Statics.setRobotoFontLight(ctx,item.txtName);
 
 
-        animateView(convertView);
         return (convertView);
     }
 

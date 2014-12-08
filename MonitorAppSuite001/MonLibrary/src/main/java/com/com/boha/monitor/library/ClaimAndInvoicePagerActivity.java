@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -38,7 +39,8 @@ import java.util.List;
 
 
 public class ClaimAndInvoicePagerActivity extends ActionBarActivity
-implements ContractorClaimFragment.ContractorClaimFragmentListener, ContractorClaimListFragment.ContractorClaimListListener{
+implements ContractorClaimFragment.ContractorClaimFragmentListener,
+        ContractorClaimListFragment.ContractorClaimListListener{
 
     ViewPager mPager;
     Context ctx;
@@ -47,11 +49,13 @@ implements ContractorClaimFragment.ContractorClaimFragmentListener, ContractorCl
     PagerAdapter adapter;
     ImageView imgLogo;
     ObjectAnimator objectAnimator;
+    GestureDetectorCompat mDetector;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_claim_and_invoice_pager);
         ctx = getApplicationContext();
+
         mPager = (ViewPager) findViewById(R.id.SITE_pager);
         mPager.setOffscreenPageLimit(NUM_ITEMS-1);
         PagerTitleStrip strip = (PagerTitleStrip)findViewById(R.id.pager_title_strip);
@@ -238,6 +242,8 @@ implements ContractorClaimFragment.ContractorClaimFragmentListener, ContractorCl
         //TODO popup actions for invoices - generate new, download existing
 
     }
+
+
 
 
     private class PagerAdapter extends FragmentStatePagerAdapter {

@@ -22,6 +22,9 @@ import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TaskAssignmentActivity extends ActionBarActivity implements
         SiteTaskAndStatusAssignmentFragment.ProjectSiteTaskListener{
 
@@ -30,6 +33,7 @@ public class TaskAssignmentActivity extends ActionBarActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_task_assignment);
         ctx = getApplicationContext();
          site = (ProjectSiteDTO)getIntent()
@@ -57,7 +61,8 @@ public class TaskAssignmentActivity extends ActionBarActivity implements
                         if (!ErrorUtil.checkServerError(ctx,response)) {
                             return;
                         }
-                        taf.setProjectSiteTaskList(response.getProjectSiteTaskList());
+                        site = response.getProjectSiteList().get(0);
+                        taf.setProjectSiteTaskList(site.getProjectSiteTaskList());
                     }
                 });
             }
@@ -114,9 +119,11 @@ public class TaskAssignmentActivity extends ActionBarActivity implements
 
     @Override
     public void onProjectSiteTaskAdded(ProjectSiteTaskDTO task) {
-
+        Log.w(LOG,"## onProjectSiteTaskAdded " + task.getTask().getTaskName());
+        projectSiteTaskList.add(task);
     }
 
+    List<ProjectSiteTaskDTO> projectSiteTaskList = new ArrayList<>();
     @Override
     public void onProjectSiteTaskDeleted() {
 
@@ -171,15 +178,14 @@ public class TaskAssignmentActivity extends ActionBarActivity implements
     }
 
     @Override
-    public void setBusy() {
-        setRefreshActionButtonState(true);
+    public void onProjectSiteTaskStatusAdded(ProjectSiteTaskStatusDTO taskStatus) {
+        Log.w(LOG, "## onProjectSiteTaskStatusAdded " + taskStatus.getTask().getTaskName() + " "
+                + taskStatus.getTaskStatus().getTaskStatusName());
+
+        projectSiteTaskStatusList.add(taskStatus);
     }
 
-    @Override
-    public void setNotBusy() {
-        setRefreshActionButtonState(false);
-    }
-
+    List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList = new ArrayList<>();
     @Override
     public void onCameraRequested(ProjectSiteTaskDTO siteTask, int type) {
         Intent i = new Intent(ctx, PictureActivity.class);
@@ -202,4 +208,16 @@ public class TaskAssignmentActivity extends ActionBarActivity implements
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        ResponseDTO r = new ResponseDTO();
+        r.setProjectSiteTaskStatusList(projectSiteTaskStatusList);
+        r.setProjectSiteTaskList(projectSiteTaskList);
+        Intent i = new Intent();
+        i.putExtra("response", r);
+
+        setResult(RESULT_OK, i);
+        finish();
+    }
+static final String LOG = TaskAssignmentActivity.class.getSimpleName();
 }

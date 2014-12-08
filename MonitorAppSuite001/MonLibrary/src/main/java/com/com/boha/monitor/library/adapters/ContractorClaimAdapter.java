@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.ContractorClaimDTO;
 import com.com.boha.monitor.library.util.Statics;
+import com.com.boha.monitor.library.util.Util;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -54,7 +55,7 @@ public class ContractorClaimAdapter extends ArrayAdapter<ContractorClaimDTO> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolderItem item;
+        final ViewHolderItem item;
         if (convertView == null) {
             convertView = mInflater.inflate(mLayoutRes, null);
             item = new ViewHolderItem();
@@ -99,20 +100,29 @@ public class ContractorClaimAdapter extends ArrayAdapter<ContractorClaimDTO> {
         item.txtInvoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onInvoiceActionsRequested(p);
+                Util.flashOnce(item.txtInvoice, 100, new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        listener.onInvoiceActionsRequested(p);
+                    }
+                });
             }
         });
         item.txtDoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onPDFDownloadRequested(p);
+                Util.flashOnce(item.txtDoc, 100, new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        listener.onPDFDownloadRequested(p);
+                    }
+                });
             }
         });
 
         Statics.setRobotoFontLight(ctx, item.txtDate);
         Statics.setRobotoFontLight(ctx, item.txtEngineerName);
 
-        animateView(convertView);
         return (convertView);
     }
 

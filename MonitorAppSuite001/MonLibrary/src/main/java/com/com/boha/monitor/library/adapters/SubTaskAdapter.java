@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -84,17 +82,9 @@ public class SubTaskAdapter extends ArrayAdapter<SubTaskDTO>  {
         Statics.setRobotoFontLight(ctx, item.txtName);
 
 
-        animateView(convertView);
         return (convertView);
     }
 
-    public void animateView(final View view) {
-        Animation a = AnimationUtils.loadAnimation(ctx, R.anim.grow_fade_in_center);
-        a.setDuration(500);
-        if (view == null)
-            return;
-        view.startAnimation(a);
-    }
 
     static final Locale x = Locale.getDefault();
     static final SimpleDateFormat y = new SimpleDateFormat("dd MMMM yyyy", x);

@@ -68,7 +68,7 @@ public class TaskStatusListFragment extends Fragment implements PageFragment {
         txtCount.setText("" + taskStatusList.size());
         // Set the adapter
         mListView = (AbsListView) view.findViewById(R.id.TASK_STAT_list);
-        adapter = new TaskStatusAdapter(ctx, R.layout.task_status_item, taskStatusList);
+        adapter = new TaskStatusAdapter(ctx, R.layout.task_status_item, taskStatusList,false);
         mListView.setAdapter(adapter);
 
         // Set OnItemClickListener so we can be notified on item clicks

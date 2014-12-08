@@ -14,10 +14,10 @@
 
         <ImageView
             android:id="@+id/SITE_heroImage"
-            android:src="@drawable/under_construction"
+            android:src="@drawable/banner_construction11"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="140dp" />
+            android:layout_height="@dimen/mon_hero_height_medium" />
 
         <RelativeLayout
             android:id="@+id/SITE_top"
@@ -103,7 +103,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/SITE_staffLayout"
             android:layout_marginTop="@dimen/mon_padding"
-            android:layout_marginRight="48dp"
+            android:layout_marginRight="@dimen/mon_wider"
+            android:layout_marginBottom="@dimen/mon_margin"
             android:layout_alignLeft="@id/SITE_layout"
             android:layout_below="@id/SITE_layout">
 

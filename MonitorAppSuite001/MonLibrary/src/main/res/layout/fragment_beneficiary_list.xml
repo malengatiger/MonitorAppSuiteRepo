@@ -43,6 +43,7 @@
                 style="@style/Title2TextStyleBlue"
                 android:layout_marginLeft="@dimen/mon_padding"
                 android:layout_centerVertical="true"
+                android:elevation="@dimen/mon_padding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

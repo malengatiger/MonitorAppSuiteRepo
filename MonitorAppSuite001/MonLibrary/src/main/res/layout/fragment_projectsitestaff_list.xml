@@ -8,7 +8,7 @@
     tools:context="com.com.boha.monitor.library.fragments.ProjectSiteStaffListFragment">
 
     <RelativeLayout
-        android:id="@+id/STAFF_LIST_layoutx"
+        android:id="@+id/STAFF_LIST_top"
         android:padding="16dp"
         android:background="@color/beige_pale"
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
     <ListView
         android:id="@android:id/list"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/STAFF_LIST_layoutx"
+        android:layout_below="@id/STAFF_LIST_top"
         android:background="@color/white"
         android:dividerHeight="5dp"
         android:layout_width="match_parent"

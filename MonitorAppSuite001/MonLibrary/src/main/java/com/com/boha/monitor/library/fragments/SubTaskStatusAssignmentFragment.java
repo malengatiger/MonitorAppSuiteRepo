@@ -170,18 +170,21 @@ public class SubTaskStatusAssignmentFragment extends Fragment {
     }
     int lastIndex;
     private void showPopup() {
+        View v = null;
         actionsWindow = new ListPopupWindow(getActivity());
         switch (type) {
             case TASK:
+                actionsWindow.setPromptView(v = Util.getHeroView(ctx, task.getTask().getTaskName()));
                 actionsWindow.setAdapter(new TaskStatusAdapter(ctx,
-                        R.layout.task_status_item_small, taskStatusList, task.getTask().getTaskName()));
+                        R.layout.task_status_item_small, taskStatusList,true));
                 break;
             case SUBTASK:
+                actionsWindow.setPromptView(Util.getHeroView(ctx, subTask.getSubTaskName()));
                 actionsWindow.setAdapter(new TaskStatusAdapter(ctx,
-                        R.layout.task_status_item_small, taskStatusList, subTask.getSubTaskName()));
+                        R.layout.task_status_item_small, taskStatusList,false));
                 break;
         }
-
+        actionsWindow.setPromptPosition(ListPopupWindow.POSITION_PROMPT_ABOVE);
         actionsWindow.setAnchorView(handle);
         actionsWindow.setWidth(700);
         actionsWindow.setModal(true);

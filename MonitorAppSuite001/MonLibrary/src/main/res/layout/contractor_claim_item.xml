@@ -70,7 +70,8 @@
     <RelativeLayout
         android:id="@+id/CCI_bottom"
         android:layout_below="@id/CCI_dateLayout"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="@dimen/mon_margin"
+        android:padding="@dimen/mon_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -78,6 +79,7 @@
             android:id="@+id/CCI_doc"
             android:text="Doc"
             style="@style/RedCircle"
+            android:elevation="@dimen/mon_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -104,7 +106,8 @@
 
     <RelativeLayout
         android:id="@+id/CCI_statusLayout"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="@dimen/mon_margin"
+        android:padding="@dimen/mon_padding"
         android:layout_below="@id/CCI_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -112,6 +115,7 @@
             android:id="@+id/CCI_invoice"
             android:text="Inv"
             style="@style/GreenCircle"
+            android:elevation="@dimen/mon_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

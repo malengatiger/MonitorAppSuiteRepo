@@ -8,36 +8,53 @@
 
     <RelativeLayout
         android:id="@+id/FCC_top"
-        android:background="@color/beige_pale"
-        android:padding="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/FCC_hero"
+            android:src="@drawable/banner_report2"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mon_hero_height_large" />
+
         <TextView
             android:id="@+id/FCC_title"
             style="@style/Title2TextStyleGrey"
             android:text="@string/contractor_claims"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="@dimen/mon_padding"
+            android:textColor="@color/blue"
+            android:layout_marginTop="@dimen/mon_hero_height_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        </RelativeLayout>
+    </RelativeLayout>
 
-    <ListView
-        android:id="@+id/FCC_list"
+    <RelativeLayout
         android:layout_below="@id/FCC_top"
+        android:layout_marginTop="@dimen/mon_padding"
+        android:background="@color/beige_pale"
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_marginTop="8dp"
-        android:dividerHeight="5dp"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:id="@+id/FCC_count"
-        style="@style/BlueCircle"
-        android:text="99"
-        android:layout_marginTop="24dp"
-        android:layout_marginRight="8dp"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/FCC_list"
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_marginTop="@dimen/mon_wide"
+            android:dividerHeight="@dimen/mon_divider"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/FCC_count"
+            style="@style/BlueCircle"
+            android:text="99"
+            android:layout_marginRight="@dimen/mon_padding"
+            android:elevation="@dimen/mon_padding"
+            android:layout_marginTop="@dimen/mon_padding"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 
 </RelativeLayout>
