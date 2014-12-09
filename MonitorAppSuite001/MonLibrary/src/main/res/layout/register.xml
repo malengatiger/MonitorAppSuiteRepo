@@ -2,20 +2,29 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:padding="10dp"
+        android:padding="@dimen/mon_padding"
         android:background="@color/grey"
         android:layout_height="fill_parent">
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/mon_wide"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <ImageView
-            android:src="@drawable/banner_blue"
+            android:src="@drawable/banner_construction13"
             android:id="@+id/REG_banner"
             android:scaleType="centerCrop"
+            android:alpha="0.5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="@dimen/mon_hero_height_medium" />
 
         <RelativeLayout
             android:id="@+id/REG_ediLayout"

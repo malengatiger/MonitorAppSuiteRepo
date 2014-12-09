@@ -550,8 +550,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
         taskPopupWindow.setAnchorView(txtTitle);
         taskPopupWindow.setWidth(800);
         taskPopupWindow.setModal(true);
-        taskPopupWindow.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item, taskStringList,
-                ctx.getString(R.string.add_task), false));
+        taskPopupWindow.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item, taskStringList, false));
         taskPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

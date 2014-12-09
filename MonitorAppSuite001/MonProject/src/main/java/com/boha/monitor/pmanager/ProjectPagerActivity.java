@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.com.boha.monitor.library.ClaimAndInvoicePagerActivity;
@@ -56,6 +57,7 @@ public class ProjectPagerActivity extends ActionBarActivity
     private DrawerLayout mDrawerLayout;
     private DrawerAdapter mDrawerAdapter;
     private LayoutInflater inflater;
+    ProgressBar progressBar;
     static final String LOG = ProjectPagerActivity.class.getSimpleName();
 
     @Override
@@ -68,6 +70,7 @@ public class ProjectPagerActivity extends ActionBarActivity
         mPager = (ViewPager) findViewById(R.id.pager);
         PagerTitleStrip strip = (PagerTitleStrip) findViewById(R.id.pager_title_strip);
         strip.setVisibility(View.GONE);
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
         drawerListView = (ListView) findViewById(R.id.left_drawer);
         titles = getResources().getStringArray(R.array.action_items);
         setDrawerList();
@@ -156,13 +159,14 @@ public class ProjectPagerActivity extends ActionBarActivity
         setRefreshActionButtonState(true);
         if (projectListFragment != null)
             projectListFragment.rotateLogo();
+        progressBar.setVisibility(View.VISIBLE);
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO r) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        setRefreshActionButtonState(false);
+                        progressBar.setVisibility(View.GONE);
                         if (projectListFragment != null)
                             projectListFragment.stopRotatingLogo();
                         Log.e(LOG, "############# getCompanyData responded");
@@ -195,7 +199,12 @@ public class ProjectPagerActivity extends ActionBarActivity
 
             @Override
             public void onClose() {
-
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
             }
 
             @Override
@@ -203,7 +212,7 @@ public class ProjectPagerActivity extends ActionBarActivity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        setRefreshActionButtonState(false);
+                        progressBar.setVisibility(View.GONE);
                         ToastUtil.errorToast(ctx, message);
                     }
                 });

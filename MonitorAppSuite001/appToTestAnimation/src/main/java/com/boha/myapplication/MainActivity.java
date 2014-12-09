@@ -52,7 +52,7 @@ public class MainActivity extends ActionBarActivity {
         amber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Util.flashSeveralTimes(amber,200,10);
+                Util.flashSeveralTimes(amber,200,10,null);
             }
         });
         green.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +64,7 @@ public class MainActivity extends ActionBarActivity {
         txtNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Util.flashOnce(green, 200);
+                Util.flashOnce(green, 200, null);
             }
         });
     }

@@ -301,7 +301,7 @@ public class SubTaskFragment extends Fragment implements PageFragment {
         taskPopupWindow.setModal(true);
         taskPopupWindow.setAnchorView(txtTitle);
         taskPopupWindow.setWidth(700);
-        taskPopupWindow.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item, list, ctx.getString(R.string.select_task),false));
+        taskPopupWindow.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item, list, false));
         taskPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

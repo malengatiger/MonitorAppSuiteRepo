@@ -161,7 +161,11 @@ public class BeneficiaryImportFragment extends Fragment implements PageFragment 
         btnImport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (beneficiaryList == null) {
+                    ToastUtil.errorToast(ctx,
+                            ctx.getString(R.string.import_not_found));
+                    return;
+                }
                 totalPages = beneficiaryList.size() / PAGE_SIZE;
                 int rem = beneficiaryList.size() % PAGE_SIZE;
                 if (rem > 0) {

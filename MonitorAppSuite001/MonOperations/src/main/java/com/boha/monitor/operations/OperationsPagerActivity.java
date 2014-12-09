@@ -18,8 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.com.boha.monitor.library.AppInvitationActivity;
 import com.com.boha.monitor.library.BeneficiaryImportActivity;
 import com.com.boha.monitor.library.ClaimAndInvoicePagerActivity;
 import com.com.boha.monitor.library.ImagePagerActivity;
@@ -79,6 +81,7 @@ public class OperationsPagerActivity extends ActionBarActivity
     private DrawerLayout mDrawerLayout;
     private DrawerAdapter mDrawerAdapter;
     private List<ProjectDTO> projectList;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,7 @@ public class OperationsPagerActivity extends ActionBarActivity
         ctx = getApplicationContext();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mPager = (ViewPager) findViewById(R.id.pager);
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
         Toolbar tb = (Toolbar)findViewById(R.id.toolbar);
         if (tb != null) {
             //setSupportActionBar(tb);
@@ -157,12 +161,14 @@ public class OperationsPagerActivity extends ActionBarActivity
         w.setRequestType(RequestDTO.GET_COMPANY_DATA);
         w.setCompanyID(SharedUtil.getCompany(ctx).getCompanyID());
 
+        progressBar.setVisibility(View.VISIBLE);
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO r) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        progressBar.setVisibility(View.GONE);
                         if (!ErrorUtil.checkServerError(ctx, r)) {
                             return;
                         }
@@ -647,6 +653,18 @@ public class OperationsPagerActivity extends ActionBarActivity
     public void onCompanyStaffClicked(CompanyStaffDTO companyStaff) {
 
     }
+
+    @Override
+    public void onCompanyStaffInvitationRequested(List<CompanyStaffDTO> companyStaffList, int index) {
+
+        Intent i = new Intent(this, AppInvitationActivity.class);
+        ResponseDTO r = new ResponseDTO();
+        r.setCompanyStaffList(companyStaffList);
+        i.putExtra("response", r);
+        i.putExtra("index", index);
+        startActivity(i);
+    }
+
 
     static final int PICTURE_REQUESTED = 9133;
     CompanyStaffDTO companyStaff;

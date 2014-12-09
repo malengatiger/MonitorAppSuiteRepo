@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="0dp">
+
+    <RelativeLayout
+        android:layout_below="@id/top"
+        android:padding="@dimen/mon_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image1"
+            android:src="@android:drawable/btn_star"
+            android:tint="@color/blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/text1"
+            style="@style/TextStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:layout_centerVertical="true"
+            android:text="Spinner item text here"
+            android:layout_toRightOf="@id/image1"
+            android:layout_marginLeft="@dimen/mon_padding"
+            android:textStyle="normal"
+            android:textColor="@color/black" />
+    </RelativeLayout>
+</RelativeLayout>

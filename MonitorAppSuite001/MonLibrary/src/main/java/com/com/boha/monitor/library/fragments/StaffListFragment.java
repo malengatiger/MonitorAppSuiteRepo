@@ -13,7 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
-import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
+import com.com.boha.monitor.library.adapters.PopupListAdapter;
 import com.com.boha.monitor.library.adapters.StaffAdapter;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
@@ -128,17 +128,41 @@ public class StaffListFragment extends Fragment
                     list.add(ctx.getString(R.string.take_picture));
                     list.add(ctx.getString(R.string.send_app_link));
                     list.add(ctx.getString(R.string.edit_staff));
-
+                    View v = Util.getHeroView(ctx, "Select Action");
 
                     staffActionsWindow = new ListPopupWindow(getActivity());
-                    staffActionsWindow.setAdapter(new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item,
-                            list, SpinnerListAdapter.STAFF_ACTIONS, false));
+                    staffActionsWindow.setPromptView(v);
+                    staffActionsWindow.setPromptPosition(ListPopupWindow.POSITION_PROMPT_ABOVE);
+                    staffActionsWindow.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item,
+                            list, true));
                     staffActionsWindow.setAnchorView(txtName);
                     staffActionsWindow.setWidth(600);
                     staffActionsWindow.setModal(true);
                     staffActionsWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            switch (position) {
+                                case 0:
+                                    //get status
+                                    break;
+                                case 1:
+                                    mListener.onCompanyStaffPictureRequested(companyStaffDTO);
+                                    break;
+                                case 2:
+                                    //invite staff to download app
+                                    int index = 0;
+                                    for (CompanyStaffDTO s: companyStaffList) {
+                                        if (s.getCompanyStaffID().intValue() == companyStaffDTO.getCompanyStaffID().intValue()) {
+                                            break;
+                                        }
+                                        index++;
+                                    }
+                                    mListener.onCompanyStaffInvitationRequested(companyStaffList,index);
+                                    break;
+                                case 3:
+                                    //edit staff data - include deactivation
+                                    break;
+                            }
                             staffActionsWindow.dismiss();
                         }
                     });
@@ -207,19 +231,9 @@ public class StaffListFragment extends Fragment
         }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow logoAnimator interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <project/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface CompanyStaffListListener {
         public void onCompanyStaffClicked(CompanyStaffDTO companyStaff);
-
+        public void onCompanyStaffInvitationRequested(List<CompanyStaffDTO> companyStaffList, int index);
         public void onCompanyStaffPictureRequested(CompanyStaffDTO companyStaff);
     }
 

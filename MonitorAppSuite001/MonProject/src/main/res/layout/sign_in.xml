@@ -4,14 +4,22 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:background="@color/grey"
-        android:padding="10dp"
+        android:padding="@dimen/mon_padding"
         android:id="@+id/SI_mainLayout"
         android:layout_height="match_parent">
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_margin="@dimen/mon_wide"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
         <ImageView
             android:id="@+id/SI_banner"
-            android:src="@drawable/banner_gold"
+            android:src="@drawable/banner_construction11"
+            android:scaleType="centerCrop"
+            android:alpha="0.5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="@dimen/mon_hero_height_medium"/>
 
         <RelativeLayout
             android:id="@+id/SI_layout0"
@@ -19,14 +27,8 @@
             android:layout_width="match_parent"
             android:padding="10dp"
             android:background="@color/white"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/SI_image"
-                android:src="@drawable/ic_launcher"
-                android:layout_margin="10dp"
-                android:layout_width="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_height="wrap_content"/>
+            android:layout_height="match_parent">
+
 
             <TextView
                 android:id="@+id/SI_welcome"
@@ -36,7 +38,6 @@
                 android:layout_centerHorizontal="true"
                 style="@style/TextStyle"
                 android:textSize="16sp"
-                android:layout_below="@id/SI_image"
                 android:layout_height="wrap_content"/>
 
             <TextView
@@ -84,7 +85,7 @@
 
                 <Button
                     android:id="@+id/SI_btnSave"
-                    style="@style/ButtonSaveSmall"
+                    style="@style/ButtonRed"
                     android:layout_weight="3"
                     android:layout_alignParentRight="true"
                     android:text="@string/sign_in"

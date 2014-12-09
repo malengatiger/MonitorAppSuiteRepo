@@ -78,6 +78,9 @@ public class ProjectListFragment extends Fragment implements PageFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.w(LOG,"######### onCreateView");
+        if (savedInstanceState != null) {
+            hasReminderBeenShown = savedInstanceState.getBoolean("hasReminderBeenShown");
+        }
         view = inflater.inflate(R.layout.fragment_project, container, false);
         this.inflater = inflater;
         ctx = getActivity();
@@ -133,19 +136,32 @@ public class ProjectListFragment extends Fragment implements PageFragment {
             }
         }
 
-
         txtProjectCount = (TextView) view.findViewById(R.id.PROJ_LIST_projectCount);
         mListView = (ListView) view.findViewById(android.R.id.list);
         txtLabel = (TextView) view.findViewById(R.id.PROJ_LIST_label);
         Statics.setRobotoFontLight(ctx, txtLabel);
 
-
         setTotals();
         setList();
-        //Util.expand(topView,2000,null);
+
+        if (!hasReminderBeenShown) {
+            Util.pretendFlash(txtLabel, 300, 5, new Util.UtilAnimationListener() {
+                @Override
+                public void onAnimationEnded() {
+                    Util.showToast(ctx, ctx.getString(R.string.swipe_for_more), ctx.getResources().getDrawable(R.drawable.arrow_right));
+                }
+            });
+        }
+
         return view;
     }
 
+    boolean hasReminderBeenShown;
+    @Override
+    public void onSaveInstanceState(Bundle b) {
+        b.putBoolean("hasReminderBeenShown", hasReminderBeenShown);
+        super.onSaveInstanceState(b);
+    }
     private void search() {
         if (editSearch.getText().toString().isEmpty()) {
             return;

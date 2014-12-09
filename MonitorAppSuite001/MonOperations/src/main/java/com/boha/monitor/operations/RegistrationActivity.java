@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -24,8 +25,8 @@ import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.com.boha.monitor.library.dto.GcmDeviceDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
-import com.com.boha.monitor.library.toolbox.BaseVolley;
 import com.com.boha.monitor.library.util.CacheUtil;
+import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.GCMUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
@@ -153,7 +154,7 @@ public class RegistrationActivity extends ActionBarActivity implements
         a.setPin(ePin.getText().toString());
         a.setGcmDevice(gcmDevice);
 
-        CompanyDTO g = new CompanyDTO();
+        final CompanyDTO g = new CompanyDTO();
         g.setCompanyName(eGroup.getText().toString());
 
 
@@ -162,21 +163,15 @@ public class RegistrationActivity extends ActionBarActivity implements
         r.setCompany(g);
         r.setCompanyStaff(a);
 
-        setRefreshActionButtonState(true);
-
-        BaseVolley.checkNetworkOnDevice(ctx);
-        //ToastUtil.toast(ctx, ctx.getResources().getString(R.string.wait), 10, Gravity.CENTER);
-
-        setRefreshActionButtonState(true);
+        progressBar.setVisibility(View.VISIBLE);
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, r, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        setRefreshActionButtonState(false);
-                        if (response.getStatusCode() > 0) {
-                            ToastUtil.errorToast(ctx, response.getMessage());
+                        progressBar.setVisibility(View.GONE);
+                        if (!ErrorUtil.checkServerError(ctx,response)) {
                             return;
                         }
 
@@ -234,7 +229,12 @@ public class RegistrationActivity extends ActionBarActivity implements
 
             @Override
             public void onClose() {
-
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
             }
 
             @Override
@@ -242,7 +242,7 @@ public class RegistrationActivity extends ActionBarActivity implements
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        setRefreshActionButtonState(false);
+                        progressBar.setVisibility(View.GONE);
                         ToastUtil.errorToast(ctx, message);
 
                     }
@@ -268,16 +268,14 @@ public class RegistrationActivity extends ActionBarActivity implements
         r.setPin(ePin.getText().toString());
         r.setGcmDevice(gcmDevice);
 
-        setRefreshActionButtonState(true);
-        BaseVolley.checkNetworkOnDevice(ctx);
-
+        progressBar.setVisibility(View.VISIBLE);
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, r, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        setRefreshActionButtonState(false);
+                        progressBar.setVisibility(View.GONE);
                         if (response.getStatusCode() > 0) {
                             ToastUtil.errorToast(ctx, response.getMessage());
                             return;
@@ -310,7 +308,12 @@ public class RegistrationActivity extends ActionBarActivity implements
 
             @Override
             public void onClose() {
-
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
             }
 
             @Override
@@ -318,7 +321,7 @@ public class RegistrationActivity extends ActionBarActivity implements
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        setRefreshActionButtonState(false);
+                        progressBar.setVisibility(View.GONE);
                         ToastUtil.errorToast(ctx, message);
                     }
                 });
@@ -330,9 +333,11 @@ public class RegistrationActivity extends ActionBarActivity implements
 
     boolean isRegistration;
     GcmDeviceDTO gcmDevice;
+    ProgressBar progressBar;
 
 
     private void setFields() {
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
         spinnerCountry = (Spinner) findViewById(R.id.EP_countrySpinner);
         eFirstName = (EditText) findViewById(R.id.EP_firstName);
         eLastName = (EditText) findViewById(R.id.EP_lastName);

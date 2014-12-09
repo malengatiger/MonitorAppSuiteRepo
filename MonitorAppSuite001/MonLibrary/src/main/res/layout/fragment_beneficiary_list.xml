@@ -70,5 +70,12 @@
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="@dimen/mon_wide"
+        android:layout_marginLeft="@dimen/mon_wide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

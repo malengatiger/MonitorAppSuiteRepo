@@ -42,6 +42,7 @@
         <activity
             android:name=".OperationsPagerActivity"
             android:label="@string/title_activity_main_pager"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.com.boha.monitor.library.CameraActivity"

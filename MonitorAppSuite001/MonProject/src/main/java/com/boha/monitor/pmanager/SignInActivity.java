@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -43,6 +44,7 @@ public class SignInActivity extends Activity {
     Button btnSave;
     Context ctx;
     String email;
+    ProgressBar progressBar;
 
     boolean isRegistration;
     GcmDeviceDTO gcmDevice;
@@ -122,13 +124,14 @@ public class SignInActivity extends Activity {
         setRefreshActionButtonState(true);
         BaseVolley.checkNetworkOnDevice(ctx);
 
+        progressBar.setVisibility(View.VISIBLE);
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, r, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        setRefreshActionButtonState(false);
+                        progressBar.setVisibility(View.GONE);
                         if (response.getStatusCode() > 0) {
                             ToastUtil.errorToast(ctx, response.getMessage());
                             return;
@@ -161,7 +164,12 @@ public class SignInActivity extends Activity {
 
             @Override
             public void onClose() {
-
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
             }
 
             @Override
@@ -169,7 +177,7 @@ public class SignInActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        setRefreshActionButtonState(false);
+                        progressBar.setVisibility(View.GONE);
                         ToastUtil.errorToast(ctx, message);
                     }
                 });
@@ -179,6 +187,7 @@ public class SignInActivity extends Activity {
 
     }
     private void setFields() {
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         ePin = (EditText) findViewById(R.id.SI_pin);
         spinnerEmail = (Spinner) findViewById(R.id.SI_spinner);
         txtApp = (TextView)findViewById(R.id.SI_app);

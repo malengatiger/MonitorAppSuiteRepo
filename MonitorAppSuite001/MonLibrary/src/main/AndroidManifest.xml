@@ -26,6 +26,10 @@
             android:name="com.com.boha.monitor.library.BeneficiaryImportActivity"
             android:label="@string/title_activity_beneficiary_import" >
         </activity>
+        <activity
+            android:name="com.com.boha.monitor.library.AppInvitationActivity"
+            android:label="@string/title_activity_app_invitation" >
+        </activity>
     </application>
 
 </manifest>

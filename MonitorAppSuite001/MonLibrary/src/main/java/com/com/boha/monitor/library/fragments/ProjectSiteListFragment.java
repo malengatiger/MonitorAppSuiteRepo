@@ -301,6 +301,9 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
                             s.setStatusCount(s.getStatusCount() + 1);
                         }
                         s.setLastStatus(sta);
+                        Log.i(LOG, "## LastStatus updated in list, task: "
+                                + sta.getTask().getTaskName() + " status: "
+                                + sta.getTaskStatus().getTaskStatusName());
                     }
                 }
             }
@@ -308,69 +311,14 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
             list.add(s);
         }
         projectSiteList = list;
+        project.setProjectSiteList(list);
         setList();
-        //getProjectData();
+        //cache data
+        ResponseDTO r = new ResponseDTO();
+        r.setProjectList(new ArrayList<ProjectDTO>());
+        r.getProjectList().add(project);
+        CacheUtil.cacheProjectData(ctx,r,CacheUtil.CACHE_PROJECT,project.getProjectID(), null);
 
-    }
-
-    private void getProjectData() {
-        Log.w(LOG, "################################ getProjectData");
-        RequestDTO w = new RequestDTO(RequestDTO.GET_PROJECT_DATA);
-        w.setProjectID(project.getProjectID());
-
-        WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
-            @Override
-            public void onMessage(final ResponseDTO response) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!ErrorUtil.checkServerError(ctx, response)) {
-                            return;
-                        }
-                        project = response.getProjectList().get(0);
-                        projectSiteList = project.getProjectSiteList();
-                        setList();
-                        CacheUtil.cacheProjectData(ctx, response, CacheUtil.CACHE_PROJECT, project.getProjectID(), new CacheUtil.CacheUtilListener() {
-                            @Override
-                            public void onFileDataDeserialized(ResponseDTO response) {
-
-                            }
-
-                            @Override
-                            public void onDataCached() {
-
-                            }
-
-                            @Override
-                            public void onError() {
-
-                            }
-                        });
-                    }
-                });
-            }
-
-            @Override
-            public void onClose() {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.e(LOG, "getProjectData --------------- websocket closed");
-                    }
-                });
-            }
-
-            @Override
-            public void onError(final String message) {
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastUtil.errorToast(ctx, message);
-                    }
-                });
-            }
-        });
     }
 
     public void refreshPhotoList(ProjectSiteDTO site) {

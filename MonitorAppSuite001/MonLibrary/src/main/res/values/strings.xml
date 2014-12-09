@@ -84,7 +84,7 @@
     <string name="search_map">Use Map for Club search</string>
     <string name="invited">You are invited to download this app\:</string>
     <string name="click_link">Click or tap the link below to navigate to Google Play</string>
-    <string name="enjoy">Enjoy the game!</string>
+    <string name="enjoy">Enjoy the app!</string>
     <string name="select_players_imp">Please select Players for import</string>
     <string name="subject">Invitation to Project Monitor Apps</string>
     <string name="off">Normal</string>
@@ -107,8 +107,8 @@
     <string name="pm_app">Project Manager App</string>
     <string name="invite_title">Invite Golf Group members to download apps</string>
     <string name="mg_apps">ProjectMonitor Apps</string>
-    <string name="invite_dialog">Are you sure you want to invite a download of this app? \nThe user will be an Administrator and may add and change data in your group</string>
-    <string name="invite_confirm">Do you want to invite someone to download mgGolf Leaderboard App?</string>
+    <string name="invite_dialog">Are you sure you want to invite a download of this app? \nThe user will be an Operations manager and may add and change data in your group</string>
+    <string name="invite_confirm">Do you want to invite someone to download the App?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="par">Par</string>
@@ -300,5 +300,10 @@
     <string name="select_action">Select Action</string>
     <string name="status">Status</string>
     <string name="save_coords">Save Coordinates</string>
+    <string name="import_not_found">No beneficiary files to import</string>
+    <string name="select_app">Please select app</string>
+    <string name="title_activity_app_invitation">App Invitations</string>
+    <string name="contact_us"><![CDATA[<p>Should you encounter any issues please do not hesitate to contact us. We hope you find our platform useful!</p>]]></string>
+    <string name="swipe_for_more">Swipe to do more </string>
 
 </resources>

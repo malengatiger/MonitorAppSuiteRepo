@@ -21,30 +21,18 @@ public class PopupListAdapter extends ArrayAdapter<String> {
     private List<String> mList;
     private Context ctx;
     private String title;
-    private boolean hideBanner;
+    private boolean showAlternateIcon;
     public static final int ENGINEER_LIST = 1, TASK_LIST = 2,
             STAFF_ACTIONS = 3, INVOICE_ACTIONS = 4, SITE_LIST = 5, PROJECT_LIST = 6;
 
     static final String LOG = PopupListAdapter.class.getSimpleName();
 
     public PopupListAdapter(Context context, int textViewResourceId,
-                            List<String> list, boolean hideBanner) {
+                            List<String> list, boolean showAlternateIcon) {
         super(context, textViewResourceId, list);
         this.mLayoutRes = textViewResourceId;
         mList = list;
-        this.hideBanner = hideBanner;
-        ctx = context;
-        this.mInflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    public PopupListAdapter(Context context, int textViewResourceId,
-                            List<String> list, String title, boolean hideBanner) {
-        super(context, textViewResourceId, list);
-        this.mLayoutRes = textViewResourceId;
-        mList = list;
-        this.title = title;
-        this.hideBanner = hideBanner;
+        this.showAlternateIcon = showAlternateIcon;
         ctx = context;
         this.mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -84,9 +72,11 @@ public class PopupListAdapter extends ArrayAdapter<String> {
         } else {
             item = (ViewHolderItem) convertView.getTag();
         }
-
-
-        item.image.setImageDrawable(ctx.getResources().getDrawable(android.R.drawable.ic_input_add));
+        if (showAlternateIcon) {
+            item.image.setImageDrawable(ctx.getResources().getDrawable(R.drawable.xblue_oval_smaller));
+        } else {
+            item.image.setImageDrawable(ctx.getResources().getDrawable(android.R.drawable.ic_input_add));
+        }
         final String p = mList.get(position);
         item.txtString.setText(p);
         Statics.setRobotoFontLight(ctx, item.txtString);

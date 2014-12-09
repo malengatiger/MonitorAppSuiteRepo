@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dialogs.ProjectSiteDialog;
@@ -46,6 +47,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
 
     static final int NUM_ITEMS = 2;
     GPSScanFragment gpsScanFragment;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
         setContentView(R.layout.activity_site_pager);
         ctx = getApplicationContext();
         mPager = (ViewPager) findViewById(R.id.SITE_pager);
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
         mPager.setOffscreenPageLimit(NUM_ITEMS - 1);
         PagerTitleStrip strip = (PagerTitleStrip) findViewById(R.id.pager_title_strip);
         strip.setVisibility(View.GONE);
@@ -97,14 +100,15 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
         RequestDTO w = new RequestDTO(RequestDTO.GET_PROJECT_DATA);
         w.setProjectID(project.getProjectID());
 
-        setRefreshActionButtonState(true);
+        progressBar.setVisibility(View.VISIBLE);
         WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
             @Override
             public void onMessage(final ResponseDTO response) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        setRefreshActionButtonState(false);
+                        //setRefreshActionButtonState(false);
+                        progressBar.setVisibility(View.GONE);
                         if (!ErrorUtil.checkServerError(ctx, response)) {
                             return;
                         }
@@ -137,6 +141,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        progressBar.setVisibility(View.GONE);
                         Log.e(LOG, "getProjectData --------------- websocket closed");
                     }
                 });
@@ -148,6 +153,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        progressBar.setVisibility(View.GONE);
                         ToastUtil.errorToast(ctx, message);
                     }
                 });
@@ -319,23 +325,20 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
 
     private void buildPages() {
 
-        if (pageFragmentList == null) {
-            pageFragmentList = new ArrayList<>();
-            projectSiteListFragment = new ProjectSiteListFragment();
-            Bundle data1 = new Bundle();
-            data1.putSerializable("project", project);
-            data1.putInt("index", selectedSiteIndex);
-            projectSiteListFragment.setArguments(data1);
+        pageFragmentList = new ArrayList<>();
+        projectSiteListFragment = new ProjectSiteListFragment();
+        Bundle data1 = new Bundle();
+        data1.putSerializable("project", project);
+        data1.putInt("index", selectedSiteIndex);
+        projectSiteListFragment.setArguments(data1);
 
-            gpsScanFragment = new GPSScanFragment();
+        gpsScanFragment = new GPSScanFragment();
 
-            pageFragmentList.add(projectSiteListFragment);
-            pageFragmentList.add(gpsScanFragment);
+        pageFragmentList.add(projectSiteListFragment);
+        pageFragmentList.add(gpsScanFragment);
 
-            initializeAdapter();
-        } else {
-            projectSiteListFragment.setProject(project);
-        }
+        initializeAdapter();
+
 
     }
 
@@ -481,7 +484,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
                     Log.w(LOG, "## data returned, statusList: " + r.getProjectSiteTaskStatusList().size() +
                             " taskList: " + r.getProjectSiteTaskList().size());
 
-                        projectSiteListFragment.refreshData(r);
+                    projectSiteListFragment.refreshData(r);
 
                 }
                 break;

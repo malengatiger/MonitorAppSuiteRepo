@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!-- The main content view -->
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -21,21 +21,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
+                android:visibility="gone"
                 android:background="@color/blue_dark2"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
+                android:paddingBottom="@dimen/mon_padding"
+                android:paddingTop="@dimen/mon_padding"
                 android:textColor="#fff" />
         </android.support.v4.view.ViewPager>
-        </FrameLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/mon_wide"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        </RelativeLayout>
 
 
     <!-- The navigation drawer -->
     <ListView android:id="@+id/left_drawer"
-        android:layout_width="240dp"
+        android:layout_width="@dimen/mon_nav_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:divider="@color/grey"
-        android:dividerHeight="1dp"
+        android:dividerHeight="2dp"
         />
+
 </android.support.v4.widget.DrawerLayout>

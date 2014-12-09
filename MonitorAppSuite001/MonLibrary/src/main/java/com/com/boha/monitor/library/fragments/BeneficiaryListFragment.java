@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
@@ -48,7 +49,9 @@ public class BeneficiaryListFragment extends Fragment implements PageFragment {
 
     Context ctx;
     View view, topView, hero;
+    ImageView topImage;
     TextView txtCount, txtTitle, txtProjectName;
+    ProgressBar progressBar;
     static final String LOG = BeneficiaryListFragment.class.getSimpleName();
 
     @Override
@@ -59,11 +62,29 @@ public class BeneficiaryListFragment extends Fragment implements PageFragment {
         ctx = getActivity();
         topView = view.findViewById(R.id.BC_top);
         hero = view.findViewById(R.id.BC_hero);
+        topImage = (ImageView) view.findViewById(R.id.BC_hero);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         mListView = (AbsListView) view.findViewById(R.id.BC_list);
         txtCount = (TextView) view.findViewById(R.id.BC_count);
         txtTitle = (TextView) view.findViewById(R.id.BC_title);
         txtProjectName = (TextView) view.findViewById(R.id.BC_projectName);
         Statics.setRobotoFontLight(ctx, txtTitle);
+        topImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Util.flashSeveralTimes(txtCount, 100, 1, new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        if (project != null) {
+                            mListener.onBeneficiaryImportRequested(project);
+                        } else {
+                            if (!projectList.isEmpty())
+                                mListener.onBeneficiaryImportRequested(projectList.get(0));
+                        }
+                    }
+                });
+            }
+        });
         txtProjectName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -316,9 +337,10 @@ public class BeneficiaryListFragment extends Fragment implements PageFragment {
     BeneficiaryAdapter adapter;
     List<ProjectDTO> projectList;
     ProjectDTO project;
-
+    boolean reminderHasBeenShown;
 
     private void getBeneficiaryList(final Integer projectID) {
+        progressBar.setVisibility(View.VISIBLE);
         CacheUtil.getCachedProjectData(ctx, CacheUtil.CACHE_PROJECT, projectID, new CacheUtil.CacheUtilListener() {
             @Override
             public void onFileDataDeserialized(ResponseDTO response) {
@@ -327,6 +349,7 @@ public class BeneficiaryListFragment extends Fragment implements PageFragment {
                     if (!response.getProjectList().isEmpty()) {
                         beneficiaryList = response.getProjectList().get(0).getBeneficiaryList();
                         setList();
+                        progressBar.setVisibility(View.GONE);
                     }
                 }
                 Util.refreshProjectData(getActivity(), ctx, projectID, new Util.ProjectDataRefreshListener() {
@@ -334,6 +357,7 @@ public class BeneficiaryListFragment extends Fragment implements PageFragment {
                     public void onDataRefreshed(ProjectDTO project) {
                         beneficiaryList = project.getBeneficiaryList();
                         setList();
+                        progressBar.setVisibility(View.GONE);
                     }
 
                     @Override

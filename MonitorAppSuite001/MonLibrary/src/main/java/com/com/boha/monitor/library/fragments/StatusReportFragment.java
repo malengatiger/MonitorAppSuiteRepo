@@ -125,7 +125,7 @@ public class StatusReportFragment extends Fragment implements PageFragment {
         popupWindow.setAnchorView(imgLogo);
         popupWindow.setHorizontalOffset(72);
         popupWindow.setWidth(700);
-        popupWindow.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item,list, ctx.getString(R.string.select_project),false));
+        popupWindow.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item,list,false));
         popupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

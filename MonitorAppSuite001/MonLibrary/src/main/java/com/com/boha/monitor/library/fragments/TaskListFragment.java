@@ -355,7 +355,7 @@ public class TaskListFragment extends Fragment implements PageFragment {
                 actionsPopupWindow.setAnchorView(txtTitle);
                 actionsPopupWindow.setPromptView(pv);
                 actionsPopupWindow.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item,
-                        list, ctx.getString(R.string.task_actions), false));
+                        list, false));
                 actionsPopupWindow.setWidth(600);
                 actionsPopupWindow.setModal(true);
                 actionsPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {

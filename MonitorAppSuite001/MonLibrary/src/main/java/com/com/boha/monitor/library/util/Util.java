@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import android.view.animation.OvershootInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.ProjectDTO;
@@ -57,6 +59,57 @@ public class Util {
         public void onAnimationEnded();
     }
 
+    public static void pretendFlash(final View v, final int duration, final int max, final UtilAnimationListener listener) {
+        final ObjectAnimator an = ObjectAnimator.ofFloat(v, "alpha", 1, 1);
+        an.setRepeatMode(ObjectAnimator.REVERSE);
+        an.setDuration(duration);
+        an.setInterpolator(new AccelerateDecelerateInterpolator());
+        an.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                count++;
+                if (count > max) {
+                    count = 0;
+                    an.cancel();
+                    if (listener != null)
+                        listener.onAnimationEnded();
+                    return;
+                }
+                flashSeveralTimes(v, duration, max, listener);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        an.start();
+    }
+    public static void showToast(Context ctx, String caption, Drawable drawable) {
+        LayoutInflater inflater= (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View customToastroot =inflater.inflate(R.layout.toast_pager_instructions, null);
+        TextView txt = (TextView)customToastroot.findViewById(R.id.TOAST_text);
+        ImageView img = (ImageView)customToastroot.findViewById(R.id.TOAST_image);
+        txt.setText(caption);
+        img.setImageDrawable(drawable);
+        Toast customtoast=new Toast(ctx);
+
+        customtoast.setView(customToastroot);
+        customtoast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL,0, 0);
+        customtoast.setDuration(Toast.LENGTH_LONG);
+        customtoast.show();
+    }
     public static double getElapsed(long start, long end) {
         BigDecimal m = new BigDecimal(end - start).divide(new BigDecimal(1000));
         return m.doubleValue();

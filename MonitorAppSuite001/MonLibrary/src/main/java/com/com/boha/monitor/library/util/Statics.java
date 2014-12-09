@@ -32,10 +32,10 @@ public class Statics {
     public static final String PDF_URL = "http://192.168.1.111:8080/monitor_documents/";
 
     public static final String INVITE_DESTINATION = "https://play.google.com/store/apps/details?id=";
-    public static final String INVITE_ADMIN = INVITE_DESTINATION + "com.boha.malengagolf.admin";
-    public static final String INVITE_PLAYER = INVITE_DESTINATION + "com.boha.malengagolf.player";
-    public static final String INVITE_SCORER = INVITE_DESTINATION + "com.boha.malengagolf.scorer";
-    public static final String INVITE_LEADERBORAD = INVITE_DESTINATION + "com.boha.malengagolf.leaderboard";
+    public static final String INVITE_EXEC = INVITE_DESTINATION + "com.boha.monitor.exec";
+    public static final String INVITE_OPERATIONS_MGR = INVITE_DESTINATION + "com.boha.monitor.operations";
+    public static final String INVITE_PROJECT_MGR = INVITE_DESTINATION + "com.boha.monitor.pmanager";
+    public static final String INVITE_SITE_MGR = INVITE_DESTINATION + "com.boha.monitor.site";
 
     public static final String UPLOAD_URL_REQUEST = "uploadUrl?";
     public static final String UPLOAD_BLOB = "uploadBlob?";

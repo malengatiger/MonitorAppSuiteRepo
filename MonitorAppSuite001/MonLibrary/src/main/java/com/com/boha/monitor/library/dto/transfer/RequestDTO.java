@@ -150,7 +150,9 @@ public class RequestDTO implements Serializable {
             UPDATE_COMPANY_PROJECT_STATUS_TYPE = 403,
             UPDATE_COMPANY_CHECKPOINT = 404,
             UPDATE_PROJECT = 405,
-            UPDATE_PROJECT_SITE = 406;
+            UPDATE_PROJECT_SITE = 406,
+            UPDATE_COMPANY_STAFF = 407,
+            RESET_STAFF_PIN = 408;
     //invoice * claim
     public static final int
             ADD_INVOICE = 501,

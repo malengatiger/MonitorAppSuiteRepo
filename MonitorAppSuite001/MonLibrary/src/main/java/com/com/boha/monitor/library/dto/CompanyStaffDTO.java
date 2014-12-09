@@ -10,6 +10,7 @@ package com.com.boha.monitor.library.dto;
 import com.com.boha.monitor.library.dto.transfer.PhotoUploadDTO;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,11 +19,13 @@ import java.util.List;
  */
 public class CompanyStaffDTO implements Serializable, Comparable<CompanyStaffDTO> {
     private static final long serialVersionUID = 1L;
+
     private Integer companyStaffID, activeFlag;
     private String firstName;
     private String lastName;
     private String email, companyName;
     private String cellphone, pin;
+    private Date appInvitationDate;
     private CompanyStaffTypeDTO companyStaffType;
     private Integer companyID;
     private GcmDeviceDTO gcmDevice;
@@ -34,6 +37,13 @@ public class CompanyStaffDTO implements Serializable, Comparable<CompanyStaffDTO
     public CompanyStaffDTO() {
     }
 
+    public Date getAppInvitationDate() {
+        return appInvitationDate;
+    }
+
+    public void setAppInvitationDate(Date appInvitationDate) {
+        this.appInvitationDate = appInvitationDate;
+    }
 
     public List<PhotoUploadDTO> getPhotoUploadList() {
         return photoUploadList;

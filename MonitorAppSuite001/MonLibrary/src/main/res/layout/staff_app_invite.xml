@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="@dimen/mon_padding"
+    android:background="@color/grey"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/SIV_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/SIV_hero"
+            android:src="@drawable/banner_construction14"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mon_hero_height_small" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/SIV_staffLayout"
+        android:layout_below="@id/SIV_top"
+        android:padding="@dimen/mon_padding"
+        android:background="@color/beige_pale"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/SIV_staffName"
+            android:scaleType="centerCrop"
+            style="@style/Title3TextStyleBlack"
+            android:text="Staff Fullname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/SIV_appsLayout"
+        android:layout_below="@id/SIV_staffLayout"
+        android:layout_marginTop="@dimen/mon_divider"
+        android:background="@color/white"
+        android:padding="@dimen/mon_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/SIV_title2"
+            style="@style/Title2TextStyleBlue"
+            android:text="Monitor Apps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RadioGroup
+            android:layout_below="@id/SIV_title2"
+            android:layout_marginTop="@dimen/mon_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/SIV_appExec"
+                android:text="Executive App"
+                android:layout_marginTop="@dimen/mon_padding"
+                android:enabled="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/SIV_appOperations"
+                android:text="Operations App"
+                android:layout_marginTop="@dimen/mon_padding"
+                android:layout_below="@id/SIV_appExec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/SIV_appProjectMgr"
+                android:text="Project Manager App"
+                android:layout_below="@id/SIV_appOperations"
+                android:layout_marginTop="@dimen/mon_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/SIV_appSiteMgr"
+                android:text="Site Manager App"
+                android:enabled="false"
+                android:layout_below="@id/SIV_appProjectMgr"
+                android:layout_marginTop="@dimen/mon_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/SIV_btnLayout"
+        android:padding="@dimen/mon_margin"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/mon_padding"
+        android:layout_below="@id/SIV_appsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/SIV_btnSave"
+            android:text="Send App Invitation"
+            style="@style/ButtonRed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/SIV_title"
+        android:text="Staff App Invitations"
+        android:layout_marginTop="@dimen/mon_widest"
+        style="@style/Title3TextStyleBlue"
+        android:layout_marginLeft="@dimen/mon_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_margin="@dimen/mon_margin"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
