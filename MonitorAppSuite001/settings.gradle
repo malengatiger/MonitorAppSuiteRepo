@@ -1,1 +1,1 @@
-include ':MonLibrary', ':MonOperations', ':MonProject', ':appToTestAnimation'
+include ':MonLibrary', ':MonOperations', ':MonProject', ':appToTestAnimation', ':Application'

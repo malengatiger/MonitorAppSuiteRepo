@@ -35,7 +35,6 @@ import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListPopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -116,7 +115,9 @@ public class Util {
         }
         ImageView img = (ImageView) v.findViewById(R.id.HERO_image);
         img.setImageDrawable(getRandomHeroImage(ctx));
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(getWindowWidth(act) / 2, 100);
+        Double b = new Double("" + getWindowWidth(act));
+        Double c = b / new Double("1.5");
+        //RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(getWindowWidth(act), 100);
         //img.setLayoutParams(layoutParams);
         pop.setPromptView(v);
         pop.setPromptPosition(ListPopupWindow.POSITION_PROMPT_ABOVE);
@@ -124,7 +125,7 @@ public class Util {
                 list, false));
         pop.setAnchorView(anchorView);
         pop.setModal(true);
-        pop.setWidth(getWindowWidth(act) / 2);
+        pop.setWidth(c.intValue());
         pop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

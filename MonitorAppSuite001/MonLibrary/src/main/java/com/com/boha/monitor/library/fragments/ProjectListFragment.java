@@ -159,6 +159,7 @@ public class ProjectListFragment extends Fragment implements PageFragment {
 
         return view;
     }
+
     static final long ONE_DAY = 1000*60*60*60*24, TWO_HOUR = 1000*60*60*2;
 
     @Override
@@ -176,13 +177,13 @@ public class ProjectListFragment extends Fragment implements PageFragment {
             }
             index++;
         }
+
         mListView.setSelection(index);
 
     }
     @Override
     public void onResume() {
         Log.e(LOG,"######### onResume");
-
         super.onResume();
     }
     Integer statusCountInPeriod;
@@ -221,6 +222,7 @@ public class ProjectListFragment extends Fragment implements PageFragment {
 
             }
         });
+
         objectAnimator.start();
     }
 

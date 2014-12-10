@@ -33,9 +33,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.com.boha.monitor.library.CameraActivity"
+            android:label="@string/title_activity_image" />
+        <activity
             android:name="com.com.boha.monitor.library.ImageActivity"
             android:label="@string/title_activity_image" />
         <activity
+
             android:name="com.com.boha.monitor.library.TaskAssignmentActivity"
             android:screenOrientation="portrait"
             android:label="@string/assign_status" />

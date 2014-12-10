@@ -43,7 +43,6 @@ import com.com.boha.monitor.library.util.GLToolbox;
 import com.com.boha.monitor.library.util.ImageUtil;
 import com.com.boha.monitor.library.util.PMException;
 import com.com.boha.monitor.library.util.TextureRenderer;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -63,15 +62,17 @@ public class PictureActivity extends ActionBarActivity implements
         LocationListener, GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
     LocationRequest mLocationRequest;
     LocationClient mLocationClient;
+    LocationListener activity;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ctx = getApplicationContext();
+        activity = this;
         setContentView(R.layout.camera);
         setFields();
 
         mLocationRequest = LocationRequest.create();
-        mLocationRequest.setInterval(1000);
+        mLocationRequest.setInterval(2000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setFastestInterval(1000);
 
@@ -147,19 +148,21 @@ public class PictureActivity extends ActionBarActivity implements
     @Override
     public void onActivityResult(final int requestCode, final int resultCode,
                                  final Intent data) {
-        Log.e(LOG,"##### onActivityResult ");
+        Log.e(LOG,"##### onActivityResult requestCode: " + requestCode + " resultCode: " + resultCode);
         switch (requestCode) {
             case CAPTURE_IMAGE:
                 if (resultCode == Activity.RESULT_OK) {
                     if (resultCode == Activity.RESULT_OK) {
                         if (photoFile != null)
-                        Log.e(LOG,"---------> hopefully photo file has a length: " + photoFile.length());
+                        Log.e(LOG,"++++++ hopefully photo file has a length: " + photoFile.length());
                         new PhotoTask().execute();
                     }
                     pictureChanged = true;
+
                 }
                 break;
             case REQUEST_VIDEO_CAPTURE:
+
                 Uri videoUri = data.getData();
                 new FileTask().execute(videoUri);
                 //mVideoView.setVideoURI(videoUri);
@@ -202,6 +205,27 @@ public class PictureActivity extends ActionBarActivity implements
         }
 
     }
+
+    @Override
+    public void onStop() {
+        Log.d(LOG,
+                "#################### onStop");
+        if (mLocationClient != null) {
+            if (mLocationClient.isConnected()) {
+                stopPeriodicUpdates();
+            }
+            // After disconnect() is called, the client is considered "dead".
+            mLocationClient.disconnect();
+            Log.e("map", "### onStop - locationClient disconnected: "
+                    + mLocationClient.isConnected());
+        }
+        super.onStop();
+    }
+    private void stopPeriodicUpdates() {
+        mLocationClient.removeLocationUpdates(this);
+        Log.e(LOG,
+                "#################### stopPeriodicUpdates - removeLocationUpdates");
+    }
     @Override
     public void onLocationChanged(Location location) {
         Log.w(LOG,"############## onLocationChanged ...");
@@ -210,7 +234,6 @@ public class PictureActivity extends ActionBarActivity implements
         } else {
             Log.w(LOG, "Old Location lat: " + this.location.getLatitude() +
                     " long: " + this.location.getLongitude() + " - accuracy: " + this.location.getAccuracy());
-
             if (location.getAccuracy() == ACCURAY_THRESHOLD || location.getAccuracy() < ACCURAY_THRESHOLD) {
                 this.location = location;
                 mLocationClient.removeLocationUpdates(this);
@@ -301,10 +324,19 @@ public class PictureActivity extends ActionBarActivity implements
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
-                Log.e("pic", "Fuck!", ex);
+                Log.e(LOG, "Fuck!", ex);
+                Util.showErrorToast(ctx,getString(R.string.file_error));
+                return;
             }
-            // Continue only if the File was successfully created
             if (photoFile != null) {
+                Log.w(LOG, "dispatchTakePictureIntent - start pic intent");
+
+                if (mLocationClient.isConnected()) {
+                    Log.w(LOG,"## requesting mLocationClient updates before picture taken");
+                    mLocationClient.requestLocationUpdates(mLocationRequest, this);
+                } else {
+                    mLocationClient.connect();
+                }
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
                         Uri.fromFile(photoFile));
                 startActivityForResult(takePictureIntent, CAPTURE_IMAGE);
@@ -423,11 +455,11 @@ public class PictureActivity extends ActionBarActivity implements
 
         @Override
         protected Integer doInBackground(Void... voids) {
-            //Log.e("pic", " file length: " + photoFile.length());
+            Log.w(LOG, "## PhotoTask starting doInBackground, file length: " + photoFile.length());
             pictureChanged = false;
             ExifInterface exif = null;
-            if (photoFile == null) {
-                Log.e(LOG,"----- photoFile is null, exitting");
+            if (photoFile == null || photoFile.length() == 0) {
+                Log.e(LOG,"----- photoFile is null or length 0, exiting");
                 return 99;
             }
             fileUri = Uri.fromFile(photoFile);
@@ -435,18 +467,18 @@ public class PictureActivity extends ActionBarActivity implements
                 try {
                     exif = new ExifInterface(photoFile.getAbsolutePath());
                     String orient = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
-                    Log.i("pic", "@@@@@@@@@@@@@@@@@@@@@@ Orientation says: " + orient);
+                    Log.i(LOG, "@@@@@@@@@@@@@@@@@@@@@@ Orientation says: " + orient);
                     float rotate = 0f;
                     if (orient.equalsIgnoreCase("6")) {
                         rotate = 90f;
-                        Log.i("pic", "@@@@@ rotate = " + rotate);
+                        Log.i(LOG, "@@@@@ picture, rotate = " + rotate);
                     }
                     try {
                         BitmapFactory.Options options = new BitmapFactory.Options();
                         options.inSampleSize = 2;
                         Bitmap bm = BitmapFactory.decodeFile(photoFile.getAbsolutePath(), options);
                         if (bm == null) {
-                            Log.w(LOG,"Bitmap is null, file length: " + photoFile.length());
+                            Log.e(LOG,"---> Bitmap is null, file length: " + photoFile.length());
                         }
                         getLog(bm, "Raw Camera");
                           //get thumbnail for upload
@@ -474,6 +506,8 @@ public class PictureActivity extends ActionBarActivity implements
                         currentFullFile = ImageUtil.getFileFromBitmap(fullBm, "m" + System.currentTimeMillis() + ".jpg");
                         currentThumbFile = ImageUtil.getFileFromBitmap(thumb, "t" + System.currentTimeMillis() + ".jpg");
                         bitmapForScreen = ImageUtil.getBitmapFromUri(ctx,Uri.fromFile(currentFullFile));
+
+                        Log.e(LOG, "## files created from camera bitmap");
 
                         thumbUri = Uri.fromFile(currentThumbFile);
                         fullUri = Uri.fromFile(currentFullFile);
@@ -717,7 +751,7 @@ public class PictureActivity extends ActionBarActivity implements
     boolean pictureChanged;
     Context ctx;
     Uri fileUri;
-    public static final int CAPTURE_IMAGE = 3013;
+    public static final int CAPTURE_IMAGE = 9908;
 
     Bitmap bitmapForScreen;
 

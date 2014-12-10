@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -22,13 +21,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
-import com.com.boha.monitor.library.MonitorMapActivity;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
@@ -46,6 +43,9 @@ public class GPSScanFragment extends Fragment implements PageFragment {
         public void onStartScanRequested();
 
         public void onEndScanRequested();
+        public void onMapRequested(ProjectSiteDTO projectSite);
+
+
     }
 
     private GPSScanFragmentListener listener;
@@ -132,11 +132,7 @@ public class GPSScanFragment extends Fragment implements PageFragment {
                 Util.flashOnce(imgLogo,100,new Util.UtilAnimationListener() {
                     @Override
                     public void onAnimationEnded() {
-                        if (projectSite.getLatitude() != null) {
-                            Intent i = new Intent(ctx, MonitorMapActivity.class);
-                            i.putExtra("projectSite", projectSite);
-                            startActivity(i);
-                        }
+                       listener.onMapRequested(projectSite);
                     }
                 });
             }
@@ -147,11 +143,7 @@ public class GPSScanFragment extends Fragment implements PageFragment {
                 Util.flashOnce(txtAccuracy,100,new Util.UtilAnimationListener() {
                     @Override
                     public void onAnimationEnded() {
-                        if (projectSite.getLatitude() != null) {
-                            Intent i = new Intent(ctx, MonitorMapActivity.class);
-                            i.putExtra("projectSite", projectSite);
-                            startActivity(i);
-                        }
+                        listener.onMapRequested(projectSite);
                     }
                 });
 
@@ -337,6 +329,7 @@ public class GPSScanFragment extends Fragment implements PageFragment {
     }
 
     public void setLocation(Location location) {
+        if (projectSite == null) return;
         this.location = location;
         txtLat.setText("" + location.getLatitude());
         txtLng.setText("" + location.getLongitude());

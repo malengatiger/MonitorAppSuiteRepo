@@ -308,5 +308,11 @@
     <string name="map_not_available">Map not available. Please try again!</string>
     <string name="title_activity_staff">"Staff "</string>
     <string name="unable_project_data">Unable to refresh project data from the cloud. Local data may be available</string>
+    <string name="sitestatus">Site Status</string>
+    <string name="get_gps">Get GPS Coordinates</string>
+    <string name="site_on_map">Site on Map</string>
+    <string name="edit_site">Edit Site Details</string>
+    <string name="title_activity_camera2">Camera2Activity</string>
+    <string name="file_error">Unable to create file for pending picture</string>
 
 </resources>

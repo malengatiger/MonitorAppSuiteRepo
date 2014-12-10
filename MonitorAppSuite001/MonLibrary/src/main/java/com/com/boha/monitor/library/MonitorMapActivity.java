@@ -372,9 +372,12 @@ public class MonitorMapActivity extends ActionBarActivity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ErrorUtil.checkServerError(ctx,response);
+                        if (!ErrorUtil.checkServerError(ctx,response)) {
+                            return;
+                        };
                         Log.d(LOG, "########## location confirmed, status code: " + response.getStatusCode());
                         projectSite.setLocationConfirmed(1);
+                        coordsConfirmed = true;
                         Util.showToast(ctx, "Site location has been confirmed");
                     }
                 });
@@ -618,6 +621,20 @@ public class MonitorMapActivity extends ActionBarActivity
         }
 
 
+    }
+
+    boolean coordsConfirmed;
+    @Override
+    public void onBackPressed() {
+        Log.e(LOG,"######## onBackPressed, coordsConfirmed: " + coordsConfirmed);
+        if (coordsConfirmed) {
+            Intent i = new Intent();
+            i.putExtra("projectSite",projectSite);
+            setResult(RESULT_OK, i);
+        } else {
+            setResult(RESULT_CANCELED);
+        }
+        finish();
     }
 
 }

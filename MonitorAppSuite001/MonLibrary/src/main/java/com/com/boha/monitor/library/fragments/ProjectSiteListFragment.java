@@ -206,6 +206,20 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
 
     List<ProjectSiteDTO> projectSiteList;
 
+    public void updateSiteLocation(ProjectSiteDTO site) {
+        Log.e(LOG, "updateSiteLocation site location confirmed: " + site.getLocationConfirmed());
+        List<ProjectSiteDTO> list = new ArrayList<>();
+        for (ProjectSiteDTO s: projectSiteList) {
+            if (s.getProjectSiteID().intValue() == site.getProjectSiteID().intValue()) {
+                list.add(site);
+                Log.i(LOG,"## confirmed site put in list");
+            } else {
+                list.add(s);
+            }
+        }
+        projectSiteList = list;
+        setList();
+    }
     private void setList() {
         Log.i(LOG, "## setList");
         txtCount.setText("" + projectSiteList.size());
@@ -221,15 +235,17 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
                 if (null != mListener) {
                     lastIndex = position;
                     projectSite = project.getProjectSiteList().get(position);
+                    //
                     list = new ArrayList<>();
-                    list.add("Site Status");
-                    list.add("Take Picture");
-                    list.add("Get GPS Coordinates");
+                    list.add(ctx.getString(R.string.sitestatus));
+                    list.add(ctx.getString(R.string.take_picture));
+                    list.add(ctx.getString(R.string.get_gps));
+
+                    list.add(ctx.getString(R.string.site_gallery));
+                    list.add(ctx.getString(R.string.edit_site));
                     if (projectSite.getLatitude() != null) {
-                        list.add("Site on Map");
+                        list.add(ctx.getString(R.string.site_on_map));
                     }
-                    list.add("Site Gallery");
-                    list.add("Edit Site Details");
 
                     Util.showPopupBasicWithHeroImage(ctx,getActivity(),list,heroImage,ctx.getString(R.string.select_action), new Util.UtilPopupListener() {
                         @Override
@@ -244,16 +260,17 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
                                 case 2:
                                     mListener.onGPSRequested(projectSite, lastIndex);
                                     break;
+
                                 case 3:
+                                    mListener.onGalleryRequested(projectSite, lastIndex);
+                                    break;
+                                case 4:
+                                    mListener.onProjectSiteEditRequested(projectSite, lastIndex);
+                                    break;
+                                case 5:
                                     Intent i = new Intent(ctx, MonitorMapActivity.class);
                                     i.putExtra("projectSite", projectSite);
                                     startActivity(i);
-                                    break;
-                                case 4:
-                                    mListener.onGalleryRequested(projectSite, lastIndex);
-                                    break;
-                                case 5:
-                                    mListener.onProjectSiteEditRequested(projectSite, lastIndex);
                                     break;
 
                             }

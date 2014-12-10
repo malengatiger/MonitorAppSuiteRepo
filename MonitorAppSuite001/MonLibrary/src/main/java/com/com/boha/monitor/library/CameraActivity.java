@@ -12,11 +12,11 @@ import android.hardware.Camera.PictureCallback;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.boha.monitor.library.R;
@@ -29,22 +29,29 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class CameraActivity extends ActionBarActivity {
+public class CameraActivity extends ActionBarActivity implements PictureCallback {
     private Camera mCamera;
     private CameraPreview mPreview;
     private PictureCallback mPicture;
     private Button capture, switchCamera;
-    private Context myContext;
-    private LinearLayout cameraPreview;
+    private Context ctx;
+    private View cameraPreview;
     private boolean cameraFront = false;
+    static final String LOG = CameraActivity.class.getSimpleName();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_camera2);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        myContext = this;
-       // initialize();
+        ctx = this;
+        cameraPreview.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCamera.takePicture(null, null, mPicture);
+            }
+        });
+        // initialize();
     }
 
     private int findFrontFacingCamera() {
@@ -83,13 +90,12 @@ public class CameraActivity extends ActionBarActivity {
 
     public void onResume() {
         super.onResume();
-        if (!hasCamera(myContext)) {
-            Toast toast = Toast.makeText(myContext, "Sorry, your phone does not have a camera!", Toast.LENGTH_LONG);
+        if (ctx.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+            Toast toast = Toast.makeText(ctx, "Sorry, your phone does not have a camera!", Toast.LENGTH_LONG);
             toast.show();
             finish();
         }
         if (mCamera == null) {
-            //if the front facing camera does not exist
             if (findFrontFacingCamera() == 1) {
                 //release the old camera instance
                 //switch camera, from the front and the back and vice versa
@@ -97,7 +103,7 @@ public class CameraActivity extends ActionBarActivity {
                 releaseCamera();
                 chooseCamera();
             } else {
-                Toast toast = Toast.makeText(myContext, "Sorry, your phone has only one camera!", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(ctx, "Sorry, your phone has only one camera!", Toast.LENGTH_LONG);
                 toast.show();
             }
         }
@@ -137,14 +143,7 @@ public class CameraActivity extends ActionBarActivity {
         releaseCamera();
     }
 
-    private boolean hasCamera(Context context) {
-        //check if the device has camera
-        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 
     private PictureCallback getPictureCallback() {
         PictureCallback picture = new PictureCallback() {
@@ -153,7 +152,6 @@ public class CameraActivity extends ActionBarActivity {
             public void onPictureTaken(byte[] data, Camera camera) {
                 //make a new picture file
                 File pictureFile = getOutputMediaFile();
-
                 if (pictureFile == null) {
                     return;
                 }
@@ -162,7 +160,7 @@ public class CameraActivity extends ActionBarActivity {
                     FileOutputStream fos = new FileOutputStream(pictureFile);
                     fos.write(data);
                     fos.close();
-                    Toast toast = Toast.makeText(myContext, "Picture saved: " + pictureFile.getName(), Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(ctx, "Picture saved: " + pictureFile.getName(), Toast.LENGTH_LONG);
                     toast.show();
 
                 } catch (FileNotFoundException e) {
@@ -187,7 +185,7 @@ public class CameraActivity extends ActionBarActivity {
     private static File getOutputMediaFile() {
         //make a new file directory  folder
         File root = Environment.getDataDirectory();
-        File mediaStorageDir = new File(root, "ProjectMonitor");
+        File mediaStorageDir = new File(root, "Monitor");
 
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdir()) {
@@ -210,5 +208,54 @@ public class CameraActivity extends ActionBarActivity {
             mCamera.release();
             mCamera = null;
         }
+    }
+
+    /**
+     * Called when image data is available after a picture is taken.
+     * The format of the data depends on the context of the callback
+     * and {@link android.hardware.Camera.Parameters} settings.
+     *
+     * @param data   a byte array of the picture data
+     * @param camera the Camera service object
+     */
+    @Override
+    public void onPictureTaken(byte[] data, Camera camera) {
+        File pictureFileDir = getDir();
+
+        if (!pictureFileDir.exists() && !pictureFileDir.mkdirs()) {
+            Log.d(LOG, "Can't create directory to save image.");
+            Toast.makeText(ctx, "Can't create directory to save image.",
+                    Toast.LENGTH_LONG).show();
+            return;
+
+        }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
+        String date = dateFormat.format(new Date());
+        String photoFile = "Picture_" + date + ".jpg";
+
+        String filename = pictureFileDir.getPath() + File.separator + photoFile;
+
+        File pictureFile = new File(filename);
+
+        try {
+            FileOutputStream fos = new FileOutputStream(pictureFile);
+            fos.write(data);
+            fos.close();
+            Toast.makeText(ctx, "New Image saved:" + photoFile,
+                    Toast.LENGTH_LONG).show();
+        } catch (Exception error) {
+            Log.d(LOG, "File" + filename + "not saved: "
+                    + error.getMessage());
+            Toast.makeText(ctx, "Image could not be saved.",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    private File getDir() {
+        File sdDir = Environment
+                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        return new File(sdDir, "Monitor");
     }
 }

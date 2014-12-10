@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:background="@color/grey"
@@ -17,7 +16,7 @@
             android:id="@+id/SI_banner"
             android:src="@drawable/banner_construction11"
             android:scaleType="centerCrop"
-            android:alpha="0.5"
+            android:alpha="0.4"
             android:layout_width="match_parent"
             android:layout_height="@dimen/mon_hero_height_medium"/>
 
@@ -25,7 +24,7 @@
             android:id="@+id/SI_layout0"
             android:layout_below="@id/SI_banner"
             android:layout_width="match_parent"
-            android:padding="10dp"
+            android:padding="@dimen/mon_padding"
             android:background="@color/white"
             android:layout_height="match_parent">
 
@@ -33,7 +32,7 @@
             <TextView
                 android:id="@+id/SI_welcome"
                 android:layout_width="wrap_content"
-                android:padding="10dp"
+                android:padding="@dimen/mon_padding"
                 android:text="@string/welcome_aboard"
                 android:layout_centerHorizontal="true"
                 style="@style/TextStyle"
@@ -43,23 +42,28 @@
             <TextView
                 android:id="@+id/SI_header"
                 android:layout_width="wrap_content"
-                android:text="@string/subject" android:layout_marginTop="10dp"
+                android:text="@string/subject"
+                android:layout_marginTop="@dimen/mon_margin"
                 android:layout_centerHorizontal="true"
-                style="@style/Title2TextStyleBlue"
+                style="@style/Title3TextStyleBlue"
                 android:layout_below="@id/SI_welcome"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/SI_app"
                 android:layout_width="wrap_content"
                 android:text="App Name Here"
-                style="@style/Title2TextStyleBlack"
+                android:layout_marginTop="@dimen/mon_margin"
+                style="@style/Title3TextStyleBlack"
                 android:layout_below="@id/SI_header"
                 android:layout_centerHorizontal="true"
                 android:layout_height="wrap_content"/>
 
-            <Spinner
-                android:id="@+id/SI_spinner"
-                android:layout_marginTop="10dp"
+            <TextView
+                android:id="@+id/SI_txtEmail"
+                android:layout_marginTop="@dimen/mon_margin"
+                android:text="@string/select_email"
+                style="@style/Title3TextStyleRed"
+                android:layout_marginLeft="@dimen/mon_padding"
                 android:layout_below="@id/SI_app"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -68,8 +72,10 @@
             <EditText
                 android:id="@+id/SI_pin"
                 android:layout_width="match_parent"
-                android:layout_below="@id/SI_spinner"
+                android:layout_below="@id/SI_txtEmail"
                 android:inputType="number"
+                android:layout_marginTop="@dimen/mon_margin"
+                android:layout_marginLeft="@dimen/mon_padding"
                 android:layout_height="wrap_content"
                 android:hint="@string/pin"/>
 
@@ -89,7 +95,6 @@
                     android:layout_weight="3"
                     android:layout_alignParentRight="true"
                     android:text="@string/sign_in"
-                    android:textSize="20sp"
                     android:layout_width="wrap_content"
                     android:textStyle="normal"
                     android:layout_height="wrap_content"/>

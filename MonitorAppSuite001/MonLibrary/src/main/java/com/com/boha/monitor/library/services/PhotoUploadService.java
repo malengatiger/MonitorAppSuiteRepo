@@ -61,6 +61,7 @@ public class PhotoUploadService extends IntentService {
         dto.setProjectID(site.getProjectID());
         dto.setProjectSiteID(site.getProjectSiteID());
         dto.setPictureType(PhotoUploadDTO.SITE_IMAGE);
+        dto.setAccuracy(location.getAccuracy());
         addPhotoToCache(context, dto);
     }
     public static void uploadSiteTaskPicture(final Context context, final ProjectSiteTaskDTO siteTask,
@@ -71,6 +72,7 @@ public class PhotoUploadService extends IntentService {
         dto.setProjectSiteID(siteTask.getProjectSiteID());
         dto.setProjectSiteTaskID(siteTask.getProjectSiteTaskID());
         dto.setPictureType(PhotoUploadDTO.TASK_IMAGE);
+        dto.setAccuracy(location.getAccuracy());
         addPhotoToCache(context, dto);
 
     }

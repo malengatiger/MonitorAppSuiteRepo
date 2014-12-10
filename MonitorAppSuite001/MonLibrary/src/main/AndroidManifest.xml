@@ -34,6 +34,10 @@
             android:name="com.com.boha.monitor.library.StaffActivity"
             android:label="@string/title_activity_staff" >
         </activity>
+        <activity
+            android:name="com.com.boha.monitor.library.Camera2Activity"
+            android:label="@string/title_activity_camera2" >
+        </activity>
     </application>
 
 </manifest>

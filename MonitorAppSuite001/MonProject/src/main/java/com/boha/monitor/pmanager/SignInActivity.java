@@ -12,10 +12,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,6 +28,7 @@ import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.GCMUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
+import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -41,22 +41,26 @@ import static com.com.boha.monitor.library.util.Util.showToast;
 public class SignInActivity extends Activity {
 
     Spinner spinnerEmail;
-    TextView txtApp;
+    TextView txtApp, txtEmail;
     EditText ePin;
     Button btnSave;
     Context ctx;
     String email;
+    ImageView banner;
     ProgressBar progressBar;
 
     boolean isRegistration;
     GcmDeviceDTO gcmDevice;
     static final String LOG = SignInActivity.class.getSimpleName();
+    Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in);
         ctx = getApplicationContext();
+        activity = this;
+        banner = (ImageView)findViewById(R.id.SI_banner);
         checkVirgin();
         setFields();
         getEmail();
@@ -191,21 +195,47 @@ public class SignInActivity extends Activity {
     private void setFields() {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         ePin = (EditText) findViewById(R.id.SI_pin);
-        spinnerEmail = (Spinner) findViewById(R.id.SI_spinner);
+        txtEmail = (TextView) findViewById(R.id.SI_txtEmail);
         txtApp = (TextView)findViewById(R.id.SI_app);
         btnSave = (Button)findViewById(R.id.SI_btnSave);
         txtApp.setText(ctx.getString(R.string.pm_app));
 
+        txtEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Util.flashOnce(txtEmail,100, new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        Util.showPopupBasicWithHeroImage(ctx, activity, tarList,
+                                banner, ctx.getString(R.string.select_email),
+                                new Util.UtilPopupListener() {
+                            @Override
+                            public void onItemSelected(int index) {
+                                //selected
+                                email = tarList.get(index);
+                                txtEmail.setText(email);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendSignIn();
+                Util.flashOnce(btnSave, 100, new Util.UtilAnimationListener() {
+                    @Override
+                    public void onAnimationEnded() {
+                        sendSignIn();
+                    }
+                });
             }
         });
     }
 
 
-    public boolean checkPlayServices() {
+    private boolean checkPlayServices() {
         Log.w(LOG, "checking GooglePlayServices .................");
         int resultCode = GooglePlayServicesUtil
                 .isGooglePlayServicesAvailable(ctx);
@@ -248,51 +278,21 @@ public class SignInActivity extends Activity {
         AccountManager am = AccountManager.get(getApplicationContext());
         Account[] accts = am.getAccounts();
         if (accts.length == 0) {
-            //TODO - send user to create acct
             showErrorToast(ctx, "No Accounts found. Please create one and try again");
             finish();
             return;
         }
-        if (accts.length == 1) {
-            email = accts[0].name;
-            spinnerEmail.setVisibility(View.GONE);
-            return;
-        }
-        final ArrayList<String> tarList = new ArrayList<String>();
         if (accts != null) {
             tarList.add(ctx.getResources().getString(R.string.select_acct));
             for (int i = 0; i < accts.length; i++) {
                 tarList.add(accts[i].name);
             }
 
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                    R.layout.xsimple_spinner_item, tarList);
-            dataAdapter
-                    .setDropDownViewResource(R.layout.xsimple_spinner_dropdown_item);
-            spinnerEmail.setAdapter(dataAdapter);
-            spinnerEmail
-                    .setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-                        @Override
-                        public void onItemSelected(AdapterView<?> arg0,
-                                                   View arg1, int index, long arg3) {
-                            Log.w("RegistrationActivity", "###### Email account index is " + index);
-                            if (index == 0) {
-                                email = null;
-                                return;
-                            }
-                            email = tarList.get(index);
-                            Log.e("RegistrationActivity", "###### Email account selected is "
-                                    + email);
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> arg0) {
-
-                        }
-                    });
         }
+
     }
+    ArrayList<String> tarList = new ArrayList<String>();
     Menu mMenu;
     public void setRefreshActionButtonState(final boolean refreshing) {
         if (mMenu != null) {

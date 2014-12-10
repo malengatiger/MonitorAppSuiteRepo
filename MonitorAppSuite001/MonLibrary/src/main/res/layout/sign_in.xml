@@ -5,7 +5,7 @@
                 android:background="@color/grey"
                 android:padding="5dp"
                 android:id="@+id/SI_mainLayout"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_height="wrap_content">
 
     <RelativeLayout

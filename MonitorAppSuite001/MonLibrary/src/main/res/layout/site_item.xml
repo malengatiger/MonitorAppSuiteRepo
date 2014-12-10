@@ -16,6 +16,7 @@
             android:id="@+id/SITE_heroImage"
             android:src="@drawable/banner_construction11"
             android:scaleType="centerCrop"
+            android:alpha="0.6"
             android:layout_width="match_parent"
             android:layout_height="@dimen/mon_hero_height_medium" />
 
@@ -46,6 +47,13 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/mon_padding"
                 android:layout_toRightOf="@+id/SITE_image" />
+            <ImageView
+                android:id="@+id/SITE_confirmed"
+                android:src="@drawable/ic_action_globe"
+                android:layout_alignParentRight="true"
+                android:tint="@color/absa_red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </RelativeLayout>
 

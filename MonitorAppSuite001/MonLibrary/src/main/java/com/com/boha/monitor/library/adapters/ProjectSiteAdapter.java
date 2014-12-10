@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
-import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
-import com.com.boha.monitor.library.dto.ProjectSiteTaskStatusDTO;
 import com.com.boha.monitor.library.dto.TaskStatusDTO;
 import com.com.boha.monitor.library.util.Statics;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -22,8 +20,6 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -53,7 +49,7 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
         TextView txtName, txtLastStatus, txtTaskName;
         TextView txtTaskCount, txtStatusCount;
         TextView txtNumber, txtDate, txtBen;
-        ImageView imgHero;
+        ImageView imgHero, imgConfirmed;
         View statLayout1, statLayout2;
     }
 
@@ -84,6 +80,7 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
                     .findViewById(R.id.SITE_lastStatus);
 
             item.imgHero = (ImageView) convertView.findViewById(R.id.SITE_heroImage);
+            item.imgConfirmed = (ImageView) convertView.findViewById(R.id.SITE_confirmed);
 
             convertView.setTag(item);
         } else {
@@ -97,8 +94,16 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
             item.txtStatusCount.setText("" + p.getStatusCount());
         else
             item.txtStatusCount.setText("0");
+
         if (p.getBeneficiary() != null) {
             item.txtBen.setText(p.getBeneficiary().getFullName());
+        } else {
+
+        }
+        if (p.getLocationConfirmed() == null) {
+            item.imgConfirmed.setVisibility(View.GONE);
+        } else {
+            item.imgConfirmed.setVisibility(View.VISIBLE);
         }
         Statics.setRobotoFontLight(ctx, item.txtName);
         if (p.getPhotoUploadList() != null && !p.getPhotoUploadList().isEmpty()) {

@@ -57,7 +57,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
         setContentView(R.layout.activity_site_pager);
         ctx = getApplicationContext();
         mPager = (ViewPager) findViewById(R.id.SITE_pager);
-        progressBar = (ProgressBar)findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         mPager.setOffscreenPageLimit(NUM_ITEMS - 1);
         PagerTitleStrip strip = (PagerTitleStrip) findViewById(R.id.pager_title_strip);
         strip.setVisibility(View.GONE);
@@ -345,33 +345,37 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
     }
 
     private void initializeAdapter() {
-        adapter = new PagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(adapter);
-        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageSelected(int arg0) {
-                currentPageIndex = arg0;
-                if (currentPageIndex == 1) {
-                    if (gpsScanFragment.getProjectSite() == null) {
-                        mPager.setCurrentItem(0);
-                    } else {
-                        gpsScanFragment.startScan();
+        try {
+            adapter = new PagerAdapter(getSupportFragmentManager());
+            mPager.setAdapter(adapter);
+            mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageSelected(int arg0) {
+                    currentPageIndex = arg0;
+                    if (currentPageIndex == 1) {
+                        if (gpsScanFragment.getProjectSite() == null) {
+                            mPager.setCurrentItem(0);
+                        } else {
+                            gpsScanFragment.startScan();
+                        }
+                    }
+                    if (currentPageIndex == 0) {
+                        gpsScanFragment.setProjectSite(null);
                     }
                 }
-                if (currentPageIndex == 0) {
-                    gpsScanFragment.setProjectSite(null);
+
+                @Override
+                public void onPageScrolled(int arg0, float arg1, int arg2) {
+
                 }
-            }
 
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-            }
-        });
+                @Override
+                public void onPageScrollStateChanged(int arg0) {
+                }
+            });
+        } catch (Exception e) {
+            Log.e(LOG, "-- Some shit happened, probably IllegalState of some kind ...");
+        }
     }
 
     @Override
@@ -429,12 +433,15 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
 
     @Override
     public void onCameraRequested(ProjectSiteDTO projectSite, int index) {
+
         selectedSiteIndex = index;
         this.projectSite = projectSite;
         Intent i = new Intent(this, PictureActivity.class);
         i.putExtra("projectSite", projectSite);
         i.putExtra("type", PhotoUploadDTO.SITE_IMAGE);
         startActivityForResult(i, SITE_PICTURE_REQUEST);
+
+
     }
 
     @Override
@@ -472,8 +479,15 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
 
     @Override
     public void onActivityResult(int reqCode, int res, Intent data) {
-        Log.e(LOG, "### onActivityResult: " + data);
+        Log.e(LOG, "##### onActivityResult requestCode: " + reqCode + " resultCode: " + res);
         switch (reqCode) {
+            case MAP_REQUESTED:
+                Log.w(LOG, "### map has returned with data?");
+                if (res == RESULT_OK) {
+                    projectSite = (ProjectSiteDTO) data.getSerializableExtra("projectSite");
+                    projectSiteListFragment.updateSiteLocation(projectSite);
+                }
+                break;
             case SITE_PICTURE_REQUEST:
                 if (res == RESULT_OK) {
                     projectSiteListFragment.refreshPhotoList(projectSite);
@@ -504,6 +518,16 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
         stopPeriodicUpdates();
     }
 
+    @Override
+    public void onMapRequested(ProjectSiteDTO projectSite) {
+        if (projectSite.getLatitude() != null) {
+            Intent i = new Intent(ctx, MonitorMapActivity.class);
+            i.putExtra("projectSite", projectSite);
+            startActivityForResult(i, MAP_REQUESTED);
+        }
+    }
+
+    static final int MAP_REQUESTED = 9007;
 
     private class PagerAdapter extends FragmentStatePagerAdapter {
 
@@ -545,6 +569,15 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
         super.onPause();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (pageFragmentList.get(currentPageIndex) instanceof GPSScanFragment) {
+            mPager.setCurrentItem(0, true);
+            return;
+        }
+        finish();
+    }
+
     public void setRefreshActionButtonState(final boolean refreshing) {
         if (mMenu != null) {
             final MenuItem refreshItem = mMenu.findItem(R.id.action_refresh);
@@ -575,4 +608,5 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
     static final String LOG = SitePagerActivity.class.getSimpleName();
     static final int SITE_PICTURE_REQUEST = 113,
             SITE_TASK_REQUEST = 114;
+
 }
