@@ -365,6 +365,9 @@ public class MonitorMapActivity extends ActionBarActivity
     private void confirmLocation() {
         RequestDTO w = new RequestDTO(RequestDTO.CONFIRM_LOCATION);
         w.setProjectSiteID(projectSite.getProjectSiteID());
+        w.setLatitude(projectSite.getLatitude());
+        w.setLongitude(projectSite.getLongitude());
+
 
         WebSocketUtil.sendRequest(ctx,Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
             @Override

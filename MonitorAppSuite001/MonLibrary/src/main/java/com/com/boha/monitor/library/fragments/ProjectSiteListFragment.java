@@ -234,18 +234,25 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (null != mListener) {
                     lastIndex = position;
-                    projectSite = project.getProjectSiteList().get(position);
+                    projectSite = projectSiteList.get(position);
                     //
                     list = new ArrayList<>();
                     list.add(ctx.getString(R.string.sitestatus));
                     list.add(ctx.getString(R.string.take_picture));
-                    list.add(ctx.getString(R.string.get_gps));
+
 
                     list.add(ctx.getString(R.string.site_gallery));
                     list.add(ctx.getString(R.string.edit_site));
+
+
+
+                    if (projectSite.getLocationConfirmed() == null) {
+                        list.add(ctx.getString(R.string.get_gps));
+                    }
                     if (projectSite.getLatitude() != null) {
                         list.add(ctx.getString(R.string.site_on_map));
                     }
+
 
                     Util.showPopupBasicWithHeroImage(ctx,getActivity(),list,heroImage,ctx.getString(R.string.select_action), new Util.UtilPopupListener() {
                         @Override
@@ -258,19 +265,20 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
                                     mListener.onCameraRequested(projectSite, lastIndex);
                                     break;
                                 case 2:
-                                    mListener.onGPSRequested(projectSite, lastIndex);
-                                    break;
-
-                                case 3:
                                     mListener.onGalleryRequested(projectSite, lastIndex);
                                     break;
-                                case 4:
+                                case 3:
                                     mListener.onProjectSiteEditRequested(projectSite, lastIndex);
                                     break;
+
+
                                 case 5:
                                     Intent i = new Intent(ctx, MonitorMapActivity.class);
                                     i.putExtra("projectSite", projectSite);
                                     startActivity(i);
+                                    break;
+                                case 4:
+                                    mListener.onGPSRequested(projectSite, lastIndex);
                                     break;
 
                             }
