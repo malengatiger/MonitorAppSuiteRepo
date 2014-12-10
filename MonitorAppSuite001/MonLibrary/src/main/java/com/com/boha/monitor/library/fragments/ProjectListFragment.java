@@ -27,11 +27,13 @@ import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
+import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.Util;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -78,9 +80,7 @@ public class ProjectListFragment extends Fragment implements PageFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.w(LOG,"######### onCreateView");
-        if (savedInstanceState != null) {
-            hasReminderBeenShown = savedInstanceState.getBoolean("hasReminderBeenShown");
-        }
+
         view = inflater.inflate(R.layout.fragment_project, container, false);
         this.inflater = inflater;
         ctx = getActivity();
@@ -144,22 +144,25 @@ public class ProjectListFragment extends Fragment implements PageFragment {
         setTotals();
         setList();
 
-        if (!hasReminderBeenShown) {
+        Date lastReminder = SharedUtil.getReminderTime(ctx);
+        Date now = new Date();
+        long delta = now.getTime() - lastReminder.getTime();
+        if (delta > (TWO_HOUR)) {
             Util.pretendFlash(txtLabel, 300, 5, new Util.UtilAnimationListener() {
                 @Override
                 public void onAnimationEnded() {
-                    Util.showToast(ctx, ctx.getString(R.string.swipe_for_more), ctx.getResources().getDrawable(R.drawable.arrow_right));
+                    SharedUtil.saveReminderTime(ctx, new Date());
+                    Util.showPagerToast(ctx, ctx.getString(R.string.swipe_for_more), ctx.getResources().getDrawable(R.drawable.arrow_right));
                 }
             });
         }
 
         return view;
     }
+    static final long ONE_DAY = 1000*60*60*60*24, TWO_HOUR = 1000*60*60*2;
 
-    boolean hasReminderBeenShown;
     @Override
     public void onSaveInstanceState(Bundle b) {
-        b.putBoolean("hasReminderBeenShown", hasReminderBeenShown);
         super.onSaveInstanceState(b);
     }
     private void search() {

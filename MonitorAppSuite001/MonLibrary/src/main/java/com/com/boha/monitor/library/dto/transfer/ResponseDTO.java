@@ -12,7 +12,6 @@ import com.com.boha.monitor.library.dto.CityDTO;
 import com.com.boha.monitor.library.dto.ClientDTO;
 import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
-import com.com.boha.monitor.library.dto.CompanyStaffTypeDTO;
 import com.com.boha.monitor.library.dto.ContractorClaimDTO;
 import com.com.boha.monitor.library.dto.ContractorClaimSiteDTO;
 import com.com.boha.monitor.library.dto.CountryDTO;
@@ -64,7 +63,6 @@ public class ResponseDTO implements Serializable {
     private List<ProjectSiteDTO> projectSiteList = new ArrayList<>();
     private List<ProjectDTO> projectList = new ArrayList<>();
     private List<CompanyStaffDTO> companyStaffList = new ArrayList<>();
-    private List<CompanyStaffTypeDTO> companyStaffTypeList = new ArrayList<>();
     private List<ProjectDiaryRecordDTO> projectDiaryRecordList = new ArrayList<>();
     private List<ProjectSiteTaskDTO> projectSiteTaskList = new ArrayList<>();
     private List<ProjectSiteTaskStatusDTO> projectSiteTaskStatusList = new ArrayList<>();
@@ -394,14 +392,6 @@ public class ResponseDTO implements Serializable {
 
     public void setBankDetailList(List<BankDetailDTO> bankDetailList) {
         this.bankDetailList = bankDetailList;
-    }
-
-    public List<CompanyStaffTypeDTO> getCompanyStaffTypeList() {
-        return companyStaffTypeList;
-    }
-
-    public void setCompanyStaffTypeList(List<CompanyStaffTypeDTO> companyStaffTypeList) {
-        this.companyStaffTypeList = companyStaffTypeList;
     }
 
     public List<ProjectDiaryRecordDTO> getProjectDiaryRecordList() {

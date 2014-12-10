@@ -104,7 +104,7 @@ public class InvoiceFragment extends Fragment implements PageFragment {
 
     private void sendData() {
         if (task == null) {
-            ToastUtil.toast(ctx, ctx.getString(R.string.select_task));
+            Util.showToast(ctx, ctx.getString(R.string.select_task));
             return;
         }
         if (claimDate == null) {
@@ -153,7 +153,7 @@ public class InvoiceFragment extends Fragment implements PageFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        Util.showErrorToast(ctx,message);
                     }
                 });
             }
@@ -400,7 +400,7 @@ public class InvoiceFragment extends Fragment implements PageFragment {
         txtCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.toast(ctx, "Under Construction");
+                Util.showToast(ctx, "Under Construction");
             }
         });
     }

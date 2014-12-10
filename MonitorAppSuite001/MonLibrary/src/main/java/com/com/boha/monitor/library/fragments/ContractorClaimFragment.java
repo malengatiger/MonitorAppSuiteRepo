@@ -113,15 +113,15 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
     private void sendData() {
 
         if (project == null) {
-            ToastUtil.toast(ctx, ctx.getString(R.string.select_project));
+            Util.showToast(ctx, ctx.getString(R.string.select_project));
             return;
         }
         if (engineer == null) {
-            ToastUtil.toast(ctx, ctx.getString(R.string.select_engineer));
+            Util.showToast(ctx, ctx.getString(R.string.select_engineer));
             return;
         }
         if (task == null) {
-            ToastUtil.toast(ctx, ctx.getString(R.string.select_task));
+            Util.showToast(ctx, ctx.getString(R.string.select_task));
             return;
         }
         if (claimDate == null) {
@@ -176,7 +176,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx, message);
+                        Util.showErrorToast(ctx, message);
                     }
                 });
             }
@@ -499,7 +499,7 @@ public class ContractorClaimFragment extends Fragment implements PageFragment {
         txtCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.toast(ctx, "Under Construction");
+                Util.showToast(ctx, "Under Construction");
             }
         });
         chkSelectAll.setChecked(true);

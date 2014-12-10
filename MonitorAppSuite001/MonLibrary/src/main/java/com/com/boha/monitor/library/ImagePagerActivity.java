@@ -31,6 +31,7 @@ import com.com.boha.monitor.library.util.PhotoCache;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
+import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
 import java.io.File;
@@ -108,7 +109,7 @@ public class ImagePagerActivity extends ActionBarActivity implements ImageGridFr
             return true;
         }
         if (id == R.id.action_help) {
-            ToastUtil.toast(ctx, ctx.getString(R.string.under_cons));
+            Util.showToast(ctx, ctx.getString(R.string.under_cons));
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -222,7 +223,7 @@ public class ImagePagerActivity extends ActionBarActivity implements ImageGridFr
                     @Override
                     public void run() {
                         setRefreshActionButtonState(false);
-                        ToastUtil.errorToast(ctx, message);
+                        Util.showErrorToast(ctx, message);
                     }
                 });
             }

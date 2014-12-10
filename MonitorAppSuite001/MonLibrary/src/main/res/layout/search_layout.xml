@@ -10,7 +10,7 @@
         android:src="@drawable/banner_construction11"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
-        android:layout_height="120dp" />
+        android:layout_height="@dimen/mon_hero_height_small" />
 
     <RelativeLayout
         android:id="@+id/SLT_bottomLayout"
@@ -25,6 +25,7 @@
             android:text="Find Something"
             android:layout_alignParentLeft="true"
             android:tint="@color/blue"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

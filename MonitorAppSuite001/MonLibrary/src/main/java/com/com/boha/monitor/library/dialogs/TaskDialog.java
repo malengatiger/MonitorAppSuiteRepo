@@ -27,10 +27,13 @@ import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
 import com.com.boha.monitor.library.util.ToastUtil;
+import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+import static com.com.boha.monitor.library.util.Util.*;
 
 /**
  * Add, update and delete company tasks
@@ -151,12 +154,12 @@ public class TaskDialog extends DialogFragment {
         c.setCompanyID(SharedUtil.getCompany(context).getCompanyID());
         task.setCompanyID(c.getCompanyID());
         if (editTaskName.getText().toString().isEmpty()) {
-            ToastUtil.toast(context,context.getResources().getString(R.string.enter_engineer_name));
+            showToast(context, context.getResources().getString(R.string.enter_engineer_name));
             return;
         }
 
         if (numberPicker.getValue() == 0) {
-            ToastUtil.toast(context, context.getString(R.string.select_seq_no));
+            showToast(context, context.getString(R.string.select_seq_no));
             return;
         }
 
@@ -168,7 +171,7 @@ public class TaskDialog extends DialogFragment {
         w.setTask(task);
 
         if (editPrice.getText().toString().isEmpty()) {
-            ToastUtil.toast(context, context.getString(R.string.enter_price));
+            showToast(context, context.getString(R.string.enter_price));
             return;
         }
         taskPrice = new TaskPriceDTO();
@@ -215,7 +218,7 @@ public class TaskDialog extends DialogFragment {
 
     private void updateTask() {
         if (editTaskName.getText().toString().isEmpty()) {
-            ToastUtil.toast(context, context.getString(R.string.enter_taskname));
+            showToast(context, context.getString(R.string.enter_taskname));
             return;
         }
         TaskDTO t = new TaskDTO();
@@ -253,7 +256,7 @@ public class TaskDialog extends DialogFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(context,message);
+                        Util.showErrorToast(context,message);
                     }
                 });
             }

@@ -26,7 +26,6 @@ public class CompanyStaffDTO implements Serializable, Comparable<CompanyStaffDTO
     private String email, companyName;
     private String cellphone, pin;
     private Date appInvitationDate;
-    private CompanyStaffTypeDTO companyStaffType;
     private Integer companyID;
     private GcmDeviceDTO gcmDevice;
     private List<PhotoUploadDTO> photoUploadList;
@@ -125,15 +124,6 @@ public class CompanyStaffDTO implements Serializable, Comparable<CompanyStaffDTO
     public void setCellphone(String cellphone) {
         this.cellphone = cellphone;
     }
-
-    public CompanyStaffTypeDTO getCompanyStaffType() {
-        return companyStaffType;
-    }
-
-    public void setCompanyStaffType(CompanyStaffTypeDTO companyStaffType) {
-        this.companyStaffType = companyStaffType;
-    }
-
     public Integer getCompanyID() {
         return companyID;
     }

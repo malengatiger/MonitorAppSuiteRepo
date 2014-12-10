@@ -115,7 +115,7 @@ public class TaskPriceListFragment extends Fragment implements PageFragment {
         txtCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.toast(ctx, "Under Construction");
+                Util.showToast(ctx, "Under Construction");
             }
         });
     }

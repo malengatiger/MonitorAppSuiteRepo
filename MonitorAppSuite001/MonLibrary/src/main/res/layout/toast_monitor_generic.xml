@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/MONTOAST_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/MONTOAST_banner"
+            android:src="@drawable/banner_construction13"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mon_wider" />
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/MONTOAST_top"
+        android:padding="@dimen/mon_wide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/MONTOAST_text"
+            android:text="General message text happens here and things could be long in the tooth."
+            style="@style/Title3TextStyleBlack"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/MONTOAST_indicator"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="@dimen/mon_padding"
+        style="@style/BlueCircleSmall"
+        android:text="M"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

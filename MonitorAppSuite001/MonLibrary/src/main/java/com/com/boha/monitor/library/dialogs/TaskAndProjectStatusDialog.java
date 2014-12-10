@@ -210,13 +210,13 @@ public class TaskAndProjectStatusDialog extends DialogFragment {
     private void update() {
         RequestDTO w = new RequestDTO();
         if (editName.getText().toString().isEmpty()) {
-            ToastUtil.toast(context, context.getString(R.string.enter_name));
+            Util.showToast(context, context.getString(R.string.enter_name));
             return;
         }
         Short color = null;
         if (project == null) {
             if (!radioRed.isChecked() && !radioGreen.isChecked() && !radioYellow.isChecked()) {
-                ToastUtil.toast(context, context.getString(R.string.select_status_color));
+                Util.showToast(context, context.getString(R.string.select_status_color));
                 return;
             }
             if (radioGreen.isChecked()) color = (short) TaskStatusDTO.STATUS_COLOR_GREEN;

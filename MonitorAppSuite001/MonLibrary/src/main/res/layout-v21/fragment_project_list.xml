@@ -67,6 +67,7 @@
                     android:src="@android:drawable/ic_menu_search"
                     android:layout_alignParentLeft="true"
                     android:tint="@color/blue"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

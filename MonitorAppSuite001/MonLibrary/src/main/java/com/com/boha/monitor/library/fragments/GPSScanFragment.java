@@ -329,7 +329,7 @@ public class GPSScanFragment extends Fragment implements PageFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx, message);
+                        Util.showErrorToast(ctx, message);
                     }
                 });
             }

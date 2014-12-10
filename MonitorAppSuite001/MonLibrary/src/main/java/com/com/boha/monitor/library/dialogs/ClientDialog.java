@@ -20,7 +20,7 @@ import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
+import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
 /**
@@ -127,24 +127,24 @@ public class ClientDialog extends DialogFragment {
         client = new ClientDTO();
         client.setCompanyID(SharedUtil.getCompany(context).getCompanyID());
         if (editClientName.getText().toString().isEmpty()) {
-            ToastUtil.toast(context,context.getResources()
+            Util.showToast(context,context.getResources()
                     .getString(R.string.enter_name));
             return;
         }
 
         if (editAddress.getText().toString().isEmpty()) {
-            ToastUtil.toast(context,context.getResources()
+            Util.showToast(context, context.getResources()
                     .getString(R.string.enter_address));
             return;
         }
 
         if (editEmail.getText().toString().isEmpty()) {
-            ToastUtil.toast(context,context.getResources().getString(R.string.enter_email));
+            Util.showToast(context,context.getResources().getString(R.string.enter_email));
             return;
         }
 
         if (editCellphone.getText().toString().isEmpty()) {
-            ToastUtil.toast(context,context.getResources().getString(R.string.enter_cell));
+            Util.showToast(context,context.getResources().getString(R.string.enter_cell));
             return;
         }
 

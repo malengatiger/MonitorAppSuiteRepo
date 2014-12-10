@@ -5,17 +5,11 @@
 
     <ImageView
         android:id="@+id/HERO_image"
-        android:src="@drawable/house"
+        android:src="@drawable/banner_construction3"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="@dimen/mon_hero_height_small"/>
-    <ImageView
-        android:id="@+id/HERO_imageSmall"
-        android:src="@drawable/house"
-        android:scaleType="centerCrop"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/mon_wider"/>
+
     <TextView
         android:id="@+id/HERO_caption"
         android:text="Operations"

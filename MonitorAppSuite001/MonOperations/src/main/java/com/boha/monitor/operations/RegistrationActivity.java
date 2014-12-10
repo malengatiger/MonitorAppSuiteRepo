@@ -30,7 +30,6 @@ import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.GCMUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -39,6 +38,9 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import org.acra.ACRA;
 
 import java.util.ArrayList;
+
+import static com.com.boha.monitor.library.util.Util.showErrorToast;
+import static com.com.boha.monitor.library.util.Util.showToast;
 
 
 public class RegistrationActivity extends ActionBarActivity implements
@@ -125,25 +127,25 @@ public class RegistrationActivity extends ActionBarActivity implements
     private void sendRegistration() {
 
         if (eGroup.getText().toString().isEmpty()) {
-            ToastUtil.errorToast(ctx, ctx.getResources().getString(R.string.enter_comp_name));
+            showErrorToast(ctx, ctx.getResources().getString(R.string.enter_comp_name));
             return;
         }
         if (eFirstName.getText().toString().isEmpty()) {
-            ToastUtil.errorToast(ctx, ctx.getResources().getString(R.string.enter_firstname));
+            showErrorToast(ctx, ctx.getResources().getString(R.string.enter_firstname));
             return;
         }
         if (eLastName.getText().toString().isEmpty()) {
-            ToastUtil.errorToast(ctx, ctx.getResources().getString(R.string.enter_lastname));
+            showErrorToast(ctx, ctx.getResources().getString(R.string.enter_lastname));
             return;
         }
 
         if (ePin.getText().toString().isEmpty()) {
-            ToastUtil.errorToast(ctx, ctx.getResources().getString(R.string.enter_password));
+            showErrorToast(ctx, ctx.getResources().getString(R.string.enter_password));
             return;
         }
 
         if (email == null) {
-            ToastUtil.errorToast(ctx, ctx.getResources().getString(R.string.select_email));
+            showErrorToast(ctx, ctx.getResources().getString(R.string.select_email));
             return;
         }
         CompanyStaffDTO a = new CompanyStaffDTO();
@@ -243,7 +245,7 @@ public class RegistrationActivity extends ActionBarActivity implements
                     @Override
                     public void run() {
                         progressBar.setVisibility(View.GONE);
-                        ToastUtil.errorToast(ctx, message);
+                        showErrorToast(ctx, message);
 
                     }
                 });
@@ -255,11 +257,11 @@ public class RegistrationActivity extends ActionBarActivity implements
     private void sendSignIn() {
 
         if (ePin.getText().toString().isEmpty()) {
-            ToastUtil.errorToast(ctx, ctx.getResources().getString(R.string.enter_password));
+            showErrorToast(ctx, ctx.getResources().getString(R.string.enter_password));
             return;
         }
         if (email == null) {
-            ToastUtil.errorToast(ctx, ctx.getResources().getString(R.string.select_email));
+            showErrorToast(ctx, ctx.getResources().getString(R.string.select_email));
             return;
         }
         RequestDTO r = new RequestDTO();
@@ -277,7 +279,7 @@ public class RegistrationActivity extends ActionBarActivity implements
                     public void run() {
                         progressBar.setVisibility(View.GONE);
                         if (response.getStatusCode() > 0) {
-                            ToastUtil.errorToast(ctx, response.getMessage());
+                            showErrorToast(ctx, response.getMessage());
                             return;
                         }
 
@@ -322,7 +324,7 @@ public class RegistrationActivity extends ActionBarActivity implements
                     @Override
                     public void run() {
                         progressBar.setVisibility(View.GONE);
-                        ToastUtil.errorToast(ctx, message);
+                        showErrorToast(ctx, message);
                     }
                 });
             }
@@ -449,7 +451,7 @@ public class RegistrationActivity extends ActionBarActivity implements
         switch (item.getItemId()) {
 
             case R.id.menu_help:
-                ToastUtil.toast(ctx, "Under Construction");
+                showToast(ctx, "Under Construction");
                 return true;
 
 
@@ -482,7 +484,7 @@ public class RegistrationActivity extends ActionBarActivity implements
         Account[] accts = am.getAccounts();
         if (accts.length == 0) {
             //TODO - send user to create acct
-            ToastUtil.errorToast(ctx, "No Accounts found. Please create one and try again");
+            showErrorToast(ctx, "No Accounts found. Please create one and try again");
             finish();
             return;
         }

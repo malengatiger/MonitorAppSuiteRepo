@@ -97,7 +97,7 @@ public class SubTaskFragment extends Fragment implements PageFragment {
     private void sendSubTask() {
         subTask = new SubTaskDTO();
         if (editTaskName.getText().toString().isEmpty()) {
-            ToastUtil.toast(ctx, ctx.getString(R.string.enter_subtask));
+            Util.showToast(ctx, ctx.getString(R.string.enter_subtask));
             return;
         }
         subTask.setSubTaskName(editTaskName.getText().toString());
@@ -143,7 +143,7 @@ public class SubTaskFragment extends Fragment implements PageFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        Util.showErrorToast(ctx,message);
                     }
                 });
             }

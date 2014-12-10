@@ -22,7 +22,6 @@ import android.widget.ListPopupWindow;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
-import com.com.boha.monitor.library.adapters.PopupListAdapter;
 import com.com.boha.monitor.library.adapters.TaskAdapter;
 import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
@@ -34,7 +33,6 @@ import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
@@ -210,12 +208,12 @@ public class TaskListFragment extends Fragment implements PageFragment {
         c.setCompanyID(SharedUtil.getCompany(ctx).getCompanyID());
         task.setCompanyID(c.getCompanyID());
         if (editTaskName.getText().toString().isEmpty()) {
-            ToastUtil.toast(ctx, ctx.getResources().getString(R.string.enter_task_name));
+            Util.showToast(ctx, ctx.getResources().getString(R.string.enter_task_name));
             return;
         }
 
         if (numberPicker.getText().toString().isEmpty()) {
-            ToastUtil.toast(ctx, ctx.getString(R.string.enter_task_number));
+            Util.showToast(ctx, ctx.getString(R.string.enter_task_number));
             return;
         }
 
@@ -227,7 +225,7 @@ public class TaskListFragment extends Fragment implements PageFragment {
         w.setTask(task);
 
         if (editPrice.getText().toString().isEmpty()) {
-            ToastUtil.toast(ctx, ctx.getString(R.string.enter_price));
+            Util.showToast(ctx, ctx.getString(R.string.enter_price));
             return;
         }
         taskPrice = new TaskPriceDTO();
@@ -274,7 +272,7 @@ public class TaskListFragment extends Fragment implements PageFragment {
 
     private void updateTask() {
         if (editTaskName.getText().toString().isEmpty()) {
-            ToastUtil.toast(ctx, ctx.getString(R.string.enter_taskname));
+            Util.showToast(ctx, ctx.getString(R.string.enter_taskname));
             return;
         }
         TaskDTO t = new TaskDTO();
@@ -320,7 +318,7 @@ public class TaskListFragment extends Fragment implements PageFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        Util.showErrorToast(ctx,message);
                     }
                 });
             }
@@ -338,12 +336,6 @@ public class TaskListFragment extends Fragment implements PageFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 task = taskList.get(position);
-                View pv = getActivity().getLayoutInflater().inflate(R.layout.hero_image, null);
-                ImageView img = (ImageView) pv.findViewById(R.id.HERO_image);
-                TextView cap = (TextView) pv.findViewById(R.id.HERO_caption);
-                Statics.setRobotoFontLight(ctx,cap);
-                cap.setText(ctx.getString(R.string.select_action));
-                img.setImageDrawable(Util.getRandomHeroImage(ctx));
 
                 if (list == null) {
                     list = new ArrayList<String>();
@@ -351,17 +343,12 @@ public class TaskListFragment extends Fragment implements PageFragment {
                     list.add("Add New Task");
                     list.add("Edit this Task");
                 }
-                actionsPopupWindow = new ListPopupWindow(ctx);
-                actionsPopupWindow.setAnchorView(txtTitle);
-                actionsPopupWindow.setPromptView(pv);
-                actionsPopupWindow.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item,
-                        list, false));
-                actionsPopupWindow.setWidth(600);
-                actionsPopupWindow.setModal(true);
-                actionsPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                Util.showPopupBasicWithHeroImage(ctx,getActivity(),list,txtTitle,
+                        ctx.getString(R.string.select_action),
+                        new Util.UtilPopupListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        switch (position) {
+                    public void onItemSelected(int index) {
+                        switch (index) {
                             case 0:
                                 mListener.onSubTasksRequested(task);
                                 break;
@@ -385,10 +372,9 @@ public class TaskListFragment extends Fragment implements PageFragment {
                                 openEditPanel();
                                 break;
                         }
-                        actionsPopupWindow.dismiss();
                     }
                 });
-                actionsPopupWindow.show();
+
             }
         });
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

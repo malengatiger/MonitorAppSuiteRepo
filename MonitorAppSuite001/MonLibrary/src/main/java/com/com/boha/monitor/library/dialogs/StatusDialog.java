@@ -24,11 +24,12 @@ import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.com.boha.monitor.library.util.Util.showToast;
 
 /**
  * Created by aubreyM on 2014/10/18.
@@ -151,7 +152,7 @@ public class StatusDialog extends DialogFragment {
         projectSiteTaskStatus = new ProjectSiteTaskStatusDTO();
 
         if (taskStatus == null) {
-            ToastUtil.toast(context,context.getString(R.string.select_status));
+            showToast(context, context.getString(R.string.select_status));
             return;
         }
         projectSiteTaskStatus.setTaskStatus(taskStatus);

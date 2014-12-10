@@ -13,13 +13,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListPopupWindow;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
-import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
@@ -30,7 +27,7 @@ import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
+import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.ErrorDialogFragment;
@@ -116,7 +113,7 @@ public class MonitorMapActivity extends ActionBarActivity
         }
         googleMap = mapFragment.getMap();
         if (googleMap == null) {
-            ToastUtil.toast(ctx, "Map not available. Please try again!");
+            Util.showToast(ctx, getString(R.string.map_not_available));
             finish();
             return;
         }
@@ -152,13 +149,18 @@ public class MonitorMapActivity extends ActionBarActivity
 //                if (mf > 100) {
 //                    showDirectionsDialog(latLng.latitude, latLng.longitude);
 //                } else {
-//                    ToastUtil.toast(ctx, "You are currently " + df.format(mf) + " metres from where the picture was taken");
+//                    Util.showToast(ctx, "You are currently " + df.format(mf) + " metres from where the picture was taken");
 //                }
                 return true;
             }
         });
         if (projectSite != null) {
-            setOneMarker();
+            if (projectSite.getLatitude() == null) {
+                Util.showToast(ctx,"Site has no location coordinates. Unable to put site on map.");
+                finish();
+            } else {
+                setOneMarker();
+            }
         }
         if (project != null) {
             getCachedData();
@@ -228,7 +230,7 @@ public class MonitorMapActivity extends ActionBarActivity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        Util.showErrorToast(ctx,message);
                     }
                 });
             }
@@ -292,6 +294,9 @@ public class MonitorMapActivity extends ActionBarActivity
     }
 
     private void setOneMarker() {
+        if (projectSite.getLatitude() == null) {
+            return;
+        }
         LatLng pnt = new LatLng(projectSite.getLatitude(), projectSite.getLongitude());
         BitmapDescriptor desc = BitmapDescriptorFactory.fromResource(R.drawable.number_1);
         Marker m =
@@ -337,40 +342,24 @@ public class MonitorMapActivity extends ActionBarActivity
                 list.add(getString(R.string.confirm_gps));
             }
         }
-
-        actionsWindow = new ListPopupWindow(this);
-        actionsWindow.setAdapter(new SpinnerListAdapter(ctx, R.layout.xxsimple_spinner_item, list,
-                SpinnerListAdapter.INVOICE_ACTIONS, title, false));
-        actionsWindow.setAnchorView(topLayout);
-        actionsWindow.setHorizontalOffset(72);
-        actionsWindow.setWidth(600);
-        actionsWindow.setModal(true);
-        actionsWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+        Util.showPopupBasicWithHeroImage(ctx,this,list,topLayout,ctx.getString(R.string.select_action),new Util.UtilPopupListener() {
             @Override
-            public void onDismiss() {
-
-            }
-        });
-        actionsWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
+            public void onItemSelected(int index) {
+                switch (index) {
                     case 0:
                         startDirectionsMap(lat, lng);
                         break;
                     case 1:
-
+                        Util.showToast(ctx, ctx.getString(R.string.under_cons));
                         break;
                     case 2:
                         confirmLocation();
                         break;
 
                 }
-                actionsWindow.dismiss();
             }
         });
 
-        actionsWindow.show();
 
     }
     private void confirmLocation() {
@@ -386,7 +375,7 @@ public class MonitorMapActivity extends ActionBarActivity
                         ErrorUtil.checkServerError(ctx,response);
                         Log.d(LOG, "########## location confirmed, status code: " + response.getStatusCode());
                         projectSite.setLocationConfirmed(1);
-                        ToastUtil.toast(ctx,"Site location has been confirmed");
+                        Util.showToast(ctx, "Site location has been confirmed");
                     }
                 });
             }
@@ -402,7 +391,7 @@ public class MonitorMapActivity extends ActionBarActivity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        Util.showErrorToast(ctx,message);
                     }
                 });
             }

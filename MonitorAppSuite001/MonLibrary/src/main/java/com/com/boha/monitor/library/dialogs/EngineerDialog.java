@@ -23,7 +23,7 @@ import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
+import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
 /**
@@ -67,7 +67,7 @@ public class EngineerDialog extends DialogFragment {
         imgDelete = (ImageView)view.findViewById(R.id.ED_PSN_imgDelete);
         imgDelete.setVisibility(View.GONE);
 
-        progressBar = (ProgressBar) view.findViewById(R.id.ED_PSN_progress);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
 
 
@@ -142,17 +142,17 @@ public class EngineerDialog extends DialogFragment {
         c.setCompanyID(SharedUtil.getCompany(context).getCompanyID());
         engineer.setCompanyID(c.getCompanyID());
         if (editFirstName.getText().toString().isEmpty()) {
-            ToastUtil.toast(context,context.getResources().getString(R.string.enter_engineer_name));
+            Util.showToast(context, context.getResources().getString(R.string.enter_engineer_name));
             return;
         }
 
         if (editEmail.getText().toString().isEmpty()) {
-            ToastUtil.toast(context,context.getResources().getString(R.string.enter_email));
+            Util.showToast(context,context.getResources().getString(R.string.enter_email));
             return;
         }
 
         if (editCellphone.getText().toString().isEmpty()) {
-            ToastUtil.toast(context,context.getResources().getString(R.string.enter_cell));
+            Util.showToast(context,context.getResources().getString(R.string.enter_cell));
             return;
         }
 

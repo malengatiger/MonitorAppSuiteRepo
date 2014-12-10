@@ -92,17 +92,17 @@ public class ToastUtil {
 
 	public static void serverUnavailable(Context ctx) {
 		
-		ToastUtil.errorToast(ctx, "Server is not available or reachable at " +
+		Util.showErrorToast(ctx, "Server is not available or reachable at " +
 				"this time. Please try later or contact GhostPractice support.");
 	}
 
 	public static void memoryUnavailable(Context ctx) {
 		
-		ToastUtil.errorToast(ctx, "Memory required is not available");
+		Util.showErrorToast(ctx, "Memory required is not available");
 	}
 	/*
 	 * public static void locationUnavailable(Context ctx,int languageCode) {
-	 * ToastUtil.toast(ctx, TX.translate(languageCode,
+	 * Util.showToast(ctx, TX.translate(languageCode,
 	 * "GPS coordinates are not available.\nPlease check Location Settings on your phone"
 	 * , ctx), Toast.LENGTH_LONG, Gravity.CENTER); } public static void
 	 * underConstruction(Context ctx,int languageCode) { LayoutInflater inf =

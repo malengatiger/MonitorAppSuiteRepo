@@ -43,7 +43,6 @@ import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
@@ -76,7 +75,7 @@ public class ProjectPagerActivity extends ActionBarActivity
         setDrawerList();
         setTitle(SharedUtil.getCompany(ctx).getCompanyName());
         CompanyStaffDTO staff = SharedUtil.getCompanyStaff(ctx);
-        getSupportActionBar().setSubtitle(staff.getFirstName() + " - " + staff.getCompanyStaffType().getCompanyStaffTypeName());
+        getSupportActionBar().setSubtitle(staff.getFullName());
         //
         // PhotoUploadService.uploadPendingPhotos(ctx);
     }
@@ -213,7 +212,7 @@ public class ProjectPagerActivity extends ActionBarActivity
                     @Override
                     public void run() {
                         progressBar.setVisibility(View.GONE);
-                        ToastUtil.errorToast(ctx, message);
+                        Util.showErrorToast(ctx, message);
                     }
                 });
             }
@@ -253,7 +252,7 @@ public class ProjectPagerActivity extends ActionBarActivity
         int id = item.getItemId();
 
         if (id == R.id.action_help) {
-            ToastUtil.toast(ctx, ctx.getString(R.string.under_cons));
+            Util.showToast(ctx, ctx.getString(R.string.under_cons));
             return true;
         }
         if (id == R.id.action_refresh) {

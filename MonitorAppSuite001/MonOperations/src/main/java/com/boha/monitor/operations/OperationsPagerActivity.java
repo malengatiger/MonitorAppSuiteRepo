@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,13 +29,13 @@ import com.com.boha.monitor.library.ImagePagerActivity;
 import com.com.boha.monitor.library.MonitorMapActivity;
 import com.com.boha.monitor.library.PictureActivity;
 import com.com.boha.monitor.library.SitePagerActivity;
+import com.com.boha.monitor.library.StaffActivity;
 import com.com.boha.monitor.library.SubTaskActivity;
 import com.com.boha.monitor.library.adapters.DrawerAdapter;
 import com.com.boha.monitor.library.dialogs.BeneficiaryDialog;
 import com.com.boha.monitor.library.dialogs.ClientDialog;
 import com.com.boha.monitor.library.dialogs.EngineerDialog;
 import com.com.boha.monitor.library.dialogs.ProjectDialog;
-import com.com.boha.monitor.library.dialogs.StaffDialog;
 import com.com.boha.monitor.library.dialogs.TaskAndProjectStatusDialog;
 import com.com.boha.monitor.library.dialogs.TaskDialog;
 import com.com.boha.monitor.library.dto.BeneficiaryDTO;
@@ -63,7 +64,7 @@ import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
+import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
 import java.util.ArrayList;
@@ -128,6 +129,8 @@ public class OperationsPagerActivity extends ActionBarActivity
                 drawerListView.setAdapter(mDrawerAdapter);
                 LayoutInflater in = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View v = in.inflate(R.layout.hero_image, null);
+                ImageView img = (ImageView)v.findViewById(R.id.HERO_image);
+                img.setImageDrawable(Util.getRandomHeroImage(ctx));
                 drawerListView.addHeaderView(v);
                 drawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -135,10 +138,10 @@ public class OperationsPagerActivity extends ActionBarActivity
                         TextView tv = (TextView)view.findViewById(R.id.DI_txtTitle);
                         Log.w(LOG,"##### onItemClick, index: " + i + " title: " + tv.getText().toString());
                         mPager.setCurrentItem(i - 1, true);
-
                         mDrawerLayout.closeDrawers();
                     }
                 });
+
                 getCompanyData();
             }
 
@@ -206,7 +209,8 @@ public class OperationsPagerActivity extends ActionBarActivity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx, message);
+                        progressBar.setVisibility(View.GONE);
+                        Util.showErrorToast(ctx, message);
                     }
                 });
             }
@@ -261,39 +265,8 @@ public class OperationsPagerActivity extends ActionBarActivity
                 pd.show(getFragmentManager(), "PROJ_DIAG");
             }
             if (pf instanceof StaffListFragment) {
-                StaffDialog diag = new StaffDialog();
-                diag.setAction(CompanyStaffDTO.ACTION_ADD);
-                diag.setContext(ctx);
-                diag.setListener(new StaffDialog.StaffDialogListener() {
-                    @Override
-                    public void onStaffAdded(final CompanyStaffDTO companyStaff) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //ToastUtil.toast(ctx, ctx.getResources().getString(R.string.company_staff_saved));
-                                staffListFragment.addCompanyStaff(companyStaff);
-                            }
-                        });
-
-                    }
-
-                    @Override
-                    public void onStaffUpdated(CompanyStaffDTO companyStaff) {
-
-                    }
-
-                    @Override
-                    public void onError(final String message) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ToastUtil.errorToast(ctx, message);
-                            }
-                        });
-
-                    }
-                });
-                diag.show(getFragmentManager(), "STAFF_DIALOG");
+                Intent i = new Intent(this, StaffActivity.class);
+                startActivityForResult(i,EDIT_STAFF_REQUESTED);
             }
             if (pf instanceof ClientListFragment) {
                 ClientDialog cd = new ClientDialog();
@@ -321,7 +294,7 @@ public class OperationsPagerActivity extends ActionBarActivity
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ToastUtil.errorToast(ctx,message);
+                                Util.showErrorToast(ctx,message);
                             }
                         });
                     }
@@ -372,7 +345,7 @@ public class OperationsPagerActivity extends ActionBarActivity
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ToastUtil.errorToast(ctx,message);
+                                Util.showErrorToast(ctx,message);
                             }
                         });
                     }
@@ -449,7 +422,7 @@ public class OperationsPagerActivity extends ActionBarActivity
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ToastUtil.errorToast(ctx,message);
+                                Util.showErrorToast(ctx,message);
                             }
                         });
                     }
@@ -677,6 +650,14 @@ public class OperationsPagerActivity extends ActionBarActivity
         startActivityForResult(i,PICTURE_REQUESTED);
     }
 
+    @Override
+    public void onCompanyStaffEditRequested(CompanyStaffDTO companyStaff) {
+        Intent i = new Intent(this, StaffActivity.class);
+        i.putExtra("companyStaff",companyStaff);
+        startActivityForResult(i,EDIT_STAFF_REQUESTED);
+    }
+
+    static final int EDIT_STAFF_REQUESTED = 1132;
     boolean isRefreshedDueToImport;
     ProjectDTO project;
     @Override
@@ -700,6 +681,12 @@ public class OperationsPagerActivity extends ActionBarActivity
                 Log.e(LOG,"## no project data found onActivityResult - ?????");
             }
         }
+        if (requestCode == EDIT_STAFF_REQUESTED) {
+            if (resultCode == RESULT_OK) {
+                CompanyStaffDTO staff = (CompanyStaffDTO) data.getSerializableExtra("companyStaff");
+                staffListFragment.addCompanyStaff(staff);
+            }
+        }
     }
     @Override
     public void onTaskStatusClicked(TaskStatusDTO taskStatus) {
@@ -719,7 +706,7 @@ public class OperationsPagerActivity extends ActionBarActivity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        Util.showErrorToast(ctx,message);
                     }
                 });
             }
@@ -744,7 +731,7 @@ public class OperationsPagerActivity extends ActionBarActivity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        Util.showErrorToast(ctx,message);
                     }
                 });
             }
@@ -771,7 +758,7 @@ public class OperationsPagerActivity extends ActionBarActivity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        Util.showErrorToast(ctx,message);
                     }
                 });
             }
@@ -797,7 +784,7 @@ public class OperationsPagerActivity extends ActionBarActivity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        Util.showErrorToast(ctx,message);
                     }
                 });
             }
@@ -833,7 +820,7 @@ public class OperationsPagerActivity extends ActionBarActivity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        Util.showErrorToast(ctx,message);
                     }
                 });
             }
@@ -863,7 +850,7 @@ public class OperationsPagerActivity extends ActionBarActivity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        Util.showErrorToast(ctx,message);
                     }
                 });
             }
@@ -1051,7 +1038,7 @@ public class OperationsPagerActivity extends ActionBarActivity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        Util.showErrorToast(ctx,message);
                     }
                 });
             }

@@ -16,7 +16,6 @@ import com.com.boha.monitor.library.MonApp;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.WebCheck;
 import com.com.boha.monitor.library.util.WebCheckResult;
 import com.google.gson.Gson;
@@ -24,6 +23,8 @@ import com.google.gson.Gson;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.concurrent.TimeUnit;
+
+import static com.com.boha.monitor.library.util.Util.showErrorToast;
 
 /**
  * Utility class to encapsulate calls to the remote server via the Volley Networking library.
@@ -52,7 +53,7 @@ public class BaseVolley {
         ctx = context;
         WebCheckResult r = WebCheck.checkNetworkAvailability(ctx);
         if (r.isNetworkUnavailable()) {
-            ToastUtil.errorToast(
+            showErrorToast(
                     ctx,
                     ctx.getResources().getString(
                             com.boha.monitor.library.R.string.error_network_unavailable)

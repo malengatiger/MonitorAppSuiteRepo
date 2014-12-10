@@ -30,7 +30,6 @@ public class CompanyDTO implements Serializable {
     private List<BankDetailDTO> bankDetailList = new ArrayList<>();
     private List<GcmDeviceDTO> gcmDeviceList = new ArrayList<>();
 
-    private List<CompanyStaffTypeDTO> companyStaffTypeList = new ArrayList<>();
     private List<EngineerDTO> engineerList = new ArrayList<EngineerDTO>();
     
 
@@ -85,13 +84,6 @@ public class CompanyDTO implements Serializable {
         this.bankDetailList = bankDetailList;
     }
 
-    public List<CompanyStaffTypeDTO> getCompanyStaffTypeList() {
-        return companyStaffTypeList;
-    }
-
-    public void setCompanyStaffTypeList(List<CompanyStaffTypeDTO> companyStaffTypeList) {
-        this.companyStaffTypeList = companyStaffTypeList;
-    }
     
     public List<TaskDTO> getTaskList() {
         return taskList;

@@ -40,7 +40,6 @@ import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
@@ -105,6 +104,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
         this.inflater = inflater;
         view = inflater.inflate(R.layout.fragment_assign_site_tasks, container, false);
         ctx = getActivity();
+        //
         Bundle b = getArguments();
         if (b != null) {
             projectSite = (ProjectSiteDTO) b.getSerializable("projectSite");
@@ -232,7 +232,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        Util.showErrorToast(ctx,message);
                     }
                 });
             }
@@ -241,7 +241,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
 
     private void sendTask() {
         if (task == null) {
-            ToastUtil.toast(ctx, ctx.getString(R.string.select_task));
+            Util.showToast(ctx, ctx.getString(R.string.select_task));
             return;
         }
         boolean found = false;
@@ -252,7 +252,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
             }
         }
         if (found) {
-            ToastUtil.toast(ctx, ctx.getString(R.string.task_already));
+            Util.showToast(ctx, ctx.getString(R.string.task_already));
             return;
         }
         ProjectSiteTaskDTO pst = new ProjectSiteTaskDTO();
@@ -298,7 +298,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx, message);
+                        Util.showErrorToast(ctx, message);
                     }
                 });
             }
@@ -359,7 +359,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
                     projectSiteTask = projectSiteTaskList.get(position - 1);
                 }
                 if (projectSiteTask.isStatusDone()) {
-                    ToastUtil.toast(ctx,"Status already completed");
+                    Util.showToast(ctx,"Status already completed");
                     return;
                 }
                 if (projectSiteTask.getTask().getSubTaskList() != null && !projectSiteTask.getTask().getSubTaskList().isEmpty()) {
@@ -770,7 +770,7 @@ public class SiteTaskAndStatusAssignmentFragment extends Fragment implements Pag
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        Util.showErrorToast(ctx,message);
                     }
                 });
             }

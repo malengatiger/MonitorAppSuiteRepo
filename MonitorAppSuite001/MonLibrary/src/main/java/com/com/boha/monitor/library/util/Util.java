@@ -6,7 +6,9 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -18,7 +20,9 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Html;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,11 +32,16 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListPopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.boha.monitor.library.R;
+import com.com.boha.monitor.library.adapters.PopupListAdapter;
+import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.transfer.RequestDTO;
 import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
@@ -57,6 +66,270 @@ public class Util {
 
     public interface UtilAnimationListener {
         public void onAnimationEnded();
+    }
+
+    public interface UtilPopupListener {
+        public void onItemSelected(int index);
+    }
+
+    public static void showPopupBasic(Context ctx, Activity act,
+                                      List<String> list,
+                                      View anchorView, final UtilPopupListener listener) {
+        final ListPopupWindow pop = new ListPopupWindow(act);
+        pop.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item,
+                list, false));
+        pop.setAnchorView(anchorView);
+        pop.setModal(true);
+        pop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                pop.dismiss();
+                if (listener != null) {
+                    listener.onItemSelected(position);
+                }
+            }
+        });
+        pop.show();
+    }
+
+    private static int getWindowWidth(Activity ctx) {
+        Display display = ctx.getWindowManager().getDefaultDisplay();
+        return display.getWidth();
+    }
+
+    private static int getWindowHeight(Activity ctx) {
+        Display display = ctx.getWindowManager().getDefaultDisplay();
+        return display.getHeight();
+    }
+
+    public static void showPopupBasicWithHeroImage(Context ctx, Activity act,
+                                                   List<String> list,
+                                                   View anchorView, String caption, final UtilPopupListener listener) {
+        final ListPopupWindow pop = new ListPopupWindow(act);
+        LayoutInflater inf = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inf.inflate(R.layout.hero_image_popup, null);
+        TextView txt = (TextView) v.findViewById(R.id.HERO_caption);
+        if (caption != null) {
+            txt.setText(caption);
+        } else {
+            txt.setVisibility(View.GONE);
+        }
+        ImageView img = (ImageView) v.findViewById(R.id.HERO_image);
+        img.setImageDrawable(getRandomHeroImage(ctx));
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(getWindowWidth(act) / 2, 100);
+        //img.setLayoutParams(layoutParams);
+        pop.setPromptView(v);
+        pop.setPromptPosition(ListPopupWindow.POSITION_PROMPT_ABOVE);
+        pop.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item,
+                list, false));
+        pop.setAnchorView(anchorView);
+        pop.setModal(true);
+        pop.setWidth(getWindowWidth(act) / 2);
+        pop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                pop.dismiss();
+                if (listener != null) {
+                    listener.onItemSelected(position);
+                }
+            }
+        });
+        pop.show();
+    }
+
+    public static void showPopup(Context ctx, Activity act,
+                                 List<String> list,
+                                 View anchorView, View promptView,
+                                 Integer width, Integer height, Integer horizontalOffset, final UtilPopupListener listener) {
+        final ListPopupWindow pop = new ListPopupWindow(act);
+        pop.setPromptView(promptView);
+        pop.setPromptPosition(ListPopupWindow.POSITION_PROMPT_ABOVE);
+        pop.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item,
+                list, false));
+        pop.setAnchorView(anchorView);
+        if (width != null) {
+            pop.setWidth(width);
+        }
+        if (horizontalOffset != null) {
+            pop.setHorizontalOffset(horizontalOffset);
+        }
+        if (height != null) {
+            pop.setHeight(height);
+        }
+        pop.setModal(true);
+        pop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                pop.dismiss();
+                if (listener != null) {
+                    listener.onItemSelected(position);
+                }
+            }
+        });
+        pop.show();
+    }
+
+    public static void showConfirmAppInvitationDialog(final Context ctx, final Activity act,
+                                                      final CompanyStaffDTO companyStaff, final int type) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(act);
+        switch (type) {
+            case EXEC:
+                dialog.setTitle(ctx.getString(R.string.exec_app));
+                break;
+            case OPS:
+                dialog.setTitle(ctx.getString(R.string.operations_app));
+                break;
+            case PROJ:
+                dialog.setTitle(ctx.getString(R.string.pm_app));
+                break;
+            case SITE:
+                dialog.setTitle(ctx.getString(R.string.supervisor_app));
+                break;
+        }
+        dialog.setMessage(ctx.getResources().getString(R.string.invite_dialog))
+                .setPositiveButton(ctx.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        sendInvitation(ctx, act, companyStaff, type);
+                    }
+                })
+                .setNegativeButton(ctx.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).show();
+    }
+
+    public static final int EXEC = 1, OPS = 2, PROJ = 3, SITE = 4;
+
+    private static void sendInvitation(final Context ctx, Activity act, final CompanyStaffDTO companyStaff,
+                                       int type) {
+        StringBuilder sba = new StringBuilder();
+        sba.append(getHeader(ctx, type));
+        switch (type) {
+            case EXEC:
+                sba.append(getExecLink(ctx, companyStaff));
+                break;
+            case OPS:
+                sba.append(getOperationsLink(ctx, companyStaff));
+                sba.append(getFooter(ctx));
+                break;
+            case PROJ:
+                sba.append(getProjectManagerLink(ctx, companyStaff));
+                break;
+            case SITE:
+                sba.append(getSiteManagerLink(ctx, companyStaff));
+                break;
+        }
+        sba.append(getFooter(ctx));
+
+        Log.w(LOG, "before send intent, sba = \n" + sba.toString());
+        final Intent shareIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + companyStaff.getEmail()));
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, ctx.getResources().getString(R.string.subject));
+        shareIntent.putExtra(
+                Intent.EXTRA_TEXT,
+                Html.fromHtml(sba.toString())
+        );
+        Log.e(LOG, shareIntent.toString());
+        ctx.startActivity(Intent.createChooser(shareIntent, "Email:"));
+
+        //update app date
+
+        CompanyStaffDTO cs = new CompanyStaffDTO();
+        cs.setAppInvitationDate(new Date());
+        cs.setCompanyStaffID(companyStaff.getCompanyStaffID());
+        RequestDTO w = new RequestDTO();
+        w.setRequestType(RequestDTO.UPDATE_COMPANY_STAFF);
+        w.setCompanyStaff(cs);
+
+
+        WebSocketUtil.sendRequest(ctx, Statics.COMPANY_ENDPOINT, w, new WebSocketUtil.WebSocketListener() {
+            @Override
+            public void onMessage(final ResponseDTO response) {
+
+            }
+
+            @Override
+            public void onClose() {
+
+            }
+
+            @Override
+            public void onError(final String message) {
+
+            }
+        });
+
+    }
+
+    private static String getHeader(Context ctx, int type) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<h2>").append(SharedUtil.getCompany(ctx).getCompanyName()).append("</h2>");
+        sb.append("<p>").append(ctx.getResources().getString(R.string.invited)).append("</p>");
+        switch (type) {
+            case EXEC:
+                sb.append("<h3>").append(ctx.getString(R.string.exec_app)).append("</h3>");
+                break;
+            case OPS:
+                sb.append("<h3>").append(ctx.getString(R.string.operations_app)).append("</h3>");
+                break;
+            case PROJ:
+                sb.append("<h3>").append(ctx.getString(R.string.pm_app)).append("</h3>");
+                break;
+            case SITE:
+                sb.append("<h3>").append(ctx.getString(R.string.supervisor_app)).append("</h3>");
+                break;
+        }
+
+
+        return sb.toString();
+    }
+
+    private static String getFooter(Context ctx) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(ctx.getString(R.string.contact_us));
+        sb.append("<h2>").append(ctx.getResources().getString(R.string.enjoy)).append("</h2>");
+        return sb.toString();
+    }
+
+    private static String getSiteManagerLink(Context ctx, CompanyStaffDTO companyStaff) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<p>").append(ctx.getResources().getString(R.string.click_link)).append("</p>");
+        sb.append("<p>").append(Statics.INVITE_SITE_MGR).append("</p>");
+        sb.append(getPinNote(ctx, companyStaff));
+        return sb.toString();
+    }
+
+    private static String getProjectManagerLink(Context ctx, CompanyStaffDTO companyStaff) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<p>").append(ctx.getResources().getString(R.string.click_link)).append("</p>");
+        sb.append("<p>").append(Statics.INVITE_PROJECT_MGR).append("</p>");
+        sb.append(getPinNote(ctx, companyStaff));
+        return sb.toString();
+    }
+
+    private static String getPinNote(Context ctx, CompanyStaffDTO companyStaff) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<p>").append(ctx.getResources().getString(R.string.pin_note)).append("</p>");
+        sb.append("<h4>").append(companyStaff.getPin()).append("</h4>");
+        return sb.toString();
+    }
+
+    private static String getOperationsLink(Context ctx, CompanyStaffDTO companyStaff) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<p>").append(ctx.getResources().getString(R.string.click_link)).append("</p>");
+        sb.append("<p>").append(Statics.INVITE_OPERATIONS_MGR).append("</p>");
+        sb.append(getPinNote(ctx, companyStaff));
+        return sb.toString();
+    }
+
+    private static String getExecLink(Context ctx, CompanyStaffDTO companyStaff) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<p>").append(ctx.getResources().getString(R.string.click_link)).append("</p>");
+        sb.append("<p>").append(Statics.INVITE_EXEC).append("</p>");
+        sb.append(getPinNote(ctx, companyStaff));
+        return sb.toString();
     }
 
     public static void pretendFlash(final View v, final int duration, final int max, final UtilAnimationListener listener) {
@@ -95,21 +368,61 @@ public class Util {
         });
         an.start();
     }
-    public static void showToast(Context ctx, String caption, Drawable drawable) {
-        LayoutInflater inflater= (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View customToastroot =inflater.inflate(R.layout.toast_pager_instructions, null);
-        TextView txt = (TextView)customToastroot.findViewById(R.id.TOAST_text);
-        ImageView img = (ImageView)customToastroot.findViewById(R.id.TOAST_image);
+    public static void showErrorToast(Context ctx, String caption) {
+        LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View view = inflater.inflate(R.layout.toast_monitor_generic, null);
+        TextView txt = (TextView) view.findViewById(R.id.MONTOAST_text);
+        TextView ind = (TextView) view.findViewById(R.id.MONTOAST_indicator);
+        ind.setText("E");
+        ind.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xred_oval_small));
+        txt.setTextColor(ctx.getResources().getColor(R.color.absa_red));
         txt.setText(caption);
-        img.setImageDrawable(drawable);
-        Toast customtoast=new Toast(ctx);
+        Toast customtoast = new Toast(ctx);
 
-        customtoast.setView(customToastroot);
-        customtoast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL,0, 0);
+        customtoast.setView(view);
+        customtoast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
         customtoast.setDuration(Toast.LENGTH_LONG);
         customtoast.show();
     }
+
+    public static void showToast(Context ctx, String caption) {
+        LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View view = inflater.inflate(R.layout.toast_monitor_generic, null);
+        TextView txt = (TextView) view.findViewById(R.id.MONTOAST_text);
+        Statics.setRobotoFontLight(ctx, txt);
+        TextView ind = (TextView) view.findViewById(R.id.MONTOAST_indicator);
+        ind.setText("M");
+        ind.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.xblue_oval_small));
+        txt.setTextColor(ctx.getResources().getColor(R.color.blue));
+        txt.setText(caption);
+        Toast customtoast = new Toast(ctx);
+
+        customtoast.setView(view);
+        customtoast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+        customtoast.setDuration(Toast.LENGTH_LONG);
+        customtoast.show();
+    }
+
+    public static void showPagerToast(Context ctx, String caption, Drawable drawable) {
+        LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View view = inflater.inflate(R.layout.toast_pager_instructions, null);
+        TextView txt = (TextView) view.findViewById(R.id.TOAST_text);
+        Statics.setRobotoFontLight(ctx, txt);
+        ImageView img = (ImageView) view.findViewById(R.id.TOAST_image);
+        txt.setText(caption);
+        img.setImageDrawable(drawable);
+        Toast customtoast = new Toast(ctx);
+
+        customtoast.setView(view);
+        customtoast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+        customtoast.setDuration(Toast.LENGTH_LONG);
+        customtoast.show();
+    }
+
     public static double getElapsed(long start, long end) {
         BigDecimal m = new BigDecimal(end - start).divide(new BigDecimal(1000));
         return m.doubleValue();
@@ -726,12 +1039,16 @@ public class Util {
     public interface ProjectDataRefreshListener {
         public void onDataRefreshed(ProjectDTO project);
 
-        public void onError();
+        public void onError(String message);
     }
 
     public static void refreshProjectData(final Activity activity,
                                           final Context ctx, final Integer projectID,
                                           final ProjectDataRefreshListener listener) {
+        if (activity == null || ctx == null) {
+            Log.e(LOG,"## activity passed in is null, exit");
+            return;
+        }
         Log.i(LOG, "######## refreshProjectData started ....");
         RequestDTO w = new RequestDTO();
         w.setRequestType(RequestDTO.GET_PROJECT_DATA);
@@ -744,7 +1061,7 @@ public class Util {
                     @Override
                     public void run() {
                         if (response.getStatusCode() > 0) {
-                            ToastUtil.errorToast(ctx, response.getMessage());
+                            Util.showErrorToast(ctx, response.getMessage());
                             return;
                         }
                         CacheUtil.cacheProjectData(ctx, response, CacheUtil.CACHE_PROJECT, projectID, new CacheUtil.CacheUtilListener() {
@@ -760,7 +1077,7 @@ public class Util {
 
                             @Override
                             public void onError() {
-                                listener.onError();
+                                listener.onError(activity.getString(R.string.unable_project_data));
                             }
                         });
                     }
@@ -774,7 +1091,12 @@ public class Util {
 
             @Override
             public void onError(final String message) {
-
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.onError(message);
+                    }
+                });
             }
         });
     }

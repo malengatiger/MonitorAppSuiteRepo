@@ -8,14 +8,14 @@
 
     <RelativeLayout
         android:id="@+id/AST_handle"
-        android:padding="@dimen/mon_padding"
+        android:padding="@dimen/mon_divider"
         android:background="@color/beige_pale"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/AST_title2"
-            style="@style/Title2TextStyleBlack"
+            style="@style/Title3TextStyleBlack"
             android:text="@string/site_status"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
@@ -26,7 +26,6 @@
     <RelativeLayout
         android:id="@+id/AST_middle"
         android:layout_below="@id/AST_handle"
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -61,8 +60,8 @@
         android:id="@+id/AST_number"
         style="@style/BlackCircle"
         android:text="99"
-        android:layout_marginTop="@dimen/mon_wide"
-        android:layout_marginLeft="@dimen/mon_margin"
+        android:layout_marginTop="@dimen/mon_margin"
+        android:layout_marginLeft="@dimen/mon_padding"
         android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

@@ -223,7 +223,7 @@ public class ContractorClaimListFragment extends Fragment implements PageFragmen
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
                                 } catch (ActivityNotFoundException e) {
-                                    ToastUtil.errorToast(ctx,
+                                    Util.showErrorToast(ctx,
                                             "PDF Reader application is not installed in your device");
                                 }
                             }

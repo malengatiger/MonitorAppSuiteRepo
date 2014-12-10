@@ -162,7 +162,7 @@ public class BeneficiaryImportFragment extends Fragment implements PageFragment 
             @Override
             public void onClick(View view) {
                 if (beneficiaryList == null) {
-                    ToastUtil.errorToast(ctx,
+                    Util.showErrorToast(ctx,
                             ctx.getString(R.string.import_not_found));
                     return;
                 }
@@ -315,7 +315,7 @@ public class BeneficiaryImportFragment extends Fragment implements PageFragment 
     }
 
     private void weIsDone() {
-        ToastUtil.toast(ctx, ctx.getResources().getString(R.string.import_ok));
+        Util.showToast(ctx, ctx.getResources().getString(R.string.import_ok));
         listener.onBeneficiariesImported(project);
     }
     private void sendData(List<BeneficiaryDTO> list) {
@@ -357,7 +357,7 @@ public class BeneficiaryImportFragment extends Fragment implements PageFragment 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        Util.showErrorToast(ctx,message);
                     }
                 });
             }
@@ -412,7 +412,7 @@ public class BeneficiaryImportFragment extends Fragment implements PageFragment 
                 try {
                     parseFile(files.get(i - 1));
                 } catch (IOException e) {
-                    ToastUtil.errorToast(ctx, ctx.getResources().getString(R.string.failed_import));
+                    Util.showErrorToast(ctx, ctx.getResources().getString(R.string.failed_import));
                 }
             }
 

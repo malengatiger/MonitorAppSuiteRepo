@@ -355,14 +355,17 @@ public class BeneficiaryListFragment extends Fragment implements PageFragment {
                 Util.refreshProjectData(getActivity(), ctx, projectID, new Util.ProjectDataRefreshListener() {
                     @Override
                     public void onDataRefreshed(ProjectDTO project) {
+
                         beneficiaryList = project.getBeneficiaryList();
                         setList();
                         progressBar.setVisibility(View.GONE);
                     }
 
                     @Override
-                    public void onError() {
-                        Log.e("BeneficiaryListFragment", "Error doing shit!");
+                    public void onError(String message) {
+                        Log.e("BeneficiaryListFragment", "Error getting refresh data!");
+                        progressBar.setVisibility(View.GONE);
+                        Util.showErrorToast(ctx, message);
                     }
                 });
 
@@ -384,8 +387,9 @@ public class BeneficiaryListFragment extends Fragment implements PageFragment {
                     }
 
                     @Override
-                    public void onError() {
-                        Log.e("BeneficiaryListFragment", "Error refreshing project data!");
+                    public void onError(String message) {
+                        Log.e("BeneficiaryListFragment", message);
+                        Util.showErrorToast(ctx,message);
                     }
                 });
 

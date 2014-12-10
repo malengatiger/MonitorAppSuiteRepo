@@ -26,7 +26,7 @@ import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
+import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
 import java.util.ArrayList;
@@ -201,18 +201,18 @@ public class ProjectDialog extends DialogFragment {
         project = new ProjectDTO();
         project.setCompanyID(SharedUtil.getCompany(context).getCompanyID());
         if (editProjectName.getText().toString().isEmpty()) {
-            ToastUtil.toast(context,context.getResources().getString(R.string.enter_name));
+            Util.showToast(context,context.getResources().getString(R.string.enter_name));
             return;
         }
 
         if (editDesc.getText().toString().isEmpty()) {
-            ToastUtil.toast(context,context.getResources().getString(R.string.enter_desc));
+            Util.showToast(context, context.getResources().getString(R.string.enter_desc));
             return;
         }
 
 
         if (client == null) {
-            ToastUtil.toast(context,context.getResources().getString(R.string.select_client));
+            Util.showToast(context,context.getResources().getString(R.string.select_client));
             return;
         }
 

@@ -30,6 +30,10 @@
             android:name="com.com.boha.monitor.library.AppInvitationActivity"
             android:label="@string/title_activity_app_invitation" >
         </activity>
+        <activity
+            android:name="com.com.boha.monitor.library.StaffActivity"
+            android:label="@string/title_activity_staff" >
+        </activity>
     </application>
 
 </manifest>

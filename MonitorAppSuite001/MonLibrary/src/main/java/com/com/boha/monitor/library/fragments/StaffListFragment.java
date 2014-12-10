@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.boha.monitor.library.R;
-import com.com.boha.monitor.library.adapters.PopupListAdapter;
 import com.com.boha.monitor.library.adapters.StaffAdapter;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.com.boha.monitor.library.dto.ProjectDTO;
@@ -103,6 +103,10 @@ public class StaffListFragment extends Fragment
     List<String> list;
     private void setList() {
 
+        if (companyStaffList == null) {
+            Log.w("StaffListFragment", "-- companyStaffList is null, quittin...");
+            return;
+        }
         staffAdapter = new StaffAdapter(ctx, R.layout.staff_card,
                 companyStaffList, new StaffAdapter.StaffAdapterListener() {
             @Override
@@ -130,18 +134,10 @@ public class StaffListFragment extends Fragment
                     list.add(ctx.getString(R.string.edit_staff));
                     View v = Util.getHeroView(ctx, "Select Action");
 
-                    staffActionsWindow = new ListPopupWindow(getActivity());
-                    staffActionsWindow.setPromptView(v);
-                    staffActionsWindow.setPromptPosition(ListPopupWindow.POSITION_PROMPT_ABOVE);
-                    staffActionsWindow.setAdapter(new PopupListAdapter(ctx, R.layout.xxsimple_spinner_item,
-                            list, true));
-                    staffActionsWindow.setAnchorView(txtName);
-                    staffActionsWindow.setWidth(600);
-                    staffActionsWindow.setModal(true);
-                    staffActionsWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    Util.showPopupBasicWithHeroImage(ctx,getActivity(),list,txtName, ctx.getString(R.string.select_action),new Util.UtilPopupListener() {
                         @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            switch (position) {
+                        public void onItemSelected(int index) {
+                            switch (index) {
                                 case 0:
                                     //get status
                                     break;
@@ -149,24 +145,21 @@ public class StaffListFragment extends Fragment
                                     mListener.onCompanyStaffPictureRequested(companyStaffDTO);
                                     break;
                                 case 2:
-                                    //invite staff to download app
-                                    int index = 0;
+                                    int index2 = 0;
                                     for (CompanyStaffDTO s: companyStaffList) {
                                         if (s.getCompanyStaffID().intValue() == companyStaffDTO.getCompanyStaffID().intValue()) {
                                             break;
                                         }
-                                        index++;
+                                        index2++;
                                     }
-                                    mListener.onCompanyStaffInvitationRequested(companyStaffList,index);
+                                    mListener.onCompanyStaffInvitationRequested(companyStaffList,index2);
                                     break;
                                 case 3:
-                                    //edit staff data - include deactivation
+                                    mListener.onCompanyStaffEditRequested(companyStaffDTO);
                                     break;
                             }
-                            staffActionsWindow.dismiss();
                         }
                     });
-                    staffActionsWindow.show();
                 }
             }
         });
@@ -205,12 +198,20 @@ public class StaffListFragment extends Fragment
         Collections.sort(companyStaffList);
         staffAdapter.notifyDataSetChanged();
         txtCount.setText("" + companyStaffList.size());
-        try {
-            Thread.sleep(1000);
-            Util.animateRotationY(txtCount, 500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        Util.pretendFlash(txtCount,300,4,new Util.UtilAnimationListener() {
+            @Override
+            public void onAnimationEnded() {
+                Util.animateRotationY(txtCount, 500);
+            }
+        });
+        int index = 0;
+        for (CompanyStaffDTO s: companyStaffList) {
+            if (s.getCompanyStaffID().intValue() == staff.getCompanyStaffID().intValue()) {
+                break;
+            }
+            index++;
         }
+        mListView.setSelection(index);
 
     }
 
@@ -235,6 +236,7 @@ public class StaffListFragment extends Fragment
         public void onCompanyStaffClicked(CompanyStaffDTO companyStaff);
         public void onCompanyStaffInvitationRequested(List<CompanyStaffDTO> companyStaffList, int index);
         public void onCompanyStaffPictureRequested(CompanyStaffDTO companyStaff);
+        public void onCompanyStaffEditRequested(CompanyStaffDTO companyStaff);
     }
 
     ProjectDTO project;

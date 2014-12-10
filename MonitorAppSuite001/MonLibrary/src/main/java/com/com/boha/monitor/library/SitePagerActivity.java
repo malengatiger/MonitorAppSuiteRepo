@@ -30,7 +30,6 @@ import com.com.boha.monitor.library.fragments.SiteTaskAndStatusAssignmentFragmen
 import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -39,6 +38,9 @@ import com.google.android.gms.location.LocationRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.com.boha.monitor.library.util.Util.showErrorToast;
+import static com.com.boha.monitor.library.util.Util.showToast;
 
 public class SitePagerActivity extends ActionBarActivity implements com.google.android.gms.location.LocationListener,
         GooglePlayServicesClient.ConnectionCallbacks,
@@ -154,7 +156,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
                     @Override
                     public void run() {
                         progressBar.setVisibility(View.GONE);
-                        ToastUtil.errorToast(ctx, message);
+                        showErrorToast(ctx, message);
                     }
                 });
             }
@@ -173,7 +175,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_help) {
-            ToastUtil.toast(ctx, ctx.getString(R.string.under_cons));
+            showToast(ctx, ctx.getString(R.string.under_cons));
             return true;
         }
         if (id == R.id.action_add) {
@@ -204,7 +206,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            ToastUtil.errorToast(ctx, message);
+                            showErrorToast(ctx, message);
                         }
                     });
                 }
@@ -407,7 +409,7 @@ public class SitePagerActivity extends ActionBarActivity implements com.google.a
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx, message);
+                        showErrorToast(ctx, message);
                     }
                 });
             }

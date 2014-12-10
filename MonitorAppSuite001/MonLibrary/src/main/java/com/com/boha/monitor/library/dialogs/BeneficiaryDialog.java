@@ -29,7 +29,7 @@ import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
+import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
 import java.util.ArrayList;
@@ -79,7 +79,7 @@ public class BeneficiaryDialog extends DialogFragment {
 
         spinner = (Spinner) view.findViewById(R.id.ED_PSN_spinner);
         spinner2 = (Spinner) view.findViewById(R.id.ED_PSN_spinner2);
-        progressBar = (ProgressBar) view.findViewById(R.id.ED_PSN_progress);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
         imgDelete = (ImageView) view.findViewById(R.id.ED_PSN_imgDelete);
         imgDelete.setVisibility(View.GONE);
@@ -180,24 +180,24 @@ public class BeneficiaryDialog extends DialogFragment {
         c.setCompanyID(SharedUtil.getCompany(context).getCompanyID());
         beneficiary.setCompany(c);
         if (editFirstName.getText().toString().isEmpty()) {
-            ToastUtil.toast(context, context.getResources().getString(R.string.enter_firstname));
+            Util.showToast(context, context.getResources().getString(R.string.enter_firstname));
             return;
         }
 
         if (editLastName.getText().toString().isEmpty()) {
-            ToastUtil.toast(context, context.getResources().getString(R.string.enter_lastname));
+            Util.showToast(context, context.getResources().getString(R.string.enter_lastname));
             return;
         }
         if (editIDNumber.getText().toString().isEmpty()) {
-            ToastUtil.toast(context, context.getResources().getString(R.string.enter_id));
+            Util.showToast(context, context.getResources().getString(R.string.enter_id));
             return;
         }
         if (project == null) {
-            ToastUtil.toast(context, context.getString(R.string.select_project));
+            Util.showToast(context, context.getString(R.string.select_project));
             return;
         }
         if (site == null) {
-            ToastUtil.toast(context, context.getString(R.string.select_site));
+            Util.showToast(context, context.getString(R.string.select_site));
             return;
         }
 

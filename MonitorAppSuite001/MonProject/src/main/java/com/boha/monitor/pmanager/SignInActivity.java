@@ -29,12 +29,14 @@ import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.GCMUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import java.util.ArrayList;
+
+import static com.com.boha.monitor.library.util.Util.showErrorToast;
+import static com.com.boha.monitor.library.util.Util.showToast;
 
 public class SignInActivity extends Activity {
 
@@ -108,11 +110,11 @@ public class SignInActivity extends Activity {
     private void sendSignIn() {
 
         if (ePin.getText().toString().isEmpty()) {
-            ToastUtil.errorToast(ctx, ctx.getResources().getString(R.string.enter_password));
+            showErrorToast(ctx, ctx.getResources().getString(R.string.enter_password));
             return;
         }
         if (email == null) {
-            ToastUtil.errorToast(ctx, ctx.getResources().getString(R.string.select_email));
+            showErrorToast(ctx, ctx.getResources().getString(R.string.select_email));
             return;
         }
         RequestDTO r = new RequestDTO();
@@ -133,7 +135,7 @@ public class SignInActivity extends Activity {
                     public void run() {
                         progressBar.setVisibility(View.GONE);
                         if (response.getStatusCode() > 0) {
-                            ToastUtil.errorToast(ctx, response.getMessage());
+                            showErrorToast(ctx, response.getMessage());
                             return;
                         }
 
@@ -178,7 +180,7 @@ public class SignInActivity extends Activity {
                     @Override
                     public void run() {
                         progressBar.setVisibility(View.GONE);
-                        ToastUtil.errorToast(ctx, message);
+                        showErrorToast(ctx, message);
                     }
                 });
             }
@@ -235,7 +237,7 @@ public class SignInActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_help) {
-            ToastUtil.toast(ctx,ctx.getString(R.string.under_cons));
+            showToast(ctx, ctx.getString(R.string.under_cons));
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -247,7 +249,7 @@ public class SignInActivity extends Activity {
         Account[] accts = am.getAccounts();
         if (accts.length == 0) {
             //TODO - send user to create acct
-            ToastUtil.errorToast(ctx, "No Accounts found. Please create one and try again");
+            showErrorToast(ctx, "No Accounts found. Please create one and try again");
             finish();
             return;
         }

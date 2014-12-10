@@ -11,6 +11,10 @@ import com.com.boha.monitor.library.dto.CompanyDTO;
 import com.com.boha.monitor.library.dto.CompanyStaffDTO;
 import com.google.gson.Gson;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 /**
  * Created by aubreyM on 2014/10/12.
  */
@@ -22,6 +26,7 @@ public class SharedUtil {
             GCM_REGISTRATION_ID = "gcm",
             SESSION_ID = "sessionID",
             LOG = "SharedUtil",
+            REMINDER_TIME = "reminderTime",
             APP_VERSION = "appVersion";
     /**
      * Stores the registration ID and app versionCode in the application's
@@ -68,6 +73,27 @@ public class SharedUtil {
             return null;
         }
         return registrationId;
+    }
+    public static void saveReminderTime(Context ctx, Date date) {
+
+        SharedPreferences sp = PreferenceManager
+                .getDefaultSharedPreferences(ctx);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putLong(REMINDER_TIME, date.getTime());
+        ed.commit();
+        Log.e("SharedUtil", "%%%%% reminderTime: " + date + " saved in SharedPreferences");
+    }
+    public static Date getReminderTime(Context ctx) {
+
+        SharedPreferences sp = PreferenceManager
+                .getDefaultSharedPreferences(ctx);
+        long t = sp.getLong(REMINDER_TIME, 0);
+        if (t == 0) {
+            Calendar cal = GregorianCalendar.getInstance();
+            cal.roll(Calendar.DAY_OF_YEAR, false);
+            return cal.getTime();
+        }
+        return new Date(t);
     }
     public static void saveSessionID(Context ctx, String sessionID) {
 

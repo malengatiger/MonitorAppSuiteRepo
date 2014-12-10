@@ -24,7 +24,6 @@ import android.widget.TextView;
 import com.boha.monitor.library.R;
 import com.com.boha.monitor.library.MonitorMapActivity;
 import com.com.boha.monitor.library.adapters.ProjectSiteAdapter;
-import com.com.boha.monitor.library.adapters.SpinnerListAdapter;
 import com.com.boha.monitor.library.dto.ProjectDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteDTO;
 import com.com.boha.monitor.library.dto.ProjectSiteTaskDTO;
@@ -34,7 +33,6 @@ import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
@@ -227,29 +225,16 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
                     list.add("Site Status");
                     list.add("Take Picture");
                     list.add("Get GPS Coordinates");
-                    list.add("Site on Map");
+                    if (projectSite.getLatitude() != null) {
+                        list.add("Site on Map");
+                    }
                     list.add("Site Gallery");
                     list.add("Edit Site Details");
 
-                    View v = getActivity().getLayoutInflater().inflate(R.layout.hero_image, null);
-                    TextView cap = (TextView) v.findViewById(R.id.HERO_caption);
-                    cap.setText(ctx.getString(R.string.select_action));
-                    ImageView img = (ImageView) v.findViewById(R.id.HERO_image);
-                    img.setImageDrawable(Util.getRandomHeroImage(ctx));
-
-                    actionsWindow = new ListPopupWindow(getActivity());
-                    actionsWindow.setPromptView(v);
-                    actionsWindow.setPromptPosition(ListPopupWindow.POSITION_PROMPT_ABOVE);
-                    actionsWindow.setAdapter(new SpinnerListAdapter(ctx,
-                            R.layout.xxsimple_spinner_item, list, SpinnerListAdapter.INVOICE_ACTIONS, project.getProjectName(), false));
-                    actionsWindow.setAnchorView(heroImage);
-                    actionsWindow.setWidth(600);
-                    actionsWindow.setHorizontalOffset(72);
-                    actionsWindow.setModal(true);
-                    actionsWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    Util.showPopupBasicWithHeroImage(ctx,getActivity(),list,heroImage,ctx.getString(R.string.select_action), new Util.UtilPopupListener() {
                         @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            switch (position) {
+                        public void onItemSelected(int index) {
+                            switch (index) {
                                 case 0:
                                     mListener.onProjectSiteTasksRequested(projectSite, lastIndex);
                                     break;
@@ -272,10 +257,10 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
                                     break;
 
                             }
-                            actionsWindow.dismiss();
                         }
                     });
-                    actionsWindow.show();
+
+
                 }
             }
         });
@@ -365,7 +350,7 @@ public class ProjectSiteListFragment extends Fragment implements PageFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx, message);
+                        Util.showErrorToast(ctx, message);
                     }
                 });
             }

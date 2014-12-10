@@ -501,7 +501,7 @@ public class PictureActivity extends ActionBarActivity implements
         @Override
         protected void onPostExecute(Integer result) {
             if (result > 0) {
-                ToastUtil.errorToast(ctx, ctx.getResources().getString(R.string.camera_error));
+                Util.showErrorToast(ctx, ctx.getResources().getString(R.string.camera_error));
                 return;
             }
             if (thumbUri != null) {

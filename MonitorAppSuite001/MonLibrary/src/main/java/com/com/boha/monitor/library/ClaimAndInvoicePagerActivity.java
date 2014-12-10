@@ -31,7 +31,7 @@ import com.com.boha.monitor.library.util.CacheUtil;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.SharedUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
+import com.com.boha.monitor.library.util.Util;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
 import java.util.ArrayList;
@@ -149,7 +149,7 @@ implements ContractorClaimFragment.ContractorClaimFragmentListener,
                     @Override
                     public void run() {
                         setRefreshActionButtonState(false);
-                        ToastUtil.errorToast(ctx,message);
+                        Util.showErrorToast(ctx, message);
                     }
                 });
             }
@@ -386,7 +386,7 @@ implements ContractorClaimFragment.ContractorClaimFragmentListener,
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        Util.showErrorToast(ctx, message);
                     }
                 });
             }

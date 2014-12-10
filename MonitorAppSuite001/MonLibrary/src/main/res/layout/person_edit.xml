@@ -2,40 +2,72 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:padding="0dp"
+    android:background="@color/grey"
+    android:padding="@dimen/mon_padding"
     android:visibility="visible"
     android:id="@+id/ED_PSN_layout0"
     android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/ED_PSN_banner"
+        android:src="@drawable/banner_report"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mon_hero_height_small" />
 
     <RelativeLayout
         android:id="@+id/ED_PSN_mainLayout"
+        android:layout_below="@id/ED_PSN_banner"
+        android:background="@color/white"
+        android:padding="@dimen/mon_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/ED_PSN_banner"
-            android:src="@drawable/banner_gold"
-            android:layout_width="match_parent"
+
+
+        <TextView
+            android:id="@+id/ED_PSN_title"
+            style="@style/Title2TextStyleBlue"
+            android:text="@string/company_staff"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/ED_PSN_firstName"
+        <RelativeLayout
+            android:id="@+id/xlayoutxl"
+            android:layout_below="@id/ED_PSN_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_below="@id/ED_PSN_banner"
-            android:inputType="textCapWords"
-            style="@style/TextStyleSmall"
-            android:layout_marginLeft="5dp"
-            android:hint="@string/firstname" />
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/ED_PSN_imgDelete"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/mon_margin"
+                android:src="@android:drawable/ic_delete"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/ED_PSN_firstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/ED_PSN_imgDelete"
+                android:layout_marginTop="@dimen/mon_padding"
+                android:inputType="textCapWords"
+                style="@style/TextStyleSmall"
+                android:layout_marginLeft="5dp"
+                android:hint="@string/firstname" />
+        </RelativeLayout>
 
         <EditText
             android:id="@+id/ED_PSN_lastName"
             android:layout_width="match_parent"
-            android:layout_below="@id/ED_PSN_firstName"
+            android:layout_below="@id/xlayoutxl"
             android:inputType="textCapWords"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/mon_padding"
             android:layout_marginLeft="5dp"
             style="@style/TextStyleSmall"
             android:layout_height="wrap_content"
@@ -47,7 +79,7 @@
             android:layout_below="@id/ED_PSN_lastName"
             android:inputType="phone"
             style="@style/TextStyleSmall"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/mon_padding"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:hint="@string/cellphone" />
@@ -58,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_below="@id/ED_PSN_cellphone"
             android:inputType="textEmailAddress"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/mon_margin"
             android:layout_marginLeft="5dp"
             style="@style/TextStyleSmall"
             android:layout_height="wrap_content"
@@ -71,39 +103,102 @@
             android:inputType="number"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
+            android:visibility="gone"
             style="@style/TextStyleSmall"
             android:layout_height="wrap_content"
             android:hint="@string/id_number" />
 
-        <CheckBox
-            android:id="@+id/ED_PSN_chkInvite"
+
+        <RelativeLayout
+            android:id="@+id/spinners"
+            android:layout_below="@id/ED_PSN_idNumber"
+            android:padding="@dimen/mon_margin"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/ED_PSN_spinner"
+                android:layout_width="match_parent"
+                android:background="@color/blue_pale"
+                android:layout_height="wrap_content" />
+
+            <Spinner
+                android:id="@+id/ED_PSN_spinner2"
+                android:layout_width="match_parent"
+                android:layout_below="@id/ED_PSN_spinner"
+                android:background="@color/beige_pale"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RadioGroup
+            android:id="@+id/ED_PSN_activeLayout"
             android:layout_width="match_parent"
             android:layout_below="@id/ED_PSN_idNumber"
-            android:layout_marginTop="8dp"
-            android:checked="true"
-            android:textSize="12sp"
-            android:textColor="@color/black"
-            android:text="@string/subject"
-            android:layout_height="wrap_content" />
+            android:padding="@dimen/mon_padding"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/mon_wide"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/ED_PSN_radioActive"
+                android:text="Active"
+                android:layout_weight="1"
+                android:textColor="@color/blue"
+                android:checked="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <Spinner
-            android:id="@+id/ED_PSN_spinner"
-            android:layout_width="match_parent"
-            android:layout_below="@id/ED_PSN_chkInvite"
-            android:background="@color/blue_pale"
-            android:layout_height="wrap_content" />
-        <Spinner
-            android:id="@+id/ED_PSN_spinner2"
-            android:layout_width="match_parent"
-            android:layout_below="@id/ED_PSN_spinner"
-            android:background="@color/beige_pale"
-            android:layout_height="wrap_content" />
+            <RadioButton
+                android:id="@+id/ED_PSN_radioInactive"
+                android:textColor="@color/absa_red"
+                android:text="Inactive"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            </RadioGroup>
 
+        <RadioGroup
+            android:id="@+id/ED_PSN_apps"
+            android:layout_width="match_parent"
+            android:layout_below="@id/ED_PSN_activeLayout"
+            android:padding="@dimen/mon_padding"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/ED_PSN_chkExec"
+                android:text="@string/exec_app"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/ED_PSN_chkOps"
+                android:layout_below="@id/ED_PSN_chkExec"
+                android:textColor="@color/black"
+                android:text="@string/operations_app"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/ED_PSN_chkProj"
+                android:layout_below="@id/ED_PSN_chkOps"
+                android:textColor="@color/black"
+                android:text="@string/pm_app"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/ED_PSN_chkSite"
+                android:layout_below="@id/ED_PSN_chkProj"
+                android:textColor="@color/black"
+                android:text="@string/supervisor_app"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_below="@id/ED_PSN_spinner2"
-            android:padding="8dp"
+            android:layout_below="@id/ED_PSN_apps"
+            android:padding="@dimen/mon_padding"
             android:orientation="horizontal"
             android:layout_height="wrap_content">
 
@@ -112,6 +207,7 @@
                 style="@style/ButtonCancelSmall"
                 android:text="@string/cancel"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -127,24 +223,18 @@
         </RelativeLayout>
 
         <ProgressBar
-            android:id="@+id/ED_PSN_progress"
+            android:id="@+id/progressBar"
             android:layout_alignParentTop="true"
             android:layout_width="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginTop="48dp"
             android:layout_marginRight="8dp"
+            android:visibility="gone"
             style="@android:style/Widget.ProgressBar.Small"
             android:layout_height="wrap_content" />
 
-        <ImageView
-            android:id="@+id/ED_PSN_imgDelete"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="48dp"
-            android:src="@android:drawable/ic_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+
     </RelativeLayout>
 
-
+    </RelativeLayout>
 </ScrollView>

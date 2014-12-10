@@ -19,11 +19,13 @@ import com.com.boha.monitor.library.dto.transfer.ResponseDTO;
 import com.com.boha.monitor.library.fragments.SiteTaskAndStatusAssignmentFragment;
 import com.com.boha.monitor.library.util.ErrorUtil;
 import com.com.boha.monitor.library.util.Statics;
-import com.com.boha.monitor.library.util.ToastUtil;
 import com.com.boha.monitor.library.util.WebSocketUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.com.boha.monitor.library.util.Util.showErrorToast;
+import static com.com.boha.monitor.library.util.Util.showToast;
 
 public class TaskAssignmentActivity extends ActionBarActivity implements
         SiteTaskAndStatusAssignmentFragment.ProjectSiteTaskListener{
@@ -78,7 +80,7 @@ public class TaskAssignmentActivity extends ActionBarActivity implements
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        showErrorToast(ctx, message);
                     }
                 });
             }
@@ -100,7 +102,7 @@ public class TaskAssignmentActivity extends ActionBarActivity implements
             return true;
         }
         if (id == R.id.action_help) {
-            ToastUtil.toast(ctx, ctx.getString(R.string.under_cons));
+            showToast(ctx, ctx.getString(R.string.under_cons));
             return true;
         }
         if (id == R.id.action_camera) {
@@ -169,7 +171,7 @@ public class TaskAssignmentActivity extends ActionBarActivity implements
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.errorToast(ctx,message);
+                        showErrorToast(ctx, message);
                     }
                 });
             }
