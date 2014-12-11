@@ -545,6 +545,7 @@ public class OperationsPagerActivity extends ActionBarActivity
     @Override
     public void onProjectClicked(ProjectDTO project) {
 
+        
     }
 
     @Override
