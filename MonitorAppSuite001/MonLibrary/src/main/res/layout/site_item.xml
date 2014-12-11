@@ -47,13 +47,27 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/mon_padding"
                 android:layout_toRightOf="@+id/SITE_image" />
-            <ImageView
-                android:id="@+id/SITE_confirmed"
-                android:src="@drawable/ic_action_globe"
-                android:layout_alignParentRight="true"
-                android:tint="@color/absa_red"
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:padding="@dimen/mon_divider"
+                android:layout_alignParentRight="true"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/SITE_confirmed"
+                    android:src="@drawable/ic_action_globe"
+                    android:tint="@color/absa_red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/SITE_accuracy"
+                    android:text="00.00"
+                    style="@style/TextStyleGreySmall"
+                    android:layout_below="@id/SITE_confirmed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
 
         </RelativeLayout>
 

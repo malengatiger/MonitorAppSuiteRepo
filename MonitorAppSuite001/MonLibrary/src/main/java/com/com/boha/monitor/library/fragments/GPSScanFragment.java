@@ -346,6 +346,7 @@ public class GPSScanFragment extends Fragment implements PageFragment {
             btnSave.setVisibility(View.VISIBLE);
             projectSite.setLatitude(location.getLatitude());
             projectSite.setLongitude(location.getLongitude());
+            projectSite.setAccuracy(location.getAccuracy());
             Util.expand(btnSave,200,null);
             Log.d(LOG, "----------- onEndScanRequested - stopped scanning");
         }

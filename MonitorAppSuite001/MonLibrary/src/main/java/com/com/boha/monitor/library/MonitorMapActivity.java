@@ -367,7 +367,7 @@ public class MonitorMapActivity extends ActionBarActivity
         w.setProjectSiteID(projectSite.getProjectSiteID());
         w.setLatitude(projectSite.getLatitude());
         w.setLongitude(projectSite.getLongitude());
-
+        w.setAccuracy(projectSite.getAccuracy());
 
         WebSocketUtil.sendRequest(ctx,Statics.COMPANY_ENDPOINT,w,new WebSocketUtil.WebSocketListener() {
             @Override

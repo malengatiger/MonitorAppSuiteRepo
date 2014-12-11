@@ -48,7 +48,7 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
     static class ViewHolderItem {
         TextView txtName, txtLastStatus, txtTaskName;
         TextView txtTaskCount, txtStatusCount;
-        TextView txtNumber, txtDate, txtBen;
+        TextView txtNumber, txtDate, txtBen, txtAccuracy;
         ImageView imgHero, imgConfirmed;
         View statLayout1, statLayout2;
     }
@@ -78,6 +78,8 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
                     .findViewById(R.id.SITE_lastStatusDate);
             item.txtLastStatus = (TextView) convertView
                     .findViewById(R.id.SITE_lastStatus);
+            item.txtAccuracy = (TextView) convertView
+                    .findViewById(R.id.SITE_accuracy);
 
             item.imgHero = (ImageView) convertView.findViewById(R.id.SITE_heroImage);
             item.imgConfirmed = (ImageView) convertView.findViewById(R.id.SITE_confirmed);
@@ -90,6 +92,12 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
         final ProjectSiteDTO p = mList.get(position);
         item.txtName.setText(p.getProjectSiteName());
         item.txtNumber.setText("" + (position + 1));
+        if (p.getAccuracy() == null) {
+            item.txtAccuracy.setVisibility(View.GONE);
+        } else {
+            item.txtAccuracy.setVisibility(View.VISIBLE);
+            item.txtAccuracy.setText(df.format(p.getAccuracy()));
+        }
         if (p.getStatusCount() != null)
             item.txtStatusCount.setText("" + p.getStatusCount());
         else
@@ -190,5 +198,5 @@ public class ProjectSiteAdapter extends ArrayAdapter<ProjectSiteDTO> {
 
     static final Locale x = Locale.getDefault();
     static final SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm", x);
-    static final DecimalFormat df = new DecimalFormat("###,###,##0.0");
+    static final DecimalFormat df = new DecimalFormat("###,###,##0.00");
 }
